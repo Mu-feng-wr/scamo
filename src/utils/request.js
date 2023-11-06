@@ -13,6 +13,7 @@ service.interceptors.request.use(
     if (getDupToken()) {
       config.headers['Token'] = getDupToken()
     }
+    console.log(config)
     return config
   },
   error => {

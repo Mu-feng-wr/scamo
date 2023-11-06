@@ -8,7 +8,7 @@ function resolve(dir) {
 
 const name = defaultSettings.title || 'scamo'
 const port = 9000
-
+const server = process.env.VUE_APP_SERVER // 后台地址、
 module.exports = {
   publicPath: '/',
   outputDir: 'dist',
@@ -22,12 +22,18 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    headers: { 'Access-Control-Allow-0rigin': '*' },
-    before: require('./mock/mock-server.js')
+    proxy: {
+      [process.env.VUE_APP_BASE_API]: {
+        target: server,
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_BASE_API]: ''
+        }
+      }
+    },
+    headers: { 'Access-Control-Allow-0rigin': '*' }
   },
   configureWebpack: {
-    // provide the app's title in webpack's name field, so that
-    // it can be accessed in index.html to inject the correct title.
     name: name,
     resolve: {
       alias: {
@@ -36,21 +42,15 @@ module.exports = {
     }
   },
   chainWebpack(config) {
-    // it can improve the speed of the first screen, it is recommended to turn on preload
     config.plugin('preload').tap(() => [
       {
         rel: 'preload',
-        // to ignore runtime.js
-        // https://github.com/vuejs/vue-cli/blob/dev/packages/@vue/cli-service/lib/config/app.js#L171
         fileBlacklist: [/\.map$/, /hot-update\.js$/, /runtime\..*\.js$/],
         include: 'initial'
       }
     ])
 
-    // when there are many pages, it will cause too many meaningless requests
     config.plugins.delete('prefetch')
-
-    // set svg-sprite-loader
     config.module
       .rule('svg')
       .exclude.add(resolve('src/icons'))

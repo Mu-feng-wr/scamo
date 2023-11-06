@@ -1,8 +1,9 @@
 import request from '@/utils/request'
 
-export function getList(params) {
+/** 获取登录验证码 */
+export function getCode(params) {
   return request({
-    url: '/vue-admin-template/table/list',
+    url: '/code',
     method: 'get',
     params
   })
