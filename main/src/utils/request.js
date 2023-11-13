@@ -26,11 +26,11 @@ service.interceptors.response.use(
   response => {
     const res = response.data
 
-    if (res.code !== 0) {
+    if (res.code !== 200) {
       Message({
         message: res.message || 'Error',
         type: 'error',
-        duration: 5 * 1000
+        duration: 1500
       })
 
       if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
