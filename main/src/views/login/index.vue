@@ -135,7 +135,10 @@ export default {
       curent: 'password',
       activeName: '',
       isShow: false,
-      loginForm: {},
+      loginForm: {
+        username: '15888888888',
+        password: 'admin123'
+      },
       loginRules: {},
       captchaEnabled: true,
       codeUrl: '',
@@ -146,9 +149,19 @@ export default {
     this.getCode()
   },
   methods: {
+    // 获取验证码
     getCode() {
       getVerificationCode().then((res) => {
         this.codeUrl = 'data:image/gif;base64,' + res.img
+        this.loginForm.uuid = res.uuid
+      })
+    },
+    // 账号密码登录
+    handleLogin() {
+      this.$store.dispatch('system/loginHandler', this.loginForm).then((res) => {
+        this.$router.push({
+          path: '/'
+        })
       })
     }
   }

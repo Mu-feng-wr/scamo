@@ -1,9 +1,16 @@
 <template>
-  <div>待办</div>
+  <div @click="to">待办</div>
 </template>
 
 <script>
-export default {}
+export default {
+  created() {},
+  methods: {
+    to() {
+      console.log(window.$wujie.location)
+    }
+  }
+}
 </script>
 
 <style>

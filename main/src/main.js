@@ -21,7 +21,7 @@ Vue.use(WujieVue)
 const { setupApp } = WujieVue
 setupApp({
   name: 'authorization',
-  url: hostMap('https'),
+  url: hostMap('//localhost:9001/'),
   exec: true
 })
 

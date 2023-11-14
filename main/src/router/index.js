@@ -16,7 +16,20 @@ export const constantRoutes = [
     component: () => import('@/views/404'),
     hidden: true
   },
-
+  {
+    path: '/unification',
+    name: 'Unification',
+    component: Layout,
+    meta: { title: 'Example', icon: 'el-icon-s-help' },
+    children: [
+      {
+        path: 'unificationPage',
+        name: 'unificationPage',
+        component: () => import('@/views/unificationPage/index'),
+        meta: { title: 'Table', icon: 'table' }
+      }
+    ]
+  },
   {
     path: '/',
     component: Layout,

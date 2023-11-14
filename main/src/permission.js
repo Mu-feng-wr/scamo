@@ -1,9 +1,9 @@
 import router from './router'
 import store from './store'
-import { Message } from 'element-ui'
+// import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
-import { getDupToken } from '@/utils/auth' // get token from cookie
+import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
@@ -15,27 +15,36 @@ router.beforeEach(async(to, from, next) => {
 
   document.title = getPageTitle(to.meta.title)
 
-  const hasToken = getDupToken()
+  const hasToken = getToken()
 
   if (hasToken) {
     if (to.path === '/login') {
       next({ path: '/' })
       NProgress.done()
     } else {
-      const hasGetUserInfo = store.getters.name
-      if (hasGetUserInfo) {
-        next()
-      } else {
-        try {
+      try {
+        const menuList = store.getters.menuList
+        if (!menuList || menuList.length <= 0) {
           await store.dispatch('system/getMenulist')
-          next()
-        } catch (error) {
-          // await store.dispatch('user/resetToken')
-          Message.error(error || 'Has Error')
-          next(`/login`)
-          NProgress.done()
         }
+        next()
+      } catch (err) {
+        console.log(err)
       }
+      // const hasGetUserInfo = store.getters.name
+      // if (hasGetUserInfo) {
+      //   next()
+      // } else {
+      //   try {
+      //     await store.dispatch('system/getMenulist')
+      //     next({...to})
+      //   } catch (error) {
+      //     // await store.dispatch('user/resetToken')
+      //     Message.error(error || 'Has Error')
+      //     next(`/login`)
+      //     NProgress.done()
+      //   }
+      // }
     }
   } else {
     if (whiteList.indexOf(to.path) !== -1) {

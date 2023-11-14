@@ -1,5 +1,5 @@
 const map = {
-  '//localhost:7100/': '//wujie-micro.github.io/demo-react17/'
+  '//localhost:9001/': '//wujie-micro.github.io/demo-react17/'
 }
 
 export default function hostMap(host) {

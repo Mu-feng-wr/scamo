@@ -8,7 +8,7 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/login'] // 白名单
+const whiteList = ['/todo'] // 白名单
 
 router.beforeEach(async(to, from, next) => {
   NProgress.start()
@@ -18,7 +18,7 @@ router.beforeEach(async(to, from, next) => {
   const hasToken = getDupToken()
 
   if (hasToken) {
-    if (to.path === '/login') {
+    if (to.path === '/todo') {
       next({ path: '/' })
       NProgress.done()
     } else {

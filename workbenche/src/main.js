@@ -32,9 +32,31 @@ Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
 
-new Vue({
-  el: '#app',
-  router,
-  store,
-  render: h => h(App)
-})
+
+
+if (window.__POWERED_BY_WUJIE__) {
+  let instance;
+  window.__WUJIE_MOUNT = () => {
+    instance = new Vue({
+      el: '#app',
+      router,
+      store,
+      render: h => h(App)
+    })
+  };
+  window.__WUJIE_UNMOUNT = () => {
+    instance.$destroy();
+  };
+} else {
+  new Vue({
+    el: '#app',
+    router,
+    store,
+    render: h => h(App)
+  })
+}
+
+
+
+
+

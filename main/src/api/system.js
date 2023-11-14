@@ -8,3 +8,21 @@ export function getVerificationCode(params) {
     params
   })
 }
+
+/** 登录系统 */
+export function login(data) {
+  return request({
+    url: '/auth/login',
+    method: 'post',
+    data
+  })
+}
+
+/** 获取菜单 */
+export function getRouters(params) {
+  return request({
+    url: '/system/menu/getRouters',
+    method: 'get',
+    params
+  })
+}
