@@ -250,6 +250,19 @@ export default {
             height: 100%;
           }
         }
+        .login-form {
+          ::v-deep .el-input__inner {
+            height: 44px;
+          }
+          ::v-deep .el-input--prefix .el-input__inner {
+            padding-left: 40px;
+          }
+          ::v-deep .el-input__prefix {
+            line-height: 44px;
+            margin-left: 10px;
+            margin-top: 4px;
+          }
+        }
       }
     }
   }
