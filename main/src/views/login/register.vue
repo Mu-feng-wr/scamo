@@ -24,93 +24,88 @@
       </el-col>
 
       <el-col :span="8">
-        <div class="loginCon_right">
-          <div class="loginCon_box">
-            <div class="login_tabs" style="padding-top: 50px">
-              <span class="el-tabs__item is-active">免费注册</span>
-            </div>
-            <el-form ref="registerForm" :model="registerForm" :rules="registerRules" class="login-form">
-              <el-form-item prop="enterpriseName">
-                <el-input v-model="registerForm.enterpriseName" type="text" auto-complete="off" placeholder="企业名称">
-                  <!-- <img src="@/assets/images/enterpriseIcon.png" slot="prefix" /> -->
-                </el-input>
-              </el-form-item>
-              <el-form-item prop="contact">
-                <el-input v-model="registerForm.contact" type="text" auto-complete="off" placeholder="联系人姓名">
-                  <!-- <img src="@/assets/images/AccountNumber.png" slot="prefix" /> -->
-                </el-input>
-              </el-form-item>
-              <el-form-item prop="email">
-                <el-input v-model="registerForm.email" type="text" auto-complete="off" placeholder="邮箱">
-                  <!-- <img src="@/assets/images/emailIcon.png" slot="prefix" /> -->
-                </el-input>
-              </el-form-item>
-              <el-form-item prop="username">
-                <el-input clearable v-model="registerForm.username" type="text" auto-complete="off" placeholder="手机号">
-                  <!-- <img src="@/assets/images/Mobilephone.png" slot="prefix" /> -->
-                </el-input>
-              </el-form-item>
-              <el-form-item prop="code" v-if="captchaEnabled">
-                <el-input v-model="registerForm.code" auto-complete="off" placeholder="验证码" style="width: 63%" @keyup.enter.native="handleRegister">
-                  <!-- <img src="@/assets/images/Verificationcode.png" slot="prefix" /> -->
-                </el-input>
-                <div class="login-code">
-                  <img :src="codeUrl" @click="getCode" class="login-code-img" />
-                </div>
-              </el-form-item>
-
-              <el-form-item prop="code">
-                <el-input v-model="registerForm.code" placeholder="验证码" @keyup.enter.native="handleRegister">
-                  <!-- <img src="@/assets/images/Verificationcode.png" slot="prefix" /> -->
-                  <a class="vCode" :class="disabled ? 'disabled' : ''" slot="suffix" @click="getSMSVerificationCode">{{ computedVerifBtnText }}</a>
-                </el-input>
-              </el-form-item>
-              <el-form-item prop="password">
-                <el-input v-model="registerForm.password" type="password" auto-complete="off" placeholder="设置密码（8-12位，包含数字和字母）" show-password @keyup.enter.native="handleRegister">
-                  <!-- <img src="@/assets/images/Password.png" slot="prefix" /> -->
-                </el-input>
-              </el-form-item>
-              <el-form-item>
-                <el-button :loading="loading" size="medium" type="primary" style="width: 100%; padding: 12px 20px; font-size: 16px" @click.native.prevent="handleRegister">
-                  <span v-if="!loading">注 册</span>
-                  <span v-else>注 册 中...</span>
-                </el-button>
-              </el-form-item>
-
-              <div class="text-center text-gray">
-                已有账号，
-                <router-link class="link-type" :to="'/login'">去登录</router-link>
+        <el-container class="h-100">
+          <el-main class="loginCon_right">
+            <div class="loginCon_box">
+              <div class="login_tabs pt-50 mb-28">
+                <span class="el-tabs__item is-active">免费注册</span>
               </div>
+              <el-form ref="registerForm" :model="registerForm" :rules="registerRules" class="login-form">
+                <el-form-item prop="enterpriseName">
+                  <el-input v-model="registerForm.enterpriseName" type="text" auto-complete="off" placeholder="企业名称">
+                    <img slot="prefix" src="@/assets/images/enterpriseIcon.png" />
+                  </el-input>
+                </el-form-item>
+                <el-form-item prop="contact">
+                  <el-input v-model="registerForm.contact" type="text" auto-complete="off" placeholder="联系人姓名">
+                    <img slot="prefix" src="@/assets/images/AccountNumber.png" />
+                  </el-input>
+                </el-form-item>
+                <el-form-item prop="email">
+                  <el-input v-model="registerForm.email" type="text" auto-complete="off" placeholder="邮箱">
+                    <img slot="prefix" src="@/assets/images/emailIcon.png" />
+                  </el-input>
+                </el-form-item>
+                <el-form-item prop="username">
+                  <el-input v-model="registerForm.username" type="text" clearable auto-complete="off" placeholder="手机号">
+                    <img slot="prefix" src="@/assets/images/Mobilephone.png" />
+                  </el-input>
+                </el-form-item>
+                <el-form-item prop="code">
+                  <el-input v-model="registerForm.code" placeholder="验证码" @keyup.enter.native="handleRegister">
+                    <img slot="prefix" src="@/assets/images/Verificationcode.png" />
+                    <a slot="suffix" class="link-type fs-14 mr-10" :class="disabled ? 'disabled' : ''" @click="getSMSVerificationCode">{{ computedVerifBtnText }}{{ count==60?'':count+'S' }}</a>
+                  </el-input>
+                </el-form-item>
+                <el-form-item prop="password">
+                  <el-input v-model="registerForm.password" type="password" auto-complete="off" placeholder="设置密码（8-12位，包含数字和字母）" show-password @keyup.enter.native="handleRegister">
+                    <img slot="prefix" src="@/assets/images/Password.png" />
+                  </el-input>
+                </el-form-item>
+                <el-form-item>
+                  <el-button :loading="loading" size="medium" type="primary" style="width: 100%; padding: 12px 20px; font-size: 16px" @click.native.prevent="handleRegister">
+                    <span v-if="!loading">注 册</span>
+                    <span v-else>注 册 中...</span>
+                  </el-button>
+                </el-form-item>
 
-              <!-- <language></language> -->
-            </el-form>
-          </div>
-        </div>
-        <!-- <foot></foot> -->
+                <div class="text-center text-gray">
+                  已有账号，
+                  <router-link class="link-type" :to="'/login'">去登录</router-link>
+                </div>
+
+                <language />
+              </el-form>
+            </div>
+          </el-main>
+          <el-footer style="height:auto;">
+            <ComponyName />
+            <Copyright />
+          </el-footer>
+        </el-container>
       </el-col>
     </el-row>
 
-    <Vcode :show="isShow" :imgs="[img1, img2]" sliderText="向右拖动滑块完成拼图" :sliderSize="40" @success="onSuccess" @close="onClose" />
+    <Vcode :show="isShow" :imgs="[img1, img2]" slider-text="向右拖动滑块完成拼图" :slider-size="40" @success="onSuccess" @close="onClose" />
   </div>
 </template>
 
 <script>
-// import foot from './foot'
-// import { getCodeImg, register } from '@/api/login'
+import language from '@/components/Language/index.vue'
 import Vcode from 'vue-puzzle-vcode'
-// import leftInfo from './leftInfo'
-// import language from './language'
-// import loginMixin from '@/libs/components/login-mixin'
-// import { sendSMS } from '@/api/system/commons'
-// import rsa from '@/utils/rsa'
+import img1 from '@/assets/images/login_bottomBg.png'
+import img2 from '@/assets/images/reBg.png'
+import { sendSMS, register } from '@/api/system.js'
+import rsa from '@/utils/rsa.js'
+import Copyright from '@/components/Copyright/index.vue'
+import ComponyName from '@/components/ComponyName/index.vue'
 export default {
   name: 'Register',
-  // mixins: [loginMixin],
   components: {
-    // foot,
-    Vcode
-    // leftInfo,
-    // language
+    Vcode,
+    Copyright,
+    ComponyName,
+    language
   },
   data() {
     const equalToPassword = (rule, value, callback) => {
@@ -121,18 +116,10 @@ export default {
       }
     }
     return {
-      codeUrl: '',
+      img1,
+      img2,
       registerForm: {
-        username: '',
-        enterpriseName: '',
-        contact: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        code: '',
-        smsVerificationCode: this.code,
-        uuid: '',
-        phone: ''
+        uuid: 'registry'
       },
       registerRules: {
         username: [
@@ -161,29 +148,26 @@ export default {
         phone: [{ required: true, trigger: 'change', message: '请输入手机号' }]
       },
       loading: false,
-      captchaEnabled: false
+      computedVerifBtnText: '获取验证码',
+      isShow: false,
+      disabled: false,
+      count: 60
     }
   },
-  created() {
-    // this.getCode();
-  },
+  created() {},
   methods: {
     getSMSVerificationCode() {
+      if (this.disabled) {
+        return
+      }
       this.$refs.registerForm.validateField('username', (valid) => {
         if (!valid) {
           this.getVerificationCode()
-          // let rest =
-          // console.log(rest)
-          // .onSuccess((res) => {
-          // 	console.log(res)
-          // 	// let param = {
-          // 	// 	cellPhoneNumber: this.registerForm.username,
-          // 	// 	businessCode: 'registry'
-          // 	// }
-          // 	// sendSMS(param).then((res) => {})
-          // })
         }
       })
+    },
+    getVerificationCode() {
+      this.isShow = true
     },
     onSuccess() {
       this.isShow = false // 通过验证后，需要手动关闭模态框
@@ -191,7 +175,7 @@ export default {
         this.getVerifBtnTextTiming()
       }
       rsa.encrypt(this.registerForm.username).then((res) => {
-        let param = {
+        const param = {
           cellPhoneNumber: res.encryptContext,
           headerParam: res.headerParam,
           businessCode: 'registry'
@@ -199,7 +183,10 @@ export default {
         sendSMS(param).then((result) => {
           if (result.code == 120001) {
             setTimeout(() => {
-              this.$router.push({ path: '/login', query: { cellPhoneNumber: this.registerForm.username } })
+              this.$router.push({
+                path: '/login',
+                query: { cellPhoneNumber: this.registerForm.username }
+              })
             }, 200)
             return
           }
@@ -207,25 +194,18 @@ export default {
         })
       })
     },
-    getCode() {
-      getCodeImg().then((res) => {
-        this.captchaEnabled = res.captchaEnabled === undefined ? true : res.captchaEnabled
-        if (this.captchaEnabled) {
-          this.codeUrl = 'data:image/gif;base64,' + res.img
-          this.registerForm.uuid = res.uuid
-        }
-      })
+    onClose() {
+      this.isShow = false
     },
     handleRegister() {
       this.$refs.registerForm.validate((valid) => {
         if (valid) {
           this.loading = true
           this.registerForm.cellPhoneNumber = this.registerForm.username
-          this.registerForm.uuid = 'registry'
           register(this.registerForm)
             .then((res) => {
               const username = this.registerForm.username
-              this.$alert("<font color='red'>恭喜你，您的账号 " + username + ' 注册成功！</font>', '系统提示', {
+              this.$confirm("<font color='red'>恭喜你，您的账号 " + username + ' 注册成功！</font>', '系统提示', {
                 dangerouslyUseHTMLString: true,
                 type: 'success'
               })
@@ -236,12 +216,23 @@ export default {
             })
             .catch(() => {
               this.loading = false
-              if (this.captchaEnabled) {
-                this.getCode()
-              }
             })
         }
       })
+    },
+    getVerifBtnTextTiming() {
+      if (this.count == 0) {
+        this.disabled = false
+        this.computedVerifBtnText = '获取验证码'
+        this.count = 60
+        return
+      }
+      setTimeout(() => {
+        this.disabled = true
+        this.computedVerifBtnText = '重新获取'
+        this.count--
+        this.getVerifBtnTextTiming()
+      }, 1000)
     }
   }
 }
@@ -406,5 +397,8 @@ export default {
 }
 .text-gray {
   color: #aaa;
+}
+.disabled {
+  color: #bdbfc7;
 }
 </style>

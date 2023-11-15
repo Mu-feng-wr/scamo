@@ -86,7 +86,7 @@
                     <el-form-item prop="vcode">
                       <el-input v-model="loginForm.vcode" placeholder="验证码" @keyup.enter.native="handleLogin">
                         <img slot="prefix" src="@/assets/images/Verificationcode.png" />
-                        <a slot="suffix" class="link-type fs-14" :class="disabled ? 'disabled' : ''" @click="getPhoneVerificationCode">{{ computedVerifBtnText }}</a>
+                        <a slot="suffix" class="link-type fs-14 mr-10" :class="disabled ? 'disabled' : ''" @click="getPhoneVerificationCode">{{ computedVerifBtnText }}</a>
                       </el-input>
                     </el-form-item>
 
@@ -217,7 +217,7 @@ export default {
                 path: '/'
               })
             })
-            .finally(() => {
+            .catch(() => {
               this.loading = false
             })
         }
