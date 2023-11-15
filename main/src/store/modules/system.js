@@ -1,9 +1,10 @@
-import { login, getRouters } from '@/api/system.js'
+import { login, getRouters, getUserInfo } from '@/api/system.js'
 import { setToken } from '@/utils/auth'
 const getDefaultState = () => {
   return {
     token: '',
-    menuList: []
+    menuList: [],
+    userInfo: {}
   }
 }
 
@@ -15,6 +16,9 @@ const mutations = {
   },
   SET_MENULIST: (state, menulist) => {
     state.menuList = menulist
+  },
+  SET_USERINFO: (state, userInfo) => {
+    state.userInfo = userInfo
   }
 }
 
@@ -32,6 +36,14 @@ const actions = {
     return new Promise((resolve, reject) => {
       getRouters().then(res => {
         commit('SET_MENULIST', res.data)
+        resolve(res.data)
+      })
+    })
+  },
+  getInfo({ commit }) {
+    return new Promise((resolve, reject) => {
+      getUserInfo().then(res => {
+        commit('SET_USERINFO', res.data)
         resolve()
       })
     })

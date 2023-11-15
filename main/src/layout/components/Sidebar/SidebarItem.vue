@@ -1,6 +1,6 @@
 <template>
   <div v-if="!item.hidden">
-    <template v-if="!item.children||item.children.length==0">
+    <!-- <template v-if="!item.children||item.children.length==0">
       <app-link :to="'/unification/unificationPage'">
         <el-menu-item :index="item.name">{{ item.meta.title }}</el-menu-item>
       </app-link>
@@ -9,7 +9,7 @@
     <el-submenu v-else ref="subMenu" :index="item.name" popper-append-to-body>
       <template slot="title">{{ item.meta.title }}</template>
       <sidebar-item v-for="child in item.children" :key="child.name" :is-nest="true" :item="child" base-path="/unification/unificationPage" class="nest-menu" />
-    </el-submenu>
+    </el-submenu>-->
   </div>
 </template>
 
