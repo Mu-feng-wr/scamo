@@ -1,5 +1,12 @@
 
 /* 全局通用样式  */ 
+
+.h-100{
+	height: 100% !important;
+}
+.w-100{
+	width: 100% !important;
+}
 /*边距*/
 @for $i from 0 through 400 {
 	.margin-#{$i}, .m-#{$i} {

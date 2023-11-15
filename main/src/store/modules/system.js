@@ -1,4 +1,4 @@
-import { login, getRouters } from "@/api/system.js"
+import { login, getRouters } from '@/api/system.js'
 import { setToken } from '@/utils/auth'
 const getDefaultState = () => {
   return {
@@ -19,7 +19,7 @@ const mutations = {
 }
 
 const actions = {
-  loginHandler ({ commit }, formData) {
+  loginHandler({ commit }, formData) {
     return new Promise((resolve, reject) => {
       login(formData).then(res => {
         commit('SET_TOKEN', res.data.access_token)
@@ -28,7 +28,7 @@ const actions = {
       })
     })
   },
-  getMenulist ({ commit }) {
+  getMenulist({ commit }) {
     return new Promise((resolve, reject) => {
       getRouters().then(res => {
         commit('SET_MENULIST', res.data)

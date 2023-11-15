@@ -8,7 +8,7 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/todo'] // 白名单
+const whiteList = ['/todo', '/todo/detail'] // 白名单
 
 router.beforeEach(async(to, from, next) => {
   NProgress.start()

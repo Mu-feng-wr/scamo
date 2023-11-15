@@ -5,7 +5,10 @@
 export default {
   methods: {
     to() {
-      console.log(window.$wujie.location)
+      // console.log(window.$wujie)
+      this.$router.push({
+        path: '/todo/detail'
+      })
     }
   }
 }

@@ -11,7 +11,11 @@ export const constantRoutes = [
   },
   { path: '*', redirect: '/404', hidden: true },
   {
-    path:'/todo',
+    path: '/todo',
+    component: () => import('@/views/todo/index.vue')
+  },
+  {
+    path: '/todo',
     component: () => import('@/views/todo/index.vue')
   }
 ]

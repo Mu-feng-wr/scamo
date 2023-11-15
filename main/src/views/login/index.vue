@@ -24,128 +24,165 @@
       </el-col>
 
       <el-col :span="8">
-        <div class="loginCon_right">
-          <div class="scanDiv" @click="userLogin = !userLogin">
-            <img v-if="userLogin" :src="require('@/assets/images/img/Handover.png')" />
-            <img v-else :src="require('@/assets/images/img/Userover.png')" />
-          </div>
-          <div class="text-right" style="padding-bottom: 26px">
-            <el-tag v-if="userLogin" @click="userLogin = !userLogin">扫码登录更方便</el-tag>
-            <el-tag v-else @click="userLogin = !userLogin">账号密码登录</el-tag>
-            <img :src="require('@/assets/images/img/triangle.png')" />
-          </div>
-
-          <div class="loginCon_box">
-            <div v-if="userLogin">
-              <div class="login_tabs mb-28">
-                <span class="el-tabs__item" :class="curent=='password'?'is-active':''" @click="curent='password'">密码登录</span>
-                <span class="el-tabs__item pl-20" :class="curent=='code'?'is-active':''" @click="curent='code'">验证码登录</span>
-              </div>
-              <div v-if="curent == 'password'">
-                <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
-                  <el-form-item prop="username">
-                    <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号/手机号/邮箱" clearable>
-                      <img slot="prefix" src="@/assets/images/img/AccountNumber.png" />
-                    </el-input>
-                  </el-form-item>
-                  <el-form-item prop="password">
-                    <el-input v-model="loginForm.password" type="password" auto-complete="off" placeholder="密码" show-password clearable @keyup.enter.native="handleLogin">
-                      <img slot="prefix" src="@/assets/images/img/Password.png" />
-                      <router-link slot="suffix" class="link-type forget" :to="'/forget'">忘记密码？</router-link>
-                    </el-input>
-                  </el-form-item>
-                  <el-form-item v-if="captchaEnabled" prop="code">
-                    <el-input v-model="loginForm.code" auto-complete="off" placeholder="验证码" style="width: 63%" @keyup.enter.native="handleLogin">
-                      <svg-icon slot="prefix" icon-class="validCode" class="el-input__icon input-icon" />
-                    </el-input>
-                    <div class="login-code">
-                      <img :src="codeUrl" class="login-code-img" @click="getCode" />
-                    </div>
-                  </el-form-item>
-
-                  <div class="flex justify-between">
-                    <el-checkbox v-model="loginForm.rememberMe" style="margin: 0px 0px 25px 0px">记住密码</el-checkbox>
-                  </div>
-
-                  <el-form-item style="width: 100%">
-                    <el-button :loading="loading" size="medium" type="primary" style="width: 100%; padding: 12px 20px; font-size: 16px" @click.native.prevent="handleLogin">
-                      <span v-if="!loading">登 录</span>
-                      <span v-else>登 录 中...</span>
-                    </el-button>
-                  </el-form-item>
-                </el-form>
-              </div>
-              <div v-if="curent == 'code'">
-                <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
-                  <el-form-item prop="phone">
-                    <el-input v-model="loginForm.phone" type="text" auto-complete="off" placeholder="手机号" clearable>
-                      <img slot="prefix" :src="require('@/assets/images/img/Mobilephone.png')" />
-                    </el-input>
-                  </el-form-item>
-                  <el-form-item prop="vcode">
-                    <el-input v-model="loginForm.vcode" placeholder="验证码" @keyup.enter.native="handleLogin">
-                      <img slot="prefix" src="@/assets/images/img/Verificationcode.png" />
-                      <a slot="suffix" class="vCode" :class="disabled ? 'disabled' : ''" @click="getVerificationCode">{{ computedVerifBtnText }}</a>
-                    </el-input>
-                  </el-form-item>
-
-                  <el-form-item style="width: 100%">
-                    <el-button :loading="loading" size="medium" type="primary" style="width: 100%; padding: 12px 20px; font-size: 16px" @click.native.prevent="handleLogin">
-                      <span v-if="!loading">登 录</span>
-                      <span v-else>登 录 中...</span>
-                    </el-button>
-                  </el-form-item>
-                </el-form>
-              </div>
+        <el-container class="h-100">
+          <el-main class="loginCon_right">
+            <div class="scanDiv" @click="userLogin = !userLogin">
+              <img v-if="userLogin" :src="require('@/assets/images/img/Handover.png')" />
+              <img v-else :src="require('@/assets/images/img/Userover.png')" />
+            </div>
+            <div class="text-right" style="padding-bottom: 26px">
+              <el-tag v-if="userLogin" @click="userLogin = !userLogin">扫码登录更方便</el-tag>
+              <el-tag v-else @click="userLogin = !userLogin">账号密码登录</el-tag>
+              <img :src="require('@/assets/images/img/triangle.png')" />
             </div>
 
-            <div v-else>
-              <div class="login_tabs">
-                <span class="el-tabs__item is-active">小程序扫码登录</span>
-              </div>
-              <div class="text-center">
-                <div class="ewmBox">
-                  <img :src="require('@/assets/images/img/ewm.jpg')" />
+            <div class="loginCon_box">
+              <div v-if="userLogin">
+                <div class="login_tabs mb-28">
+                  <span class="el-tabs__item" :class="curent=='password'?'is-active':''" @click="curent='password'">密码登录</span>
+                  <span class="el-tabs__item pl-20" :class="curent=='code'?'is-active':''" @click="curent='code'">验证码登录</span>
                 </div>
-                <div class="smallTitle">使用小程序扫码进行登录</div>
-              </div>
-            </div>
+                <div v-if="curent == 'password'">
+                  <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
+                    <el-form-item prop="username">
+                      <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号/手机号/邮箱" clearable>
+                        <img slot="prefix" src="@/assets/images/img/AccountNumber.png" />
+                      </el-input>
+                    </el-form-item>
+                    <el-form-item prop="password">
+                      <el-input v-model="loginForm.password" type="password" auto-complete="off" placeholder="密码" show-password clearable @keyup.enter.native="handleLogin">
+                        <img slot="prefix" src="@/assets/images/img/Password.png" />
+                        <router-link slot="suffix" class="link-type forget" :to="'/forget'">忘记密码？</router-link>
+                      </el-input>
+                    </el-form-item>
+                    <el-form-item v-if="captchaEnabled" prop="code">
+                      <el-input v-model="loginForm.code" auto-complete="off" placeholder="验证码" style="width: 63%" @keyup.enter.native="handleLogin">
+                        <svg-icon slot="prefix" icon-class="validCode" class="validCode_icon" />
+                      </el-input>
+                      <div class="login-code">
+                        <img :src="codeUrl" class="login-code-img" @click="getCode" />
+                      </div>
+                    </el-form-item>
 
-            <div class="text-center text-gray">
-              没有账号，
-              <!-- <router-link class="link-type" :to="'/register'">免费注册</router-link> -->
+                    <div class="flex justify-between">
+                      <el-checkbox v-model="loginForm.rememberMe" style="margin: 0px 0px 25px 0px">记住密码</el-checkbox>
+                    </div>
+
+                    <el-form-item style="width: 100%">
+                      <el-button :loading="loading" size="medium" type="primary" style="width: 100%; padding: 12px 20px; font-size: 16px" @click.native.prevent="handleLogin">
+                        <span v-if="!loading">登 录</span>
+                        <span v-else>登 录 中...</span>
+                      </el-button>
+                    </el-form-item>
+                  </el-form>
+                </div>
+                <div v-if="curent == 'code'">
+                  <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
+                    <el-form-item prop="phone">
+                      <el-input v-model="loginForm.phone" type="text" auto-complete="off" placeholder="手机号" clearable>
+                        <img slot="prefix" :src="require('@/assets/images/img/Mobilephone.png')" />
+                      </el-input>
+                    </el-form-item>
+                    <el-form-item prop="vcode">
+                      <el-input v-model="loginForm.vcode" placeholder="验证码" @keyup.enter.native="handleLogin">
+                        <img slot="prefix" src="@/assets/images/img/Verificationcode.png" />
+                        <a slot="suffix" class="link-type fs-14" :class="disabled ? 'disabled' : ''" @click="getPhoneVerificationCode">{{ computedVerifBtnText }}</a>
+                      </el-input>
+                    </el-form-item>
+
+                    <el-form-item style="width: 100%">
+                      <el-button :loading="loading" :disabled="disabled" size="medium" type="primary" style="width: 100%; padding: 12px 20px; font-size: 16px" @click.native.prevent="handleLogin">
+                        <span v-if="!loading">登 录</span>
+                        <span v-else>登 录 中...</span>
+                      </el-button>
+                    </el-form-item>
+                  </el-form>
+                </div>
+              </div>
+
+              <div v-else>
+                <div class="login_tabs">
+                  <span class="el-tabs__item is-active">小程序扫码登录</span>
+                </div>
+                <div class="text-center">
+                  <div class="ewmBox">
+                    <img :src="require('@/assets/images/img/ewm.jpg')" />
+                  </div>
+                  <h5 class="smallTitle">使用小程序扫码进行登录</h5>
+                </div>
+              </div>
+
+              <div class="text-center text-gray fs-14">
+                没有账号，
+                <router-link class="link-type fs-14" :to="'/register'">免费注册</router-link>
+              </div>
+              <language />
             </div>
-            <!-- <language></language> -->
-          </div>
-        </div>
-        <!-- <foot></foot> -->
+          </el-main>
+          <el-footer style="height:auto;">
+            <ComponyName />
+            <Copyright />
+          </el-footer>
+        </el-container>
       </el-col>
     </el-row>
 
-    <!-- <Vcode :show="isShow" :imgs="[img1, img2]" sliderText="向右拖动滑块完成拼图" :sliderSize="40" @success="onSuccess" @close="onClose" /> -->
+    <Vcode :show="isShow" :imgs="[img1, img2]" :slider-size="40" slider-text="向右拖动滑块完成拼图" @success="onSuccess" @close="onClose" />
   </div>
 </template>
 
 <script>
 import { getVerificationCode } from '@/api/system.js'
+import language from '@/components/Language/index.vue'
+import Copyright from '@/components/Copyright/index.vue'
+import ComponyName from '@/components/ComponyName/index.vue'
+import Vcode from 'vue-puzzle-vcode'
+import img1 from '@/assets/images/img/login_bottomBg.png'
+import img2 from '@/assets/images/img/reBg.png'
 export default {
+  components: {
+    language,
+    Copyright,
+    ComponyName,
+    Vcode
+  },
   data() {
     return {
+      img1,
+      img2,
       userLogin: true,
       curent: 'password',
       activeName: '',
       isShow: false,
       loginForm: {
-        username: '15888888888',
-        password: 'admin123'
+        username: '',
+        password: '',
+        rememberMe: false
       },
-      loginRules: {},
+      loginRules: {
+        username: [{ required: true, trigger: 'change', message: '请输入您的账号/手机号/邮箱' }],
+        password: [{ required: true, trigger: 'change', message: '请输入您的密码' }],
+        code: [{ required: true, trigger: 'change', message: '请输入验证码' }],
+        phone: [{ required: true, trigger: 'blur', message: '请输入手机号' }],
+        vcode: [{ required: true, trigger: 'blur', message: '请输入验证码' }]
+      },
       captchaEnabled: true,
       codeUrl: '',
-      loading: false
+      loading: false,
+      disabled: false,
+      computedVerifBtnText: '获取验证码'
     }
   },
   created() {
+    let loginInfo = window.localStorage.getItem('loginInfo')
+    if (loginInfo) {
+      loginInfo = JSON.parse(loginInfo)
+      this.loginForm = {
+        username: loginInfo.username,
+        password: loginInfo.password,
+        rememberMe: loginInfo.rememberMe
+      }
+    }
     this.getCode()
   },
   methods: {
@@ -158,11 +195,42 @@ export default {
     },
     // 账号密码登录
     handleLogin() {
-      this.$store.dispatch('system/loginHandler', this.loginForm).then((res) => {
-        this.$router.push({
-          path: '/'
-        })
+      this.$refs.loginForm.validate((valid) => {
+        if (valid) {
+          this.loading = true
+          this.$store
+            .dispatch('system/loginHandler', this.loginForm)
+            .then((res) => {
+              this.disabled = true
+              if (this.loginForm.rememberMe) {
+                const loginInfo = {
+                  username: this.loginForm.username,
+                  password: this.loginForm.password,
+                  rememberMe: this.loginForm.rememberMe
+                }
+                window.localStorage.setItem('loginInfo', JSON.stringify(loginInfo))
+              } else {
+                window.localStorage.setItem('loginInfo', '')
+              }
+
+              this.$router.push({
+                path: '/'
+              })
+            })
+            .finally(() => {
+              this.loading = false
+            })
+        }
       })
+    },
+    getPhoneVerificationCode() {
+      this.isShow = true
+    },
+    onSuccess() {
+      this.isShow = false
+    },
+    onClose() {
+      this.isShow = false
     }
   }
 }
@@ -226,7 +294,6 @@ export default {
       }
     }
     .loginCon_right {
-      height: calc(100% - 70px);
       position: relative;
       padding: 20px 50px;
       .scanDiv {
@@ -275,9 +342,57 @@ export default {
             margin-left: 10px;
             margin-top: 4px;
           }
+          .forget {
+            position: relative;
+            padding-left: 10px;
+            float: right;
+            margin-left: 10px;
+
+            &::before {
+              position: absolute;
+              top: 50%;
+              left: 0;
+              transform: translateY(-50%);
+              content: '';
+              display: inline-block;
+              height: 12px;
+              width: 1px;
+              background-color: #e9eaec;
+            }
+          }
+          .validCode_icon {
+            height: 36px;
+            width: 18px;
+          }
+          ::v-deep .el-button--primary {
+            background-color: rgb(35, 109, 255);
+          }
         }
+      }
+      .ewmBox {
+        margin: 28px auto 0;
+        width: 244px;
+        height: 244px;
+        background-repeat: no-repeat;
+        background-image: url('~@/assets/images/img/rectangle.png');
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .smallTitle {
+        font-size: 14px;
+        font-family: PingFang SC-Semibold, PingFang SC;
+        font-weight: 600;
+        color: #7a7f8e;
       }
     }
   }
+}
+.link-type {
+  font-size: 16px;
+  color: #236dff;
+}
+.text-gray {
+  color: #aaa;
 }
 </style>
