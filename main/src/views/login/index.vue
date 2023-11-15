@@ -4,7 +4,7 @@
       <el-col :span="16">
         <div class="loginCon_left">
           <div class="logo-box">
-            <img :src="require('@/assets/images/img/logo.png')" />
+            <img :src="require('@/assets/images/logo.png')" />
             <div class="pt-8 pl-8">
               <div class="login-title">云蟾数字资产管理中台</div>
               <div class="subtitle">Smart Asset Cloud Middle Platform</div>
@@ -17,7 +17,7 @@
               <br />更灵活、更自治、更经济的云蟾SAC五星级服务
             </div>
             <div class="frameBox">
-              <img v-for="(item,i) in 5" :key="i" :src="require('@/assets/images/img/Frame' + (i + 1) + '.png')" />
+              <img v-for="(item,i) in 5" :key="i" :src="require('@/assets/images/Frame' + (i + 1) + '.png')" />
             </div>
           </div>
         </div>
@@ -27,13 +27,13 @@
         <el-container class="h-100">
           <el-main class="loginCon_right">
             <div class="scanDiv" @click="userLogin = !userLogin">
-              <img v-if="userLogin" :src="require('@/assets/images/img/Handover.png')" />
-              <img v-else :src="require('@/assets/images/img/Userover.png')" />
+              <img v-if="userLogin" :src="require('@/assets/images/Handover.png')" />
+              <img v-else :src="require('@/assets/images/Userover.png')" />
             </div>
             <div class="text-right" style="padding-bottom: 26px">
               <el-tag v-if="userLogin" @click="userLogin = !userLogin">扫码登录更方便</el-tag>
               <el-tag v-else @click="userLogin = !userLogin">账号密码登录</el-tag>
-              <img :src="require('@/assets/images/img/triangle.png')" />
+              <img :src="require('@/assets/images/triangle.png')" />
             </div>
 
             <div class="loginCon_box">
@@ -46,12 +46,12 @@
                   <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
                     <el-form-item prop="username">
                       <el-input v-model="loginForm.username" type="text" auto-complete="off" placeholder="账号/手机号/邮箱" clearable>
-                        <img slot="prefix" src="@/assets/images/img/AccountNumber.png" />
+                        <img slot="prefix" src="@/assets/images/AccountNumber.png" />
                       </el-input>
                     </el-form-item>
                     <el-form-item prop="password">
                       <el-input v-model="loginForm.password" type="password" auto-complete="off" placeholder="密码" show-password clearable @keyup.enter.native="handleLogin">
-                        <img slot="prefix" src="@/assets/images/img/Password.png" />
+                        <img slot="prefix" src="@/assets/images/Password.png" />
                         <router-link slot="suffix" class="link-type forget" :to="'/forget'">忘记密码？</router-link>
                       </el-input>
                     </el-form-item>
@@ -80,12 +80,12 @@
                   <el-form ref="loginForm" :model="loginForm" :rules="loginRules" class="login-form">
                     <el-form-item prop="phone">
                       <el-input v-model="loginForm.phone" type="text" auto-complete="off" placeholder="手机号" clearable>
-                        <img slot="prefix" :src="require('@/assets/images/img/Mobilephone.png')" />
+                        <img slot="prefix" :src="require('@/assets/images/Mobilephone.png')" />
                       </el-input>
                     </el-form-item>
                     <el-form-item prop="vcode">
                       <el-input v-model="loginForm.vcode" placeholder="验证码" @keyup.enter.native="handleLogin">
-                        <img slot="prefix" src="@/assets/images/img/Verificationcode.png" />
+                        <img slot="prefix" src="@/assets/images/Verificationcode.png" />
                         <a slot="suffix" class="link-type fs-14" :class="disabled ? 'disabled' : ''" @click="getPhoneVerificationCode">{{ computedVerifBtnText }}</a>
                       </el-input>
                     </el-form-item>
@@ -106,7 +106,7 @@
                 </div>
                 <div class="text-center">
                   <div class="ewmBox">
-                    <img :src="require('@/assets/images/img/ewm.jpg')" />
+                    <img :src="require('@/assets/images/ewm.jpg')" />
                   </div>
                   <h5 class="smallTitle">使用小程序扫码进行登录</h5>
                 </div>
@@ -137,8 +137,8 @@ import language from '@/components/Language/index.vue'
 import Copyright from '@/components/Copyright/index.vue'
 import ComponyName from '@/components/ComponyName/index.vue'
 import Vcode from 'vue-puzzle-vcode'
-import img1 from '@/assets/images/img/login_bottomBg.png'
-import img2 from '@/assets/images/img/reBg.png'
+import img1 from '@/assets/images/login_bottomBg.png'
+import img2 from '@/assets/images/reBg.png'
 export default {
   components: {
     language,
@@ -252,7 +252,7 @@ export default {
       background-size: 100%;
       background-position: center bottom;
       background-repeat: no-repeat;
-      background-image: url('~@/assets/images/img/login_bottomBg.png');
+      background-image: url('~@/assets/images/login_bottomBg.png');
       .logo-box {
         padding: 40px;
         display: flex;
@@ -288,7 +288,7 @@ export default {
         .frameBox {
           width: 444px;
           height: 222px;
-          background-image: url('~@/assets/images/img/10001.png');
+          background-image: url('~@/assets/images/10001.png');
           margin: auto;
         }
       }
@@ -374,7 +374,7 @@ export default {
         width: 244px;
         height: 244px;
         background-repeat: no-repeat;
-        background-image: url('~@/assets/images/img/rectangle.png');
+        background-image: url('~@/assets/images/rectangle.png');
         display: flex;
         justify-content: center;
         align-items: center;
