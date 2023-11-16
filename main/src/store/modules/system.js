@@ -1,10 +1,12 @@
-import { login, getRouters, getUserInfo } from '@/api/system.js'
+import { login, getRouters } from '@/api/system.js'
 import { setToken } from '@/utils/auth'
+import router from '../../router'
+import Layout from '@/layout'
+import unificationPage from '@/views/unificationPage/index.vue'
 const getDefaultState = () => {
   return {
     token: '',
-    menuList: [],
-    userInfo: {}
+    menuList: []
   }
 }
 
@@ -16,9 +18,6 @@ const mutations = {
   },
   SET_MENULIST: (state, menulist) => {
     state.menuList = menulist
-  },
-  SET_USERINFO: (state, userInfo) => {
-    state.userInfo = userInfo
   }
 }
 
@@ -36,19 +35,35 @@ const actions = {
     return new Promise((resolve, reject) => {
       getRouters().then(res => {
         commit('SET_MENULIST', res.data)
-        resolve(res.data)
-      })
-    })
-  },
-  getInfo({ commit }) {
-    return new Promise((resolve, reject) => {
-      getUserInfo().then(res => {
-        commit('SET_USERINFO', res.data)
+        const routerList = menuRecursion( res.data)
+        router.addRoutes(routerList)
         resolve()
       })
     })
   }
 }
+
+
+// 递归处理菜单
+const menuRecursion = function (list) {
+  let menuRouter = []
+  menuRouter = list.map(item => {
+    const obj = {
+      path: item.path,
+      name: item.name,
+      meta: item.meta
+    }
+    if (item.children && item.children.length > 0) {
+      obj.children = menuRecursion(item.children)
+      obj.component = Layout
+    } else {
+      obj.component = unificationPage
+    }
+    return obj
+  })
+  return menuRouter
+}
+
 
 export default {
   namespaced: true,
@@ -56,3 +71,4 @@ export default {
   mutations,
   actions
 }
+

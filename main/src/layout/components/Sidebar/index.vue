@@ -3,7 +3,9 @@
     <div class="logo">
       <img :src="require('@/assets/images/logo.png')" alt />
     </div>
-    <div class="memu"></div>
+    <div class="memu">
+      <SidebarItem />
+    </div>
     <div class="avatar-container text-center">
       <el-tag type="success" size="mini" style="margin-bottom: 5px">试用版</el-tag>
       <el-dropdown class="hover-effect" trigger="hover">
@@ -33,13 +35,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// import Logo from './Logo'
-// import SidebarItem from './SidebarItem'
+import SidebarItem from './SidebarItem'
 // import variables from '@/styles/variables.scss'
 import avatarImg from '@/assets/images/Headimage.png'
 
 export default {
-  // components: { SidebarItem, Logo },
+  components: { SidebarItem },
   data() {
     return {
       avatarImg,
@@ -48,10 +49,10 @@ export default {
   },
   computed: {
     ...mapGetters(['sidebar']),
-    routes() {
-      console.log(this.$store.getters.menuList)
-      return this.$store.getters.menuList
-    },
+    // routes() {
+    //   console.log(this.$store.getters.menuList)
+    //   return this.$store.getters.menuList
+    // },
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
@@ -60,9 +61,9 @@ export default {
       }
       return path
     },
-    variables() {
-      return variables
-    },
+    // variables() {
+    //   return variables
+    // },
     isCollapse() {
       return true
     }
@@ -77,10 +78,12 @@ export default {
   justify-content: center;
   align-items: center;
 }
+
 .memu {
-  height: calc(100% - 210px);
-  margin-bottom: 70px;
+  height: calc(100% - 190px);
+  margin-bottom: 50px;
 }
+
 .user-avatar {
   width: 36px;
   height: 36px;

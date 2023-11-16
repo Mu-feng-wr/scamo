@@ -22,11 +22,9 @@ export default {
   },
   computed: {
     isExternal() {
-      console.log(isExternal(this.iconClass))
       return isExternal(this.iconClass)
     },
     iconName() {
-      console.log(`#icon-${this.iconClass}`)
       return `#icon-${this.iconClass}`
     },
     svgClass() {
