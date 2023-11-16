@@ -10,9 +10,7 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login', '/register'] // 白名单
 
-
-
-router.beforeEach(async (to, from, next) => {
+router.beforeEach(async(to, from, next) => {
   NProgress.start()
   document.title = getPageTitle(to.meta.title)
   const hasToken = getToken()
@@ -31,12 +29,10 @@ router.beforeEach(async (to, from, next) => {
         if (!menuList || menuList.length <= 0) {
           // 请求并获取菜单
           await store.dispatch('system/getMenulist')
-          next({ path: to.redirectedFrom})
+          next({ path: to.redirectedFrom })
         } else {
           next()
         }
-
-
       } catch (err) {
         console.log(err)
       }

@@ -7,9 +7,13 @@ export default {
   name: 'FlowModel',
   data() {
     return {
-      url: 'http://192.168.10.10:9001',
+      url: '',
       name: 'crud'
     }
+  },
+  created() {
+    console.log(this.$route)
+    this.url = 'http://192.168.10.10:9001/#/' + this.$route.path
   }
 }
 </script>

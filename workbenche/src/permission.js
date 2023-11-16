@@ -8,7 +8,7 @@ import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/todo', '/todo/detail'] // 白名单
+const whiteList = ['/workbenche/todo', '/workbenche/done'] // 白名单
 
 router.beforeEach(async(to, from, next) => {
   NProgress.start()
@@ -27,7 +27,7 @@ router.beforeEach(async(to, from, next) => {
         next()
       } else {
         try {
-          await store.dispatch('system/getMenulist')
+          // await store.dispatch('system/getMenulist')
           next()
         } catch (error) {
           // await store.dispatch('user/resetToken')
@@ -41,7 +41,8 @@ router.beforeEach(async(to, from, next) => {
     if (whiteList.indexOf(to.path) !== -1) {
       next()
     } else {
-      next(`/todo`)
+      console.log(window.$wujie.location.hash.slice(2))
+      next(window.$wujie.location.hash.slice(2))
       NProgress.done()
     }
   }

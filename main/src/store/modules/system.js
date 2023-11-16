@@ -35,7 +35,7 @@ const actions = {
     return new Promise((resolve, reject) => {
       getRouters().then(res => {
         commit('SET_MENULIST', res.data)
-        const routerList = menuRecursion( res.data)
+        const routerList = menuRecursion(res.data)
         router.addRoutes(routerList)
         resolve()
       })
@@ -43,9 +43,8 @@ const actions = {
   }
 }
 
-
 // 递归处理菜单
-const menuRecursion = function (list) {
+const menuRecursion = function(list) {
   let menuRouter = []
   menuRouter = list.map(item => {
     const obj = {
@@ -63,7 +62,6 @@ const menuRecursion = function (list) {
   })
   return menuRouter
 }
-
 
 export default {
   namespaced: true,
