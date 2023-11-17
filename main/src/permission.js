@@ -31,6 +31,15 @@ router.beforeEach(async(to, from, next) => {
           await store.dispatch('system/getMenulist')
           next({ path: to.redirectedFrom })
         } else {
+          var urlList = store.getters.cachedViews
+          const index = urlList.findIndex((item) => item.name == to.path)
+          if (index == -1) {
+            urlList.push({
+              url: 'http://192.168.10.10:9001/#' + to.path,
+              name: to.path
+            })
+          }
+          store.commit('system/SET_CACHEVIEWS', urlList)
           next()
         }
       } catch (err) {

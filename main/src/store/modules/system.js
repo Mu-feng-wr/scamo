@@ -2,11 +2,11 @@ import { login, getRouters } from '@/api/system.js'
 import { setToken } from '@/utils/auth'
 import router from '../../router'
 import Layout from '@/layout'
-import unificationPage from '@/views/unificationPage/index.vue'
 const getDefaultState = () => {
   return {
     token: '',
-    menuList: []
+    menuList: [],
+    cachedViews: []
   }
 }
 
@@ -18,6 +18,9 @@ const mutations = {
   },
   SET_MENULIST: (state, menulist) => {
     state.menuList = menulist
+  },
+  SET_CACHEVIEWS: (state, cachedViews) => {
+    state.cachedViews = cachedViews
   }
 }
 
@@ -46,17 +49,15 @@ const actions = {
 // 递归处理菜单
 const menuRecursion = function(list) {
   let menuRouter = []
-  menuRouter = list.map(item => {
+  menuRouter = list.map((item, i) => {
     const obj = {
       path: item.path,
-      name: item.name,
+      name: i == 0 ? 'UnificationPage' : 'UnificationPageDetail',
       meta: item.meta
     }
     if (item.children && item.children.length > 0) {
       obj.children = menuRecursion(item.children)
       obj.component = Layout
-    } else {
-      obj.component = unificationPage
     }
     return obj
   })

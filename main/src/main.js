@@ -21,7 +21,8 @@ const { setupApp } = WujieVue
 setupApp({
   name: 'authorization',
   url: hostMap('//localhost:9001/'),
-  exec: true
+  exec: true,
+  alive: true
 })
 
 Vue.use(ElementUI)

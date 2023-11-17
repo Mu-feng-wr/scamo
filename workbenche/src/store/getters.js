@@ -1,4 +1,4 @@
 const getters = {
-  menuList: state => state.system.menuList
+  userInfo: state => state.user.userInfo
 }
 export default getters

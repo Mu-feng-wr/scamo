@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="logo">
+    <div class="logo" @click="toHome">
       <img :src="require('@/assets/images/logo.png')" alt />
     </div>
     <div class="memu">
@@ -67,6 +67,11 @@ export default {
     isCollapse() {
       return true
     }
+  },
+  methods: {
+    toHome() {
+      this.$router.push('/dashboard')
+    }
   }
 }
 </script>
@@ -77,6 +82,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
 .memu {

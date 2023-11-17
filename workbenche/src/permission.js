@@ -1,38 +1,35 @@
 import router from './router'
 import store from './store'
-import { Message } from 'element-ui'
 import NProgress from 'nprogress' // progress bar
 import 'nprogress/nprogress.css' // progress bar style
-import { getDupToken } from '@/utils/auth' // get token from cookie
+import { getToken } from '@/utils/auth' // get token from cookie
 import getPageTitle from '@/utils/get-page-title'
 
 NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
-const whiteList = ['/workbenche/todo', '/workbenche/done'] // 白名单
+const whiteList = [] // 白名单
 
 router.beforeEach(async(to, from, next) => {
   NProgress.start()
 
   document.title = getPageTitle(to.meta.title)
 
-  const hasToken = getDupToken()
-
+  const hasToken = getToken()
   if (hasToken) {
-    if (to.path === '/todo') {
-      next({ path: '/' })
+    if (to.path === '/') {
+      next({ path: '/workbenche/todo' })
       NProgress.done()
     } else {
-      const hasGetUserInfo = store.getters.name
-      if (hasGetUserInfo) {
+      const hasGetUserInfo = store.getters.userInfo
+      if (hasGetUserInfo.userId) {
         next()
       } else {
         try {
-          // await store.dispatch('system/getMenulist')
-          next()
+          const userInfo = window.$wujie.props.userInfo
+          store.commit('user/SET_USERINFO', userInfo)
+          next({ path: to.redirectedFrom })
         } catch (error) {
-          // await store.dispatch('user/resetToken')
-          Message.error(error || 'Has Error')
-          next(`/login`)
+          next(`/workbenche/todo`)
           NProgress.done()
         }
       }
@@ -41,8 +38,7 @@ router.beforeEach(async(to, from, next) => {
     if (whiteList.indexOf(to.path) !== -1) {
       next()
     } else {
-      console.log(window.$wujie.location.hash.slice(2))
-      next(window.$wujie.location.hash.slice(2))
+      next({ path: '/workbenche/todo' })
       NProgress.done()
     }
   }

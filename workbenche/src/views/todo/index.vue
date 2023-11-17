@@ -1,15 +1,22 @@
 <template>
-  <div @click="to">待办</div>
+  <div @click="to">
+    待办
+    <el-input v-model="value" />
+  </div>
 </template>
 <script>
 export default {
-  methods: {
-    to() {
-      // console.log(window.$wujie)
-      this.$router.push({
-        path: '/todo/detail'
-      })
+  data() {
+    return {
+      value: ''
     }
+  },
+  created() {
+    console.log('todo======')
+    // console.log(this.$store.getters.userInfo, '==========1111')
+  },
+  methods: {
+    to() {}
   }
 }
 </script>
