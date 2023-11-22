@@ -12,7 +12,7 @@ const whiteList = ['/login', '/register'] // 白名单
 
 router.beforeEach(async(to, from, next) => {
   NProgress.start()
-  document.title = getPageTitle(to.meta.title)
+  document.title = getPageTitle()
   const hasToken = getToken()
 
   if (hasToken) {
@@ -24,9 +24,9 @@ router.beforeEach(async(to, from, next) => {
         const menuList = store.getters.menuList
         const userInfo = store.getters.userInfo
         if (!userInfo.userId) {
-          await store.dispatch('user/getInfo')
+          await store.dispatch('system/getInfo')
         }
-        if (!menuList || menuList.length <= 0) {
+        if (!menuList || menuList.length == 0) {
           // 请求并获取菜单
           await store.dispatch('system/getMenulist')
           next({ path: to.redirectedFrom })

@@ -1,6 +1,6 @@
 const getters = {
   menuList: state => state.system.menuList,
-  userInfo: state => state.user.userInfo,
+  userInfo: state => state.system.userInfo,
   cachedViews: state => state.system.cachedViews,
   name: state => 'yuiyiu'
 }

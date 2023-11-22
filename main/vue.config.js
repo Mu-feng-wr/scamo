@@ -31,7 +31,11 @@ module.exports = {
         }
       }
     },
-    headers: { 'Access-Control-Allow-0rigin': '*' }
+    headers: { 
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "*",
+      "Access-Control-Allow-Methods": "*",
+    }
   },
   configureWebpack: {
     name: name,

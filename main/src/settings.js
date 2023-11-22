@@ -1,6 +1,7 @@
 module.exports = {
 
-  title: 'Vue Admin Template',
+  title: '约纽科技管理系统',
+  pageTitle: '云蟾数字资产管理中台',
 
   /**
    * @type {boolean} true | false

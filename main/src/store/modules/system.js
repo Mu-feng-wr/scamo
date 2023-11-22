@@ -1,12 +1,15 @@
 import { login, getRouters } from '@/api/system.js'
-import { setToken } from '@/utils/auth'
+import { setToken, removeToken } from '@/utils/auth'
 import router from '../../router'
 import Layout from '@/layout'
+import { getUserInfo } from '@/api/user.js'
 const getDefaultState = () => {
   return {
     token: '',
     menuList: [],
-    cachedViews: []
+    cachedViews: [],
+    userInfo: {},
+    sidebarRouters: []
   }
 }
 
@@ -21,6 +24,12 @@ const mutations = {
   },
   SET_CACHEVIEWS: (state, cachedViews) => {
     state.cachedViews = cachedViews
+  },
+  SET_USERINFO: (state, userInfo) => {
+    state.userInfo = userInfo
+  },
+  SET_SIDEBARROUTERS: (state, sidebarRouters) => {
+    state.sidebarRouters = sidebarRouters
   }
 }
 
@@ -39,10 +48,25 @@ const actions = {
       getRouters().then(res => {
         commit('SET_MENULIST', res.data)
         const routerList = menuRecursion(res.data)
+        commit('SET_SIDEBARROUTERS', routerList)
         router.addRoutes(routerList)
         resolve()
       })
     })
+  },
+  getInfo({ commit }) {
+    return new Promise((resolve, reject) => {
+      getUserInfo().then(res => {
+        commit('SET_USERINFO', res.user)
+        resolve()
+      })
+    })
+  },
+  logout({ commit }) {
+    commit('SET_MENULIST', [])
+    commit('SET_USERINFO', {})
+    removeToken()
+    router.push('/login')
   }
 }
 

@@ -32,10 +32,8 @@ Vue.use(ElementUI, { locale })
 
 Vue.config.productionTip = false
 
-
-
 if (window.__POWERED_BY_WUJIE__) {
-  let instance;
+  let instance
   window.__WUJIE_MOUNT = () => {
     instance = new Vue({
       el: '#app',
@@ -43,10 +41,10 @@ if (window.__POWERED_BY_WUJIE__) {
       store,
       render: h => h(App)
     })
-  };
+  }
   window.__WUJIE_UNMOUNT = () => {
-    instance.$destroy();
-  };
+    instance.$destroy()
+  }
 } else {
   new Vue({
     el: '#app',
@@ -55,8 +53,3 @@ if (window.__POWERED_BY_WUJIE__) {
     render: h => h(App)
   })
 }
-
-
-
-
-
