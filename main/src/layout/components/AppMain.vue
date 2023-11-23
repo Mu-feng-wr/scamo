@@ -5,7 +5,7 @@
         <div v-if="$route.path=='/dashboard'">
           <dashboard />
         </div>
-        <WujieVue v-for="(item, i) in cachedViews" v-show="$route.path==item.name&&$route.path!='/dashboard'" :key="i" width="100%" height="100%" class="wujie" :url="item.url" :name="item.name" :props="props" />
+        <!-- <WujieVue v-for="(item, i) in cachedViews" v-show="$route.path==item.name&&$route.path!='/dashboard'" :key="i" width="100%" height="100%" class="wujie" :url="item.url" :name="item.name" :props="props" /> -->
       </div>
     </transition>
   </section>

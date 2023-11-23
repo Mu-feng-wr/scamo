@@ -1,7 +1,9 @@
 <template>
   <div class="navbar disp-flex justify-between align-center">
     <div class="pageTitle">{{ pageTitle }}</div>
-    <div class="topMenu">菜单</div>
+    <div class="topMenu flex-1 text-center">
+      <topMenu />
+    </div>
     <div class="disp-flex right_menu">
       <router-link to="/dashboard" class="right-menu-item hover-effect">
         <img class="mr-3" :src="require('@/assets/images/search.png')" />驾驶舱
@@ -44,7 +46,11 @@
 <script>
 import defaultSettings from '@/settings'
 import screenfull from 'screenfull'
+import topMenu from './topMenu.vue'
 export default {
+  components: {
+    topMenu
+  },
   data() {
     return {
       isFullscreen: false
@@ -110,6 +116,7 @@ export default {
   }
   .topMenu {
     height: 100%;
+    padding: 0 30px;
   }
   .right_menu {
     color: #222943;

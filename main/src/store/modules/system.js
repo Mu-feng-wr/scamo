@@ -46,8 +46,8 @@ const actions = {
   getMenulist({ commit }) {
     return new Promise((resolve, reject) => {
       getRouters().then(res => {
-        commit('SET_MENULIST', res.data)
         const routerList = menuRecursion(res.data)
+        commit('SET_MENULIST', routerList)
         commit('SET_SIDEBARROUTERS', routerList)
         router.addRoutes(routerList)
         resolve()
@@ -71,20 +71,21 @@ const actions = {
 }
 
 // 递归处理菜单
-const menuRecursion = function(list) {
+const menuRecursion = function(list, parent) {
   let menuRouter = []
   menuRouter = list.map((item, i) => {
     const obj = {
-      path: item.path,
-      name: i == 0 ? 'UnificationPage' : 'UnificationPageDetail',
+      path: `${parent && parent.path ? parent.path + '/' : ''}${item.path}`,
+      name: item.name,
       meta: item.meta
     }
     if (item.children && item.children.length > 0) {
-      obj.children = menuRecursion(item.children)
+      obj.children = menuRecursion(item.children, item)
       obj.component = Layout
     }
     return obj
   })
+  console.log(menuRouter)
   return menuRouter
 }
 

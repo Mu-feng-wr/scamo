@@ -2,24 +2,24 @@
   <div ref="sidebar" class="sidebar">
     <el-menu :default-active="activeMenu" mode="horizontal" :collapse="false">
       <template v-for="(item, index) in menuList">
-        <el-submenu v-if="index < visibleMenuNumber" :key="index" popper-class="submenu" :index="item.path">
+        <el-submenu v-if="index < visibleMenuNumber" :key="item.path+index" popper-class="submenu" :index="item.path">
           <div slot="title" class="title">
             <svg-icon class="icon" :icon-class="item.meta.icon" />
             <span class="name">{{ item.meta.title }}</span>
           </div>
-          <el-menu-item v-for="(temp, i) in item.children" :key="i" :index="item.path+'/'+temp.path" @click.native="handleSelect(item,temp)">{{ temp.meta.title }}</el-menu-item>
+          <el-menu-item v-for="(temp, i) in item.children" :key="item.path+i" :index="temp.path" @click.native="handleSelect(item,temp)">{{ temp.meta.title }}</el-menu-item>
         </el-submenu>
       </template>
-      <el-submenu v-if="menuList.length>visibleMenuNumber" index="more" popper-class="submenu" class="moreMenu">
+      <el-submenu v-if="menuList.length>visibleMenuNumber" index="more_menu" popper-class="submenu" class="moreMenu">
         <div slot="title" class="title">
           <img width="30px" :src="require('@/assets/images/More.png')" />
         </div>
         <template v-for="(item, index) in menuList">
-          <el-submenu v-if="index >= visibleMenuNumber" :key="index" class="submenu" :index="item.path">
+          <el-submenu v-if="index >= visibleMenuNumber" :key="item.path+index" class="submenu" :index="item.path">
             <template slot="title">{{ item.meta.title }}</template>
-            <el-menu-item v-for="(temp, n) in item.children" :key="n" class="moreMenuItem" :index="temp.path" @click.native="handleSelect(item,temp)">{{ temp.meta.title }}</el-menu-item>
+            <el-menu-item v-for="(temp, n) in item.children" :key="temp.path+n" class="moreMenuItem" :index="temp.path" @click.native="handleSelect(item,temp)">{{ temp.meta.title }}</el-menu-item>
           </el-submenu>
-          <el-menu-item v-else-if="index > visibleMenuNumber" :key="index" :index="item.path+'/'+temp.path" class="moreMenuItem" @click.native="handleSelect(item)">{{ item.meta.title }}</el-menu-item>
+          <el-menu-item v-else-if="index > visibleMenuNumber" :key="temp.path+index" :index="temp.path" class="moreMenuItem" @click.native="handleSelect(item)">{{ item.meta.title }}</el-menu-item>
         </template>
       </el-submenu>
     </el-menu>
@@ -31,24 +31,17 @@ export default {
   name: 'SidebarItem',
   data() {
     return {
-      visibleMenuNumber: 5
+      visibleMenuNumber: 5,
+      activeMenu: '/dashboard'
     }
   },
   computed: {
     menuList() {
       return this.$store.getters.menuList
-    },
-    activeMenu() {
-      const route = this.$route
-      const { meta, path, matched } = route
-      if (meta.activeMenu) {
-        return meta.activeMenu
-      }
-      if (matched && matched.length == 3) {
-        return matched[1].path
-      }
-      return path
     }
+  },
+  created() {
+    this.activeMenu = this.$route.path
   },
   mounted() {
     window.onresize = () => {
@@ -63,7 +56,7 @@ export default {
     },
     handleSelect(item, temp) {
       this.$router.push({
-        path: item.path + '/' + temp.path
+        path: temp.path
       })
     }
   }
