@@ -2,7 +2,7 @@
   <div class="navbar disp-flex justify-between align-center">
     <div class="pageTitle">{{ pageTitle }}</div>
     <div class="topMenu flex-1 text-center">
-      <topMenu />
+      <topMenu ref="topMenu" />
     </div>
     <div class="disp-flex right_menu">
       <router-link to="/dashboard" class="right-menu-item hover-effect">
@@ -68,6 +68,9 @@ export default {
     this.destroy()
   },
   methods: {
+    calculateNumber() {
+      this.$refs.topMenu.calculateNumber()
+    },
     toggleSideBar() {
       this.$store.dispatch('app/toggleSideBar')
     },

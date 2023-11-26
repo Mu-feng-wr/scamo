@@ -41,9 +41,6 @@ export default {
     }
   },
   mounted() {
-    window.onresize = () => {
-      this.calculateNumber()
-    }
     this.calculateNumber()
   },
 

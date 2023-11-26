@@ -1,9 +1,9 @@
 <template>
   <div :class="classObj" class="app-wrapper">
-    <sidebar class="sidebar-container" />
+    <sidebar ref="sidebar" class="sidebar-container" />
     <div class="main-container">
-      <div :class="{'fixed-header':fixedHeader}">
-        <navbar />
+      <div>
+        <navbar ref="navbar" />
       </div>
       <app-main />
     </div>
@@ -12,7 +12,6 @@
 
 <script>
 import { Navbar, Sidebar, AppMain } from './components'
-import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
   name: 'Layout',
@@ -21,7 +20,6 @@ export default {
     Sidebar,
     AppMain
   },
-  mixins: [ResizeMixin],
   computed: {
     sidebar() {
       return {
@@ -44,9 +42,15 @@ export default {
       }
     }
   },
+  mounted() {
+    window.onresize = () => {
+      this.$refs.sidebar.calculateNumber()
+      this.$refs.navbar.calculateNumber()
+    }
+  },
   methods: {
     handleClickOutside() {
-      this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
+      // this.$store.dispatch('app/closeSideBar', { withoutAnimation: false })
     }
   }
 }
