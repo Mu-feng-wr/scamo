@@ -57,7 +57,6 @@ export default {
         this.menuList = []
       }
       this.$forceUpdate()
-      console.log(this.menuList, this.moduleData, this.activeMenu)
     },
     calculateNumber() {
       var width = this.$refs.top_menu.offsetWidth

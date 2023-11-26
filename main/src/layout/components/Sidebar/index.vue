@@ -6,25 +6,25 @@
     <div class="memu">
       <div ref="sidebar" class="sidebar">
         <el-menu :default-active="activeMenu" mode="horizontal" :collapse="false">
-          <template v-for="(item, index) in menuList">
-            <el-submenu v-if="index < visibleMenuNumber" :key="item.path + index" popper-class="submenu" :index="item.path">
+          <template v-for="(item, i) in menuList">
+            <el-submenu :key="item.name+i" popper-class="submenu" :index="item.name">
               <div slot="title" class="title">
                 <svg-icon class="icon" :icon-class="item.meta.icon" />
                 <span class="name">{{ item.meta.title }}</span>
               </div>
-              <el-menu-item v-for="(temp, i) in item.children" :key="item.path + i" :index="temp.path" @click.native="handleSelect(item, temp)">{{ temp.meta.title }}</el-menu-item>
+              <el-menu-item v-for="(temp, index) in item.children" :key="temp.name+index" :index="temp.name" @click.native="handleSelect(item, temp)">{{ temp.meta.title }}</el-menu-item>
             </el-submenu>
           </template>
-          <el-submenu v-if="menuList.length > visibleMenuNumber" index="more_menu" popper-class="submenu" class="moreMenu">
+          <el-submenu v-if="moreMenuList.length > 0" index="more_menu" popper-class="submenu" class="moreMenu">
             <div slot="title" class="title">
               <img width="30px" :src="require('@/assets/images/More.png')" />
             </div>
-            <template v-for="(item, index) in menuList">
-              <el-submenu v-if="index >= visibleMenuNumber" :key="item.path + index" class="submenu" :index="item.path">
+            <template v-for="(item, i) in moreMenuList">
+              <el-submenu v-if="item.children&&item.children.length>0" :key="item.name+i" class="submenu" :index="item.name">
                 <template slot="title">{{ item.meta.title }}</template>
-                <el-menu-item v-for="(temp, n) in item.children" :key="temp.path + n" class="moreMenuItem" :index="temp.path" @click.native="handleSelect(item, temp)">{{ temp.meta.title }}</el-menu-item>
+                <el-menu-item v-for="(temp, n) in item.children" :key="temp.name+n" class="moreMenuItem" :index="temp.name" @click.native="handleSelect(item, temp)">{{ temp.name }}</el-menu-item>
               </el-submenu>
-              <el-menu-item v-else-if="index > visibleMenuNumber" :key="temp.path + index" :index="temp.path" class="moreMenuItem" @click.native="handleSelect(item)">{{ item.meta.title }}</el-menu-item>
+              <el-menu-item v-else :key="item.name+i" :index="item.name" class="moreMenuItem" @click.native="handleSelect(item)">{{ item.meta.title }}</el-menu-item>
             </template>
           </el-submenu>
         </el-menu>
@@ -61,19 +61,14 @@ export default {
       avatarImg,
       avatar: this.$store.getters.userInfo.avatar,
       visibleMenuNumber: 5,
-      // activeMenu: ''
+      menuList: [],
+      moreMenuList: []
     }
   },
   computed: {
-    activeMenu () {
-      return this.$route.path
-    },
-    menuList() {
-      return this.$store.getters.menuList
+    activeMenu() {
+      return this.$route.name
     }
-  },
-  created() {
-    // this.activeMenu = this.$route.path
   },
   mounted() {
     this.calculateNumber()
@@ -81,7 +76,15 @@ export default {
   methods: {
     calculateNumber() {
       const height = this.$refs.sidebar.offsetHeight
-      this.visibleMenuNumber = Math.floor(height / 60)
+      this.visibleMenuNumber = Math.floor(height / 60) - 1
+      var routerList = this.$store.getters.menuList
+      if (routerList.length <= this.visibleMenuNumber || routerList.length == this.visibleMenuNumber + 1) {
+        this.menuList = routerList
+        this.moreMenuList = []
+      } else {
+        this.menuList = routerList.slice(0, this.visibleMenuNumber)
+        this.moreMenuList = routerList.slice(this.visibleMenuNumber)
+      }
     },
     handleSelect(item, temp) {
       this.$router.push({

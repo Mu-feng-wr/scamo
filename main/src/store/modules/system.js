@@ -76,7 +76,7 @@ const menuRecursion = function(list, parent) {
   menuRouter = list.map((item, i) => {
     const obj = {
       path: `${parent && parent.path ? parent.path + '/' : ''}${item.path}`,
-      name: item.name,
+      name: `${parent && parent.name ? parent.name + '-' : ''}${item.name}`,
       meta: item.meta
     }
     if (item.children && item.children.length > 0) {
@@ -85,7 +85,6 @@ const menuRecursion = function(list, parent) {
     }
     return obj
   })
-  console.log(menuRouter)
   return menuRouter
 }
 
