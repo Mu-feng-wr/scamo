@@ -32,11 +32,13 @@ router.beforeEach(async(to, from, next) => {
           next({ path: to.redirectedFrom })
         } else {
           var urlList = store.getters.cachedViews
-          const index = urlList.findIndex((item) => item.name == to.path)
+          const index = urlList.findIndex((item) => item.path == to.path)
           if (index == -1) {
             urlList.push({
-              url: 'http://192.168.10.10:9001/#' + to.path,
-              name: to.path
+              path: to.path,
+              name: to.name,
+              title: to.meta.title,
+              module: to.meta.module
             })
           }
           store.commit('system/SET_CACHEVIEWS', urlList)

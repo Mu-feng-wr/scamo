@@ -7,7 +7,7 @@ const getDefaultState = () => {
   return {
     token: '',
     menuList: [],
-    cachedViews: [],
+    cachedViews: [{ title: '首页', path: '/dashboard' }],
     userInfo: {},
     sidebarRouters: []
   }
@@ -77,7 +77,7 @@ const menuRecursion = function(list, parent) {
     const obj = {
       path: `${parent && parent.path ? parent.path + '/' : ''}${item.path}`,
       name: `${parent && parent.name ? parent.name + '-' : ''}${item.name}`,
-      meta: item.meta
+      meta: { ...item.meta, module: parent && parent.name ? parent.name : '' }
     }
     if (item.children && item.children.length > 0) {
       obj.children = menuRecursion(item.children, item)

@@ -1,11 +1,11 @@
 <template>
-  <section class="app-main">
+  <section class="app-main" :style="{'min-height':minHeight}">
     <transition name="fade-transform" mode="out-in">
       <div>
         <div v-if="$route.path=='/dashboard'">
           <dashboard />
         </div>
-        <!-- <WujieVue v-for="(item, i) in cachedViews" v-show="$route.path==item.name&&$route.path!='/dashboard'" :key="i" width="100%" height="100%" class="wujie" :url="item.url" :name="item.name" :props="props" /> -->
+        <WujieVue v-for="(item, i) in wujieCacheView" v-show="$route.path==item.path" :key="i" width="100%" height="100%" class="wujie" :url="getUrl(item)" :name="item.name" :props="props" />
       </div>
     </transition>
   </section>
@@ -26,11 +26,31 @@ export default {
     }
   },
   computed: {
+    minHeight() {
+      if (this.$route.path == '/dashboard') {
+        return 'calc(100vh - 90px)'
+      } else {
+        return 'calc(100vh - 121px)'
+      }
+    },
     cachedViews() {
       return this.$store.getters.cachedViews
     },
+    wujieCacheView() {
+      const mainRoute = ['/dashboard']
+      return this.cachedViews.filter((item) => !mainRoute.includes(item.path))
+    },
     key() {
       return this.$route.path
+    }
+  },
+  methods: {
+    getUrl(item) {
+      const wujieHost = {
+        Workbenche: 'http://192.168.10.10:9001/#'
+      }
+      // console.log(wujieHost[item.module] + item.path)
+      return wujieHost[item.module] + item.path
     }
   }
 }
@@ -38,7 +58,6 @@ export default {
 
 <style scoped>
 .app-main {
-  min-height: calc(100vh - 56px);
   width: 100%;
   position: relative;
   overflow: hidden;

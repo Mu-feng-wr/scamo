@@ -22,7 +22,7 @@
             <template v-for="(item, i) in moreMenuList">
               <el-submenu v-if="item.children&&item.children.length>0" :key="item.name+i" class="submenu" :index="item.name">
                 <template slot="title">{{ item.meta.title }}</template>
-                <el-menu-item v-for="(temp, n) in item.children" :key="temp.name+n" class="moreMenuItem" :index="temp.name" @click.native="handleSelect(item, temp)">{{ temp.name }}</el-menu-item>
+                <el-menu-item v-for="(temp, n) in item.children" :key="temp.name+n" class="moreMenuItem" :index="temp.name" @click.native="handleSelect(item, temp)">{{ temp.meta.title }}</el-menu-item>
               </el-submenu>
               <el-menu-item v-else :key="item.name+i" :index="item.name" class="moreMenuItem" @click.native="handleSelect(item)">{{ item.meta.title }}</el-menu-item>
             </template>
@@ -198,7 +198,6 @@ export default {
 }
 
 .el-submenu.is-active {
-
   .el-submenu__title,
   .el-menu-item:focus {
     background-color: rgba(34, 41, 67, 0.2) !important;
