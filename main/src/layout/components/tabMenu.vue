@@ -83,7 +83,7 @@ export default {
     },
     refreshSelectedTag() {
       var routeList = JSON.parse(JSON.stringify(this.visitedViews))
-      let index = routeList.findIndex((item) => item.path == this.selectedTag.path)
+      const index = routeList.findIndex((item) => item.path == this.selectedTag.path)
       routeList.splice(index, 1)
       this.$store.commit('system/SET_CACHEVIEWS', routeList)
       this.$nextTick(() => {
@@ -93,7 +93,7 @@ export default {
     },
     closeSelectedTag(tag) {
       var routeList = JSON.parse(JSON.stringify(this.visitedViews))
-      let index = routeList.findIndex((item) => item.path == tag.path)
+      const index = routeList.findIndex((item) => item.path == tag.path)
       routeList.splice(index, 1)
       this.$store.commit('system/SET_CACHEVIEWS', routeList)
       this.$router.push(routeList[routeList.length - 1].path)
