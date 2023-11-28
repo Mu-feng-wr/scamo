@@ -1,13 +1,16 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
+
+   <searchArea >12331</searchArea>
+   
   </div>
 </template>
 
 <script>
+import searchArea from '../components/searchArea/index.vue';
 export default {
   name: 'App',
-  components: {}
+  components: {searchArea}
 }
 </script>
 
@@ -18,6 +21,6 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  margin-top: 60px;
+  padding: 30px;
 }
 </style>

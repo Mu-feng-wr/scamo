@@ -10,7 +10,10 @@
     "lib": "vue-cli-service build --target lib ./components/index.js --name yueniucomponents --dest yueniucomponents"
   },
   "dependencies": {
-    "vue": "2.6.10"
+    "vue": "2.6.10",
+    "element-ui": "2.13.2",
+    "vxe-table": "3.0.0",
+    "xe-utils": "^3.5.13"
   },
   "devDependencies": {
     "@babel/core": "^7.12.16",
@@ -20,7 +23,9 @@
     "@vue/cli-service": "~5.0.0",
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
-    "vue-template-compiler": "2.6.10"
+    "vue-template-compiler": "2.6.10",
+    "sass": "1.26.8",
+    "sass-loader": "8.0.2"
   },
   "eslintConfig": {
     "root": true,

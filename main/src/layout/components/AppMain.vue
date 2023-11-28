@@ -21,7 +21,7 @@ export default {
       url: '',
       props: {
         userInfo: this.$store.getters.userInfo,
-        request:request
+        request: request
       }
     }
   },

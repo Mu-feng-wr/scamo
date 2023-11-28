@@ -2,7 +2,7 @@
   <div class="card-container" :class="$route.meta.isTab?'app-container':'app-container'">
     <el-container>
       <el-header>
-        <SearchArea :showAllSearch.sync="showAllSearch" class="p-16">
+        <search-area :showAllSearch.sync="showAllSearch" class="p-16">
           <div class="flex">
             <div class="searchLeft">
               <el-row :gutter="14">
@@ -23,7 +23,7 @@
               <!-- <MoreQuery :filterOptions="filterOptions" :formData.sync="queryParams" @reload="load" /> -->
             </div>
           </div>
-        </SearchArea>
+        </search-area>
       </el-header>
       <el-main style="padding:0;">
         <el-container>
