@@ -7,7 +7,7 @@
     "build:prod": "vue-cli-service build",
     "lint": "vue-cli-service lint",
     "build:stage": "vue-cli-service build --mode staging",
-    "lib": "vue-cli-service build --target lib ./package/index.js --name yueniucomponents --dest lib"
+    "lib": "vue-cli-service build --target lib ./components/index.js --name yueniucomponents --dest yueniucomponents"
   },
   "dependencies": {
     "vue": "2.6.10"

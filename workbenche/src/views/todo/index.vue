@@ -2,6 +2,7 @@
   <div @click="to">
     待办
     <el-input v-model="value" />
+    <com-one />
   </div>
 </template>
 <script>
