@@ -10,7 +10,7 @@ import '@/styles/index.scss'
 import App from './App'
 import store from './store'
 import router from './router'
-
+// import yueniucomponents from 'yueniucomponents';
 import '@/icons'
 import '@/permission'
 import '@/styles/global.scss'
