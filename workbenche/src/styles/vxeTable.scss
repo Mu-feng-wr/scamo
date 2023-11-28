@@ -1,0 +1,61 @@
+::v-deep .app-main {
+  height: 100vh !important;
+}
+.card-container {
+  height: 100%;
+  ::v-deep .el-container {
+    height: 100% !important;
+  }
+}
+::v-deep .el-header {
+  padding: 0 !important;
+  height: auto !important;
+}
+::v-deep .el-main {
+  padding: 0 !important;
+}
+.vxeTable {
+  ::v-deep .vxe-header--row {
+    color: #222943 ;
+    background-color: #F8F9F9 !important;
+  }
+  ::v-deep .vxe-table--header .vxe-header--column .vxe-cell {
+    font-weight: normal;
+  }
+  ::v-deep .vxe-footer--column{
+    padding: 2px 0;
+    color: red;
+  }
+  ::v-deep .vxe-body--column{
+    padding: 0px 0;
+    height: 40px !important;
+    line-height: normal;
+  }
+ .todo{
+    .el-button{
+      position: relative;
+      font-size: 14px;
+      color: #236DFF;
+
+      i {
+        display: none;
+      }
+
+      &+.el-button {
+        padding-left: 10px;
+
+        &::before {
+          width: 1px;
+          height: 14px;
+          background: #E9EAEC;
+          content: '';
+          display: block;
+          position: absolute;
+          left: 0;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+    }
+  }
+}

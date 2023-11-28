@@ -1,17 +1,16 @@
 <template>
-  <section class="app-main" :style="{'min-height':minHeight}">
-    <transition name="fade-transform" mode="out-in">
-      <div>
-        <div v-if="$route.path=='/dashboard'">
-          <dashboard />
-        </div>
-        <WujieVue v-for="(item, i) in wujieCacheView" v-show="$route.path==item.path" :key="i" width="100%" height="100%" class="wujie" :url="getUrl(item)" :name="item.name" :props="props" />
+  <section class="app-main" :style="{'height':minHeight}">
+    <div class="w-100 content" :style="{'height':minHeight}">
+      <div v-if="$route.path=='/dashboard'">
+        <dashboard />
       </div>
-    </transition>
+      <WujieVue v-for="(item, i) in wujieCacheView" v-show="$route.path==item.path" :key="i" width="100%" height="100%" class="wujie" :url="getUrl(item)" :name="item.name" :props="props" />
+    </div>
   </section>
 </template>
 
 <script>
+import request from '@/utils/request'
 export default {
   name: 'AppMain',
   components: {
@@ -21,7 +20,8 @@ export default {
     return {
       url: '',
       props: {
-        userInfo: this.$store.getters.userInfo
+        userInfo: this.$store.getters.userInfo,
+        request:request
       }
     }
   },
@@ -49,7 +49,6 @@ export default {
       const wujieHost = {
         Workbenche: 'http://192.168.10.10:9001/#'
       }
-      // console.log(wujieHost[item.module] + item.path)
       return wujieHost[item.module] + item.path
     }
   }
@@ -61,6 +60,11 @@ export default {
   width: 100%;
   position: relative;
   overflow: hidden;
+  padding: 0 20px;
+}
+.content {
+  background: white;
+  border-radius: 4 px 4px 0 0;
 }
 .fixed-header + .app-main {
   padding-top: 50px;

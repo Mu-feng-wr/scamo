@@ -9,41 +9,41 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = [] // 白名单
 
-router.beforeEach(async(to, from, next) => {
-  NProgress.start()
+// router.beforeEach(async(to, from, next) => {
+//   NProgress.start()
 
-  document.title = getPageTitle(to.meta.title)
+//   document.title = getPageTitle(to.meta.title)
 
-  const hasToken = getToken()
-  if (hasToken) {
-    if (to.path === '/') {
-      next({ path: '/workbenche/todo' })
-      NProgress.done()
-    } else {
-      const hasGetUserInfo = store.getters.userInfo
-      if (hasGetUserInfo.userId) {
-        next()
-      } else {
-        try {
-          const userInfo = window.$wujie.props.userInfo
-          store.commit('user/SET_USERINFO', userInfo)
-          next({ path: to.redirectedFrom })
-        } catch (error) {
-          next(`/workbenche/todo`)
-          NProgress.done()
-        }
-      }
-    }
-  } else {
-    if (whiteList.indexOf(to.path) !== -1) {
-      next()
-    } else {
-      next({ path: '/workbenche/todo' })
-      NProgress.done()
-    }
-  }
-})
+//   const hasToken = getToken()
+//   if (hasToken) {
+//     if (to.path === '/') {
+//       next({ path: '/workbenche/todo' })
+//       NProgress.done()
+//     } else {
+//       const hasGetUserInfo = store.getters.userInfo
+//       if (hasGetUserInfo.userId) {
+//         next()
+//       } else {
+//         try {
+//           const userInfo = window.$wujie.props.userInfo
+//           store.commit('user/SET_USERINFO', userInfo)
+//           next({ path: to.redirectedFrom })
+//         } catch (error) {
+//           next(`/workbenche/todo`)
+//           NProgress.done()
+//         }
+//       }
+//     }
+//   } else {
+//     if (whiteList.indexOf(to.path) !== -1) {
+//       next()
+//     } else {
+//       next({ path: '/workbenche/todo' })
+//       NProgress.done()
+//     }
+//   }
+// })
 
-router.afterEach(() => {
-  NProgress.done()
-})
+// router.afterEach(() => {
+//   NProgress.done()
+// })
