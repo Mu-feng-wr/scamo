@@ -19,8 +19,14 @@ import hostMap from '@/hostMap.js'
 Vue.use(WujieVue)
 const { setupApp } = WujieVue
 setupApp({
-  name: 'authorization',
+  name: 'workbenche',
   url: hostMap('//localhost:9001/'),
+  exec: true,
+  alive: true
+})
+setupApp({
+  name: 'standbook',
+  url: hostMap('//localhost:9002/'),
   exec: true,
   alive: true
 })

@@ -34,7 +34,7 @@
               </el-col>
               <el-col :span="24" class="text-right">
                 <el-button plain icon="el-icon-refresh" size="mini" @click="reload">刷新</el-button>
-                <!-- <TableHeaderConfig class="ml-10" :columns.sync="tableColumn" /> -->
+                <table-header-config class="ml-10" :columns.sync="tableColumn" />
               </el-col>
             </el-row>
           </el-header>
@@ -45,10 +45,10 @@
               <template #todo="{row}">
                 <div class="todo">
                   <el-button type="text">查看</el-button>
-                  <!-- <el-button size="mini" type="text" @click="audit(row,'audit_superior')" v-hasPermi="getHasPermi(row,'audit')" v-if="row.status == 2  && row.processId=='DIRECT_SUPERIOR_APPROVAL'">审批</el-button>
-                  <el-button size="mini" type="text" @click="audit(row,'recall_add')" v-hasPermi="getHasPermi(row,'recall')" v-if="row.status == 2  && row.processId=='DIRECT_SUPERIOR_APPROVAL'&& row.initiatorId == $store.state.user.info.userId">撤回</el-button>
-                  <el-button size="mini" type="text" @click="audit(row,'register_asset_admin')" v-hasPermi="getHasPermi(row,'register')" v-if="row.status == 2  && row.processId=='ASSET_ADMINISTRATOR_REGISTRATION'">登记</el-button>
-                  <el-button size="mini" v-if="row.status == 2 && row.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&&row.preProcessorId == $store.state.user.info.userId" type="text" @click="audit(row,'recall_superior')" v-hasPermi="getHasPermi(row,'recall')">撤回</el-button> -->
+                  <el-button size="mini" type="text" @click="audit(row,'audit_superior')" v-if="row.status == 2  && row.processId=='DIRECT_SUPERIOR_APPROVAL'">审批</el-button>
+                  <el-button size="mini" type="text" @click="audit(row,'recall_add')" v-if="row.status == 2  && row.processId=='DIRECT_SUPERIOR_APPROVAL'&& row.initiatorId == $store.getters.userInfo.userId">撤回</el-button>
+                  <el-button size="mini" type="text" @click="audit(row,'register_asset_admin')" v-if="row.status == 2  && row.processId=='ASSET_ADMINISTRATOR_REGISTRATION'">登记</el-button>
+                  <el-button size="mini" v-if="row.status == 2 && row.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&&row.preProcessorId == $store.getters.userInfo.userId" type="text" @click="audit(row,'recall_superior')">撤回</el-button>
                 </div>
               </template>
             </vxe-grid>

@@ -47,7 +47,8 @@ export default {
   methods: {
     getUrl(item) {
       const wujieHost = {
-        Workbenche: 'http://192.168.10.10:9001/#'
+        Workbenche: 'http://192.168.10.10:9001/#',
+        Standbook: 'http://192.168.10.10:9002/#'
       }
       return wujieHost[item.module] + item.path
     }
