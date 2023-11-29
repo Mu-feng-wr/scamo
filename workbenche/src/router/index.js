@@ -14,13 +14,13 @@ export const constantRoutes = [
     path: '/workbenche/todo',
     name: 'workbenche-todo',
     component: () => import('@/views/todo/index.vue'),
-    meta:{title:"待办"}
+    meta: { title: '待办' }
   },
   {
     path: '/workbenche/done',
     name: 'workbenche-done',
     component: () => import('@/views/done/index.vue'),
-    meta:{title:"已办"}
+    meta: { title: '已办' }
   }
 ]
 

@@ -1,5 +1,5 @@
 const { defineConfig } = require('@vue/cli-service')
-const VUE_APP_BASE_API=''
+const VUE_APP_BASE_API = ''
 module.exports = defineConfig({
   transpileDependencies: true,
   devServer: {
@@ -22,7 +22,16 @@ module.exports = defineConfig({
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "*",
-      "Access-Control-Allow-Methods": "*",
+      "Access-Control-Allow-Methods": "*"
     },
   },
+  configureWebpack: config => {
+    if (process.env.NODE_ENV === "production") {
+      config.mode = 'production'
+      config.performance = {
+        maxEntrypointSize: 100000000,
+        maxAssetSize: 300000000
+      }
+    }
+  }
 })

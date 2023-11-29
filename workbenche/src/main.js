@@ -4,7 +4,6 @@ import 'normalize.css/normalize.css'
 
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
-import locale from 'element-ui/lib/locale/lang/en'
 import '@/styles/index.scss'
 import App from './App'
 import store from './store'
@@ -26,16 +25,12 @@ setupApp({
   exec: true
 })
 
-import '@/components/VXETable.js'   //注册vxe组件及相关方法
+import '@/components/VXETable.js'// 注册vxe组件及相关方法
 import 'vxe-table/lib/style.css'
-
 
 import directive from './directive' // directive
 Vue.use(directive)
 
-// set ElementUI lang to EN
-// Vue.use(ElementUI, { locale })
-// 如果想要中文版 element-ui，按如下方式声明
 Vue.use(ElementUI)
 
 Vue.config.productionTip = false
