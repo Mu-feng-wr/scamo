@@ -14,37 +14,37 @@ export const constantRoutes = [
     path: '/standbook/classificationMaterialAccount',
     name: 'standbook-classificationMaterialAccount',
     component: () => import('@/views/classificationMaterialAccount/index.vue'),
-    meta:{title:"分类"}
+    meta: { title: '分类' }
   },
   {
     path: '/standbook/organizationMaterialAccount',
     name: 'standbook0-organizationMaterialAccount',
     component: () => import('@/views/organizationMaterialAccount/index.vue'),
-    meta:{title:"组织"}
+    meta: { title: '组织' }
   },
   {
     path: '/standbook/locationMaterialAccount',
     name: 'standbook-locationMaterialAccount',
     component: () => import('@/views/locationMaterialAccount/index.vue'),
-    meta:{title:"库位"}
+    meta: { title: '库位' }
   },
   {
     path: '/standbook/indexMaterialAccount',
     name: 'standbook-indexMaterialAccount',
     component: () => import('@/views/indexMaterialAccount/index.vue'),
-    meta:{title:"我的"}
+    meta: { title: '我的' }
   },
   {
     path: '/standbook/materialPart',
     name: 'standbook-materialPart',
     component: () => import('@/views/materialPart/index.vue'),
-    meta:{title:"配件"}
+    meta: { title: '配件' }
   },
   {
     path: '/standbook/materialRegister',
     name: 'standbook-materialRegister',
     component: () => import('@/views/materialRegister/index.vue'),
-    meta:{title:"登记"}
+    meta: { title: '登记' }
   }
 ]
 

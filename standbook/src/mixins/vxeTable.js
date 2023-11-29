@@ -1,5 +1,5 @@
 export default {
-  data () {
+  data() {
     return {
       tablePage: {
         align: 'center',
@@ -8,17 +8,17 @@ export default {
         pageSizes: [10, 20, 30, 50],
         currentPage: 1,
         pageSize: 10,
-        layouts: ['Total', 'Sizes', 'PrevPage', 'Number', 'NextPage', 'FullJump'],
+        layouts: ['Total', 'Sizes', 'PrevPage', 'Number', 'NextPage', 'FullJump']
       },
       tableLoading: false,
       tableData: []
     }
   },
   methods: {
-    footerMethod (colunm, data, amountData, fieldObj, textPosition) {
-      let rows1 = []
-      let rows2 = []
-      let fieldArr = []
+    footerMethod(colunm, data, amountData, fieldObj, textPosition) {
+      var rows1 = []
+      var rows2 = []
+      var fieldArr = []
       if (fieldObj instanceof Array) {
         fieldArr = fieldObj
       } else if (typeof (fieldObj) == 'object') {
@@ -26,8 +26,8 @@ export default {
       }
       colunm.forEach((item, i) => {
         if (i == (textPosition || 0)) {
-          rows1.push("小 计：")
-          rows2.push("合 计：")
+          rows1.push('小 计：')
+          rows2.push('合 计：')
         } else if (fieldArr.includes(item.property)) {
           let amount = 0
           data.forEach(temp => {
@@ -38,12 +38,11 @@ export default {
             rows2.push(this.$vxe.commafy(amountData[item.property + 'Total'] || 0, { digits: fieldObj[item.property] || fieldObj[item.property] == 0 ? fieldObj[item.property] : 2 }))
           }
         } else {
-          rows1.push("")
-          rows2.push("")
+          rows1.push('')
+          rows2.push('')
         }
       })
       if (amountData) {
-
         return [rows1, rows2]
       } else {
         return [rows1]

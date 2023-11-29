@@ -52,6 +52,7 @@
               :columns="tableColumn"
               :row-config="{isHover:true,isCurrent:true}"
               class="vxeTable"
+              show-overflow="title"
               @page-change="handlePageChange"
             >
               <template #seqHeader>序号</template>
@@ -81,14 +82,14 @@ export default {
       showAllSearch: false,
       tableColumn: [
         { type: 'seq', width: 60, align: 'center', fixed: 'left', visibleDisabled: true, slots: { header: 'seqHeader' } },
-        { showOverflow: true, visible: true, field: 'processTitle', title: '标题', visibleDisabled: true, minWidth: 300, headerAlign: 'center', align: 'left' },
-        { showOverflow: true, visible: true, field: 'deliveryDate', title: '送达时间', minWidth: 130 },
-        { showOverflow: true, visible: true, field: 'initiatorName', title: '发起人', minWidth: 130 },
-        { showOverflow: true, visible: true, field: 'initiatorOrgName', title: '所在部门', minWidth: 130 },
-        { showOverflow: true, visible: true, field: 'initiateDate', title: '发起时间', minWidth: 130 },
-        { showOverflow: true, visible: true, field: '', title: '等待时长(小时)', minWidth: 130 },
-        { showOverflow: true, visible: true, field: '', title: '当前节点', minWidth: 130 },
-        { showOverflow: true, visible: true, field: 'status', title: '状态', minWidth: 130, slots: { default: 'status' } },
+        { visible: true, field: 'processTitle', title: '标题', visibleDisabled: true, minWidth: 300, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'deliveryDate', title: '送达时间', minWidth: 130 },
+        { visible: true, field: 'initiatorName', title: '发起人', minWidth: 130 },
+        { visible: true, field: 'initiatorOrgName', title: '所在部门', minWidth: 130 },
+        { visible: true, field: 'initiateDate', title: '发起时间', minWidth: 130 },
+        { visible: true, field: '', title: '等待时长(小时)', minWidth: 130 },
+        { visible: true, field: '', title: '当前节点', minWidth: 130 },
+        { visible: true, field: 'status', title: '状态', minWidth: 130, slots: { default: 'status' } },
         { field: 'todo', title: '操作', width: 100, slots: { default: 'todo' }, fixed: 'right' }
       ]
     }

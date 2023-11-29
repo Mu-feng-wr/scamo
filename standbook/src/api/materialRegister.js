@@ -3,12 +3,10 @@ var requestFunc = request
 if (window.$wujie) {
   requestFunc = window.$wujie.props.request
 }
-
-
-/** 获取待办列表 */
-export const getReviewListIsCompleted = (query) => {
+// 查询物资台账登记信息列表
+export function listRegister(query) {
   return requestFunc({
-    url: '/review/review/getReviewListIsCompleted',
+    url: '/library/materialRegister/list',
     method: 'get',
     params: query
   })
