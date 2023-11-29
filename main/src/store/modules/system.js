@@ -9,7 +9,9 @@ const getDefaultState = () => {
     menuList: [],
     cachedViews: [{ title: '首页', path: '/dashboard' }],
     userInfo: {},
-    sidebarRouters: []
+    sidebarRouters: [],
+    permissions: [],
+    roles: []
   }
 }
 
@@ -30,6 +32,12 @@ const mutations = {
   },
   SET_SIDEBARROUTERS: (state, sidebarRouters) => {
     state.sidebarRouters = sidebarRouters
+  },
+  SET_PERMISSIONS: (state, permissions) => {
+    state.permissions = permissions
+  },
+  SET_ROLES: (state, roles) => {
+    state.roles = roles
   }
 }
 
@@ -58,6 +66,8 @@ const actions = {
     return new Promise((resolve, reject) => {
       getUserInfo().then(res => {
         commit('SET_USERINFO', res.user)
+        commit('SET_PERMISSIONS', res.permissions)
+        commit('SET_ROLES', res.roles)
         resolve()
       })
     })

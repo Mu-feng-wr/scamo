@@ -2,18 +2,18 @@
   <div class="card-container" :class="$route.meta.isTab?'app-container':'app-container'">
     <el-container>
       <el-header>
-        <search-area :showAllSearch.sync="showAllSearch" class="p-16">
+        <search-area :show-all-search.sync="showAllSearch" class="p-16">
           <div class="flex">
             <div class="searchLeft">
               <el-row :gutter="14">
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.assetCode" placeholder="请输入标题" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.assetCode" size="mini" placeholder="请输入标题" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.assetName" placeholder="请输入发起人" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.assetName" size="mini" placeholder="请输入发起人" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <el-date-picker size="mini" v-model="queryParams.time" type="date" placeholder="请选择送达时间"></el-date-picker>
+                  <el-date-picker v-model="queryParams.time" size="mini" type="date" placeholder="请选择送达时间" />
                 </el-col>
               </el-row>
             </div>
@@ -39,16 +39,46 @@
             </el-row>
           </el-header>
           <el-main>
-            <vxe-grid ref="xTable" height="auto" v-loading="tableLoading" header-align="center" align="center" :data="tableData" :pager-config="tablePage" border :resizable="true" :columns="tableColumn" :row-config="{isHover:true,isCurrent:true}" class="vxeTable" @page-change="handlePageChange">
+            <vxe-grid
+              ref="xTable"
+              v-loading="tableLoading"
+              height="auto"
+              header-align="center"
+              align="center"
+              :data="tableData"
+              :pager-config="tablePage"
+              border
+              :resizable="true"
+              :columns="tableColumn"
+              :row-config=" {isHover : true, isCurrent : true}"
+              class="vxeTable"
+              @page-change="handlePageChange"
+            >
               <template #seqHeader>序号</template>
               <template #status>待处理</template>
               <template #todo="{row}">
                 <div class="todo">
                   <el-button type="text">查看</el-button>
-                  <el-button size="mini" type="text" @click="audit(row,'audit_superior')" v-if="row.status == 2  && row.processId=='DIRECT_SUPERIOR_APPROVAL'">审批</el-button>
-                  <el-button size="mini" type="text" @click="audit(row,'recall_add')" v-if="row.status == 2  && row.processId=='DIRECT_SUPERIOR_APPROVAL'&& row.initiatorId == $store.getters.userInfo.userId">撤回</el-button>
-                  <el-button size="mini" type="text" @click="audit(row,'register_asset_admin')" v-if="row.status == 2  && row.processId=='ASSET_ADMINISTRATOR_REGISTRATION'">登记</el-button>
-                  <el-button size="mini" v-if="row.status == 2 && row.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&&row.preProcessorId == $store.getters.userInfo.userId" type="text" @click="audit(row,'recall_superior')">撤回</el-button>
+                  <el-button
+                    v-if="row.status == 2 && row.processId=='DIRECT_SUPERIOR_APPROVAL'"
+                    v-hasPermi="getHasPermi(row,'audit')"
+                    size="mini"
+                    type="text"
+                    @click="audit(row,'audit_superior')"
+                  >审批</el-button>
+                  <el-button
+                    v-if="row.status == 2 && row.processId=='DIRECT_SUPERIOR_APPROVAL'&& row.initiatorId == $store.getters.userInfo.userId"
+                    size="mini"
+                    type="text"
+                    @click="audit(row,'recall_add')"
+                  >撤回</el-button>
+                  <el-button v-if="row.status == 2 && row.processId=='ASSET_ADMINISTRATOR_REGISTRATION'" size="mini" type="text" @click="audit(row,'register_asset_admin')">登记</el-button>
+                  <el-button
+                    v-if="row.status == 2 && row.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&&row.preProcessorId == $store.getters.userInfo.userId"
+                    size="mini"
+                    type="text"
+                    @click="audit(row,'recall_superior')"
+                  >撤回</el-button>
                 </div>
               </template>
             </vxe-grid>

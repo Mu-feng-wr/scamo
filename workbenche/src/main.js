@@ -29,6 +29,10 @@ setupApp({
 import '@/components/VXETable.js'   //注册vxe组件及相关方法
 import 'vxe-table/lib/style.css'
 
+
+import directive from './directive' // directive
+Vue.use(directive)
+
 // set ElementUI lang to EN
 // Vue.use(ElementUI, { locale })
 // 如果想要中文版 element-ui，按如下方式声明

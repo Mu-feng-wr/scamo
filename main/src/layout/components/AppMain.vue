@@ -21,7 +21,9 @@ export default {
       url: '',
       props: {
         userInfo: this.$store.getters.userInfo,
-        request: request
+        request: request,
+        permissions: this.$store.getters.permissions,
+        roles: this.$store.getters.roles
       }
     }
   },
