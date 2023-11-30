@@ -14,7 +14,7 @@
       @clear="clear"
       @focus="load"
     >
-      <el-option v-for="(item,i) in options.length>0?options:preStore" :key="i" :label="item[labelName]" :value="String(item[valueName])"></el-option>
+      <el-option v-for="(item,i) in options.length>0?options:preStore" :key="i" :label="item[labelName]" :value="String(item[valueName])" />
     </el-select>
   </div>
 </template>
@@ -39,7 +39,7 @@ import {
   listUser
 } from '@/api/base.js'
 export default {
-  name: 'baseInput',
+  name: 'BaseInput',
   props: {
     value: {
       type: [String, Number, Array],
@@ -130,20 +130,20 @@ export default {
       options: [],
       loading: false,
       getListFunc: {
-        listApplication: listApplicationQuery, //申购单
-        listType: listTypeQuery, //业务归口类型
-        listAddressWarehouse: listAddressQueryWarehouse, //库位||仓库
-        listAddressSpecificLocation: listAddressQuerySpecificLocation, //具体位置
-        listAgreement: listAgreementQuery, //招标协议
-        listSupplier: listSupplierQuery, //供应商
-        listAccount: listAccountQuery, //出账公司
-        listContract: listContractQuery, //合同
-        listAddressUseArea: listAddressQueryUseArea, //使用区域
-        companyList: findCompanyList, //公司列表
-        listScheme: listSchemeQuery, //方案名称
+        listApplication: listApplicationQuery, // 申购单
+        listType: listTypeQuery, // 业务归口类型
+        listAddressWarehouse: listAddressQueryWarehouse, // 库位||仓库
+        listAddressSpecificLocation: listAddressQuerySpecificLocation, // 具体位置
+        listAgreement: listAgreementQuery, // 招标协议
+        listSupplier: listSupplierQuery, // 供应商
+        listAccount: listAccountQuery, // 出账公司
+        listContract: listContractQuery, // 合同
+        listAddressUseArea: listAddressQueryUseArea, // 使用区域
+        companyList: findCompanyList, // 公司列表
+        listScheme: listSchemeQuery, // 方案名称
         listProject: listProjectQuery, // 项目名称
-        listBrand: listBrandQuery, //品牌
-        listUser: listUser, //用户
+        listBrand: listBrandQuery, // 品牌
+        listUser: listUser, // 用户
         listDept: listDept, // 部门
         listAddress: listAddressQuery
       }
@@ -192,7 +192,7 @@ export default {
             })
         } else if (this.getListFunc[this.baseCode]) {
           // 非字典表
-          let func = this.getListFunc[this.baseCode]
+          var func = this.getListFunc[this.baseCode]
           func(this.query)
             .then((res) => {
               this.options = res[this.resultLabel]
@@ -214,7 +214,7 @@ export default {
     change(value) {
       if (value) {
         this.$emit('update:value', value)
-        let data = this.options.find((item) => {
+        var data = this.options.find((item) => {
           return item[this.valueName] == value
         })
         this.$emit('update:label', data[this.labelName])

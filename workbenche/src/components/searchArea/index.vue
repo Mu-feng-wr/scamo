@@ -9,21 +9,22 @@
 <script>
 export default {
   name: 'SearchArea',
-  data() {
-    return {}
-  },
   props: {
     showAllSearch: {
-      //默认不展开全部
+      // 默认不展开全部
       type: Boolean,
       default: false
     },
     showToggleBtn: {
-      //显示操作按钮
+      // 显示操作按钮
       type: Boolean,
       default: true
     }
   },
+  data() {
+    return {}
+  },
+
   computed: {},
   created() {},
   methods: {

@@ -61,14 +61,15 @@ export default {
 
 <style scoped>
 .app-main {
-  width: 100%;
+  width: calc(100% - 40px);
+  margin: 0 auto;
   position: relative;
   overflow: hidden;
-  padding: 0 20px;
 }
 .content {
   background: white;
   border-radius: 4 px 4px 0 0;
+  position: relative;
 }
 .fixed-header + .app-main {
   padding-top: 50px;

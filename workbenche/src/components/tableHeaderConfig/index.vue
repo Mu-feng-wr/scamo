@@ -17,15 +17,15 @@
         <template #visible_header="{column}">
           <div>
             {{ column.title }}
-            <el-checkbox :indeterminate="indeterminate" v-model="visible" @change="change"></el-checkbox>
+            <el-checkbox v-model="visible" :indeterminate="indeterminate" @change="change" />
           </div>
         </template>
         <template #visible="{row}">
-          <el-checkbox :disabled="row.visibleDisabled" v-model="row.visible" @change="changeCheckBox"></el-checkbox>
+          <el-checkbox v-model="row.visible" :disabled="row.visibleDisabled" @change="changeCheckBox" />
         </template>
         <template #fixed="{row}">
-          <el-checkbox :disabled="row.visibleDisabled" v-model="row.fixed" true-label="left" false-label>左</el-checkbox>
-          <el-checkbox :disabled="row.visibleDisabled" v-model="row.fixed" true-label="right" false-label>右</el-checkbox>
+          <el-checkbox v-model="row.fixed" :disabled="row.visibleDisabled" true-label="left" false-label>左</el-checkbox>
+          <el-checkbox v-model="row.fixed" :disabled="row.visibleDisabled" true-label="right" false-label>右</el-checkbox>
         </template>
       </vxe-grid>
       <div class="text-center mt-15">
@@ -38,7 +38,7 @@
 </template>
 <script>
 export default {
-  name: 'tableHeaderConfig',
+  name: 'TableHeaderConfig',
   props: {
     columns: {
       type: Array,
@@ -68,7 +68,7 @@ export default {
   created() {},
   methods: {
     getVisible() {
-      let arr = this.tableData.filter((item) => {
+      var arr = this.tableData.filter((item) => {
         return item.visible != true
       })
       if (arr.length > 0) {
@@ -99,9 +99,9 @@ export default {
       this.open = false
     },
     confirm() {
-      let data = [...this.columns]
+      var data = [...this.columns]
       this.tableData.forEach((item) => {
-        let index = data.findIndex((temp) => {
+        var index = data.findIndex((temp) => {
           return temp.field == item.field
         })
         this.$set(data[index], 'visible', item.visible)
@@ -122,7 +122,7 @@ export default {
       this.getVisible()
     },
     reset() {
-      let data = [...this.columns]
+      var data = [...this.columns]
       data.forEach((item) => {
         if (!item.visibleDisabled && item.field != 'todo' && item.field) {
           item.visible = true
