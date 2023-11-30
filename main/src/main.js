@@ -13,6 +13,9 @@ import router from './router'
 import '@/icons'
 import '@/permission'
 import '@/styles/global.scss'
+import { download } from '@/utils/request.js';
+Vue.prototype.download = download
+
 
 import WujieVue from 'wujie-vue2'
 import hostMap from '@/hostMap.js'

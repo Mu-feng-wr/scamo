@@ -10,28 +10,23 @@ import '@/styles/index.scss'
 import App from './App'
 import store from './store'
 import router from './router'
-import yueniucomponents from 'yueniucomponents'
-import 'yueniucomponents/yueniucomponents.css'
-Vue.use(yueniucomponents)
+import '@/components/index.js'
 import '@/icons'
 import '@/permission'
 import '@/styles/global.scss'
-
-import WujieVue from 'wujie-vue2'
-import hostMap from '@/hostMap.js'
-Vue.use(WujieVue)
-const { setupApp } = WujieVue
-setupApp({
-  name: 'authorization',
-  url: hostMap('https'),
-  exec: true
-})
 
 import '@/components/VXETable.js'
 import 'vxe-table/lib/style.css'
 
 import directive from './directive' // directive
 Vue.use(directive)
+
+import { download } from '@/utils/request.js'
+if (window.$wujie) {
+  Vue.prototype.download = window.$wujie.props.download
+} else {
+  Vue.prototype.download = download
+}
 
 Vue.config.productionTip = false
 

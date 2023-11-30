@@ -39,32 +39,32 @@
                   </el-select>
                 </el-col>
                 <el-col :span="4">
-                  <!-- <base-input
+                  <base-input
                     size="mini"
                     :value.sync="queryParams.currentCompanyId"
-                    baseCode="companyList"
-                    resultLabel="data"
-                    labelName="deptName"
-                    valueName="deptId"
+                    base-code="companyList"
+                    result-label="data"
+                    label-name="deptName"
+                    value-name="deptId"
                     placeholder="当前使用公司"
-                    @change="load"
                     clearable
-                  ></base-input>-->
+                    @change="load"
+                  />
                 </el-col>
                 <el-col :span="4">
                   <el-input v-model="queryParams.applicantOrgName" size="mini" placeholder="申购部门" clearable @keydown.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <!-- <base-input
+                  <base-input
                     size="mini"
                     :value.sync="queryParams.eventListType"
-                    baseCode="listType"
-                    labelName="businessName"
-                    valueName="businessId"
+                    base-code="listType"
+                    label-name="businessName"
+                    value-name="businessId"
                     placeholder="事件类型"
-                    @change="load"
                     clearable
-                  ></base-input>-->
+                    @change="load"
+                  />
                 </el-col>
               </el-row>
             </div>

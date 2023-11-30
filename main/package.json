@@ -28,6 +28,7 @@
     "vue-puzzle-vcode": "^1.1.10",
     "vue-router": "3.0.6",
     "vuex": "3.1.0",
+    "file-saver": "2.0.5",
     "wujie-vue2": "^1.0.18"
   },
   "devDependencies": {

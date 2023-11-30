@@ -8,9 +8,7 @@ import '@/styles/index.scss'
 import App from './App'
 import store from './store'
 import router from './router'
-import yueniucomponents from 'yueniucomponents'
-import 'yueniucomponents/yueniucomponents.css'
-Vue.use(yueniucomponents)
+import '@/components/index.js'
 import '@/icons'
 import '@/permission'
 import '@/styles/global.scss'
@@ -22,6 +20,13 @@ import directive from './directive' // directive
 Vue.use(directive)
 
 Vue.use(ElementUI)
+
+import { download } from '@/utils/request.js'
+if (window.$wujie) {
+  Vue.prototype.download = window.$wujie.props.download
+} else {
+  Vue.prototype.download = download
+}
 
 Vue.config.productionTip = false
 
