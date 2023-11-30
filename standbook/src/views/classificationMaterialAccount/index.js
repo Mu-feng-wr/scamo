@@ -3,26 +3,6 @@ export default{
     return {
       menuOptions: [
         {
-          id: 1909,
-          label: '归档',
-          data: null,
-          type: 2,
-          selectedList: [],
-          parentId: 1679,
-          checked: null,
-          targetSource: '1'
-        },
-        {
-          id: 1908,
-          label: '归档',
-          data: null,
-          type: 2,
-          selectedList: [],
-          parentId: 1678,
-          checked: null,
-          targetSource: '1'
-        },
-        {
           id: 1914,
           label: 'BI大屏',
           data: null,

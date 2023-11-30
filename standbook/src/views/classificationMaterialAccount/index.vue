@@ -7,13 +7,12 @@
       <el-table-column width="100" align="center">
         <template slot-scope="scope">
           <el-checkbox :indeterminate="scope.row.indeterminate" v-model="scope.row.checked" @change="rowCheckChange($event,scope.row)"></el-checkbox>
-          {{ scope.row.checked }}
         </template>
       </el-table-column>
       <el-table-column header-align="center" align="center" min-width="300" label="数据范围">
         <template slot-scope="scope">
           <el-checkbox-group v-model="scope.row.selectedList" @change="handleCheckedPerChange($event,scope.row)" v-if="scope.row.type !== 2">
-            <el-checkbox v-for="(item, index) in checkLists" :label="item.id" :key="index">{{ item.text }}</el-checkbox>
+            <el-checkbox  v-for="(item, index) in checkLists" :label="item.id" :key="index">{{ item.text }}</el-checkbox>
           </el-checkbox-group>
         </template>
       </el-table-column>
@@ -49,6 +48,12 @@ export default {
         if (index >= 0) {
           item.selectedList = menuOptions[index].selectedList
           if (menuOptions[index].children && menuOptions[index].children.length > 0) {
+            if(item.type==0){
+              // let selectedList = item.children.map(temp=temp)
+              // item.selectedList
+            }
+
+
             item.children = this.init(item.children, menuOptions[index].children)
           } else {
             item.checked = true
@@ -165,6 +170,10 @@ export default {
       })
     },
     handleCheckedPerChange(value, row) {
+      if(!row.checked){
+          row.checked = true
+          this.rowCheckChange(true, row)
+      }
       if (value.length > 0) {
         this.$set(row, 'selectedList', [value[value.length - 1]])
       }
