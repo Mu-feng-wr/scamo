@@ -2,7 +2,17 @@
   <div class="table_header_config">
     <el-button size="mini" icon="el-icon-setting" @click="openDialog">表头配置</el-button>
     <el-dialog :visible.sync="open" append-to-body width="800px" title="表头配置">
-      <vxe-grid max-height="600" header-align="center" align="center" :data="tableData" border :resizable="true" :columns="tableColumn" :row-config="{isHover:true,isCurrent:true}" class="vxeTable">
+      <vxe-grid
+        max-height="600"
+        header-align="center"
+        align="center"
+        :data="tableData"
+        border
+        :resizable="true"
+        :columns="tableColumn"
+        :row-config="{isHover:true,isCurrent:true}"
+        class="vxeTable"
+      >
         <template #seqHeader>序号</template>
         <template #visible_header="{column}">
           <div>
@@ -126,3 +136,9 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped src="@/styles/vxeTable.scss"></style>
+<style lang="scss" scoped>
+.table_header_config {
+  display: inline-block;
+}
+</style>

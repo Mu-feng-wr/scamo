@@ -15,16 +15,6 @@ import '@/icons'
 import '@/permission'
 import '@/styles/global.scss'
 
-import WujieVue from 'wujie-vue2'
-import hostMap from '@/hostMap.js'
-Vue.use(WujieVue)
-const { setupApp } = WujieVue
-setupApp({
-  name: 'authorization',
-  url: hostMap('https'),
-  exec: true
-})
-
 import '@/components/VXETable.js'// 注册vxe组件及相关方法
 import 'vxe-table/lib/style.css'
 

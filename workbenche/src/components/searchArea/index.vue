@@ -8,39 +8,39 @@
 </template>
 <script>
 export default {
-  name: "SearchArea",
+  name: 'SearchArea',
   data() {
-    return {};
+    return {}
   },
   props: {
     showAllSearch: {
       //默认不展开全部
       type: Boolean,
-      default: false,
+      default: false
     },
     showToggleBtn: {
       //显示操作按钮
       type: Boolean,
-      default: true,
-    },
+      default: true
+    }
   },
   computed: {},
   created() {},
   methods: {
     // 展开、收起
     toggleSearch() {
-      this.$emit("update:showAllSearch", !this.showAllSearch);
+      this.$emit('update:showAllSearch', !this.showAllSearch)
     },
     // 刷新
     refresh() {
-      this.$emit("queryTable");
+      this.$emit('queryTable')
     },
     // 重置
     reset() {
-      this.$emit("resetTable");
-    },
-  },
-};
+      this.$emit('resetTable')
+    }
+  }
+}
 </script>
 <style lang="scss" scoped>
 .searchArea {
