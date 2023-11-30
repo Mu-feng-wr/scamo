@@ -198,7 +198,10 @@ export default {
           this.tableLoading = false
         })
     },
-    reset() {},
+    reset() {
+      this.queryParams = {}
+      this.load()
+    },
     handlePageChange() {},
     getFooterData() {
       return [[]]
