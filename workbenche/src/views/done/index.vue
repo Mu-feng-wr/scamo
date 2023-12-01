@@ -52,7 +52,7 @@
               :columns="tableColumn"
               :row-config="{isHover:true,isCurrent:true}"
               class="vxeTable"
-              show-overflow="tooltip"
+              show-overflow="title"
               @page-change="handlePageChange"
             >
               <template #seqHeader>序号</template>

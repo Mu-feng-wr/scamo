@@ -1,12 +1,15 @@
 <template>
-  <div style="display: inline-block">
+  <div class="more_query">
     <el-link class="advancedFilter" @click="filterMore">
       <i class="vxe-icon-funnel"></i>
       高级筛选
     </el-link>
 
-    <el-drawer :visible.sync="show" direction="rtl" size="650px">
-      <span slot="title" class="title">高级筛选</span>
+    <el-drawer style="position: absolute;height:100%;" :show-close="showClose" :modal="false" append-to-body :visible.sync="show" direction="rtl" size="650px" @close="showClose=true">
+      <div slot="title" class="disp-flex justify-between align-center">
+        <span class="title">高级筛选</span>
+        <i class="el-icon-close icon" @click="show=false"></i>
+      </div>
       <div class="content">
         <div class="main">
           <el-form :label-position="labelPosition" :label-width="labelWidth">
@@ -143,7 +146,8 @@ export default {
     return {
       show: false,
       isshow: false,
-      form: {}
+      form: {},
+      showClose: true
     }
   },
   watch: {
@@ -158,6 +162,9 @@ export default {
   methods: {
     filterMore() {
       this.show = true
+      this.$nextTick(() => {
+        this.showClose = false
+      })
     },
     // 查询
     refresh() {
@@ -180,14 +187,22 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.more_query {
+  display: inline-block;
+}
 ::v-deep .el-drawer__header {
   padding: 12px 15px;
   margin-bottom: 0;
   box-shadow: 0 1px 5px #efefef;
 }
+
 .title {
   font-weight: 500;
   color: #222943;
+}
+.icon {
+  font-size: 20px;
+  cursor: pointer;
 }
 .content {
   height: 100%;
@@ -207,5 +222,18 @@ export default {
 }
 ::v-deep.el-col {
   height: 52px;
+}
+.advancedFilter {
+  color: #236dff !important;
+  padding-left: 7px;
+  font-size: 14px;
+
+  i {
+    font-weight: bold;
+  }
+
+  &.is-underline:hover:after {
+    border-bottom: none;
+  }
 }
 </style>

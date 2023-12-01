@@ -107,7 +107,7 @@
               class="vxeTable"
               show-footer
               :footer-method="getFooterData"
-              show-overflow="tooltip"
+              show-overflow="title"
               @page-change="handlePageChange"
             >
               <template #seqHeader>序号</template>

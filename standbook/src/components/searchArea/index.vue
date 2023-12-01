@@ -60,7 +60,7 @@ export default {
     top: 16px;
   }
   .el-form {
-    position: relative;
+    // position: relative;
     overflow: hidden;
     height: 64px;
     overflow: hidden;
