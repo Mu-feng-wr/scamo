@@ -71,7 +71,7 @@
             <div class="ml-10 searchRight">
               <el-button type="primary" icon="el-icon-search" size="mini" @click="load">搜索</el-button>
               <el-button icon="el-icon-refresh" size="mini" @click="reset">重置</el-button>
-              <!-- <MoreQuery :filterOptions="filterOptions" :formData.sync="queryParams" @reload="load" /> -->
+              <more-query :filter-options="filterOptions" :form-data.sync="queryParams" @reload="load" />
             </div>
           </div>
         </SearchArea>
@@ -107,7 +107,7 @@
               class="vxeTable"
               show-footer
               :footer-method="getFooterData"
-              show-overflow="title"
+              show-overflow="tooltip"
               @page-change="handlePageChange"
             >
               <template #seqHeader>序号</template>
