@@ -74,7 +74,18 @@ export default {
     getUrl(item) {
       const wujieHost = {
         Workbenche: 'http://localhost:9001/#',
-        Standbook: 'http://localhost:9002/#'
+        Standbook: 'http://localhost:9002/#',
+        Asset: 'http://localhost:9003/#',
+        Consumable: 'http://localhost:9003/#',
+        Gift: 'http://localhost:9004/#',
+        Purchase: 'http://localhost:9005/#',
+        Inventory: 'http://localhost:9006/#',
+        Library: 'http://localhost:9007/#',
+        Portface: 'http://localhost:9008/#',
+        System: 'http://localhost:9009/#',
+        Monitor: 'http://localhost:9010/#',
+        Tool: 'http://localhost:9011/#',
+        Member: 'http://localhost:9012/#'
       }
       return wujieHost[item.module] + item.fullPath
     },
@@ -90,8 +101,8 @@ export default {
       } else {
         urlList.splice(index, 1)
         this.$nextTick(() => {
-          routeList.splice(index, 0, this.selectedTag)
-          this.$store.commit('system/SET_CACHEVIEWS', routeList)
+          urlList.splice(index, 0, route)
+          this.$store.commit('system/SET_CACHEVIEWS', urlList)
         })
       }
       this.$store.commit('system/SET_CURRENTPATH', route.fullPath)

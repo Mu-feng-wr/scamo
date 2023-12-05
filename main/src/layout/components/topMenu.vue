@@ -5,10 +5,10 @@
         <el-menu-item v-if="i<visibleMenuNumber" :key="item.path+i" :index="item.path" @click="toLink(item)">{{ item.meta.title }}</el-menu-item>
       </template>
 
-      <el-submenu v-if="menuList.length > visibleMenuNumber" index="more" title="更多">
+      <el-submenu v-if="moreMenuList.length>0" index="more" title="更多">
         <template slot="title">更多</template>
-        <template v-for="(item, i) in menuList">
-          <el-menu-item v-if="i>=visibleMenuNumber" :key="item.path+i" :index="item.path" @click="toLink(item)">{{ item.meta.title }}</el-menu-item>
+        <template v-for="(item, i) in moreMenuList">
+          <el-menu-item :key="item.path+i" :index="item.path" @click="toLink(item)">{{ item.meta.title }}</el-menu-item>
         </template>
       </el-submenu>
     </el-menu>
@@ -20,6 +20,7 @@ export default {
   data() {
     return {
       menuList: [],
+      moreMenuList: [],
       visibleMenuNumber: 3,
       moduleData: {}
     }
@@ -51,18 +52,34 @@ export default {
       var data = this.sidebarRouters.find((item) => item.path == currentPathArr[0] || item.path == '/' + currentPathArr[0])
       if (data) {
         this.moduleData = data
-        this.menuList = data.children
+        this.menuList = data.children.slice(0, this.visibleMenuNumber)
+        this.moreMenuList = data.children.slice(this.visibleMenuNumber)
       } else {
         this.moduleData = {}
         this.menuList = []
+        this.moreMenuList = []
       }
       this.$forceUpdate()
     },
     calculateNumber() {
       var width = this.$refs.top_menu.offsetWidth
       this.visibleMenuNumber = Math.floor(width / 120)
+      this.getMenu()
     },
     toLink(item) {
+      var routerList = this.$store.getters.cachedViews
+      debugger
+      var index = routerList.findIndex((temp) => item.path == temp.fullPath)
+      if (index < 0) {
+        routerList.push({
+          path: item.path,
+          name: item.name,
+          title: item.meta.title,
+          fullPath: item.path
+        })
+      }
+      this.$store.commit('system/SET_CACHEVIEWS', routerList)
+      this.$store.commit('system/SET_CURRENTPATH', item.path)
       this.$router.push({
         path: item.path
       })

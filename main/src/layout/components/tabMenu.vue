@@ -122,6 +122,9 @@ export default {
     closeAllTags() {},
     closeMenu() {
       this.visible = false
+    },
+    handleScroll() {
+      this.visible = false
     }
   }
 }

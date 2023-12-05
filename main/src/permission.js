@@ -15,6 +15,9 @@ router.beforeEach(async(to, from, next) => {
   document.title = getPageTitle()
   const hasToken = getToken()
 
+  if (to.path === '/dashboard') {
+    store.commit('system/SET_CURRENTPATH', to.fullPath)
+  }
   if (hasToken) {
     if (to.path === '/login') {
       next({ path: '/' })

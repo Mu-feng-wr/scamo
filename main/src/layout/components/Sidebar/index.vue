@@ -87,6 +87,7 @@ export default {
       }
     },
     handleSelect(item, temp) {
+      this.$store.commit('system/SET_CURRENTPATH', temp.path)
       this.$router.push({
         path: temp.path
       })
