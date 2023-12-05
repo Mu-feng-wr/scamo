@@ -1,7 +1,16 @@
 <template>
   <div>
     <el-scrollbar ref="scrollContainer" :vertical="false" class="scroll-container" @wheel.native.prevent="handleScroll">
-      <router-link v-for="tag in visitedViews" ref="tag" :key="tag.path" :class="isActive(tag) ? 'active' : ''" :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }" tag="span" class="tags-view-item" @contextmenu.prevent.native="openMenu(tag, $event)">
+      <router-link
+        v-for="tag in visitedViews"
+        ref="tag"
+        :key="tag.path"
+        :class="isActive(tag) ? 'active' : ''"
+        :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
+        tag="span"
+        class="tags-view-item"
+        @contextmenu.prevent.native="openMenu(tag, $event)"
+      >
         {{ tag.title }}
         <span v-if="isAffix(tag)" class="el-icon-close" @click.prevent="closeSelectedTag(tag)"></span>
       </router-link>
@@ -62,7 +71,7 @@ export default {
       const offsetLeft = this.$el.getBoundingClientRect().left
       const offsetWidth = this.$el.offsetWidth
       const maxLeft = offsetWidth - menuMinWidth
-      const left = e.clientX - offsetLeft + 15
+      const left = e.clientX - offsetLeft + 70
 
       if (left > maxLeft) {
         this.left = maxLeft
@@ -70,7 +79,7 @@ export default {
         this.left = left
       }
 
-      this.top = e.clientY
+      this.top = e.clientY + 10
       this.visible = true
       this.selectedTag = tag
     },

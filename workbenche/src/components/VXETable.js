@@ -1,10 +1,14 @@
 import Vue from 'vue'
 import XEUtils from 'xe-utils'
 import VXETable from 'vxe-table'
+var vxeTable = VXETable
+if(window.$wujie){
+  vxeTable=window.$wujie.props.VXETable
+}
 Vue.prototype.$vxe = XEUtils
-Vue.prototype.$XModal = VXETable.modal
+Vue.prototype.$XModal = vxeTable.modal
 
-VXETable.formats.mixin({
+vxeTable.formats.mixin({
   formatDate({ cellValue }, format) {
     return XEUtils.toDateString(cellValue, format || 'yyyy-MM-dd')
   },
@@ -19,4 +23,4 @@ VXETable.formats.mixin({
   }
 })
 
-Vue.use(VXETable)
+Vue.use(vxeTable)

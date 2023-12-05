@@ -10,7 +10,12 @@
 </template>
 
 <script>
+import Vue from 'vue'
 import request from '@/utils/request'
+import XEUtils from 'xe-utils'
+import VXETable from 'vxe-table'
+Vue.prototype.$vxe = XEUtils
+
 export default {
   name: 'AppMain',
   components: {
@@ -24,7 +29,11 @@ export default {
         request: request,
         permissions: this.$store.getters.permissions,
         roles: this.$store.getters.roles,
-        download: this.download
+        download: this.download,
+        VXETable: VXETable,
+        logout: () => {
+          this.$store.dispatch('system/logout')
+        }
       }
     }
   },

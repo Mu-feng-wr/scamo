@@ -45,6 +45,12 @@ export const constantRoutes = [
     name: 'standbook-materialRegister',
     component: () => import('@/views/materialRegister/index.vue'),
     meta: { title: '登记' }
+  },
+  {
+    path: '/standbook/materialRegister/detail',
+    name: 'standbook-materialRegister-detail',
+    component: () => import('@/views/materialRegister/detail.vue'),
+    meta: { title: '登记详情' }
   }
 ]
 

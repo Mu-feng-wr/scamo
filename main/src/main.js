@@ -16,6 +16,7 @@ import '@/styles/global.scss'
 import { download } from '@/utils/request.js'
 Vue.prototype.download = download
 
+import 'vxe-table/lib/style.css'
 import WujieVue from 'wujie-vue2'
 import hostMap from '@/hostMap.js'
 Vue.use(WujieVue)

@@ -107,12 +107,12 @@
               class="vxeTable"
               show-footer
               :footer-method="getFooterData"
-              show-overflow="title"
+              show-overflow="tooltip"
               @page-change="handlePageChange"
             >
               <template #seqHeader>序号</template>
               <template #assetRegisterCode="{row}">
-                <el-link :underline="false" type="primary">{{ row.assetRegisterCode }}</el-link>
+                <el-link :underline="false" type="primary" @click="toDetail(row)">{{ row.assetRegisterCode }}</el-link>
               </template>
             </vxe-grid>
           </el-main>
@@ -215,6 +215,11 @@ export default {
         },
         `登记信息_${new Date().getTime()}.xlsx`
       )
+    },
+    toDetail() {
+      this.$router.push({
+        path: '/standbook/materialRegister/detail'
+      })
     }
   }
 }

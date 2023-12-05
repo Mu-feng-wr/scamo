@@ -45,9 +45,11 @@ const actions = {
   loginHandler({ commit }, formData) {
     return new Promise((resolve, reject) => {
       login(formData).then(res => {
-        commit('SET_TOKEN', res.data.access_token)
-        setToken(res.data.access_token)
-        resolve()
+        if (res.code == 200) {
+          commit('SET_TOKEN', res.data.access_token)
+          setToken(res.data.access_token)
+        }
+        resolve(res)
       })
     })
   },

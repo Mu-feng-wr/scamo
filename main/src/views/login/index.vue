@@ -91,7 +91,7 @@
                     </el-form-item>
 
                     <el-form-item style="width: 100%">
-                      <el-button :loading="loading" :disabled="disabled" size="medium" type="primary" style="width: 100%; padding: 12px 20px; font-size: 16px" @click.native.prevent="handleLogin">
+                      <el-button :loading="loading" size="medium" type="primary" style="width: 100%; padding: 12px 20px; font-size: 16px" @click.native.prevent="handleLogin">
                         <span v-if="!loading">登 录</span>
                         <span v-else>登 录 中...</span>
                       </el-button>
@@ -169,7 +169,6 @@ export default {
       captchaEnabled: true,
       codeUrl: '',
       loading: false,
-      disabled: false,
       computedVerifBtnText: '获取验证码'
     }
   },
@@ -198,10 +197,8 @@ export default {
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           this.loading = true
-          this.$store
-            .dispatch('system/loginHandler', this.loginForm)
-            .then((res) => {
-              this.disabled = true
+          this.$store.dispatch('system/loginHandler', this.loginForm).then((res) => {
+            if (res.code == 200) {
               if (this.loginForm.rememberMe) {
                 const loginInfo = {
                   username: this.loginForm.username,
@@ -216,10 +213,11 @@ export default {
               this.$router.push({
                 path: '/'
               })
-            })
-            .catch(() => {
+            } else {
+              this.getCode()
               this.loading = false
-            })
+            }
+          })
         }
       })
     },
