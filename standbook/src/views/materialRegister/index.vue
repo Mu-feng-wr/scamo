@@ -217,8 +217,11 @@ export default {
       )
     },
     toDetail() {
-      this.$router.push({
-        path: '/standbook/materialRegister/detail'
+      window.$wujie.props.route({
+        path: '/standbook/materialRegister',
+        module: 'Standbook',
+        fullPath: '/standbook/materialRegister/detail',
+        title: '登记详情'
       })
     }
   }

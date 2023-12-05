@@ -3,7 +3,11 @@
 </template>
 
 <script>
-export default {}
+export default {
+  created() {
+    console.log(window.$wujie.props)
+  }
+}
 </script>
 
 <style>

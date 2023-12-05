@@ -50,6 +50,9 @@ service.interceptors.response.use(
         })
       }
     }
+    if (res.total) {
+      res.total = Number(res.total)
+    }
     return res
   },
   error => {

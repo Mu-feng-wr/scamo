@@ -32,14 +32,16 @@ router.beforeEach(async(to, from, next) => {
           next({ path: to.redirectedFrom })
         } else {
           var urlList = store.getters.cachedViews
-          const index = urlList.findIndex((item) => item.path == to.path)
+          const index = urlList.findIndex((item) => item.fullPath == to.fullPath)
           if (index == -1) {
             urlList.push({
               path: to.path,
+              fullPath: to.path,
               name: to.name,
               title: to.meta.title,
               module: to.meta.module
             })
+            store.commit('system/SET_CURRENTPATH', to.fullPath)
           }
           store.commit('system/SET_CACHEVIEWS', urlList)
           next()

@@ -7,11 +7,12 @@ const getDefaultState = () => {
   return {
     token: '',
     menuList: [],
-    cachedViews: [{ title: '首页', path: '/dashboard' }],
+    cachedViews: [{ title: '首页', path: '/dashboard', fullPath: '/dashboard' }],
     userInfo: {},
     sidebarRouters: [],
     permissions: [],
-    roles: []
+    roles: [],
+    currentPath: ''
   }
 }
 
@@ -38,6 +39,9 @@ const mutations = {
   },
   SET_ROLES: (state, roles) => {
     state.roles = roles
+  },
+  SET_CURRENTPATH: (state, currentPath) => {
+    state.currentPath = currentPath
   }
 }
 

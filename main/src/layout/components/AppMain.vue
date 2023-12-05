@@ -1,10 +1,20 @@
 <template>
   <section class="app-main" :style="{'height':minHeight}">
     <div class="w-100 content" :style="{'height':minHeight}">
-      <div v-if="$route.path=='/dashboard'">
+      <div v-if="currentPath=='/dashboard'">
         <dashboard />
       </div>
-      <WujieVue v-for="(item, i) in wujieCacheView" v-show="$route.path==item.path" :key="i" width="100%" height="100%" class="wujie" :url="getUrl(item)" :name="item.name" :props="props" />
+      <WujieVue
+        v-for="(item, i) in wujieCacheView"
+        v-show="currentPath==item.fullPath"
+        :key="i"
+        width="100%"
+        height="100%"
+        class="wujie"
+        :url="getUrl(item)"
+        :name="item.name"
+        :props="getProps(item)"
+      />
     </div>
   </section>
 </template>
@@ -33,7 +43,8 @@ export default {
         VXETable: VXETable,
         logout: () => {
           this.$store.dispatch('system/logout')
-        }
+        },
+        route: this.addWujiePage
       }
     }
   },
@@ -53,7 +64,10 @@ export default {
       return this.cachedViews.filter((item) => !mainRoute.includes(item.path))
     },
     key() {
-      return this.$route.path
+      return this.$route.fullPath
+    },
+    currentPath() {
+      return this.$store.getters.currentPath
     }
   },
   methods: {
@@ -62,7 +76,34 @@ export default {
         Workbenche: 'http://localhost:9001/#',
         Standbook: 'http://localhost:9002/#'
       }
-      return wujieHost[item.module] + item.path
+      return wujieHost[item.module] + item.fullPath
+    },
+    addWujiePage(route) {
+      var urlList = this.$store.getters.cachedViews
+      var index = this.cachedViews.findIndex((item) => item.fullPath == route.fullPath)
+      if (index < 0) {
+        urlList.push(route)
+        this.$store.commit('system/SET_CACHEVIEWS', urlList)
+        this.$router.push({
+          path: route.path
+        })
+      } else {
+        urlList.splice(index, 1)
+        this.$nextTick(() => {
+          routeList.splice(index, 0, this.selectedTag)
+          this.$store.commit('system/SET_CACHEVIEWS', routeList)
+        })
+      }
+      this.$store.commit('system/SET_CURRENTPATH', route.fullPath)
+      this.$router.push({
+        path: route.path
+      })
+    },
+    getProps(item) {
+      return {
+        query: item.query,
+        ...this.props
+      }
     }
   }
 }

@@ -1,19 +1,20 @@
 <template>
   <div>
     <el-scrollbar ref="scrollContainer" :vertical="false" class="scroll-container" @wheel.native.prevent="handleScroll">
-      <router-link
+      <div
         v-for="tag in visitedViews"
         ref="tag"
-        :key="tag.path"
+        :key="tag.fullPath"
         :class="isActive(tag) ? 'active' : ''"
         :to="{ path: tag.path, query: tag.query, fullPath: tag.fullPath }"
         tag="span"
         class="tags-view-item"
-        @contextmenu.prevent.native="openMenu(tag, $event)"
+        @contextmenu.prevent="openMenu(tag, $event)"
+        @click="changePath(tag)"
       >
         {{ tag.title }}
         <span v-if="isAffix(tag)" class="el-icon-close" @click.prevent="closeSelectedTag(tag)"></span>
-      </router-link>
+      </div>
     </el-scrollbar>
     <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
       <li v-if="selectedTag.path==$route.path" @click="refreshSelectedTag">
@@ -63,8 +64,16 @@ export default {
     }
   },
   methods: {
+    changePath(tag) {
+      this.$store.commit('system/SET_CURRENTPATH', tag.fullPath)
+      this.$router.push({
+        path: tag.path,
+        query: tag.query,
+        fullPath: tag.fullPath
+      })
+    },
     isActive(route) {
-      return route.path == this.$route.path
+      return route.fullPath == this.$store.getters.currentPath
     },
     openMenu(tag, e) {
       const menuMinWidth = 105
