@@ -13,26 +13,26 @@
         @click="changePath(tag)"
       >
         {{ tag.title }}
-        <span v-if="isAffix(tag)" class="el-icon-close" @click.prevent="closeSelectedTag(tag)"></span>
+        <span v-if="isAffix(tag)" class="el-icon-close" @click.stop="closeSelectedTag(tag)"></span>
       </div>
     </el-scrollbar>
     <ul v-show="visible" :style="{ left: left + 'px', top: top + 'px' }" class="contextmenu">
-      <li v-if="selectedTag.path==$route.path" @click="refreshSelectedTag">
+      <li @click="refreshSelectedTag">
         <i class="el-icon-refresh-right"></i> 刷新页面
       </li>
-      <li v-if="selectedTag.path==$route.path" @click="closeSelectedTag(selectedTag)">
+      <li v-if="selectedTag.fullPath!='/dashboard'&&selectedTag.fullPath==$store.getters.currentPath" @click="closeSelectedTag(selectedTag)">
         <i class="el-icon-close"></i> 关闭当前
       </li>
       <li v-if="visitedViews.length>2" @click="closeOthersTags">
         <i class="el-icon-circle-close"></i> 关闭其他
       </li>
-      <li @click="closeLeftTags">
+      <li v-if="currentIndex>1" @click="closeLeftTags">
         <i class="el-icon-back"></i> 关闭左侧
       </li>
-      <li @click="closeRightTags">
+      <li v-if="visitedViews.length-1>currentIndex" @click="closeRightTags">
         <i class="el-icon-right"></i> 关闭右侧
       </li>
-      <li @click="closeAllTags(selectedTag)">
+      <li v-if="visitedViews.length>=2" @click="closeAllTags">
         <i class="el-icon-circle-close"></i> 全部关闭
       </li>
     </ul>
@@ -52,6 +52,9 @@ export default {
   computed: {
     visitedViews() {
       return this.$store.getters.cachedViews
+    },
+    currentIndex() {
+      return this.visitedViews.findIndex((item) => item.fullPath == this.selectedTag.fullPath)
     }
   },
   watch: {
@@ -61,6 +64,9 @@ export default {
       } else {
         document.body.removeEventListener('click', this.closeMenu)
       }
+    },
+    '$route.path'() {
+      this.closeMenu()
     }
   },
   methods: {
@@ -101,25 +107,46 @@ export default {
     },
     refreshSelectedTag() {
       var routeList = JSON.parse(JSON.stringify(this.visitedViews))
-      const index = routeList.findIndex((item) => item.path == this.selectedTag.path)
+      const index = routeList.findIndex((item) => item.fullPath == this.selectedTag.fullPath)
       routeList.splice(index, 1)
       this.$store.commit('system/SET_CACHEVIEWS', routeList)
       this.$nextTick(() => {
         routeList.splice(index, 0, this.selectedTag)
-        this.$store.commit('system/SET_CACHEVIEWS', routeList)
+        this.toPath(routeList, this.selectedTag.fullPath, this.selectedTag.path)
       })
     },
     closeSelectedTag(tag) {
       var routeList = JSON.parse(JSON.stringify(this.visitedViews))
-      const index = routeList.findIndex((item) => item.path == tag.path)
+      const index = routeList.findIndex((item) => item.fullPath == tag.fullPath)
       routeList.splice(index, 1)
-      this.$store.commit('system/SET_CACHEVIEWS', routeList)
-      this.$router.push(routeList[routeList.length - 1].path)
+      this.toPath(routeList, routeList[routeList.length - 1].fullPath, routeList[routeList.length - 1].path)
     },
-    closeOthersTags() {},
-    closeLeftTags() {},
-    closeRightTags() {},
-    closeAllTags() {},
+    closeOthersTags() {
+      var routeList = JSON.parse(JSON.stringify(this.visitedViews))
+      var whitePath = ['/dashboard', this.selectedTag.fullPath]
+      routeList = routeList.filter((item) => whitePath.includes(item.fullPath))
+      this.toPath(routeList, routeList[routeList.length - 1].fullPath, routeList[routeList.length - 1].path)
+    },
+    closeLeftTags() {
+      var routeList = JSON.parse(JSON.stringify(this.visitedViews))
+      routeList = routeList.filter((item, i) => i >= this.currentIndex || item.fullPath == '/dashboard')
+      this.toPath(routeList, this.selectedTag.fullPath, this.selectedTag.path)
+    },
+    closeRightTags() {
+      var routeList = JSON.parse(JSON.stringify(this.visitedViews))
+      routeList = routeList.filter((item, i) => i <= this.currentIndex)
+      this.toPath(routeList, this.selectedTag.fullPath, this.selectedTag.path)
+    },
+    closeAllTags() {
+      var routeList = JSON.parse(JSON.stringify(this.visitedViews))
+      routeList = routeList.filter((item) => item.fullPath != '/dashboard')
+      this.toPath(routeList, this.selectedTag.fullPath, this.selectedTag.path)
+    },
+    toPath(routeList, fullPath, path) {
+      this.$store.commit('system/SET_CURRENTPATH', fullPath)
+      this.$store.commit('system/SET_CACHEVIEWS', routeList)
+      this.$router.push({ path })
+    },
     closeMenu() {
       this.visible = false
     },

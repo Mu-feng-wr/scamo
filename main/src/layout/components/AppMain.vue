@@ -5,9 +5,9 @@
         <dashboard />
       </div>
       <WujieVue
-        v-for="(item, i) in wujieCacheView"
+        v-for="(item) in wujieCacheView"
         v-show="currentPath==item.fullPath"
-        :key="i"
+        :key="item.fullPath"
         width="100%"
         height="100%"
         class="wujie"

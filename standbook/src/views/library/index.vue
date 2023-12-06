@@ -151,13 +151,13 @@ import { listAccount, listAccountMy } from '@/api/materialAccount'
 import { listDictItems, deptTreeSelect } from '@/api/base.js'
 import { addressTreeSelect } from '@/api/address.js'
 export default {
+  mixins: [vxeTable],
   props: {
     type: {
       type: String,
-      default: '' //classificationMaterialAccount分类  organizationMaterialAccount组织  locationMaterialAccount库位  personage个人
+      default: '' // classificationMaterialAccount分类  organizationMaterialAccount组织  locationMaterialAccount库位  personage个人
     }
   },
-  mixins: [vxeTable],
   data() {
     return {
       treeLoading: false,
