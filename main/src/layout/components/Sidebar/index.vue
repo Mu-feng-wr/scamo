@@ -197,6 +197,9 @@ export default {
     margin-top: -50px;
   }
 }
+.el-menu-item {
+  color: #222943 !important;
+}
 
 .el-submenu.is-active {
   .el-submenu__title,
@@ -212,5 +215,8 @@ export default {
     border-radius: 4px 4px 4px 4px;
     color: #fff !important;
   }
+}
+.el-menu--popup {
+  min-width: 100px;
 }
 </style>

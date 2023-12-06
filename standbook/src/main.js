@@ -21,6 +21,9 @@ import 'vxe-table/lib/style.css'
 import directive from './directive' // directive
 Vue.use(directive)
 
+import elImageViewer from 'element-ui/packages/image/src/image-viewer'
+Vue.component('elImageViewer', elImageViewer)
+
 import { download } from '@/utils/request.js'
 if (window.$wujie) {
   Vue.prototype.download = window.$wujie.props.download

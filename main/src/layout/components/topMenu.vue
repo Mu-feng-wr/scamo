@@ -68,7 +68,6 @@ export default {
     },
     toLink(item) {
       var routerList = this.$store.getters.cachedViews
-      debugger
       var index = routerList.findIndex((temp) => item.path == temp.fullPath)
       if (index < 0) {
         routerList.push({
