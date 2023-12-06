@@ -74,7 +74,8 @@ export default {
           path: item.path,
           name: item.name,
           title: item.meta.title,
-          fullPath: item.path
+          fullPath: item.path,
+          module: item.meta.module
         })
       }
       this.$store.commit('system/SET_CACHEVIEWS', routerList)

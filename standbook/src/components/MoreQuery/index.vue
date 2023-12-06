@@ -5,7 +5,7 @@
       高级筛选
     </el-link>
 
-    <el-drawer style="position: absolute;height:100%;" :show-close="showClose" :modal="false" append-to-body :visible.sync="show" direction="rtl" size="650px" @close="showClose=true">
+    <el-drawer style="position: absolute;height:100%;overflow:hidden;" :show-close="showClose" append-to-body :visible.sync="show" direction="rtl" size="650px" @close="showClose=true">
       <div slot="title" class="disp-flex justify-between align-center">
         <span class="title">高级筛选</span>
         <i class="el-icon-close icon" @click="show=false"></i>
@@ -16,7 +16,7 @@
             <el-row>
               <el-col v-for="(item, i) in filterOptions" :key="i" :span="['datetimerange', 'daterange','numberRange'].includes(item.type) ? 24 : 12">
                 <el-form-item :label="item.label">
-                  <el-input v-if="item.type == 'input'" v-model="form[item.value]" :placeholder="item.placeholder || '请输入'" :clearable="item.clearable||true" />
+                  <el-input v-if="item.type == 'input'" v-model="form[item.value]" :placeholder="item.placeholder || '请输入'" :clearable="item.clearable||true" :size="item.size||'small'" />
 
                   <el-select
                     v-if="item.type == 'select'"
@@ -26,6 +26,7 @@
                     :clearable="item.clearable||true"
                     :multiple-limit="item.multipleLimit"
                     :disabled="item.disabled"
+                    :size="item.size||'small'"
                   >
                     <el-option v-for="(temp, index) in item.options" :key="index" :label="temp[item.labelName] || temp.itemsName" :value="temp[item.valueName] || item.value" />
                   </el-select>
@@ -73,6 +74,7 @@
                     value-format="yyyy"
                     :placeholder="item.placeholder || '选择年份'"
                     :clearable="item.clearable||true"
+                    :size="item.size||'small'"
                   />
                   <el-date-picker
                     v-if="item.type == 'month'"
@@ -81,6 +83,7 @@
                     value-format="MM"
                     :placeholder="item.placeholder || '选择月份'"
                     :clearable="item.clearable||true"
+                    :size="item.size||'small'"
                   />
                   <el-input-number
                     v-if="item.type == 'inputNumber'"
@@ -93,6 +96,7 @@
                     label="描述文字"
                     :placeholder="item.placeholder || '请输入'"
                     :clearable="item.clearable||true"
+                    :size="item.size||'small'"
                   />
 
                   <el-cascader
@@ -102,6 +106,7 @@
                     filterable
                     :placeholder="item.placeholder || '请选择'"
                     :clearable="item.clearable||true"
+                    :size="item.size||'small'"
                   />
                 </el-form-item>
               </el-col>
@@ -195,7 +200,9 @@ export default {
   margin-bottom: 0;
   box-shadow: 0 1px 5px #efefef;
 }
-
+::v-deep .el-drawer__body {
+  height: calc(100% - 48px);
+}
 .title {
   font-weight: 500;
   color: #222943;
@@ -235,5 +242,11 @@ export default {
   &.is-underline:hover:after {
     border-bottom: none;
   }
+}
+::v-deep .el-form-item {
+  margin-bottom: 10px;
+}
+::v-deep .el-col {
+  height: auto;
 }
 </style>

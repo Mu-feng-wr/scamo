@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import XEUtils from 'xe-utils'
 import VXETable from 'vxe-table'
+import 'vxe-table/lib/style.css'
 var vxeTable = VXETable
 if (window.$wujie) {
   vxeTable = window.$wujie.props.VXETable

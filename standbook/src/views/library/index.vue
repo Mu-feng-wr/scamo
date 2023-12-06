@@ -26,48 +26,55 @@
           <el-container>
             <el-header>
               <SearchArea :show-all-search.sync="showAllSearch" class="p-16">
-                <el-row :gutter="14">
-                  <el-col :span="4">
-                    <el-input v-model="queryParams.assetCode" size="small" placeholder="资产编码" clearable @keyup.enter.native="load" />
-                  </el-col>
-                  <el-col :span="4">
-                    <el-input v-model="queryParams.assetName" size="small" placeholder="资产名称" clearable @keyup.enter.native="load" />
-                  </el-col>
-                  <el-col :span="4">
-                    <el-input size="small" placeholder="标准物资编码" clearable @keyup.enter.native="load" />
-                  </el-col>
-                  <el-col :span="4">
-                    <el-input size="small" placeholder="标准物资名称" clearable @keyup.enter.native="load" />
-                  </el-col>
-                  <el-col :span="4">
-                    <el-input v-model="queryParams.serialNum" size="small" placeholder="序列号" clearable @keyup.enter.native="load" />
-                  </el-col>
-                  <el-col :span="4">
+                <div class="flex">
+                  <div class="searchLeft">
+                    <el-row :gutter="14">
+                      <el-col :span="4">
+                        <el-input v-model="queryParams.assetCode" size="small" placeholder="资产编码" clearable @keyup.enter.native="load" />
+                      </el-col>
+                      <el-col :span="4">
+                        <el-input v-model="queryParams.assetName" size="small" placeholder="资产名称" clearable @keyup.enter.native="load" />
+                      </el-col>
+                      <el-col :span="4">
+                        <el-input size="small" placeholder="标准物资编码" clearable @keyup.enter.native="load" />
+                      </el-col>
+                      <el-col :span="4">
+                        <el-input size="small" placeholder="标准物资名称" clearable @keyup.enter.native="load" />
+                      </el-col>
+                      <el-col :span="4">
+                        <el-input v-model="queryParams.serialNum" size="small" placeholder="序列号" clearable @keyup.enter.native="load" />
+                      </el-col>
+                      <el-col :span="4">
+                        <el-input v-model="queryParams.specificationModel" size="small" placeholder="规格型号" clearable @keyup.enter.native="load" />
+                      </el-col>
+                    </el-row>
+                    <el-row v-show="showAllSearch" class="mt-10" :gutter="14">
+                      <el-col :span="4">
+                        <el-input v-model="queryParams.quantityUnit" size="small" placeholder="数量单位" clearable @keyup.enter.native="load" />
+                      </el-col>
+                      <el-col :span="4">
+                        <el-input v-model="queryParams.subscriptionCode" size="small" placeholder="申购单编号" clearable @keyup.enter.native="load" />
+                      </el-col>
+                      <el-col :span="4">
+                        <el-input v-model="queryParams.subscriberName" size="small" placeholder="申购人姓名" clearable @keyup.enter.native="load" />
+                      </el-col>
+                      <el-col :span="4">
+                        <el-input v-model="queryParams.acceptedOrderCode" size="small" placeholder="入库单编号" clearable @keyup.enter.native="load" />
+                      </el-col>
+                      <el-col :span="4">
+                        <el-input v-model="queryParams.acceptedUserName" size="small" placeholder="验收人姓名" clearable @keyup.enter.native="load" />
+                      </el-col>
+                      <el-col :span="4">
+                        <el-input v-model="queryParams.endSheetCode" size="small" placeholder="终结单编号" clearable @keyup.enter.native="load" />
+                      </el-col>
+                    </el-row>
+                  </div>
+                  <div class="ml-10 searchRight">
                     <el-button type="primary" icon="el-icon-search" size="small" @click="load">搜索</el-button>
                     <el-button icon="el-icon-refresh" size="small" @click="reset">重置</el-button>
                     <MoreQuery label-width="170px" :filter-options="filterOptions" :form-data.sync="queryParams" @reload="load" />
-                  </el-col>
-                </el-row>
-                <el-row v-show="showAllSearch" class="mt-10" :gutter="14">
-                  <el-col :span="4">
-                    <el-input v-model="queryParams.specificationModel" size="small" placeholder="规格型号" clearable @keyup.enter.native="load" />
-                  </el-col>
-                  <el-col :span="4">
-                    <el-input v-model="queryParams.quantityUnit" size="small" placeholder="数量单位" clearable @keyup.enter.native="load" />
-                  </el-col>
-                  <el-col :span="4">
-                    <el-input v-model="queryParams.subscriptionCode" size="small" placeholder="申购单编号" clearable @keyup.enter.native="load" />
-                  </el-col>
-                  <el-col :span="4">
-                    <el-input v-model="queryParams.subscriberName" size="small" placeholder="申购人姓名" clearable @keyup.enter.native="load" />
-                  </el-col>
-                  <el-col :span="4">
-                    <el-input v-model="queryParams.acceptedOrderCode" size="small" placeholder="入库单编号" clearable @keyup.enter.native="load" />
-                  </el-col>
-                  <el-col :span="4">
-                    <el-input v-model="queryParams.acceptedUserName" size="small" placeholder="验收人姓名" clearable @keyup.enter.native="load" />
-                  </el-col>
-                </el-row>
+                  </div>
+                </div>
               </SearchArea>
             </el-header>
             <el-main>
@@ -76,7 +83,6 @@
                   <el-row class="mb-15">
                     <el-col :span="12">
                       <el-button plain icon="el-icon-download" size="mini" @click="handleExport">导出列表</el-button>
-                      <!-- <export-toolbar @fnExport="handleExport" :columns="tableColumn"></export-toolbar> -->
                     </el-col>
                     <el-col :span="12" class="text-right">
                       <el-button plain icon="el-icon-refresh" size="mini" @click="reload">刷新</el-button>
@@ -141,16 +147,16 @@
 <script>
 import vxeTable from '@/mixins/vxeTable'
 import { categoryTreeSelect } from '@/api/category.js'
-import { listAccount } from '@/api/materialAccount'
-import { listDictItems } from '@/api/base.js'
-// import { deptTreeSelect } from '@/api/system/user.js'
-// import { addressTreeSelect } from '@/api/library/address.js'
-// import { listAccountMy } from '@/api/library/materialAccount.js'
+import { listAccount, listAccountMy } from '@/api/materialAccount'
+import { listDictItems, deptTreeSelect } from '@/api/base.js'
+import { addressTreeSelect } from '@/api/address.js'
 export default {
-  // props: {
-  //   type: String,
-  //   default: '' //classificationMaterialAccount分类  organizationMaterialAccount组织  locationMaterialAccount库位  personage个人
-  // },
+  props: {
+    type: {
+      type: String,
+      default: '' //classificationMaterialAccount分类  organizationMaterialAccount组织  locationMaterialAccount库位  personage个人
+    }
+  },
   mixins: [vxeTable],
   data() {
     return {
@@ -217,7 +223,7 @@ export default {
         { visible: true, showOverflow: true, field: 'endSheetMethod', title: '终结方式', width: 130 },
         { visible: true, showOverflow: true, field: 'endAssetPictureName', title: '终结资产图片名称', width: 150 },
         { visible: true, showOverflow: true, field: 'recycleResidualValue', title: '回收残值', width: 130 },
-        { visible: true, showOverflow: true, field: 'termValidity', title: '启用日期', width: 130 },
+        { visible: true, showOverflow: true, field: 'termValidity1', title: '启用日期', width: 130 },
         { visible: true, showOverflow: true, field: 'lastCountUserName', title: '最后盘点人姓名', width: 130 },
         { visible: true, showOverflow: true, field: 'lastCountOrgName', title: '最后盘点部门名称', width: 200 },
         { visible: true, showOverflow: true, field: 'lastCountDate', title: '最后盘点日期', width: 130 },
@@ -230,7 +236,6 @@ export default {
   computed: {
     filterOptions() {
       return [
-        { label: '终结单编号：', type: 'input', placeholder: '请输入终结单编号', value: 'endSheetCode' },
         { label: '当前使用人姓名：', type: 'input', placeholder: '请输入当前使用人姓名', value: 'valuecurrentUserName1' },
         { label: '当前使用部门名称：', type: 'input', placeholder: '请输入当前使用部门名称', value: 'currentOrgName' },
         { label: '当前使用公司名称：', type: 'input', placeholder: '请输入当前使用公司名称', value: 'currentCompanyName' },
@@ -328,15 +333,15 @@ export default {
     },
     getTreeData() {
       this.treeLoading = true
-      // let func = ''
-      // if (this.type == 'classificationMaterialAccount' || this.type == 'personage') {
-      //   func = categoryTreeSelect
-      // } else if (this.type == 'organizationMaterialAccount') {
-      //   func = deptTreeSelect
-      // } else if (this.type == 'locationMaterialAccount') {
-      //   func = addressTreeSelect
-      // }
-      categoryTreeSelect()
+      let func = ''
+      if (this.type == 'classificationMaterialAccount' || this.type == 'personage') {
+        func = categoryTreeSelect
+      } else if (this.type == 'organizationMaterialAccount') {
+        func = deptTreeSelect
+      } else if (this.type == 'locationMaterialAccount') {
+        func = addressTreeSelect
+      }
+      func()
         .then((res) => {
           this.treeList = res.data
         })
@@ -360,12 +365,12 @@ export default {
     },
     reload() {
       this.tableLoading = true
-      var func = listAccount
-      // if (this.type == 'personage') {
-      //   func = listAccountMy
-      // } else {
-      //   func = listAccount
-      // }
+      var func = null
+      if (this.type == 'personage') {
+        func = listAccountMy
+      } else {
+        func = listAccount
+      }
       func(this.currentParams)
         .then((res) => {
           this.tableData = res.rows

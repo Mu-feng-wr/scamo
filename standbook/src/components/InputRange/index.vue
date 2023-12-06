@@ -15,7 +15,7 @@
       :size="size"
       @clear="clear"
       @change="change"
-    ></el-date-picker>
+    />
     <!-- 日期范围选择   daterange-->
     <el-date-picker
       v-if="type=='daterange'"
@@ -30,12 +30,12 @@
       :size="size"
       @change="change"
       @clear="clear"
-    ></el-date-picker>
+    />
     <!-- 数量范围选择 -->
-    <div v-if="type=='numberRange'" class="flex">
-      <el-input-number v-model="value1" @change="changeValue1" controls-position="right" :label="startPlaceholder"></el-input-number>
+    <div v-if="type=='numberRange'" class="disp-flex">
+      <el-input-number v-model="value1" :size="size" controls-position="right" :label="startPlaceholder" @change="changeValue1" />
       <span class="ml-10 mr-10">{{ rangeSeparator }}</span>
-      <el-input-number v-model="value2" @change="changeValue2" controls-position="right" :label="endPlaceholder"></el-input-number>
+      <el-input-number v-model="value2" :size="size" controls-position="right" :label="endPlaceholder" @change="changeValue2" />
     </div>
   </div>
 </template>
@@ -130,7 +130,7 @@ export default {
     changeValue1(val) {
       this.$emit('update:startValue', val)
     },
-    changeValue2() {
+    changeValue2(val) {
       this.$emit('update:endValue', val)
     }
   }
@@ -139,5 +139,6 @@ export default {
 <style lang="scss" scoped>
 .templateCom {
   width: 100%;
+  line-height: 32px;
 }
 </style>

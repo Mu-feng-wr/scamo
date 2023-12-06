@@ -16,7 +16,6 @@ import '@/permission'
 import '@/styles/global.scss'
 
 import '@/components/VXETable.js'
-import 'vxe-table/lib/style.css'
 
 import directive from './directive' // directive
 Vue.use(directive)

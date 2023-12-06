@@ -12,3 +12,11 @@ export function listAccount(query) {
     params: query
   })
 }
+// 查询物资台账信息列表
+export function listAccountMy(query) {
+  return requestFunc({
+    url: '/library/materialAccount/myList',
+    method: 'get',
+    params: query
+  })
+}
