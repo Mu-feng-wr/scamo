@@ -4,17 +4,17 @@
       <el-aside class="aside">
         <div class="treeBox">
           <div class="p-10">
-            <el-input size="small" placeholder="请输入分类名称" v-model="treeName" @change="changeInput" clearable></el-input>
+            <el-input v-model="treeName" size="small" placeholder="请输入分类名称" clearable @change="changeInput" />
           </div>
 
           <el-tree
-            class="tree"
+            ref="tree"
             v-loading="treeLoading"
+            class="tree"
             :data="treeList"
             :props="treeProps"
             :expand-on-click-node="false"
             :filter-node-method="filterNode"
-            ref="tree"
             default-expand-all
             highlight-current
             @node-click="handleNodeClick"
@@ -25,13 +25,13 @@
         <div class="pl-10 pt-10 pr-10" style="height:100%;">
           <el-container>
             <el-header>
-              <SearchArea :showAllSearch.sync="showAllSearch" class="p-16">
+              <SearchArea :show-all-search.sync="showAllSearch" class="p-16">
                 <el-row :gutter="14">
                   <el-col :span="4">
-                    <el-input size="small" v-model="queryParams.assetCode" placeholder="资产编码" clearable @keyup.enter.native="load" />
+                    <el-input v-model="queryParams.assetCode" size="small" placeholder="资产编码" clearable @keyup.enter.native="load" />
                   </el-col>
                   <el-col :span="4">
-                    <el-input size="small" v-model="queryParams.assetName" placeholder="资产名称" clearable @keyup.enter.native="load" />
+                    <el-input v-model="queryParams.assetName" size="small" placeholder="资产名称" clearable @keyup.enter.native="load" />
                   </el-col>
                   <el-col :span="4">
                     <el-input size="small" placeholder="标准物资编码" clearable @keyup.enter.native="load" />
@@ -40,32 +40,32 @@
                     <el-input size="small" placeholder="标准物资名称" clearable @keyup.enter.native="load" />
                   </el-col>
                   <el-col :span="4">
-                    <el-input size="small" v-model="queryParams.serialNum" placeholder="序列号" clearable @keyup.enter.native="load" />
+                    <el-input v-model="queryParams.serialNum" size="small" placeholder="序列号" clearable @keyup.enter.native="load" />
                   </el-col>
                   <el-col :span="4">
                     <el-button type="primary" icon="el-icon-search" size="small" @click="load">搜索</el-button>
                     <el-button icon="el-icon-refresh" size="small" @click="reset">重置</el-button>
-                    <MoreQuery labelWidth="170px" :filterOptions="filterOptions" :formData.sync="queryParams" @reload="load" />
+                    <MoreQuery label-width="170px" :filter-options="filterOptions" :form-data.sync="queryParams" @reload="load" />
                   </el-col>
                 </el-row>
                 <el-row v-show="showAllSearch" class="mt-10" :gutter="14">
                   <el-col :span="4">
-                    <el-input size="small" v-model="queryParams.specificationModel" placeholder="规格型号" clearable @keyup.enter.native="load" />
+                    <el-input v-model="queryParams.specificationModel" size="small" placeholder="规格型号" clearable @keyup.enter.native="load" />
                   </el-col>
                   <el-col :span="4">
-                    <el-input size="small" v-model="queryParams.quantityUnit" placeholder="数量单位" clearable @keyup.enter.native="load" />
+                    <el-input v-model="queryParams.quantityUnit" size="small" placeholder="数量单位" clearable @keyup.enter.native="load" />
                   </el-col>
                   <el-col :span="4">
-                    <el-input size="small" v-model="queryParams.subscriptionCode" placeholder="申购单编号" clearable @keyup.enter.native="load" />
+                    <el-input v-model="queryParams.subscriptionCode" size="small" placeholder="申购单编号" clearable @keyup.enter.native="load" />
                   </el-col>
                   <el-col :span="4">
-                    <el-input size="small" v-model="queryParams.subscriberName" placeholder="申购人姓名" clearable @keyup.enter.native="load" />
+                    <el-input v-model="queryParams.subscriberName" size="small" placeholder="申购人姓名" clearable @keyup.enter.native="load" />
                   </el-col>
                   <el-col :span="4">
-                    <el-input size="small" v-model="queryParams.acceptedOrderCode" placeholder="入库单编号" clearable @keyup.enter.native="load" />
+                    <el-input v-model="queryParams.acceptedOrderCode" size="small" placeholder="入库单编号" clearable @keyup.enter.native="load" />
                   </el-col>
                   <el-col :span="4">
-                    <el-input size="small" v-model="queryParams.acceptedUserName" placeholder="验收人姓名" clearable @keyup.enter.native="load" />
+                    <el-input v-model="queryParams.acceptedUserName" size="small" placeholder="验收人姓名" clearable @keyup.enter.native="load" />
                   </el-col>
                 </el-row>
               </SearchArea>
@@ -88,8 +88,8 @@
                 <el-main>
                   <vxe-grid
                     ref="xTable"
-                    height="auto"
                     v-loading="tableLoading"
+                    height="auto"
                     header-align="center"
                     align="center"
                     :data="tableData"
@@ -110,16 +110,16 @@
                     <template #currentLocationName="{row}">{{ row.currentEreaName }}{{ row.currentLocationName?'/'+row.currentLocationName:'' }}</template>
                     <template #firstShelfName="{row}">{{ row.firstShelfName }}{{ row.secondShelfName?'/'+row.secondShelfName:'' }}</template>
                     <template #assetCharacteristic="{row}">
-                      <dictDateView :value="row.assetCharacteristic" :dictDataList="dictDataList" dictCode="AamMaterialAccount-assetCharacteristic" />
+                      <dictDateView :value="row.assetCharacteristic" :dict-data-list="dictDataList" dict-code="AamMaterialAccount-assetCharacteristic" />
                     </template>
                     <template #assetPhysicalState="{row}">
-                      <dictDateView :value="row.assetPhysicalState" :dictDataList="dictDataList" dictCode="AamMaterialAccount-assetPhysicalState" />
+                      <dictDateView :value="row.assetPhysicalState" :dict-data-list="dictDataList" dict-code="AamMaterialAccount-assetPhysicalState" />
                     </template>
                     <template #pictureName="{row}">
                       <img height="34px" :src="row.pictureRui" style="cursor: pointer;" alt @click="openImg(row)" />
                     </template>
                     <template v-slot:status="{ row }">
-                      <dictDateView :value="row.status" :dictDataList="dictDataList" dictCode="AamMaterialAccount-status" />
+                      <dictDateView :value="row.status" :dict-data-list="dictDataList" dict-code="AamMaterialAccount-status" />
                     </template>
 
                     <template v-slot:todo="{ row }">
@@ -151,6 +151,7 @@ export default {
   //   type: String,
   //   default: '' //classificationMaterialAccount分类  organizationMaterialAccount组织  locationMaterialAccount库位  personage个人
   // },
+  mixins: [vxeTable],
   data() {
     return {
       treeLoading: false,
@@ -226,7 +227,6 @@ export default {
       selectRows: []
     }
   },
-  mixins: [vxeTable],
   computed: {
     filterOptions() {
       return [
@@ -360,12 +360,12 @@ export default {
     },
     reload() {
       this.tableLoading = true
-      let func = ''
-      if (this.type == 'personage') {
-        func = listAccountMy
-      } else {
-        func = listAccount
-      }
+      var func = listAccount
+      // if (this.type == 'personage') {
+      //   func = listAccountMy
+      // } else {
+      //   func = listAccount
+      // }
       func(this.currentParams)
         .then((res) => {
           this.tableData = res.rows
@@ -402,9 +402,9 @@ export default {
       return this.footerMethod(columns, data, '', ['receiptQuantity', 'inventoryQuantity', 'reservedQuantity', 'taxAmount', 'discountAmount', 'subtotal'])
     },
     getDictData() {
-      let dictCodes = 'AamMaterialAccount-status' //资产状态
-      dictCodes += 'AamMaterialAccount-assetCharacteristic' //资产特性
-      dictCodes += ',AamMaterialAccount-assetPhysicalState' //资产物态
+      let dictCodes = 'AamMaterialAccount-status' // 资产状态
+      dictCodes += 'AamMaterialAccount-assetCharacteristic' // 资产特性
+      dictCodes += ',AamMaterialAccount-assetPhysicalState' // 资产物态
       listDictItems(dictCodes).then((res) => {
         this.dictDataList = res.sysDictionaryItemsList
       })
