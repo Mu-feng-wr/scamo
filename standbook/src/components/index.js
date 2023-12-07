@@ -1,10 +1,12 @@
 import Vue from 'vue'
-import searchArea from '@/components/searchArea/index.vue'
-import baseInput from '@/components/baseInput/index.vue'
-import tableHeaderConfig from '@/components/tableHeaderConfig/index.vue'
-import MoreQuery from '@/components/MoreQuery/index.vue'
-import InputRange from '@/components/InputRange/index.vue'
-import dictDataView from '@/components/dictDataView/index.vue'
+import searchArea from './searchArea/index.vue'
+import baseInput from './baseInput/index.vue'
+import tableHeaderConfig from './tableHeaderConfig/index.vue'
+import MoreQuery from './MoreQuery/index.vue'
+import InputRange from './InputRange/index.vue'
+import dictDataView from './dictDataView/index.vue'
+import PageCard from './PageCard/index.vue'
+import sectionCard from './sectionCard/index.vue'
 
 const com = [
   searchArea,
@@ -12,7 +14,9 @@ const com = [
   tableHeaderConfig,
   MoreQuery,
   InputRange,
-  dictDataView
+  dictDataView,
+  PageCard,
+  sectionCard
 ]
 com.forEach(item => {
   Vue.component(item.name, item)

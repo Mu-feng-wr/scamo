@@ -7,7 +7,7 @@
       <WujieVue
         v-for="(item) in wujieCacheView"
         v-show="currentPath==item.fullPath"
-        :key="item.fullPath"
+        :key="getUrl(item)"
         width="100%"
         height="100%"
         class="wujie"
@@ -57,6 +57,7 @@ export default {
       }
     },
     cachedViews() {
+      console.log(this.$store.getters.cachedViews)
       return this.$store.getters.cachedViews
     },
     wujieCacheView() {
@@ -87,7 +88,13 @@ export default {
         Tool: 'http://localhost:9011/#',
         Member: 'http://localhost:9012/#'
       }
-      return wujieHost[item.module] + item.fullPath
+      var query = []
+      if (item.condition) {
+        for (var i in item.condition) {
+          query.push(`${i}=${item.condition[i]}`)
+        }
+      }
+      return wujieHost[item.module] + item.fullPath + '?' + query.join('&')
     },
     addWujiePage(route) {
       var urlList = this.$store.getters.cachedViews
@@ -99,11 +106,13 @@ export default {
           path: route.path
         })
       } else {
-        urlList.splice(index, 1)
-        this.$nextTick(() => {
-          urlList.splice(index, 0, route)
-          this.$store.commit('system/SET_CACHEVIEWS', urlList)
-        })
+        if (route.condition && route.condition != this.cachedViews[index].condition) {
+          urlList.splice(index, 1)
+          this.$nextTick(() => {
+            urlList.splice(index, 0, route)
+            this.$store.commit('system/SET_CACHEVIEWS', urlList)
+          })
+        }
       }
       this.$store.commit('system/SET_CURRENTPATH', route.fullPath)
       this.$router.push({
@@ -127,7 +136,6 @@ export default {
   overflow: hidden;
 }
 .content {
-  background: white;
   border-radius: 4 px 4px 0 0;
   position: relative;
 }

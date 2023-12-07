@@ -20,6 +20,12 @@ export const constantRoutes = [
     }
   },
   {
+    path: '/standbook/classificationMaterialAccount/detail',
+    name: 'standbook-classificationMaterialAccount-detail',
+    component: () => import('@/views/library/detail.vue'),
+    meta: { title: '资产信息详情' }
+  },
+  {
     path: '/standbook/organizationMaterialAccount',
     name: 'standbook0-organizationMaterialAccount',
     component: () => import('@/views/library/index.vue'),
@@ -27,6 +33,12 @@ export const constantRoutes = [
     props: {
       type: 'organizationMaterialAccount'
     }
+  },
+  {
+    path: '/standbook/organizationMaterialAccount/detail',
+    name: 'standbook-organizationMaterialAccount-detail',
+    component: () => import('@/views/library/detail.vue'),
+    meta: { title: '资产信息详情' }
   },
   {
     path: '/standbook/locationMaterialAccount',
@@ -38,6 +50,12 @@ export const constantRoutes = [
     }
   },
   {
+    path: '/standbook/locationMaterialAccount/detail',
+    name: 'standbook-locationMaterialAccount-detail',
+    component: () => import('@/views/library/detail.vue'),
+    meta: { title: '资产信息详情' }
+  },
+  {
     path: '/standbook/indexMaterialAccount',
     name: 'standbook-indexMaterialAccount',
     component: () => import('@/views/library/index.vue'),
@@ -45,6 +63,12 @@ export const constantRoutes = [
     props: {
       type: 'personage'
     }
+  },
+  {
+    path: '/standbook/indexMaterialAccount/detail',
+    name: 'standbook-indexMaterialAccount-detail',
+    component: () => import('@/views/library/detail.vue'),
+    meta: { title: '资产信息详情' }
   },
   {
     path: '/standbook/materialPart',
@@ -57,12 +81,6 @@ export const constantRoutes = [
     name: 'standbook-materialRegister',
     component: () => import('@/views/materialRegister/index.vue'),
     meta: { title: '登记' }
-  },
-  {
-    path: '/standbook/materialRegister/detail',
-    name: 'standbook-materialRegister-detail',
-    component: () => import('@/views/materialRegister/detail.vue'),
-    meta: { title: '登记详情' }
   }
 ]
 

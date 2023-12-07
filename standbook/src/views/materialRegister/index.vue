@@ -112,7 +112,7 @@
             >
               <template #seqHeader>序号</template>
               <template #assetRegisterCode="{row}">
-                <el-link :underline="false" type="primary" @click="toDetail(row)">{{ row.assetRegisterCode }}</el-link>
+                <el-link :underline="false" type="primary">{{ row.assetRegisterCode }}</el-link>
               </template>
             </vxe-grid>
           </el-main>
@@ -215,15 +215,15 @@ export default {
         },
         `登记信息_${new Date().getTime()}.xlsx`
       )
-    },
-    toDetail() {
-      window.$wujie.props.route({
-        path: '/standbook/materialRegister',
-        module: 'Standbook',
-        fullPath: '/standbook/materialRegister/detail',
-        title: '登记详情'
-      })
     }
+    // toDetail() {
+    //   window.$wujie.props.route({
+    //     path: '/standbook/materialRegister',
+    //     module: 'Standbook',
+    //     fullPath: '/standbook/materialRegister/detail',
+    //     title: '登记详情'
+    //   })
+    // }
   }
 }
 </script>

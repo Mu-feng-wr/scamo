@@ -436,35 +436,39 @@ export default {
     detailHandle(id) {
       switch (this.type) {
         case 'classificationMaterialAccount':
-          this.$router.push({
-            name: 'classification-detail',
-            query: {
-              id: id
-            }
+          window.$wujie.props.route({
+            path: '/standbook/classificationMaterialAccount',
+            module: 'Standbook',
+            fullPath: '/standbook/classificationMaterialAccount/detail',
+            title: '分类-资产信息详情',
+            condition: { id }
           })
           break
         case 'organizationMaterialAccount':
-          this.$router.push({
-            name: 'organization-detail',
-            query: {
-              id: id
-            }
+          window.$wujie.props.route({
+            path: '/standbook/organizationMaterialAccount',
+            module: 'Standbook',
+            fullPath: '/standbook/organizationMaterialAccount/detail',
+            title: '组织-资产信息详情',
+            condition: { id }
           })
           break
         case 'ocationMaterialAccount':
-          this.$router.push({
-            name: 'location-detail',
-            query: {
-              id: id
-            }
+          window.$wujie.props.route({
+            path: '/standbook/ocationMaterialAccount',
+            module: 'Standbook',
+            fullPath: '/standbook/ocationMaterialAccount/detail',
+            title: '库位-资产信息详情',
+            condition: { id }
           })
           break
         case 'personage':
-          this.$router.push({
-            name: 'index-detail',
-            query: {
-              id: id
-            }
+          window.$wujie.props.route({
+            path: '/standbook/indexMaterialAccount',
+            module: 'Standbook',
+            fullPath: '/standbook/indexMaterialAccount/detail',
+            title: '我的-资产信息详情',
+            condition: { id }
           })
           break
         default:

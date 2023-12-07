@@ -20,3 +20,11 @@ export function listAccountMy(query) {
     params: query
   })
 }
+
+// 查询物资台账信息详细
+export function getAccount(materialAccountId) {
+  return requestFunc({
+    url: '/library/materialAccount/' + materialAccountId,
+    method: 'get'
+  })
+}
