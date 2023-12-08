@@ -2,8 +2,8 @@ import Vue from 'vue'
 import XEUtils from 'xe-utils'
 import VXETable from 'vxe-table'
 var vxeTable = VXETable
-if(window.$wujie){
-  vxeTable=window.$wujie.props.VXETable
+if (window.$wujie) {
+  vxeTable = window.$wujie.props.VXETable
 }
 Vue.prototype.$vxe = XEUtils
 Vue.prototype.$XModal = vxeTable.modal

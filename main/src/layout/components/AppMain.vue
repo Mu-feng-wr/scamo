@@ -12,7 +12,7 @@
         height="100%"
         class="wujie"
         :url="getUrl(item)"
-        :name="item.name"
+        :name="item.fullPath"
         :props="getProps(item)"
       />
     </div>
