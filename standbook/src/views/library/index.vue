@@ -108,11 +108,15 @@
                     class="vxeTable"
                     show-footer
                     :footer-method="getFooterData"
+                    show-overflow="tooltip"
                     @page-change="handlePageChange"
                     @checkbox-all="changeCheck"
                     @checkbox-change="changeCheck"
                   >
                     <template #seqHeader>序号</template>
+                    <template #assetCode="{row}">
+                      <el-link :underline="false" type="primary" @click="detailHandle(row.materialAccountId)">{{ row.assetCode }}</el-link>
+                    </template>
                     <template #currentLocationName="{row}">{{ row.currentEreaName }}{{ row.currentLocationName?'/'+row.currentLocationName:'' }}</template>
                     <template #firstShelfName="{row}">{{ row.firstShelfName }}{{ row.secondShelfName?'/'+row.secondShelfName:'' }}</template>
                     <template #assetCharacteristic="{row}">
@@ -174,61 +178,61 @@ export default {
       tableColumn: [
         { type: 'checkbox', width: 70, align: 'center', fixed: 'left', visible: true },
         { type: 'seq', width: 70, align: 'center', fixed: 'left', visible: true, visibleDisabled: true, slots: { header: 'seqHeader' } },
-        { visible: true, showOverflow: true, field: 'assetCode', title: '资产编码', width: 160, visibleDisabled: true, fixed: 'left' },
-        { visible: true, showOverflow: true, field: 'assetName', title: '资产名称', width: 180, visibleDisabled: true, fixed: 'left' },
-        { visible: true, showOverflow: true, field: 'pictureName', title: '资产图片', width: 120, slots: { default: 'pictureName' } },
-        { visible: true, showOverflow: true, field: 'serialNum', title: '序列号', width: 160 },
-        { visible: true, showOverflow: true, field: 'specificationModel', title: '规格型号', width: 160 },
-        { visible: true, showOverflow: true, field: 'brandName', title: '品牌', width: 130 },
-        { visible: true, showOverflow: true, field: 'receiptQuantity', title: '入库数量', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { visible: true, showOverflow: true, field: 'inventoryQuantity', title: '库存数量', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { visible: true, showOverflow: true, field: 'reservedQuantity', title: '留库数量', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { visible: true, showOverflow: true, field: 'quantityUnit', title: '数量单位', width: 130 },
-        { visible: true, showOverflow: true, field: 'conversionUnit', title: '换算单位', width: 130 },
-        { visible: true, showOverflow: true, field: 'conversionQuantity', title: '换算数量', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { visible: true, showOverflow: true, field: 'priceExcludTax', title: '不含税单价（元）', width: 150, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { visible: true, showOverflow: true, field: 'taxRate', title: '税率（%）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { visible: true, showOverflow: true, field: 'taxAmount', title: '税额（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { visible: true, showOverflow: true, field: 'priceIncludTax', title: '含税单价（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { visible: true, showOverflow: true, field: 'discountAmount', title: '优惠金额（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { visible: true, showOverflow: true, field: 'subtotal', title: '金额小计（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { visible: true, showOverflow: true, field: 'contractName', title: '合同', width: 130 },
-        { visible: true, showOverflow: true, field: 'supplierName', title: '供应商', width: 130 },
-        { visible: true, showOverflow: true, field: 'accountName', title: '出账公司', width: 170, headerAlign: 'center', align: 'left' },
-        { visible: true, showOverflow: true, field: 'projectName', title: '项目', width: 170, headerAlign: 'center', align: 'left' },
-        { visible: true, showOverflow: true, field: 'schemeName', title: '方案', width: 130 },
-        { visible: true, showOverflow: true, field: 'currentUserName', title: '使用人', width: 130 },
-        { visible: true, showOverflow: true, field: 'currentOrgName', title: '使用部门', width: 130 },
-        { visible: true, showOverflow: true, field: 'currentCompanyName', title: '使用公司', width: 170, headerAlign: 'center', align: 'left' },
-        { visible: true, showOverflow: true, field: 'currentLocationName', title: '具体位置', width: 220, slots: { default: 'currentLocationName' } },
-        { visible: true, showOverflow: true, field: 'warehouseName', title: '资产所属仓库名称', width: 200 },
-        { visible: true, showOverflow: true, field: 'assetCompanyName', title: '资产所属公司名称', width: 200, headerAlign: 'center', align: 'left' },
-        { visible: true, showOverflow: true, field: 'firstShelfName', title: '存放货架', width: 220, slots: { default: 'firstShelfName' } },
-        { visible: true, showOverflow: true, field: 'assetCharacteristic', title: '资产特性', width: 130, slots: { default: 'assetCharacteristic' } },
-        { visible: true, showOverflow: true, field: 'assetPhysicalState', title: '资产物态', width: 130, slots: { default: 'assetPhysicalState' } },
-        { visible: true, showOverflow: true, field: 'qualityGuaranteePeriod', title: '保质期', width: 130 },
-        { visible: true, showOverflow: true, field: 'termValidity', title: '有效期', width: 130 },
-        { visible: true, showOverflow: true, field: 'ynPublic', title: '是否公开', width: 130 },
-        { visible: true, showOverflow: true, field: 'ynInviteTender', title: '是否招标', width: 130 },
-        { visible: true, showOverflow: true, field: 'centralizedBusinessName', title: '业务归口名称', width: 130 },
-        { visible: true, showOverflow: true, field: 'subscriptionCode', title: '申购单编号', width: 130 },
-        { visible: true, showOverflow: true, field: 'subscriberName', title: '申购人姓名', width: 130 },
-        { visible: true, showOverflow: true, field: 'subscriptionDate', title: '申购日期', width: 130 },
-        { visible: true, showOverflow: true, field: 'acceptedOrderCode', title: '入库单编号', width: 130 },
-        { visible: true, showOverflow: true, field: 'acceptedUserName', title: '验收人姓名', width: 130 },
-        { visible: true, showOverflow: true, field: 'acceptedDate', title: '入库日期', width: 130 },
-        { visible: true, showOverflow: true, field: 'endSheetCode', title: '终结单编号', width: 130 },
-        { visible: true, showOverflow: true, field: 'terminatorName', title: '终结人姓名', width: 130 },
-        { visible: true, showOverflow: true, field: 'endData', title: '终结日期', width: 130 },
-        { visible: true, showOverflow: true, field: 'endSheetMethod', title: '终结方式', width: 130 },
-        { visible: true, showOverflow: true, field: 'endAssetPictureName', title: '终结资产图片名称', width: 150 },
-        { visible: true, showOverflow: true, field: 'recycleResidualValue', title: '回收残值', width: 130 },
-        { visible: true, showOverflow: true, field: 'termValidity1', title: '启用日期', width: 130 },
-        { visible: true, showOverflow: true, field: 'lastCountUserName', title: '最后盘点人姓名', width: 130 },
-        { visible: true, showOverflow: true, field: 'lastCountOrgName', title: '最后盘点部门名称', width: 200 },
-        { visible: true, showOverflow: true, field: 'lastCountDate', title: '最后盘点日期', width: 130 },
-        { visible: true, showOverflow: true, field: 'status', title: '资产状态', width: 130, slots: { default: 'status' } },
-        { visible: true, showOverflow: true, field: 'todo', title: '操作', width: 130, fixed: 'right', slots: { default: 'todo' } }
+        { visible: true, field: 'assetCode', title: '资产编码', width: 160, visibleDisabled: true, fixed: 'left', slots: { default: 'assetCode' } },
+        { visible: true, field: 'assetName', title: '资产名称', width: 180, visibleDisabled: true, fixed: 'left' },
+        { visible: true, field: 'pictureName', title: '资产图片', width: 120, slots: { default: 'pictureName' } },
+        { visible: true, field: 'serialNum', title: '序列号', width: 160 },
+        { visible: true, field: 'specificationModel', title: '规格型号', width: 160 },
+        { visible: true, field: 'brandName', title: '品牌', width: 130 },
+        { visible: true, field: 'receiptQuantity', title: '入库数量', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { visible: true, field: 'inventoryQuantity', title: '库存数量', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { visible: true, field: 'reservedQuantity', title: '留库数量', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { visible: true, field: 'quantityUnit', title: '数量单位', width: 130 },
+        { visible: true, field: 'conversionUnit', title: '换算单位', width: 130 },
+        { visible: true, field: 'conversionQuantity', title: '换算数量', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { visible: true, field: 'priceExcludTax', title: '不含税单价（元）', width: 150, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { visible: true, field: 'taxRate', title: '税率（%）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { visible: true, field: 'taxAmount', title: '税额（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { visible: true, field: 'priceIncludTax', title: '含税单价（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { visible: true, field: 'discountAmount', title: '优惠金额（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { visible: true, field: 'subtotal', title: '金额小计（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { visible: true, field: 'contractName', title: '合同', width: 130 },
+        { visible: true, field: 'supplierName', title: '供应商', width: 130 },
+        { visible: true, field: 'accountName', title: '出账公司', width: 170, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'projectName', title: '项目', width: 170, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'schemeName', title: '方案', width: 130 },
+        { visible: true, field: 'currentUserName', title: '使用人', width: 130 },
+        { visible: true, field: 'currentOrgName', title: '使用部门', width: 130 },
+        { visible: true, field: 'currentCompanyName', title: '使用公司', width: 170, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'currentLocationName', title: '具体位置', width: 220, slots: { default: 'currentLocationName' } },
+        { visible: true, field: 'warehouseName', title: '资产所属仓库名称', width: 200 },
+        { visible: true, field: 'assetCompanyName', title: '资产所属公司名称', width: 200, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'firstShelfName', title: '存放货架', width: 220, slots: { default: 'firstShelfName' } },
+        { visible: true, field: 'assetCharacteristic', title: '资产特性', width: 130, slots: { default: 'assetCharacteristic' } },
+        { visible: true, field: 'assetPhysicalState', title: '资产物态', width: 130, slots: { default: 'assetPhysicalState' } },
+        { visible: true, field: 'qualityGuaranteePeriod', title: '保质期', width: 130 },
+        { visible: true, field: 'termValidity', title: '有效期', width: 130 },
+        { visible: true, field: 'ynPublic', title: '是否公开', width: 130 },
+        { visible: true, field: 'ynInviteTender', title: '是否招标', width: 130 },
+        { visible: true, field: 'centralizedBusinessName', title: '业务归口名称', width: 130 },
+        { visible: true, field: 'subscriptionCode', title: '申购单编号', width: 130 },
+        { visible: true, field: 'subscriberName', title: '申购人姓名', width: 130 },
+        { visible: true, field: 'subscriptionDate', title: '申购日期', width: 130 },
+        { visible: true, field: 'acceptedOrderCode', title: '入库单编号', width: 130 },
+        { visible: true, field: 'acceptedUserName', title: '验收人姓名', width: 130 },
+        { visible: true, field: 'acceptedDate', title: '入库日期', width: 130 },
+        { visible: true, field: 'endSheetCode', title: '终结单编号', width: 130 },
+        { visible: true, field: 'terminatorName', title: '终结人姓名', width: 130 },
+        { visible: true, field: 'endData', title: '终结日期', width: 130 },
+        { visible: true, field: 'endSheetMethod', title: '终结方式', width: 130 },
+        { visible: true, field: 'endAssetPictureName', title: '终结资产图片名称', width: 150 },
+        { visible: true, field: 'recycleResidualValue', title: '回收残值', width: 130 },
+        { visible: true, field: 'termValidity1', title: '启用日期', width: 130 },
+        { visible: true, field: 'lastCountUserName', title: '最后盘点人姓名', width: 130 },
+        { visible: true, field: 'lastCountOrgName', title: '最后盘点部门名称', width: 200 },
+        { visible: true, field: 'lastCountDate', title: '最后盘点日期', width: 130 },
+        { visible: true, field: 'status', title: '资产状态', width: 130, slots: { default: 'status' } },
+        { visible: true, field: 'todo', title: '操作', width: 130, fixed: 'right', slots: { default: 'todo' } }
       ],
       selectRows: []
     }
@@ -321,6 +325,9 @@ export default {
   created() {
     this.getDictData()
     this.init()
+  },
+  mounted() {
+    window.$wujie.props.setFunc({ reload: this.reload })
   },
   methods: {
     // 全选  单选

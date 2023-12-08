@@ -1,5 +1,5 @@
 <template>
-  <PageCard>
+  <PageCard v-loading="submitLoading">
     <el-form ref="form" label-width="170px" class="form-table" style="margin-bottom: 8px">
       <SectionCard title="基本信息">
         <el-row>
@@ -205,7 +205,8 @@ export default {
       formData: {},
       dictDataList: [],
       imgList: [],
-      elImageViewer: false
+      elImageViewer: false,
+      submitLoading: false
     }
   },
   created() {

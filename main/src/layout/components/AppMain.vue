@@ -44,7 +44,8 @@ export default {
         logout: () => {
           this.$store.dispatch('system/logout')
         },
-        route: this.addWujiePage
+        route: this.addWujiePage,
+        setFunc: this.setFunc
       }
     }
   },
@@ -118,6 +119,11 @@ export default {
       this.$router.push({
         path: route.path
       })
+    },
+    setFunc(func) {
+      for (var i in func) {
+        this.props[i] = func[i]
+      }
     },
     getProps(item) {
       return {

@@ -1,13 +1,11 @@
 <template>
-  <div>123</div>
+  <div class="card-container app-container">
+    <el-container>配件</el-container>
+  </div>
 </template>
 
 <script>
-export default {
-
-}
+export default {}
 </script>
 
-<style>
-
-</style>
+<style lang="scss" scoped src="@/styles/vxeTable.scss"></style>
