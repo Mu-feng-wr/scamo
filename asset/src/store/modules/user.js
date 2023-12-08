@@ -1,6 +1,7 @@
 const getDefaultState = () => {
   return {
-    userInfo: {}
+    userInfo: {},
+    permissions: []
   }
 }
 

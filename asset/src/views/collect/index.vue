@@ -1,0 +1,340 @@
+<template>
+  <div class="card-container app-container">
+    <el-container>
+      <el-header>
+        <SearchArea :showAllSearch.sync="showAllSearch" class="p-16">
+          <div class="flex">
+            <div class="searchLeft">
+              <el-row :gutter="14">
+                <el-col :span="4">
+                  <el-input size="mini" v-model="queryParams.assetCollectCode" placeholder="领用单号" clearable @keyup.enter.native="load" />
+                </el-col>
+                <el-col :span="4">
+                  <el-input size="mini" v-model="queryParams.userName" placeholder="使用人" clearable @keyup.enter.native="load" />
+                </el-col>
+                <el-col :span="4">
+                  <el-input size="mini" v-model="queryParams.userOrgName" placeholder="使用部门" clearable @keyup.enter.native="load" />
+                </el-col>
+                <el-col :span="4">
+                  <el-input size="mini" v-model="queryParams.applicantName" placeholder="申请人" clearable @keyup.enter.native="load" />
+                </el-col>
+                <el-col :span="4">
+                  <el-input size="mini" v-model="queryParams.applicantOrgName" placeholder="申请部门" clearable @keyup.enter.native="load" />
+                </el-col>
+                <el-col :span="4">
+                  <el-input size="mini" v-model="queryParams.collectReason" placeholder="领用原因" clearable @keyup.enter.native="load"></el-input>
+                </el-col>
+              </el-row>
+              <el-row :gutter="14" v-show="showAllSearch" class="mt-10">
+                <el-col :span="4">
+                  <base-input
+                    size="mini"
+                    :value.sync="queryParams.centralizedBusinessId"
+                    baseCode="listType"
+                    labelName="businessName"
+                    valueName="businessId"
+                    placeholder="业务归口类型"
+                    @change="load"
+                  ></base-input>
+                </el-col>
+                <el-col :span="4">
+                  <base-input
+                    size="mini"
+                    :value.sync="queryParams.companyId"
+                    baseCode="companyList"
+                    resultLabel="data"
+                    labelName="deptName"
+                    valueName="deptId"
+                    placeholder="使用公司"
+                    @change="load"
+                  ></base-input>
+                </el-col>
+                <el-col :span="4">
+                  <base-input
+                    size="mini"
+                    :value.sync="queryParams.applicantCompanyId"
+                    baseCode="companyList"
+                    resultLabel="data"
+                    labelName="deptName"
+                    valueName="deptId"
+                    placeholder="申请公司"
+                    @change="load"
+                  ></base-input>
+                </el-col>
+                <el-col :span="4">
+                  <base-input size="mini" :value.sync="queryParams.projectId" baseCode="listProject" labelName="projectName" valueName="projectId" placeholder="项目名称" @change="load"></base-input>
+                </el-col>
+                <el-col :span="4">
+                  <base-input size="mini" :value.sync="queryParams.schemeId" baseCode="listScheme" labelName="schemeName" valueName="schemeId" placeholder="方案名称" @change="load"></base-input>
+                </el-col>
+                <el-col :span="4">
+                  <base-input size="mini" :value.sync="queryParams.sourceTerminal" baseCode="System-sourceTerminal" placeholder="使用终端" @change="load"></base-input>
+                </el-col>
+              </el-row>
+            </div>
+            <div class="ml-10 searchRight">
+              <el-button type="primary" icon="el-icon-search" size="mini" @click="load">搜索</el-button>
+              <el-button icon="el-icon-refresh" size="mini" @click="reset">重置</el-button>
+              <MoreQuery :filterOptions="filterOptions" :formData.sync="queryParams" @reload="load" />
+            </div>
+          </div>
+        </SearchArea>
+      </el-header>
+      <el-main style="padding:0;">
+        <el-container>
+          <el-header>
+            <el-row class="mb-15">
+              <el-col :span="12">
+                <el-button type="primary" plain icon="el-icon-plus" size="mini" v-hasPermi="['asset:borrow:add']" @click="addOrUpdateHandle()">新增领用</el-button>
+                <el-button plain icon="el-icon-upload2" size="mini" v-hasPermi="['asset:borrow:export']" @click="handleExport">导出</el-button>
+              </el-col>
+              <el-col :span="12" class="text-right">
+                <el-button plain icon="el-icon-refresh" size="mini" @click="reload">刷新</el-button>
+                <TableHeaderConfig class="ml-10" :columns.sync="tableColumn" />
+              </el-col>
+            </el-row>
+          </el-header>
+          <el-main>
+            <vxe-grid
+              height="auto"
+              v-loading="tableLoading"
+              header-align="center"
+              align="center"
+              :data="tableData"
+              :pager-config="tablePage"
+              border
+              :resizable="true"
+              :columns="tableColumn"
+              :row-config="{isHover:true,isCurrent:true}"
+              class="vxeTable"
+              show-footer
+              auto-resize
+              show-overflow="tooltip"
+              :footer-method="getFooterData"
+              @page-change="handlePageChange"
+            >
+              <template #seqHeader>序号</template>
+              <template #assetCollectCode="{row}">
+                <el-link type="primary" :underline="false" @click="handleDetail(row)">{{ row.assetCollectCode }}</el-link>
+              </template>
+              <template v-slot:sourceTerminal="{ row }">
+                <dictDateView :value="row.sourceTerminal" :dictDataList="dictDataList" dictCode="System-sourceTerminal" />
+              </template>
+              <template v-slot:status="{ row }">
+                <dictDateView :value="row.status" :dictDataList="dictDataList" dictCode="AlmAssetCollect-status" />
+              </template>
+              <template #useAreaName="{row}">
+                <span>{{ row.useAreaName }}/{{ row.specificLocationName }}</span>
+              </template>
+              <template v-slot:todo="{ row }">
+                <div class="todo">
+                  <el-button size="mini" type="text" @click="handleDetail(row)">查看</el-button>
+                  <el-button v-if="row.status == 0|| row.status == 3" size="mini" type="text" @click="addOrUpdateHandle(row.assetCollectId)" v-hasPermi="['asset:collect:edit']">修改</el-button>
+                  <el-button
+                    size="mini"
+                    type="text"
+                    @click="audit(row,'audit_superior')"
+                    v-hasPermi="['asset:collect:audit']"
+                    v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL')"
+                  >审批</el-button>
+                  <el-button
+                    size="mini"
+                    type="text"
+                    @click="audit(row,'recall_add')"
+                    v-hasPermi="['asset:collect:recall']"
+                    v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL') && row.applicantId == $store.getters.userInfo.userId"
+                  >撤回</el-button>
+
+                  <el-button
+                    size="mini"
+                    type="text"
+                    @click="audit(row,'register_asset_admin')"
+                    v-hasPermi="['asset:collect:register']"
+                    v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION')"
+                  >登记</el-button>
+                  <el-button
+                    size="mini"
+                    type="text"
+                    @click="audit(row,'recall_superior')"
+                    v-hasPermi="['asset:collect:recall']"
+                    v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION') && row.applicantId == $store.getters.userInfo.userId"
+                  >撤回</el-button>
+                  <el-button
+                    size="mini"
+                    type="text"
+                    @click="audit(row,'invalid_add')"
+                    v-hasPermi="['asset:collect:invalid']"
+                    v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL')"
+                  >作废</el-button>
+                  <el-button size="mini" type="text" @click="audit(row,'user_confirm')" v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='CONFIRM')">确认</el-button>
+                  <el-button
+                    size="mini"
+                    type="text"
+                    @click="audit(row,'recall_superior_asset_admin')"
+                    v-hasPermi="['asset:collect:recall']"
+                    v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='CONFIRM'&& row.assetReviewAuditVO.preProcessorId == $store.getters.userInfo.userId)"
+                  >撤回</el-button>
+                  <el-button size="mini" type="text" @click="handleDelete(row)" v-hasPermi="['asset:collect:remove']" v-if="row.status == 0 || row.status == 3 || row.status == 4">删除</el-button>
+                </div>
+              </template>
+            </vxe-grid>
+          </el-main>
+        </el-container>
+      </el-main>
+    </el-container>
+  </div>
+</template>
+<script>
+import vxeTable from '@/mixins/vxeTable'
+import { listCollect, getTotalAmount, delCollect } from '@/api/collect.js'
+import { listDictItems } from '@/api/base.js'
+export default {
+  mixins: [vxeTable],
+  data() {
+    return {
+      printVisible: false,
+      showAllSearch: false,
+      queryParams: {},
+      currentParams: {},
+      dictDataList: [],
+      footerTotal: {},
+      tableColumn: [
+        { type: 'seq', width: 70, align: 'center', fixed: 'left', slots: { header: 'seqHeader' } },
+        { visible: true, field: 'assetCollectCode', title: '领用单号', width: 160, fixed: 'left', visibleDisabled: true, slots: { default: 'assetCollectCode' } },
+        { visible: true, field: 'collectDate', title: '领用日期', width: 120, formatter: 'formatDate', fixed: 'left', visibleDisabled: true },
+        { visible: true, field: 'centralizedBusinessName', title: '业务类型', width: 120 },
+        { visible: true, field: 'applicantName', title: '申请人', width: 120 },
+        { visible: true, field: 'applicantOrgName', title: '申请部门', width: 120 },
+        { visible: true, field: 'applicantCompanyName', title: '申请公司', width: 170, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'assetQuantity', title: '资产数量', width: 120, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { visible: true, field: 'assetAmount', title: '资产含税金额（元）', width: 150, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { visible: true, field: 'userName', title: '使用人', width: 120 },
+        { visible: true, field: 'userOrgName', title: '使用部门', width: 120 },
+        { visible: true, field: 'collectReason', title: '领用原因', width: 220, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'projectCode', title: '项目编号', width: 120 },
+        { visible: true, field: 'projectName', title: '项目名称', width: 240, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'schemeCode', title: '方案编号', width: 120 },
+        { visible: true, field: 'schemeName', title: '方案名称', width: 120, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'useAreaName', title: '使用区域', width: 240, slots: { default: 'useAreaName' } },
+        { visible: true, field: 'sourceTerminal', title: '使用终端', width: 120, slots: { default: 'sourceTerminal' } },
+        // { visible: true, field: 'createDate', title: '创建时间', width: 160 },
+        // { visible: true, field: 'updateDate', title: '更新时间', width: 160 },
+        { visible: true, field: 'status', title: '状态', width: 120, slots: { default: 'status' } },
+        { visible: true, field: 'todo', title: '操作', width: 200, align: 'center', fixed: 'right', slots: { default: 'todo' } }
+      ]
+    }
+  },
+  computed: {
+    filterOptions() {
+      return [
+        { label: '领用日期期间：', type: 'daterange', placeholder: '领用日期', valueStart: 'collectDateStart', valueEnd: 'collectDateEnd' },
+        { label: '创建日期期间：', type: 'daterange', placeholder: '创建日期', valueStart: 'createDateStart', valueEnd: 'createDateEnd' },
+        { label: '更新日期期间：', type: 'daterange', placeholder: '更新日期', valueStart: 'updateDateStart', valueEnd: 'updateDateEnd' },
+        { label: '状态：', type: 'baseInput', baseCode: 'AlmAssetCollect-status', options: this.dictDataList, placeholder: '请选择状态', value: 'status' }
+      ]
+    }
+  },
+  created() {
+    this.getDictData()
+    this.load()
+  },
+  methods: {
+    load() {
+      this.getQuery()
+      this.reload()
+    },
+    getQuery() {
+      this.currentParams = {
+        ...this.queryParams,
+        ...{
+          pageNum: this.tablePage.currentPage,
+          pageSize: this.tablePage.pageSize
+        }
+      }
+    },
+    reload() {
+      this.tableLoading = true
+      listCollect(this.currentParams)
+        .then((res) => {
+          this.tableData = res.rows
+          this.tablePage.total = Number(res.total)
+        })
+        .finally(() => {
+          this.tableLoading = false
+        })
+      getTotalAmount(this.currentParams).then((res) => {
+        this.footerTotal = res.data
+      })
+    },
+    reset() {
+      this.queryParams = {}
+      this.load()
+    },
+    getDictData() {
+      let dictCodes = 'System-sourceTerminal' //来源终端
+      dictCodes += ',AlmAssetCollect-status' //领用状态
+      dictCodes += ',System-whether' //系统状态   是否
+      listDictItems(dictCodes).then((res) => {
+        this.dictDataList = res.sysDictionaryItemsList
+      })
+    },
+    // 新增  修改
+    addOrUpdateHandle(id) {
+      this.$router.push({
+        name: id ? 'collect-collectUpdate' : 'collect-collectAdd',
+        query: {
+          id: id
+        }
+      })
+    },
+    // 审批  登记  撤回   作废
+    audit(row, todo) {
+      this.$router.push({
+        name: 'collect-collectUpdate',
+        query: {
+          id: row.assetCollectId,
+          todo: todo
+        }
+      })
+    },
+    //  查看详情
+    handleDetail(row) {
+      this.$router.push({
+        name: 'collect-collectDetail',
+        query: {
+          id: row.assetCollectId
+        }
+      })
+    },
+    handleDelete(row) {
+      this.$confirm('是否确认删除资产领用单信息编号为"' + row.assetCollectCode + '"的数据项？', '删除').then(() => {
+        delCollect(row.assetCollectId).then(() => {
+          this.reload()
+          this.$message.success('删除成功！')
+        })
+      })
+    },
+    handlePageChange({ currentPage, pageSize }) {
+      this.tablePage.currentPage = currentPage
+      this.tablePage.pageSize = pageSize
+      // 触发列表请求
+      this.load()
+    },
+    // 导出
+    handleExport() {
+      this.download(
+        '/asset/collect/export',
+        {
+          ...this.currentParams
+        },
+        `collect_${new Date().getTime()}.xlsx`
+      )
+    },
+    // 表尾合计
+    getFooterData({ columns, data }) {
+      return this.footerMethod(columns, data, this.footerTotal, ['assetQuantity', 'assetAmount'])
+    }
+  }
+}
+</script>
+<style lang="scss" scoped src="@/styles/vxeTable.scss"></style>

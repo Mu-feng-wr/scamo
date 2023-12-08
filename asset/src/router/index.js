@@ -11,76 +11,28 @@ export const constantRoutes = [
   },
   { path: '*', redirect: '/404', hidden: true },
   {
-    path: '/standbook/classificationMaterialAccount',
-    name: 'standbook-classificationMaterialAccount',
-    component: () => import('@/views/library/index.vue'),
-    meta: { title: '分类' },
-    props: {
-      type: 'classificationMaterialAccount'
-    }
+    path: '/asset/receipt',
+    name: 'asset-receipt',
+    component: () => import('@/views/receipt/index.vue'),
+    meta: { title: '资产入库' },
   },
   {
-    path: '/standbook/classificationMaterialAccount/detail',
-    name: 'standbook-classificationMaterialAccount-detail',
-    component: () => import('@/views/library/detail.vue'),
-    meta: { title: '资产信息详情' }
+    path: '/asset/collect',
+    name: 'asset-collect',
+    component: () => import('@/views/collect/index.vue'),
+    meta: { title: '资产领用' },
   },
   {
-    path: '/standbook/organizationMaterialAccount',
-    name: 'standbook0-organizationMaterialAccount',
-    component: () => import('@/views/library/index.vue'),
-    meta: { title: '组织' },
-    props: {
-      type: 'organizationMaterialAccount'
-    }
+    path: '/asset/borrow',
+    name: 'asset-borrow',
+    component: () => import('@/views/borrow/index.vue'),
+    meta: { title: '资产借用' },
   },
   {
-    path: '/standbook/organizationMaterialAccount/detail',
-    name: 'standbook-organizationMaterialAccount-detail',
-    component: () => import('@/views/library/detail.vue'),
-    meta: { title: '资产信息详情' }
-  },
-  {
-    path: '/standbook/locationMaterialAccount',
-    name: 'standbook-locationMaterialAccount',
-    component: () => import('@/views/library/index.vue'),
-    meta: { title: '库位' },
-    props: {
-      type: 'locationMaterialAccount'
-    }
-  },
-  {
-    path: '/standbook/locationMaterialAccount/detail',
-    name: 'standbook-locationMaterialAccount-detail',
-    component: () => import('@/views/library/detail.vue'),
-    meta: { title: '资产信息详情' }
-  },
-  {
-    path: '/standbook/indexMaterialAccount',
-    name: 'standbook-indexMaterialAccount',
-    component: () => import('@/views/library/index.vue'),
-    meta: { title: '我的' },
-    props: {
-      type: 'personage'
-    }
-  },
-  {
-    path: '/standbook/indexMaterialAccount/detail',
-    name: 'standbook-indexMaterialAccount-detail',
-    component: () => import('@/views/library/detail.vue'),
-    meta: { title: '资产信息详情' }
-  },
-  {
-    path: '/standbook/materialPart',
-    name: 'standbook-materialPart',
-    component: () => import('@/views/materialPart/index.vue'),
-    meta: { title: '配件' }
-  },
-  {
-    path: '/standbook/materialRegister',
-    name: 'standbook-materialRegister',
-    component: () => import('@/views/materialRegister/index.vue'),
-    meta: { title: '登记' }
+    path: '/asset/return',
+    name: 'asset-return',
+    component: () => import('@/views/return/index.vue'),
+    meta: { title: '资产归还' },
   }
 ]
 

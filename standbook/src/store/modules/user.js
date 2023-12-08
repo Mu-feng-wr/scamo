@@ -1,6 +1,7 @@
 const getDefaultState = () => {
   return {
-    userInfo: {}
+    userInfo: {},
+    permissions: []
   }
 }
 
@@ -11,6 +12,7 @@ const mutations = {
     state.userInfo = userInfo
   },
   SET_PERMISSIONS: (state, permissions) => {
+    debugger
     state.permissions = permissions
   },
   SET_ROLES: (state, roles) => {
