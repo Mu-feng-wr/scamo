@@ -88,12 +88,14 @@ const actions = {
 
 // 递归处理菜单
 const menuRecursion = function(list, parent) {
-  let menuRouter = []
+  var menuRouter = []
+  // 二级菜单重复的
+  var repetitiveMenu = ['Asset', 'Consumable', 'Gift']
   menuRouter = list.map((item, i) => {
     const obj = {
       path: `${parent && parent.path ? parent.path + '/' : ''}${item.path}`,
       name: `${parent && parent.name ? parent.name + '-' : ''}${item.name}`,
-      meta: { ...item.meta, module: parent && parent.name ? parent.name : '' }
+      meta: { ...item.meta, module: parent && parent.name ? parent.name : '', fullTitle: parent && parent.name && repetitiveMenu.includes(parent.name) ? parent.meta.title + item.meta.title : item.meta.title }
     }
     if (item.children && item.children.length > 0) {
       obj.children = menuRecursion(item.children, item)

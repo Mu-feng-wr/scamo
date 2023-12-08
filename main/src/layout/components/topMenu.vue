@@ -73,7 +73,7 @@ export default {
         routerList.push({
           path: item.path,
           name: item.name,
-          title: item.meta.title,
+          title: item.meta.fullTitle,
           fullPath: item.path,
           module: item.meta.module
         })

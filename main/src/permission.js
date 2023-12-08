@@ -41,7 +41,7 @@ router.beforeEach(async(to, from, next) => {
               path: to.path,
               fullPath: to.path,
               name: to.name,
-              title: to.meta.title,
+              title: to.meta.fullTitle,
               module: to.meta.module
             })
             store.commit('system/SET_CURRENTPATH', to.fullPath)

@@ -51,6 +51,7 @@ export default {
   },
   computed: {
     visitedViews() {
+      console.log(this.$store.getters.cachedViews)
       return this.$store.getters.cachedViews
     },
     currentIndex() {
