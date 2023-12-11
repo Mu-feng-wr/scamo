@@ -14,25 +14,37 @@ export const constantRoutes = [
     path: '/asset/receipt',
     name: 'asset-receipt',
     component: () => import('@/views/receipt/index.vue'),
-    meta: { title: '资产入库' },
+    meta: { title: '资产入库' }
   },
   {
     path: '/asset/collect',
     name: 'asset-collect',
     component: () => import('@/views/collect/index.vue'),
-    meta: { title: '资产领用' },
+    meta: { title: '资产领用' }
   },
   {
     path: '/asset/borrow',
     name: 'asset-borrow',
     component: () => import('@/views/borrow/index.vue'),
-    meta: { title: '资产借用' },
+    meta: { title: '资产借用' }
   },
   {
     path: '/asset/return',
     name: 'asset-return',
     component: () => import('@/views/return/index.vue'),
-    meta: { title: '资产归还' },
+    meta: { title: '资产归还' }
+  },
+  {
+    path: '/asset/reshuffle',
+    name: 'asset-reshuffle',
+    component: () => import('@/views/reshuffle/index.vue'),
+    meta: { title: '资产异动' }
+  },
+  {
+    path: '/asset/transfer',
+    name: 'asset-transfer',
+    component: () => import('@/views/transfer/index.vue'),
+    meta: { title: '资产调拨' }
   }
 ]
 
