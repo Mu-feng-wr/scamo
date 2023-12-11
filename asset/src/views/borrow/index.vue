@@ -2,92 +2,101 @@
   <div class="card-container app-container">
     <el-container>
       <el-header>
-        <SearchArea :showAllSearch.sync="showAllSearch" class="p-16">
+        <SearchArea :show-all-search.sync="showAllSearch" class="p-16">
           <div class="flex">
             <div class="searchLeft">
               <el-row :gutter="14">
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.assetBorrowCode" placeholder="借用单号" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.assetBorrowCode" size="mini" placeholder="借用单号" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.userName" placeholder="使用人" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.userName" size="mini" placeholder="使用人" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.userOrgName" placeholder="使用部门" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.userOrgName" size="mini" placeholder="使用部门" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.applicantName" placeholder="申请人" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.applicantName" size="mini" placeholder="申请人" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.applicantOrgName" placeholder="申请部门" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.applicantOrgName" size="mini" placeholder="申请部门" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.borrowReason" placeholder="借用原因" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.borrowReason" size="mini" placeholder="借用原因" clearable @keyup.enter.native="load" />
                 </el-col>
               </el-row>
-              <el-row :gutter="14" v-show="showAllSearch" class="mt-10">
+              <el-row v-show="showAllSearch" :gutter="14" class="mt-10">
                 <el-col :span="4">
                   <base-input
                     size="mini"
                     :value.sync="queryParams.centralizedBusinessId"
-                    baseCode="listType"
-                    labelName="businessName"
-                    valueName="businessId"
+                    base-code="listType"
+                    label-name="businessName"
+                    value-name="businessId"
                     placeholder="业务归口类型"
                     clearable
                     @change="load"
-                  ></base-input>
+                  />
                 </el-col>
                 <el-col :span="4">
                   <base-input
                     size="mini"
                     :value.sync="queryParams.accepterOrgId"
-                    baseCode="companyList"
-                    resultLabel="data"
-                    labelName="deptName"
-                    valueName="deptId"
+                    base-code="companyList"
+                    result-label="data"
+                    label-name="deptName"
+                    value-name="deptId"
                     placeholder="使用公司"
                     clearable
                     @change="load"
-                  ></base-input>
+                  />
                 </el-col>
                 <el-col :span="4">
                   <base-input
                     size="mini"
                     :value.sync="queryParams.companyId"
-                    baseCode="companyList"
-                    resultLabel="data"
-                    labelName="deptName"
-                    valueName="deptId"
+                    base-code="companyList"
+                    resultlabel="data"
+                    label-name="deptName"
+                    value-name="deptId"
                     placeholder="申请公司"
                     clearable
                     @change="load"
-                  ></base-input>
+                  />
                 </el-col>
                 <el-col :span="4">
                   <base-input
                     size="mini"
                     :value.sync="queryParams.projectId"
-                    baseCode="listProject"
-                    labelName="projectName"
-                    valueName="projectId"
+                    base-code="listProject"
+                    label-name="projectName"
+                    value-name="projectId"
                     placeholder="项目名称"
                     clearable
                     @change="load"
-                  ></base-input>
+                  />
                 </el-col>
                 <el-col :span="4">
-                  <base-input size="mini" :value.sync="queryParams.schemeId" baseCode="listScheme" labelName="schemeName" valueName="schemeId" placeholder="方案名称" clearable @change="load"></base-input>
+                  <base-input
+                    size="mini"
+                    :value.sync="queryParams.schemeId"
+                    base-code="listScheme"
+                    label-name="schemeName"
+                    value-name="schemeId"
+                    placeholder="方案名称"
+                    clearable
+                    @change="load"
+                  />
                 </el-col>
                 <el-col :span="4">
-                  <base-input size="mini" :value.sync="queryParams.sourceTerminal" baseCode="System-sourceTerminal" placeholder="使用终端" clearable @change="load"></base-input>
+                  <base-input size="mini" :value.sync="queryParams.sourceTerminal" base-code="System-sourceTerminal" placeholder="使用终端" clearable @change="load" />
                 </el-col>
               </el-row>
             </div>
             <div class="ml-10 searchRight">
               <el-button type="primary" icon="el-icon-search" size="mini" @click="load">搜索</el-button>
               <el-button icon="el-icon-refresh" size="mini" @click="reset">重置</el-button>
-              <MoreQuery :filterOptions="filterOptions" :formData.sync="queryParams" @reload="load" />
+              <MoreQuery :filter-options="filterOptions" :form-data.sync="queryParams" @reload="load" />
             </div>
           </div>
         </SearchArea>
@@ -97,8 +106,8 @@
           <el-header>
             <el-row class="mb-15">
               <el-col :span="12">
-                <el-button type="primary" plain icon="el-icon-plus" size="mini" v-hasPermi="['asset:borrow:add']" @click="addOrUpdateHandle()">新增借用</el-button>
-                <el-button plain icon="el-icon-upload2" size="mini" v-hasPermi="['asset:borrow:export']" @click="handleExport">导出</el-button>
+                <el-button v-hasPermi="['asset:borrow:add']" type="primary" plain icon="el-icon-plus" size="mini" @click="addOrUpdateHandle()">新增借用</el-button>
+                <el-button v-hasPermi="['asset:borrow:export']" plain icon="el-icon-upload2" size="mini" @click="handleExport">导出</el-button>
               </el-col>
               <el-col :span="12" class="text-right">
                 <el-button plain icon="el-icon-refresh" size="mini" @click="reload">刷新</el-button>
@@ -108,8 +117,8 @@
           </el-header>
           <el-main>
             <vxe-grid
-              height="auto"
               v-loading="tableLoading"
+              height="auto"
               header-align="center"
               align="center"
               :data="tableData"
@@ -131,64 +140,64 @@
               </template>
               <template #useAreaName="{row}">{{ row.useAreaName }}{{ row.specificLocationName?'/'+row.specificLocationName:'' }}</template>
               <template #ynExpectReturn="{row}">
-                <dictDateView :value="row.ynExpectReturn" :dictDataList="dictDataList" dictCode="AlmAssetBorrow-ynExpectReturn" />
+                <dictDateView :value="row.ynExpectReturn" :dict-data-list="dictDataList" dict-code="AlmAssetBorrow-ynExpectReturn" />
               </template>
               <template v-slot:sourceTerminal="{ row }">
-                <dictDateView :value="row.sourceTerminal" :dictDataList="dictDataList" dictCode="System-sourceTerminal" />
+                <dictDateView :value="row.sourceTerminal" :dict-data-list="dictDataList" dict-code="System-sourceTerminal" />
               </template>
               <template v-slot:status="{ row }">
-                <dictDateView :value="row.status" :dictDataList="dictDataList" dictCode="AlmAssetBorrow-borrowStatus" />
+                <dictDateView :value="row.status" :dict-data-list="dictDataList" dict-code="AlmAssetBorrow-borrowStatus" />
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
                   <el-button size="mini" type="text" @click="detailHandle(row.assetBorrowId)">查看</el-button>
-                  <el-button v-if="row.status == 0|| row.status == 3" size="mini" type="text" @click="addOrUpdateHandle(row.assetBorrowId)" v-hasPermi="['asset:borrow:edit']">修改</el-button>
+                  <el-button v-if="row.status == 0|| row.status == 3" v-hasPermi="['asset:borrow:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.assetBorrowId)">修改</el-button>
                   <el-button
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL')"
+                    v-hasPermi="['asset:borrow:audit']"
                     size="mini"
                     type="text"
                     @click="audit(row,'audit_superior')"
-                    v-hasPermi="['asset:borrow:audit']"
-                    v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL')"
                   >审批</el-button>
                   <el-button
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL') && row.applicantId == $store.state.user.info.userId"
+                    v-hasPermi="['asset:borrow:recall']"
                     size="mini"
                     type="text"
                     @click="audit(row,'recall_add')"
-                    v-hasPermi="['asset:borrow:recall']"
-                    v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL') && row.applicantId == $store.state.user.info.userId"
                   >撤回</el-button>
 
                   <el-button
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION')"
+                    v-hasPermi="['asset:borrow:register']"
                     size="mini"
                     type="text"
                     @click="audit(row,'register_asset_admin')"
-                    v-hasPermi="['asset:borrow:register']"
-                    v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION')"
                   >登记</el-button>
                   <el-button
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&& row.assetReviewAuditVO.preProcessorId == $store.state.user.info.userId) "
+                    v-hasPermi="['asset:borrow:recall']"
                     size="mini"
                     type="text"
                     @click="audit(row,'recall_superior')"
-                    v-hasPermi="['asset:borrow:recall']"
-                    v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&& row.assetReviewAuditVO.preProcessorId == $store.state.user.info.userId) "
                   >撤回</el-button>
                   <el-button
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL')"
+                    v-hasPermi="['asset:borrow:invalid']"
                     size="mini"
                     type="text"
                     @click="audit(row,'invalid_add')"
-                    v-hasPermi="['asset:borrow:invalid']"
-                    v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL')"
                   >作废</el-button>
-                  <el-button size="mini" type="text" @click="audit(row,'user_confirm')" v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='CONFIRM')">确认</el-button>
+                  <el-button v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='CONFIRM')" size="mini" type="text" @click="audit(row,'user_confirm')">确认</el-button>
                   <el-button
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='CONFIRM'&& row.assetReviewAuditVO.preProcessorId == $store.state.user.info.userId)"
+                    v-hasPermi="['asset:collect:recall']"
                     size="mini"
                     type="text"
                     @click="audit(row,'recall_superior_asset_admin')"
-                    v-hasPermi="['asset:collect:recall']"
-                    v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='CONFIRM'&& row.assetReviewAuditVO.preProcessorId == $store.state.user.info.userId)"
                   >撤回</el-button>
 
-                  <el-button size="mini" type="text" @click="handleDelete(row)" v-hasPermi="['asset:borrow:remove']" v-if="row.status == 0 || row.status == 3 || row.status == 4">删除</el-button>
+                  <el-button v-if="row.status == 0 || row.status == 3 || row.status == 4" v-hasPermi="['asset:borrow:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
               </template>
             </vxe-grid>
@@ -306,9 +315,9 @@ export default {
     },
     // 获取字典表
     getDictData() {
-      let dictCodes = 'System-sourceTerminal' //来源终端
-      dictCodes += ',AlmAssetBorrow-borrowStatus' //借用状态
-      dictCodes += ',AlmAssetBorrow-ynExpectReturn' //借用是否需要归还
+      let dictCodes = 'System-sourceTerminal' // 来源终端
+      dictCodes += ',AlmAssetBorrow-borrowStatus' // 借用状态
+      dictCodes += ',AlmAssetBorrow-ynExpectReturn' // 借用是否需要归还
       listDictItems(dictCodes).then((res) => {
         this.dictDataList = res.sysDictionaryItemsList
       })

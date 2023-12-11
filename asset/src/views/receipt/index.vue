@@ -2,73 +2,73 @@
   <div class="card-container app-container">
     <el-container>
       <el-header>
-        <SearchArea :showAllSearch.sync="showAllSearch" class="p-16">
+        <SearchArea :show-all-search.sync="showAllSearch" class="p-16">
           <div class="flex">
             <div class="searchLeft">
               <el-row :gutter="14">
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.assetReceiptCode" placeholder="入库单号" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.assetReceiptCode" size="mini" placeholder="入库单号" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.purchaseApplicationCode" placeholder="申购单号" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.purchaseApplicationCode" size="mini" placeholder="申购单号" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.purchaseCode" placeholder="采购单号" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.purchaseCode" size="mini" placeholder="采购单号" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.purchaseTitle" placeholder="采购标题" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.purchaseTitle" size="mini" placeholder="采购标题" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.arrivalRequirement" placeholder="到货要求" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.arrivalRequirement" size="mini" placeholder="到货要求" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.receiptReason" placeholder="验收原因" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.receiptReason" size="mini" placeholder="验收原因" clearable @keyup.enter.native="load" />
                 </el-col>
               </el-row>
-              <el-row :gutter="14" v-show="showAllSearch" class="mt-10">
+              <el-row v-show="showAllSearch" :gutter="14" class="mt-10">
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.accepterName" placeholder="验收人" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.accepterName" size="mini" placeholder="验收人" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.accepterOrgName" placeholder="验收部门" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.accepterOrgName" size="mini" placeholder="验收部门" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.applicantName" placeholder="申购人" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.applicantName" size="mini" placeholder="申购人" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.applicantOrgName" placeholder="申购部门" clearable @keydown.enter.native="load" />
+                  <el-input v-model="queryParams.applicantOrgName" size="mini" placeholder="申购部门" clearable @keydown.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
                   <base-input
                     size="mini"
                     :value.sync="queryParams.centralizedBusinessId"
-                    baseCode="listType"
-                    labelName="businessName"
-                    valueName="businessId"
+                    base-code="listType"
+                    label-name="businessName"
+                    value-name="businessId"
                     placeholder="业务归口类型"
-                    @change="load"
                     clearable
-                  ></base-input>
+                    @change="load"
+                  />
                 </el-col>
                 <el-col :span="4">
                   <base-input
                     size="mini"
                     :value.sync="queryParams.applicantCompanyId"
-                    baseCode="companyList"
-                    resultLabel="data"
-                    labelName="deptName"
-                    valueName="deptId"
+                    base-code="companyList"
+                    result-label="data"
+                    label-name="deptName"
+                    value-name="deptId"
                     placeholder="申购公司"
-                    @change="load"
                     clearable
-                  ></base-input>
+                    @change="load"
+                  />
                 </el-col>
               </el-row>
             </div>
             <div class="ml-10 searchRight">
               <el-button type="primary" icon="el-icon-search" size="mini" @click="load">搜索</el-button>
               <el-button icon="el-icon-refresh" size="mini" @click="reset">重置</el-button>
-              <MoreQuery :filterOptions="filterOptions" :formData.sync="queryParams" @reload="load" />
+              <MoreQuery :filter-options="filterOptions" :form-data.sync="queryParams" @reload="load" />
             </div>
           </div>
         </SearchArea>
@@ -78,8 +78,8 @@
           <el-header>
             <el-row class="mb-15">
               <el-col :span="12">
-                <el-button type="primary" plain icon="el-icon-plus" size="mini" v-hasPermi="['asset:receipt:add']" @click="addOrUpdateHandle()">新增入库单</el-button>
-                <el-button plain icon="el-icon-upload2" size="mini" v-hasPermi="['asset:receipt:export']" @click="handleExport">导出</el-button>
+                <el-button v-hasPermi="['asset:receipt:add']" type="primary" plain icon="el-icon-plus" size="mini" @click="addOrUpdateHandle()">新增入库单</el-button>
+                <el-button v-hasPermi="['asset:receipt:export']" plain icon="el-icon-upload2" size="mini" @click="handleExport">导出</el-button>
               </el-col>
               <el-col :span="12" class="text-right">
                 <el-button plain icon="el-icon-refresh" size="mini" @click="reload">刷新</el-button>
@@ -90,8 +90,8 @@
           <el-main>
             <vxe-grid
               ref="xTable"
-              height="auto"
               v-loading="tableLoading"
+              height="auto"
               header-align="center"
               align="center"
               :data="tableData"
@@ -114,58 +114,58 @@
                 <el-link type="primary" :underline="false" @click="detailHandle(row.assetReceiptId)">{{ row.assetReceiptCode }}</el-link>
               </template>
               <template v-slot:accepterMethod="{ row }">
-                <dictDateView :value="row.accepterMethod" :dictDataList="dictDataList" dictCode="AlmAssetReceipt-accepterMethod" />
+                <dictDateView :value="row.accepterMethod" :dict-data-list="dictDataList" dict-code="AlmAssetReceipt-accepterMethod" />
               </template>
               <template v-slot:assetSource="{ row }">
-                <dictDateView :value="row.assetSource" :dictDataList="dictDataList" dictCode="AlmAssetReceipt-assetSource" />
+                <dictDateView :value="row.assetSource" :dict-data-list="dictDataList" dict-code="AlmAssetReceipt-assetSource" />
               </template>
               <template v-slot:sourceTerminal="{ row }">
-                <dictDateView :value="row.sourceTerminal" :dictDataList="dictDataList" dictCode="System-sourceTerminal" />
+                <dictDateView :value="row.sourceTerminal" :dict-data-list="dictDataList" dict-code="System-sourceTerminal" />
               </template>
               <template v-slot:status="{ row }">
-                <dictDateView :value="row.status" :dictDataList="dictDataList" dictCode="AlmAssetReceipt-status" />
+                <dictDateView :value="row.status" :dict-data-list="dictDataList" dict-code="AlmAssetReceipt-status" />
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
                   <el-button size="mini" type="text" @click="detailHandle(row.assetReceiptId)">查看</el-button>
-                  <el-button v-if="row.status == 0|| row.status == 3" size="mini" type="text" @click="addOrUpdateHandle(row.assetReceiptId)" v-hasPermi="['asset:receipt:edit']">修改</el-button>
+                  <el-button v-if="row.status == 0|| row.status == 3" v-hasPermi="['asset:receipt:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.assetReceiptId)">修改</el-button>
                   <el-button
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL')"
+                    v-hasPermi="['asset:receipt:audit']"
                     size="mini"
                     type="text"
                     @click="audit(row,'audit_superior')"
-                    v-hasPermi="['asset:receipt:audit']"
-                    v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL')"
                   >审批</el-button>
                   <el-button
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL') && row.applicantId == $store.getters.userInfo.userId"
+                    v-hasPermi="['asset:receipt:recall']"
                     size="mini"
                     type="text"
                     @click="audit(row,'recall_add')"
-                    v-hasPermi="['asset:receipt:recall']"
-                    v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL') && row.applicantId == $store.getters.userInfo.userId"
                   >撤回</el-button>
 
                   <el-button
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION')"
+                    v-hasPermi="['asset:receipt:register']"
                     size="mini"
                     type="text"
                     @click="audit(row,'register_asset_admin')"
-                    v-hasPermi="['asset:receipt:register']"
-                    v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION')"
                   >登记</el-button>
                   <el-button
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&& row.assetReviewAuditVO.preProcessorId == $store.getters.userInfo.userId) "
+                    v-hasPermi="['asset:receipt:recall']"
                     size="mini"
                     type="text"
                     @click="audit(row,'recall_superior')"
-                    v-hasPermi="['asset:receipt:recall']"
-                    v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&& row.assetReviewAuditVO.preProcessorId == $store.getters.userInfo.userId) "
                   >撤回</el-button>
                   <el-button
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL')"
+                    v-hasPermi="['asset:receipt:invalid']"
                     size="mini"
                     type="text"
                     @click="audit(row,'invalid_add')"
-                    v-hasPermi="['asset:receipt:invalid']"
-                    v-if="row.status == 2  && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL')"
                   >作废</el-button>
-                  <el-button size="mini" type="text" @click="handleDelete(row)" v-hasPermi="['asset:receipt:remove']" v-if="row.status == 0 || row.status == 3 || row.status == 4">删除</el-button>
+                  <el-button v-if="row.status == 0 || row.status == 3 || row.status == 4" v-hasPermi="['asset:receipt:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
               </template>
             </vxe-grid>
@@ -315,10 +315,10 @@ export default {
         })
     },
     getDictData() {
-      let dictCodes = 'AlmAssetReceipt-accepterMethod' //入库方式
-      dictCodes += ',AlmAssetReceipt-assetSource' //资产来源
-      dictCodes += ',System-sourceTerminal' //来源终端
-      dictCodes += ',AlmAssetReceipt-status' //入库状态
+      let dictCodes = 'AlmAssetReceipt-accepterMethod' // 入库方式
+      dictCodes += ',AlmAssetReceipt-assetSource' // 资产来源
+      dictCodes += ',System-sourceTerminal' // 来源终端
+      dictCodes += ',AlmAssetReceipt-status' // 入库状态
       listDictItems(dictCodes).then((res) => {
         this.dictDataList = res.sysDictionaryItemsList
       })
