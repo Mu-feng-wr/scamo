@@ -159,3 +159,29 @@ export function deptTreeSelect() {
     method: 'get'
   })
 }
+
+// 带查询条件下拉树结构
+export function queryAddressTreeSelect (query) {
+  return requestFunc({
+    url: '/library/address/addressTree',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询一级和二级货架
+export function queryCompanyWarehouseShelfTreeList (query) {
+  return requestFunc({
+    url: '/library/address/queryCompanyWarehouseShelfTreeList',
+    method: 'get',
+    params: query
+  })
+}
+// 查询申购单未发货的资产明细
+export function queryUnShippedByPurchaseApplicationId (query) {
+  return requestFunc({
+    url: '/srm/material/queryUnShippedByPurchaseApplicationId',
+    method: 'get',
+    params: query
+  })
+}

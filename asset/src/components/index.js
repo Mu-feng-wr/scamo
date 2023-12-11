@@ -7,6 +7,9 @@ import InputRange from './InputRange/index.vue'
 import dictDataView from './dictDataView/index.vue'
 import PageCard from './PageCard/index.vue'
 import sectionCard from './sectionCard/index.vue'
+import HandleRecords from './HandleRecords/index.vue'
+import uploadImg from './btnHandler/uploadImg.vue'
+import uploadFile from './btnHandler/uploadFile.vue'
 
 const com = [
   searchArea,
@@ -16,7 +19,10 @@ const com = [
   InputRange,
   dictDataView,
   PageCard,
-  sectionCard
+  sectionCard,
+  HandleRecords,
+  uploadImg,
+  uploadFile
 ]
 com.forEach(item => {
   Vue.component(item.name, item)

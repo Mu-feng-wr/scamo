@@ -191,39 +191,39 @@ export default {
       footerTotal: {},
       tableColumn: [
         { type: 'seq', width: 70, align: 'center', fixed: 'left', visibleDisabled: true, slots: { header: 'seqHeader' } },
-        { showOverflow: true, visible: true, field: 'assetReceiptCode', title: '入库单号', width: 150, fixed: 'left', visibleDisabled: true, slots: { default: 'assetReceiptCode' } },
-        { showOverflow: true, visible: true, field: 'applicantDate', title: '入库日期', width: 120, formatter: 'formatDate', fixed: 'left', visibleDisabled: true },
-        { showOverflow: true, visible: true, field: 'centralizedBusinessName', title: '业务类型', width: 120, fixed: 'left', visibleDisabled: true },
-        { showOverflow: true, visible: true, field: 'applicantName', title: '申请人', width: 120 },
-        { showOverflow: true, visible: true, field: 'applicantOrgName', title: '申请部门', width: 120 },
-        { showOverflow: true, visible: true, field: 'applicantCompanyName', title: '申请公司', width: 180, headerAlign: 'center', align: 'left' },
-        { showOverflow: true, visible: true, field: 'receiptQuantity', title: '入库数量', width: 120, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { showOverflow: true, visible: true, field: 'receiptTaxAmount', title: '入库含税金额（元）', headerAlign: 'center', width: 160, align: 'right', formatter: 'formatMoney' },
-        { showOverflow: true, visible: true, field: 'accepterMethod', title: '入库方式', width: 180, slots: { default: 'accepterMethod' } },
-        { showOverflow: true, visible: true, field: 'assetSource', title: '资产来源', width: 120, slots: { default: 'assetSource' } },
-        { showOverflow: true, visible: true, field: 'accepterName', title: '验收人', width: 120 },
-        { showOverflow: true, visible: true, field: 'accepterOrgName', title: '验收部门', width: 200 },
-        { showOverflow: true, visible: true, field: 'receiptReason', title: '验收原因', width: 200, headerAlign: 'center', align: 'left' },
-        { showOverflow: true, visible: true, field: 'warehouseName', title: '仓库名称', width: 200 },
-        { showOverflow: true, visible: true, field: 'assetCompanyName', title: '资产所属公司', width: 200, headerAlign: 'center', align: 'left' },
-        { showOverflow: true, visible: true, field: 'purchaseApplicationCode', title: '申购单号', width: 120 },
-        { showOverflow: true, visible: true, field: 'subscriptionDate', title: '申购日期', width: 120, formatter: 'formatDate' },
-        { showOverflow: true, visible: true, field: 'supplierCode', title: '供应商编号', width: 120 },
-        { showOverflow: true, visible: true, field: 'supplierName', title: '供应商名称', width: 200, headerAlign: 'center', align: 'left' },
-        { showOverflow: true, visible: true, field: 'accountNumber', title: '出账公司编号', width: 120 },
-        { showOverflow: true, visible: true, field: 'accountName', title: '出账公司名称', width: 200, headerAlign: 'center', align: 'left' },
-        { showOverflow: true, visible: true, field: 'contractCode', title: '合同编号', width: 120 },
-        { showOverflow: true, visible: true, field: 'contractName', title: '合同名称', width: 200, headerAlign: 'center', align: 'left' },
-        { showOverflow: true, visible: true, field: 'projectCode', title: '项目编号', width: 160 },
-        { showOverflow: true, visible: true, field: 'projectName', title: '项目名称', width: 200, headerAlign: 'center', align: 'left' },
-        { showOverflow: true, visible: true, field: 'currentEreaName', title: '使用区域', width: 200, headerAlign: 'center', align: 'left' },
-        { showOverflow: true, visible: true, field: 'currentLocationName', title: '具体位置', width: 200, headerAlign: 'center', align: 'left' },
-        { showOverflow: true, visible: true, field: 'arrivalDate', title: '到货日期', width: 120, formatter: 'formatDate' },
-        { showOverflow: true, visible: true, field: 'arrivalRequirement', title: '到货要求', width: 120, headerAlign: 'center', align: 'left' },
-        { showOverflow: true, visible: true, field: 'tenderAgreementCode', title: '招标协议编号', width: 120 },
-        { showOverflow: true, visible: true, field: 'tenderAgreementName', title: '招标协议标题', width: 200, headerAlign: 'center', align: 'left' },
-        { showOverflow: true, visible: true, field: 'sourceTerminal', title: '使用终端', width: 120, slots: { default: 'sourceTerminal' } },
-        { showOverflow: true, visible: true, field: 'status', title: '状态', width: 120, slots: { default: 'status' } },
+        { visible: true, field: 'assetReceiptCode', title: '入库单号', width: 150, fixed: 'left', visibleDisabled: true, slots: { default: 'assetReceiptCode' } },
+        { visible: true, field: 'applicantDate', title: '入库日期', width: 120, formatter: 'formatDate', fixed: 'left', visibleDisabled: true },
+        { visible: true, field: 'centralizedBusinessName', title: '业务类型', width: 120, fixed: 'left', visibleDisabled: true },
+        { visible: true, field: 'applicantName', title: '申请人', width: 120 },
+        { visible: true, field: 'applicantOrgName', title: '申请部门', width: 120 },
+        { visible: true, field: 'applicantCompanyName', title: '申请公司', width: 180, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'receiptQuantity', title: '入库数量', width: 120, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { visible: true, field: 'receiptTaxAmount', title: '入库含税金额（元）', headerAlign: 'center', width: 160, align: 'right', formatter: 'formatMoney' },
+        { visible: true, field: 'accepterMethod', title: '入库方式', width: 180, slots: { default: 'accepterMethod' } },
+        { visible: true, field: 'assetSource', title: '资产来源', width: 120, slots: { default: 'assetSource' } },
+        { visible: true, field: 'accepterName', title: '验收人', width: 120 },
+        { visible: true, field: 'accepterOrgName', title: '验收部门', width: 200 },
+        { visible: true, field: 'receiptReason', title: '验收原因', width: 200, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'warehouseName', title: '仓库名称', width: 200 },
+        { visible: true, field: 'assetCompanyName', title: '资产所属公司', width: 200, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'purchaseApplicationCode', title: '申购单号', width: 120 },
+        { visible: true, field: 'subscriptionDate', title: '申购日期', width: 120, formatter: 'formatDate' },
+        { visible: true, field: 'supplierCode', title: '供应商编号', width: 120 },
+        { visible: true, field: 'supplierName', title: '供应商名称', width: 200, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'accountNumber', title: '出账公司编号', width: 120 },
+        { visible: true, field: 'accountName', title: '出账公司名称', width: 200, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'contractCode', title: '合同编号', width: 120 },
+        { visible: true, field: 'contractName', title: '合同名称', width: 200, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'projectCode', title: '项目编号', width: 160 },
+        { visible: true, field: 'projectName', title: '项目名称', width: 200, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'currentEreaName', title: '使用区域', width: 200, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'currentLocationName', title: '具体位置', width: 200, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'arrivalDate', title: '到货日期', width: 120, formatter: 'formatDate' },
+        { visible: true, field: 'arrivalRequirement', title: '到货要求', width: 120, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'tenderAgreementCode', title: '招标协议编号', width: 120 },
+        { visible: true, field: 'tenderAgreementName', title: '招标协议标题', width: 200, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'sourceTerminal', title: '使用终端', width: 120, slots: { default: 'sourceTerminal' } },
+        { visible: true, field: 'status', title: '状态', width: 120, slots: { default: 'status' } },
         { field: 'todo', title: '操作', width: 250, align: 'center', fixed: 'right', slots: { default: 'todo' }, visibleDisabled: true }
       ]
     }
@@ -328,12 +328,19 @@ export default {
       this.load()
     },
     detailHandle(id) {
-      this.$router.push({
-        name: 'receipt-receiptDetail',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/asset/receipt',
+        module: 'Asset',
+        fullPath: '/asset/receipt/detail',
+        title: '分类-资产信息详情',
+        condition: { id }
       })
+      // this.$router.push({
+      //   name: 'receipt-receiptDetail',
+      //   query: {
+      //     id: id
+      //   }
+      // })
     },
     handlePageChange({ currentPage, pageSize }) {
       this.tablePage.currentPage = currentPage

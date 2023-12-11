@@ -29,3 +29,11 @@ export function getTotalAmount (query) {
     params: query
   })
 }
+
+// 查询资产入库单信息详细
+export function getReceipt (assetReceiptId) {
+  return requestFunc({
+    url: '/asset/receipt/' + assetReceiptId,
+    method: 'get'
+  })
+}
