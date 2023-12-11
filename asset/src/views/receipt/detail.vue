@@ -1,5 +1,5 @@
 <template>
-  <PageCard v-loading="submitLoading">
+  <PageCard v-loading="submitLoading" return-url="/asset/receipt">
     <el-form ref="form" label-width="170px" class="form-table" style="margin-bottom: 8px">
       <SectionCard title="基本信息">
         <el-row>

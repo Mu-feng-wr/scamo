@@ -22,10 +22,16 @@ export default {
     align: {
       type: String,
       default: 'center'
+    },
+    returnUrl: {
+      type: String,
+      default: undefined
     }
   },
   methods: {
-    closeRoutePage() {}
+    closeRoutePage() {
+      window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+    }
   }
 }
 </script>

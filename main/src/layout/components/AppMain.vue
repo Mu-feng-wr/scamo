@@ -45,7 +45,8 @@ export default {
           this.$store.dispatch('system/logout')
         },
         route: this.addWujiePage,
-        setFunc: this.setFunc
+        setFunc: this.setFunc,
+        closeCurrentPage: this.closeCurrentPage
       }
     }
   },
@@ -118,6 +119,17 @@ export default {
       this.$store.commit('system/SET_CURRENTPATH', route.fullPath)
       this.$router.push({
         path: route.path
+      })
+    },
+    closeCurrentPage({ path }) {
+      debugger
+      var urlList = JSON.parse(JSON.stringify(this.$store.getters.cachedViews))
+      var index = urlList.findIndex((item) => item.fullPath == this.$store.getters.currentPath)
+      urlList.splice(index, 1)
+      this.$store.commit('system/SET_CURRENTPATH', path)
+      this.$store.commit('system/SET_CACHEVIEWS', urlList)
+      this.$router.push({
+        path: path
       })
     },
     setFunc(func) {
