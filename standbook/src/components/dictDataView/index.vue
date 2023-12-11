@@ -1,5 +1,5 @@
 <template>
-  <span>{{getText()}}</span>
+  <span>{{ getText() }}</span>
 </template>
 <script>
 export default {
@@ -46,7 +46,7 @@ export default {
   },
   methods: {
     getText() {
-      let data = this.list.find((item) => {
+      var data = this.list.find((item) => {
         return item[this.valueName] == this.value
       })
       return data ? data[this.labelName] : ''
