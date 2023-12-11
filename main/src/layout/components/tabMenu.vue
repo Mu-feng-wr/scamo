@@ -140,8 +140,8 @@ export default {
     },
     closeAllTags() {
       var routeList = JSON.parse(JSON.stringify(this.visitedViews))
-      routeList = routeList.filter((item) => item.fullPath != '/dashboard')
-      this.toPath(routeList, this.selectedTag.fullPath, this.selectedTag.path)
+      routeList = routeList.filter((item) => item.fullPath == '/dashboard')
+      this.toPath(routeList, routeList[routeList.length - 1].fullPath, routeList[routeList.length - 1].path)
     },
     toPath(routeList, fullPath, path) {
       this.$store.commit('system/SET_CURRENTPATH', fullPath)

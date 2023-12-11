@@ -45,6 +45,24 @@ export const constantRoutes = [
     name: 'asset-transfer',
     component: () => import('@/views/transfer/index.vue'),
     meta: { title: '资产调拨' }
+  },
+  {
+    path: '/asset/repair',
+    name: 'asset-repair',
+    component: () => import('@/views/repair/index.vue'),
+    meta: { title: '资产维修' }
+  },
+  {
+    path: '/asset/scrap',
+    name: 'asset-scrap',
+    component: () => import('@/views/scrap/index.vue'),
+    meta: { title: '资产处置' }
+  },
+  {
+    path: '/asset/change',
+    name: 'asset-change',
+    component: () => import('@/views/change/index.vue'),
+    meta: { title: '资产变更' }
   }
 ]
 
