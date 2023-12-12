@@ -1,22 +1,22 @@
 <template>
   <div style="display:inline-block">
     <el-button :disabled="disabled" type="primary" :size="size" icon="el-icon-plus" plain resize @click="openDialog">{{ title }}</el-button>
-    <vxe-modal :title="title" v-if="dialogVisible" v-model="dialogVisible" width="70%" height="90%" esc-closable resize @hide="close">
+    <vxe-modal v-if="dialogVisible" v-model="dialogVisible" :title="title" width="70%" height="90%" esc-closable resize @hide="close">
       <div class="dialog">
         <el-container>
           <el-aside class="aside">
             <div class="treeBox">
               <div class="p-10">
-                <el-input placeholder="请输入类别" v-model="deptName" @change="changeInput" clearable></el-input>
+                <el-input v-model="deptName" placeholder="请输入类别" clearable @change="changeInput" />
               </div>
               <el-tree
-                class="tree"
+                ref="tree"
                 v-loading="treeLoading"
+                class="tree"
                 :data="treeList"
                 :props="defaultProps"
                 :expand-on-click-node="false"
                 :filter-node-method="filterNode"
-                ref="tree"
                 default-expand-all
                 highlight-current
                 @node-click="handleNodeClick"
@@ -29,17 +29,17 @@
                 <el-header class="mb-10">
                   <el-row>
                     <el-col :span="4">
-                      <el-input size="mini" v-model="queryParams.materialCode" placeholder="物资编码" clearable />
+                      <el-input v-model="queryParams.materialCode" size="mini" placeholder="物资编码" clearable />
                     </el-col>
                     <el-col :span="4" class="pl-14">
-                      <el-input size="mini" v-model="queryParams.materialName" placeholder="物资名称" clearable />
+                      <el-input v-model="queryParams.materialName" size="mini" placeholder="物资名称" clearable />
                     </el-col>
                     <el-col :span="4" class="pl-14">
-                      <el-input size="mini" v-model="queryParams.sn" placeholder="序列号" clearable />
+                      <el-input v-model="queryParams.sn" size="mini" placeholder="序列号" clearable />
                     </el-col>
                     <el-col :span="4" class="pl-14">
-                      <el-select :disabled="selectDisabled.materialType" v-model="queryParams.materialType" size="mini" placeholder="物资类型" @change="load">
-                        <el-option v-for="item in dictDataList" :key="item.itemsValue" :label="item.itemsName" :value="item.itemsValue"></el-option>
+                      <el-select v-model="queryParams.materialType" :disabled="selectDisabled.materialType" size="mini" placeholder="物资类型" @change="load">
+                        <el-option v-for="item in dictDataList" :key="item.itemsValue" :label="item.itemsName" :value="item.itemsValue" />
                       </el-select>
                     </el-col>
                     <el-col :span="6" class="pl-14">
@@ -67,6 +67,8 @@
                         :columns="tableColumn"
                         :row-config="{isHover:true,isCurrent:true}"
                         class="vxeTable"
+                        auto-resize
+                        show-overflow="tooltip"
                         @page-change="handlePageChange"
                         @checkbox-change="checkboxChange"
                         @checkbox-all="checkboxAll"
@@ -81,19 +83,19 @@
                           <i :class="showDrawer?'el-icon-d-arrow-right':'el-icon-d-arrow-left'"></i>
                         </div>
                       </div>
-                      <div class="drawer_right" v-show="showDrawer">
+                      <div v-show="showDrawer" class="drawer_right">
                         <div style="height:calc(100% - 20px);overflow: auto;">
                           <el-tag
+                            v-for="(item,i) in selectList"
                             v-show="showDrawer"
+                            :key="i"
                             size="medium"
                             class="mb-5"
                             closable
-                            v-for="(item,i) in selectList"
-                            :key="i"
                             @close="closetag(item,i)"
                           >{{ item.materialCode }}-{{ item.materialName }}</el-tag>
                         </div>
-                        <div class="text-right">已选数据 {{selectList.length}} {{limit?'/'+limit:''}}条</div>
+                        <div class="text-right">已选数据 {{ selectList.length }} {{ limit?'/' + limit:'' }}条</div>
                       </div>
                     </el-main>
                   </el-container>
@@ -117,6 +119,7 @@ import vxeTable from '@/mixins/vxeTable'
 import { listDictItems, categoryTreeSelect, listMaterialQuery } from '@/api/base.js'
 export default {
   name: 'SelectMaterial',
+  mixins: [vxeTable],
   props: {
     title: {
       type: String,
@@ -147,10 +150,10 @@ export default {
       }
     },
     limit: {
-      type: Number
+      type: Number,
+      default: null
     }
   },
-  mixins: [vxeTable],
   data() {
     return {
       dialogVisible: false,
@@ -169,20 +172,20 @@ export default {
       tableColumn: [
         { type: this.type, width: 50, align: 'center', fixed: 'left' },
         { type: 'seq', width: 50, align: 'center', fixed: 'left', slots: { header: 'seqHeader' } },
-        { showOverflow: true, field: 'materialCode', title: '物资编号', width: 200, fixed: 'left' },
-        { showOverflow: true, field: 'materialName', title: '物资名称', width: 200 },
-        { showOverflow: true, field: 'categoryCode', title: '分类编号', width: 130 },
-        { showOverflow: true, field: 'categoryName', title: '分类名称', width: 130 },
-        { showOverflow: true, field: 'sn', title: '序列号', width: 180 },
-        { showOverflow: true, field: 'modelType', title: '规格型号', width: 180, showOverflow: true },
-        { showOverflow: true, field: 'brandName', title: '品牌', width: 130 },
-        { showOverflow: true, field: 'color', title: '颜色', width: 130 },
-        { showOverflow: true, field: 'unitName', title: '计量单位', width: 130 },
-        { showOverflow: true, field: 'alterUnitName', title: '换算单位', width: 120, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { showOverflow: true, field: 'alterUnitNum', title: '换算数量', width: 120, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { showOverflow: true, field: 'price', title: '单价（元）', width: 120, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { showOverflow: true, field: 'taxRate', title: '税率（%）', width: 120, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { showOverflow: true, field: 'taxValue', title: '税额（元）', width: 120, headerAlign: 'center', align: 'right', formatter: 'formatMoney' }
+        { field: 'materialCode', title: '物资编号', width: 200, fixed: 'left' },
+        { field: 'materialName', title: '物资名称', width: 200 },
+        { field: 'categoryCode', title: '分类编号', width: 130 },
+        { field: 'categoryName', title: '分类名称', width: 130 },
+        { field: 'sn', title: '序列号', width: 180 },
+        { field: 'modelType', title: '规格型号', width: 180 },
+        { field: 'brandName', title: '品牌', width: 130 },
+        { field: 'color', title: '颜色', width: 130 },
+        { field: 'unitName', title: '计量单位', width: 130 },
+        { field: 'alterUnitName', title: '换算单位', width: 120, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { field: 'alterUnitNum', title: '换算数量', width: 120, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { field: 'price', title: '单价（元）', width: 120, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { field: 'taxRate', title: '税率（%）', width: 120, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { field: 'taxValue', title: '税额（元）', width: 120, headerAlign: 'center', align: 'right', formatter: 'formatMoney' }
       ],
       selectList: []
     }
@@ -214,7 +217,7 @@ export default {
             }
             if (this.selectList.length) {
               this.selectList.forEach((item) => {
-                let index = this.tableData.findIndex((temp) => temp.materialCode == item.materialCode)
+                var index = this.tableData.findIndex((temp) => temp.materialCode == item.materialCode)
                 if (index >= 0) {
                   this.$refs.xTable.setCheckboxRow(this.tableData[index], true)
                 }
@@ -229,7 +232,7 @@ export default {
     reset() {
       this.queryParams = {}
       if (this.query && this.query.length > 0) {
-        let text = ''
+        var text = ''
         this.query.forEach((item) => {
           this.$set(this.queryParams, item.valueName, item.value)
           this.selectDisabled[item.valueName] = item.disabled
@@ -264,7 +267,7 @@ export default {
     },
     async openDialog() {
       if (this.query && this.query.length > 0) {
-        let text = ''
+        var text = ''
         this.query.forEach((item) => {
           this.$set(this.queryParams, item.valueName, item.value)
           this.selectDisabled[item.valueName] = item.disabled
@@ -332,17 +335,18 @@ export default {
           this.selectList.push(row)
         }
       } else {
-        let index = this.selectList.findIndex((item) => item.materialCode == row.materialCode)
+        var index = this.selectList.findIndex((item) => item.materialCode == row.materialCode)
         if (index >= 0) {
           this.selectList.splice(index, 1)
         }
       }
     },
     checkboxAll({ checked, $event }) {
+      var list = []
       if (checked) {
-        let list = this.$refs.xTable.getCheckboxRecords()
+        list = this.$refs.xTable.getCheckboxRecords()
         list.forEach((item) => {
-          let index = this.selectList.findIndex((temp) => item.materialCode == temp.materialCode)
+          var index = this.selectList.findIndex((temp) => item.materialCode == temp.materialCode)
           if (index < 0) {
             if (this.limit) {
               if (this.selectList.length < this.limit) {
@@ -356,9 +360,9 @@ export default {
           }
         })
       } else {
-        let list = this.tableData
+        list = this.tableData
         list.forEach((item) => {
-          let index = this.selectList.findIndex((temp) => item.materialCode == temp.materialCode)
+          var index = this.selectList.findIndex((temp) => item.materialCode == temp.materialCode)
           if (index >= 0) {
             this.selectList.splice(index, 1)
           }
@@ -366,7 +370,7 @@ export default {
       }
     },
     closetag(tag, i) {
-      let index = this.tableData.findIndex((item) => item.materialCode == tag.materialCode)
+      var index = this.tableData.findIndex((item) => item.materialCode == tag.materialCode)
       if (index >= 0) {
         this.$refs.xTable.setCheckboxRow(this.tableData[index], false)
       }
@@ -378,7 +382,7 @@ export default {
       }
       if (this.type == 'checkbox') {
         this.$refs.xTable.setCheckboxRow(row, true)
-        let index = this.selectList.findIndex((item) => item.materialCode == row.materialCode)
+        var index = this.selectList.findIndex((item) => item.materialCode == row.materialCode)
         if (index < 0) {
           if (this.limit) {
             if (this.selectList.length < this.limit) {
@@ -397,8 +401,8 @@ export default {
     },
     async getDictData() {
       this.tableLoading = true
-      let dictCodes = 'StlMaterial-materialType' //物资类型
-      let res = await listDictItems(dictCodes)
+      var dictCodes = 'StlMaterial-materialType' // 物资类型
+      var res = await listDictItems(dictCodes)
       this.dictDataList = res.sysDictionaryItemsList
       if (this.dictDataList.length > 0) {
         if (!this.selectDisabled.materialType) {

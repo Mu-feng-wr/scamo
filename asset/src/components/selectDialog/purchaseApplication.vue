@@ -1,16 +1,16 @@
 <template>
-  <vxe-modal type="modal" title="选择申购单" v-model="dialogVisible" width="70%" height="90%" esc-closable resize @hide="close">
+  <vxe-modal v-model="dialogVisible" type="modal" title="选择申购单" width="70%" height="90%" esc-closable resize @hide="close">
     <el-container>
       <el-header style="overflow:hidden;">
         <el-row :gutter="14" class="mb-10">
           <el-col :span="4">
-            <el-input size="mini" v-model="queryParams.purchaseApplicationCode" placeholder="请输入申购单号" clearable @keyup.enter.native="load" />
+            <el-input v-model="queryParams.purchaseApplicationCode" size="mini" placeholder="请输入申购单号" clearable @keyup.enter.native="load" />
           </el-col>
           <el-col :span="4">
-            <el-input size="mini" v-model="queryParams.subscriptionReason" placeholder="请输入申购原因" clearable @keyup.enter.native="load" />
+            <el-input v-model="queryParams.subscriptionReason" size="mini" placeholder="请输入申购原因" clearable @keyup.enter.native="load" />
           </el-col>
           <el-col :span="4">
-            <el-input size="mini" v-model="queryParams.applicantName" placeholder="请输入申请人" clearable @keyup.enter.native="load" />
+            <el-input v-model="queryParams.applicantName" size="mini" placeholder="请输入申请人" clearable @keyup.enter.native="load" />
           </el-col>
           <el-col :span="6">
             <el-button type="primary" icon="el-icon-search" size="mini" @click="load">查询</el-button>
@@ -35,6 +35,8 @@
           :columns="tableColumn"
           :row-config="{isHover:true,isCurrent:true}"
           class="vxeTable"
+          auto-resize
+          show-overflow="tooltip"
           @page-change="handlePageChange"
           @checkbox-change="checkboxChange"
           @cell-click="cellClick"
@@ -56,6 +58,7 @@ import vxeTable from '@/mixins/vxeTable'
 import { listApplicationQuery } from '@/api/base'
 export default {
   name: 'PurchaseApplication',
+  mixins: [vxeTable],
   props: {
     visible: {
       type: Boolean,
@@ -72,7 +75,6 @@ export default {
       }
     }
   },
-  mixins: [vxeTable],
   data() {
     return {
       queryParams: {},
@@ -85,13 +87,13 @@ export default {
       return [
         { type: this.selectType, width: 50, align: 'center', fixed: 'left' },
         { type: 'seq', width: 70, align: 'center', fixed: 'left', slots: { header: 'seqHeader' } },
-        { showOverflow: true, field: 'purchaseApplicationCode', title: '申购编号', minWidth: 140 },
-        { showOverflow: true, field: 'subscriptionDate', title: '申购日期', minWidth: 180 },
-        { showOverflow: true, field: 'centralizedBusinessName', title: '业务类型', minWidth: 120 },
-        { showOverflow: true, field: 'subscriptionReason', title: '申购原因', minWidth: 220, headerAlign: 'center', align: 'left' },
-        { showOverflow: true, field: 'subscriptionTaxAmount', title: '申购金额', minWidth: 120 },
-        { showOverflow: true, field: 'applicantName', title: '申请人', minWidth: 180 },
-        { showOverflow: true, field: 'createDate', title: '创建日期', minWidth: 180 }
+        { field: 'purchaseApplicationCode', title: '申购编号', minWidth: 140 },
+        { field: 'subscriptionDate', title: '申购日期', minWidth: 180 },
+        { field: 'centralizedBusinessName', title: '业务类型', minWidth: 120 },
+        { field: 'subscriptionReason', title: '申购原因', minWidth: 220, headerAlign: 'center', align: 'left' },
+        { field: 'subscriptionTaxAmount', title: '申购金额', minWidth: 120 },
+        { field: 'applicantName', title: '申请人', minWidth: 180 },
+        { field: 'createDate', title: '创建日期', minWidth: 180 }
       ]
     }
   },
@@ -105,7 +107,7 @@ export default {
       this.reload()
     },
     getQuery() {
-      let query = {}
+      var query = {}
       this.query.forEach((item) => {
         query[item.label] = item.value
       })
@@ -141,7 +143,7 @@ export default {
     },
     checkboxChange(val) {},
     confirm() {
-      let rowData = this.$refs.xTable.getRadioRecord()
+      var rowData = this.$refs.xTable.getRadioRecord()
       if (rowData.length <= 0) {
         this.$modal.msgWarning('请选择数据')
         return

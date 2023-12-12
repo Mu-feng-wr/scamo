@@ -1,16 +1,16 @@
 <template>
-  <vxe-modal title="选择合同" v-model="dialogVisible" width="70%" height="90%" esc-closable resize @hide="close">
+  <vxe-modal v-model="dialogVisible" title="选择合同" width="70%" height="90%" esc-closable resize @hide="close">
     <el-container>
       <el-header style="overflow:hidden;">
         <el-row :gutter="14" class="mb-10">
           <el-col :span="4">
-            <el-input size="mini" v-model="queryParams.purchaseApplicationCode" placeholder="请输入合同编号" clearable />
+            <el-input v-model="queryParams.purchaseApplicationCode" size="mini" placeholder="请输入合同编号" clearable />
           </el-col>
           <el-col :span="4">
-            <el-input size="mini" v-model="queryParams.subscriptionReason" placeholder="请输入合同名称" clearable />
+            <el-input v-model="queryParams.subscriptionReason" size="mini" placeholder="请输入合同名称" clearable />
           </el-col>
           <el-col :span="4">
-            <el-input size="mini" v-model="queryParams.applicantName" placeholder="请输入甲方" clearable />
+            <el-input v-model="queryParams.applicantName" size="mini" placeholder="请输入甲方" clearable />
           </el-col>
           <el-col :span="6">
             <el-button type="primary" icon="el-icon-search" size="mini" @click="load">查询</el-button>
@@ -55,6 +55,7 @@ import vxeTable from '@/mixins/vxeTable'
 import { listContractQuery } from '@/api/base.js'
 export default {
   name: 'Contract',
+  mixins: [vxeTable],
   props: {
     visible: {
       type: Boolean,
@@ -65,7 +66,6 @@ export default {
       default: 'radio'
     }
   },
-  mixins: [vxeTable],
   data() {
     return {
       queryParams: {},
@@ -123,6 +123,7 @@ export default {
       this.load()
     },
     handlePageChange({ currentPage, pageSize }) {
+      debugger
       this.tablePage.currentPage = currentPage
       this.tablePage.pageSize = pageSize
       // 触发列表请求

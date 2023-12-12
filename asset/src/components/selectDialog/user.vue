@@ -1,20 +1,20 @@
 <template>
-  <vxe-modal :title="title" v-model="dialogVisible" width="80%" height="90%" esc-closable resize @hide="close">
+  <vxe-modal v-model="dialogVisible" :title="title" width="80%" height="90%" esc-closable resize @hide="close">
     <el-container>
       <el-aside width="180" class="aside">
         <div class="treeBox">
           <div class="p-10">
-            <el-input v-model="deptName" placeholder="请输入部门名称" size="small" @change="changeInput" clearable></el-input>
+            <el-input v-model="deptName" placeholder="请输入部门名称" size="small" clearable @change="changeInput" />
           </div>
 
           <el-tree
-            class="tree"
+            ref="tree"
             v-loading="treeLoading"
+            class="tree"
             :data="deptTreeList"
             :props="defaultProps"
             :expand-on-click-node="false"
             :filter-node-method="filterNode"
-            ref="tree"
             default-expand-all
             highlight-current
             @node-click="handleNodeClick"
@@ -27,19 +27,19 @@
             <el-header class="mb-10">
               <el-row :gutter="14">
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.no" placeholder="用户编号" clearable />
+                  <el-input v-model="queryParams.no" size="mini" placeholder="用户编号" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.loginName" placeholder="登录账号" clearable />
+                  <el-input v-model="queryParams.loginName" size="mini" placeholder="登录账号" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.userName" placeholder="用户姓名" clearable />
+                  <el-input v-model="queryParams.userName" size="mini" placeholder="用户姓名" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.parentUserNo" placeholder="直接上级编号" clearable />
+                  <el-input v-model="queryParams.parentUserNo" size="mini" placeholder="直接上级编号" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.parentUserName" placeholder="直接上级名称" clearable />
+                  <el-input v-model="queryParams.parentUserName" size="mini" placeholder="直接上级名称" clearable />
                 </el-col>
                 <el-col :span="4">
                   <el-button type="primary" icon="el-icon-search" size="mini" @click="load">搜索</el-button>
@@ -61,15 +61,17 @@
                 :columns="tableColumn"
                 :row-config="{isHover:true,isCurrent:true}"
                 class="vxeTable"
+                auto-resize
+                show-overflow="tooltip"
                 @page-change="handlePageChange"
                 @cell-click="cellClick"
               >
                 <template #seqHeader>序号</template>
                 <template #sex="{row}">
-                  <dictDateView :value="row.sex" :dictDataList="dictDataList" dictCode="SysUser-sex" />
+                  <dictDateView :value="row.sex" :dict-data-list="dictDataList" dict-code="SysUser-sex" />
                 </template>
                 <template #status="{row}">
-                  <dictDateView :value="row.status" :dictDataList="dictDataList" dictCode="System-status" />
+                  <dictDateView :value="row.status" :dict-data-list="dictDataList" dict-code="System-status" />
                 </template>
               </vxe-grid>
             </el-main>
@@ -91,6 +93,7 @@ import { deptTreeSelect, listUser } from '@/api/base.js'
 import { listDictItems } from '@/api/base.js'
 export default {
   name: 'SelectUser',
+  mixins: [vxeTable],
   props: {
     visible: {
       type: Boolean,
@@ -102,10 +105,9 @@ export default {
     },
     selectType: {
       type: String,
-      default: 'radio' //radio单选   checkbox多选
+      default: 'radio' // radio单选   checkbox多选
     }
   },
-  mixins: [vxeTable],
   data() {
     return {
       dialogVisible: false,
@@ -201,8 +203,8 @@ export default {
       this.$refs.tree.filter(val)
     },
     getDictData() {
-      let dictCodes = 'SysUser-sex' //性别
-      dictCodes += ',System-status' //状态
+      let dictCodes = 'SysUser-sex' // 性别
+      dictCodes += ',System-status' // 状态
       listDictItems(dictCodes).then((res) => {
         this.dictDataList = res.sysDictionaryItemsList
       })

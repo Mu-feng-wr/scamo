@@ -1,16 +1,16 @@
 <template>
-  <vxe-modal :title="title" v-model="dialogVisible" width="70%" height="90%" esc-closable resize @hide="close">
+  <vxe-modal v-model="dialogVisible" :title="title" width="70%" height="90%" esc-closable resize @hide="close">
     <el-container>
       <el-header style="overflow:hidden;">
         <el-row :gutter="14" class="pb-10">
           <el-col :span="4">
-            <el-input size="mini" v-model="queryParams.accountNumber" placeholder="请输入账号" clearable @keydown.enter="load" />
+            <el-input v-model="queryParams.accountNumber" size="mini" placeholder="请输入账号" clearable @keydown.enter="load" />
           </el-col>
           <el-col :span="4">
-            <el-input size="mini" v-model="queryParams.accountName" placeholder="请输入户名" clearable @keydown.enter="load" />
+            <el-input v-model="queryParams.accountName" size="mini" placeholder="请输入户名" clearable @keydown.enter="load" />
           </el-col>
           <el-col :span="4">
-            <el-input size="mini" v-model="queryParams.depositBank" placeholder="请输入开户行" clearable @keydown.enter="load" />
+            <el-input v-model="queryParams.depositBank" size="mini" placeholder="请输入开户行" clearable @keydown.enter="load" />
           </el-col>
           <el-col :span="6">
             <el-button type="primary" icon="el-icon-search" size="mini" @click="load">查询</el-button>
@@ -34,11 +34,13 @@
           :columns="tableColumn"
           :row-config="{isHover:true,isCurrent:true}"
           class="vxeTable"
+          auto-resize
+          show-overflow="tooltip"
           @cell-click="cellClick"
         >
           <template #seqHeader>序号</template>
           <template v-slot:status="{ row }">
-            <dictDateView :value="row.status" :dictDataList="dictDataList" dictCode="System-status" />
+            <dictDateView :value="row.status" :dict-data-list="dictDataList" dict-code="System-status" />
           </template>
         </vxe-grid>
       </el-main>
@@ -56,6 +58,7 @@ import vxeTable from '@/mixins/vxeTable'
 import { listDictItems, listAccountQuery } from '@/api/base.js'
 export default {
   name: 'ChargeOff',
+  mixins: [vxeTable],
   props: {
     visible: {
       type: Boolean,
@@ -63,14 +66,13 @@ export default {
     },
     selectType: {
       type: String,
-      default: 'radio' //radio单选   checkbox多选
+      default: 'radio' // radio单选   checkbox多选
     },
     title: {
       type: String,
       default: '选择出账公司'
     }
   },
-  mixins: [vxeTable],
   data() {
     return {
       queryParams: {},
@@ -130,7 +132,7 @@ export default {
       this.load()
     },
     confirm() {
-      let data = ''
+      var data = ''
       if (this.selectType == 'radio') {
         data = this.$refs.xTable.getRadioRecord()
         if (!data) {
@@ -151,7 +153,7 @@ export default {
       this.$emit('update:visible', false)
     },
     getDictData() {
-      let dictCodes = 'System-status' //账号状态
+      var dictCodes = 'System-status' // 账号状态
       listDictItems(dictCodes).then((res) => {
         this.dictDataList = res.sysDictionaryItemsList
       })

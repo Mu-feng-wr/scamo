@@ -1,9 +1,9 @@
 <template>
   <div style="display:inline-block">
     <el-button :disabled="disabled" type="primary" :size="size" icon="el-icon-position" plain @click="openDialog">{{ title }}</el-button>
-    <el-dialog :title="title" v-if="dialogVisible" :visible.sync="dialogVisible" width="400px" @close="close">
+    <el-dialog v-if="dialogVisible" :title="title" :visible.sync="dialogVisible" width="400px" @close="close">
       <div v-loading="loading" :style="{height:height+' !important'}">
-        <el-tree lazy check-strictly :load="loadNode" :props="props" node-key="id" ref="tree" show-checkbox></el-tree>
+        <el-tree ref="tree" lazy check-strictly :load="loadNode" :props="props" node-key="id" show-checkbox />
       </div>
       <div class="text-center">
         <el-button icon="el-icon-circle-check" type="primary" size="small" @click="confirm">确认</el-button>
@@ -58,7 +58,7 @@ export default {
         this.loading = true
         listAddressQuery(this.query)
           .then((res) => {
-            let data = res.rows.map((item) => {
+            var data = res.rows.map((item) => {
               item.disabled = true
               return item
             })
@@ -82,7 +82,7 @@ export default {
     },
 
     confirm() {
-      let data = this.$refs.tree.getCheckedNodes()
+      var data = this.$refs.tree.getCheckedNodes()
       console.log(data)
       if (!data || data.length == 0) {
         this.$message({

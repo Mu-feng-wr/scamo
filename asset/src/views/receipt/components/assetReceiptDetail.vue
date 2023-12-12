@@ -1,14 +1,14 @@
 <template>
   <div>
     <div class="pt-10 mb-10">
-      <!-- <selectMaterial
+      <selectMaterial
+        v-if="formData.accepterMethod && formData.accepterMethod != 1 && showBtn && formData.ynGenLine != 1"
         :query="selectMaterialQuery"
         class="pr-10"
-        v-if="formData.accepterMethod && formData.accepterMethod != 1 && showBtn && formData.ynGenLine != 1"
         size="mini"
-        :selectedData="formData.accepterMethod != 1 ? tableData : []"
+        :selected-data="formData.accepterMethod != 1 ? tableData : []"
         @confirm="selectMaterialHandler"
-      />-->
+      />
       <el-button
         v-if="showBtn && formData.ynGenLine != 1 && formData.accepterMethod != 1"
         icon="el-icon-download"
@@ -28,11 +28,11 @@
         @click="downloadAssetDetail('receipt')"
       >下载申购资产明细</el-button>
       <uploadFile v-if="showBtn && formData.ynGenLine != 1" class="pl-10" plain size="mini" url="/asset/receipt/importData" @uploadSuccess="uploadSuccess" />
-      <uploadImg size="mini" v-if="showBtn && editForm && formData.ynGenLine != 1" :disabled="btnDisabled" class="pl-10 pr-10" @success="uploadImgSuccess" />
-      <setUser size="mini" v-if="showBtn && editForm && formData.ynGenLine != 1" :disabled="btnDisabled" class="pr-10" @confirm="setUserHandler" />
-      <selectArea size="mini" v-if="showBtn && editForm && formData.ynGenLine != 1" :disabled="btnDisabled" class="pr-10" @confirm="selectAreaHandler" />
-      <!--<selectShelf size="mini" v-if="showBtn && editForm" :disabled="btnDisabled" :query="{ parentId: formData.warehouseId }" class="pr-10" @confirm="selectShelfHandler" />
-      <Pint v-if="formData.ynGenLine == 1 && formData.status == 1" v-bind="{ selectRows }" class="mr-10" type="qrCode" :disabled="btnDisabled"></Pint>-->
+      <uploadImg v-if="showBtn && editForm && formData.ynGenLine != 1" size="mini" :disabled="btnDisabled" class="pl-10 pr-10" @success="uploadImgSuccess" />
+      <setUser v-if="showBtn && editForm && formData.ynGenLine != 1" size="mini" :disabled="btnDisabled" class="pr-10" @confirm="setUserHandler" />
+      <selectArea v-if="showBtn && editForm && formData.ynGenLine != 1" size="mini" :disabled="btnDisabled" class="pr-10" @confirm="selectAreaHandler" />
+      <selectShelf v-if="showBtn && editForm" :disabled="btnDisabled" size="mini" :query="{ parentId: formData.warehouseId }" class="pr-10" @confirm="selectShelfHandler" />
+      <!-- <Pint v-if="formData.ynGenLine == 1 && formData.status == 1" v-bind="{ selectRows }" class="mr-10" type="qrCode" :disabled="btnDisabled"></Pint>-->
       <el-button size="mini" icon="el-icon-upload2" :disabled="tableData.length == 0" @click="exportAssetDeatil">导出</el-button>
       <el-button v-if="showBtn && editForm" size="mini" :disabled="btnDisabled" type="danger" icon="el-icon-delete" plain @click="batchDeleteRow">删除</el-button>
     </div>
@@ -522,7 +522,7 @@ export default {
       })
     },
     deleteRow(row, rowIndex) {
-      this.$modal.confirm('确认删除资产明细单资产编号为"' + row.materialCode + '"的数据项？').then(() => {
+      this.$confirm('确认删除资产明细单资产编号为"' + row.materialCode + '"的数据项？').then(() => {
         this.tableData.splice(rowIndex, 1)
         this.$emit('calculate', this.tableData)
       })
@@ -671,7 +671,7 @@ export default {
         })
         return
       }
-      this.$modal.confirm('确认批量删除资产明细信息？').then((res) => {
+      this.$confirm('确认批量删除资产明细信息？').then((res) => {
         list.forEach((item) => {
           var index = this.tableData.findIndex((temp) => {
             if (item.assetReceiptDetailId) {

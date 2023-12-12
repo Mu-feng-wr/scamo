@@ -83,7 +83,7 @@ export default {
     },
     type: {
       type: [Number, String],
-      default: '1' //1是资产，2是耗材，3是礼品
+      default: '1' // 1是资产，2是耗材，3是礼品
     },
     selectType: {
       type: String,

@@ -95,7 +95,6 @@
               header-align="center"
               align="center"
               :data="tableData"
-              :pager-config="tablePage"
               border
               :resizable="true"
               :columns="tableColumn"
@@ -107,7 +106,6 @@
               auto-resize
               show-overflow="tooltip"
               :footer-method="getFooterData"
-              @page-change="handlePageChange"
             >
               <template v-slot:seqHeader>序号</template>
               <template v-slot:assetReceiptCode="{row}">
@@ -167,6 +165,18 @@
                   >作废</el-button>
                   <el-button v-if="row.status == 0 || row.status == 3 || row.status == 4" v-hasPermi="['asset:receipt:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
+              </template>
+              <template #pager>
+                <el-pagination
+                  background
+                  :current-page="tablePage.currentPage"
+                  :page-sizes="[10, 20, 30, 50]"
+                  :page-size="tablePage.pageSize"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="tablePage.total"
+                  @size-change="handlePageChange($event,'pageSize')"
+                  @current-change="handlePageChange($event,'currentPage')"
+                />
               </template>
             </vxe-grid>
           </el-main>
@@ -335,28 +345,35 @@ export default {
         title: '资产入库详情',
         condition: { id }
       })
-      // this.$router.push({
-      //   name: 'receipt-receiptDetail',
-      //   query: {
-      //     id: id
-      //   }
-      // })
     },
-    handlePageChange({ currentPage, pageSize }) {
-      this.tablePage.currentPage = currentPage
-      this.tablePage.pageSize = pageSize
+    handlePageChange(value, type) {
+      if (type == 'currentPage') {
+        this.tablePage.currentPage = value
+      }
+      if (type == 'pageSize') {
+        this.tablePage.pageSize = value
+      }
       // 触发列表请求
       this.load()
     },
     // 新增 编辑
     addOrUpdateHandle(id) {
-      window.$wujie.props.route({
-        path: '/asset/receipt',
-        module: 'Asset',
-        fullPath: '/asset/receipt/edit',
-        title: '编辑资产入库',
-        condition: { id }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/asset/receipt',
+          module: 'Asset',
+          fullPath: '/asset/receipt/edit',
+          title: '编辑资产入库',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/asset/receipt',
+          module: 'Asset',
+          fullPath: '/asset/receipt/add',
+          title: '新增资产入库'
+        })
+      }
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {

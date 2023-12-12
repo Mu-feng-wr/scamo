@@ -1,16 +1,16 @@
 <template>
-  <vxe-modal title="选择供应商" v-model="dialogVisible" width="70%" height="90%" esc-closable resize @hide="close">
+  <vxe-modal v-model="dialogVisible" title="选择供应商" width="70%" height="90%" esc-closable resize @hide="close">
     <el-container>
       <el-header style="overflow:hidden;">
         <el-row :gutter="14" class="pb-10">
           <el-col :span="4">
-            <el-input size="mini" v-model="queryParams.supplierCode" placeholder="请输入供应商编号" clearable />
+            <el-input v-model="queryParams.supplierCode" size="mini" placeholder="请输入供应商编号" clearable />
           </el-col>
           <el-col :span="4">
-            <el-input size="mini" v-model="queryParams.supplierName" placeholder="请输入供应商名称" clearable />
+            <el-input v-model="queryParams.supplierName" size="mini" placeholder="请输入供应商名称" clearable />
           </el-col>
           <el-col :span="4">
-            <el-input size="mini" v-model="queryParams.dutyCode" placeholder="请输入营业执照号" clearable />
+            <el-input v-model="queryParams.dutyCode" size="mini" placeholder="请输入营业执照号" clearable />
           </el-col>
           <el-col :span="6">
             <el-button type="primary" icon="el-icon-search" size="mini" @click="load">查询</el-button>
@@ -34,6 +34,8 @@
           :columns="tableColumn"
           :row-config="{isHover:true,isCurrent:true}"
           class="vxeTable"
+          auto-resize
+          show-overflow="tooltip"
           @cell-click="cellClick"
           @page-change="handlePageChange"
         >
@@ -54,6 +56,7 @@ import vxeTable from '@/mixins/vxeTable'
 import { listSupplierQuery } from '@/api/base.js'
 export default {
   name: 'Supplier',
+  mixins: [vxeTable],
   props: {
     visible: {
       type: Boolean,
@@ -61,10 +64,9 @@ export default {
     },
     selectType: {
       type: String,
-      default: 'radio' //radio单选   checkbox多选
+      default: 'radio' // radio单选   checkbox多选
     }
   },
-  mixins: [vxeTable],
   data() {
     return {
       queryParams: {},
@@ -77,13 +79,13 @@ export default {
       return [
         { type: this.selectType, width: 50, align: 'center', fixed: 'left' },
         { type: 'seq', width: 50, align: 'center', fixed: 'left', slots: { header: 'seqHeader' } },
-        { showOverflow: true, field: 'supplierCode', title: '供应商编号', width: 140 },
-        { showOverflow: true, field: 'supplierName', title: '供应商名称', minWidth: 180, headerAlign: 'center', align: 'left' },
-        { showOverflow: true, field: '', title: '合作状态', width: 120 },
-        { showOverflow: true, field: 'dutyCode', title: '营业执照号', width: 180, showOverflow: true },
-        { showOverflow: true, field: 'address', title: '地址', minWidth: 180, headerAlign: 'center', align: 'center', showOverflow: true },
-        { showOverflow: true, field: 'businessType', title: '供贷类型', width: 180 },
-        { showOverflow: true, field: 'storageDate', title: '入库日期', width: 180 }
+        { field: 'supplierCode', title: '供应商编号', width: 140 },
+        { field: 'supplierName', title: '供应商名称', minWidth: 180, headerAlign: 'center', align: 'left' },
+        { field: '', title: '合作状态', width: 120 },
+        { field: 'dutyCode', title: '营业执照号', width: 180 },
+        { field: 'address', title: '地址', minWidth: 180, headerAlign: 'center', align: 'center' },
+        { field: 'businessType', title: '供贷类型', width: 180 },
+        { field: 'storageDate', title: '入库日期', width: 180 }
       ]
     }
   },

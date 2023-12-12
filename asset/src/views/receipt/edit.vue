@@ -1,24 +1,24 @@
 <template>
   <PageCard v-loading="submitLoading" :return-url="returnUrl">
-    <el-form :disabled="!editForm" ref="form" :model="formData" :rules="rules" label-width="170px" class="form-table form-table-edit" style="margin-bottom: 8px">
+    <el-form ref="form" :disabled="!editForm" :model="formData" :rules="rules" label-width="170px" class="form-table form-table-edit" style="margin-bottom: 8px">
       <SectionCard title="基本信息">
         <el-row>
           <el-col :span="8">
             <el-form-item label="验收单号" prop="assetReceiptCode">
-              <el-input size="small" disabled v-model="formData.assetReceiptCode" placeholder="系统自动生成" />
+              <el-input v-model="formData.assetReceiptCode" size="small" disabled placeholder="系统自动生成" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请日期" prop="applicantDate">
               <el-date-picker
+                v-model="formData.applicantDate"
                 :disabled="!!formData.assetReceiptId"
                 size="small"
                 clearable
-                v-model="formData.applicantDate"
                 type="date"
                 value-format="yyyy-MM-dd HH:mm:ss"
                 placeholder="请选择申请日期"
-              ></el-date-picker>
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -28,27 +28,27 @@
                 :disabled="formData.ynGenLine==1||!!formData.assetReceiptId"
                 :value.sync="formData.centralizedBusinessId"
                 :label.sync="formData.centralizedBusinessName"
-                baseCode="listType"
-                :preStore="[{businessId:formData.centralizedBusinessId,businessName:formData.centralizedBusinessName}]"
-                labelName="businessName"
-                valueName="businessId"
+                base-code="listType"
+                :pre-store="[{businessId:formData.centralizedBusinessId,businessName:formData.centralizedBusinessName}]"
+                label-name="businessName"
+                value-name="businessId"
                 placeholder="请选择业务类型"
-              ></base-input>
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请人" prop="applicantName">
-              <el-input size="small" disabled v-model="formData.applicantName" placeholder="请输入申请人" />
+              <el-input v-model="formData.applicantName" size="small" disabled placeholder="请输入申请人" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请部门" prop="applicantOrgName">
-              <el-input size="small" disabled v-model="formData.applicantOrgName" placeholder="请输入申请部门" />
+              <el-input v-model="formData.applicantOrgName" size="small" disabled placeholder="请输入申请部门" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请公司名称" prop="applicantCompanyName">
-              <el-input size="small" disabled v-model="formData.applicantCompanyName" placeholder="请输入申请公司名称" />
+              <el-input v-model="formData.applicantCompanyName" size="small" disabled placeholder="请输入申请公司名称" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -58,7 +58,7 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="验收日期" prop="acceptedDate">
-              <el-date-picker size="small" clearable v-model="formData.acceptedDate" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="请选择验收日期"></el-date-picker>
+              <el-date-picker v-model="formData.acceptedDate" size="small" clearable type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="请选择验收日期" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -67,10 +67,10 @@
                 size="small"
                 :disabled="formData.ynGenLine==1"
                 :value.sync="formData.accepterMethod"
-                :optionsList="dictDataList"
-                baseCode="AlmAssetReceipt-accepterMethod"
+                :options-list="dictDataList"
+                base-code="AlmAssetReceipt-accepterMethod"
                 placeholder="请选择验收方式"
-              ></base-input>
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -79,10 +79,10 @@
                 size="small"
                 :disabled="formData.ynGenLine==1"
                 :value.sync="formData.assetSource"
-                :optionsList="dictDataList"
-                baseCode="AlmAssetReceipt-assetSource"
+                :options-list="dictDataList"
+                base-code="AlmAssetReceipt-assetSource"
                 placeholder="请选择资产来源"
-              ></base-input>
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -92,144 +92,144 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="验收部门名称" prop="accepterOrgName">
-              <el-input size="small" disabled v-model="formData.accepterOrgName" placeholder="选择验收人自动带出" />
+              <el-input v-model="formData.accepterOrgName" size="small" disabled placeholder="选择验收人自动带出" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="资产所属仓库名称" prop="warehouseName">
               <base-input
                 size="small"
-                baseCode="listAddressWarehouse"
-                labelName="locationName"
-                valueName="locationAddressId"
-                :returnObj="true"
+                base-code="listAddressWarehouse"
+                label-name="locationName"
+                value-name="locationAddressId"
+                :return-obj="true"
                 :value.sync="formData.warehouseId"
                 placeholder="请输入资产所属仓库名称"
-                :preStore="[{locationAddressId:formData.warehouseId,locationName:formData.warehouseName}]"
+                :pre-store="[{locationAddressId:formData.warehouseId,locationName:formData.warehouseName}]"
                 @change="changeWarehouseName"
-              ></base-input>
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="资产所属公司名称" prop="assetCompanyName">
-              <el-input size="small" disabled v-model="formData.assetCompanyName" placeholder="选择仓库自动带出" />
+              <el-input v-model="formData.assetCompanyName" size="small" disabled placeholder="选择仓库自动带出" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="验收数量">
-              <el-input-number size="small" :precision="formData.materialType==1?0:3" disabled :step="1" v-model="formData.receiptQuantity" controls-position="right" placeholder="自动计算"></el-input-number>
+              <el-input-number v-model="formData.receiptQuantity" size="small" :precision="formData.materialType==1?0:3" disabled :step="1" controls-position="right" placeholder="自动计算" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="验收不含税金额（元）">
-              <el-input-number size="small" disabled :precision="3" :step="1" v-model="formData.receiptExcTaxAmount" controls-position="right" placeholder="自动计算"></el-input-number>
+              <el-input-number v-model="formData.receiptExcTaxAmount" size="small" disabled :precision="3" :step="1" controls-position="right" placeholder="自动计算" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="验收税额（元）">
-              <el-input-number size="small" disabled :precision="3" :step="1" v-model="formData.receiptTax" controls-position="right" placeholder="自动计算"></el-input-number>
+              <el-input-number v-model="formData.receiptTax" size="small" disabled :precision="3" :step="1" controls-position="right" placeholder="自动计算" />
             </el-form-item>
           </el-col>
           <el-col :span="formData.status!=0?8:16">
             <el-form-item label="验收总金额（元）">
               <el-input-number
+                v-model="formData.receiptTaxAmount"
                 size="small"
                 :style="formData.status!=0?'':'width:calc(50% - 85px - 12px );'"
                 disabled
                 :precision="2"
                 :step="1"
-                v-model="formData.receiptTaxAmount"
                 controls-position="right"
                 placeholder="自动计算 "
-              ></el-input-number>
+              />
             </el-form-item>
           </el-col>
-          <el-col :span="8" v-if="formData.status!=0">
+          <el-col v-if="formData.status!=0" :span="8">
             <el-form-item label="状态">
-              <base-input size="small" baseCode="AlmAssetReceipt-status" :disabled="true" :value.sync="formData.status" :optionsList="dictDataList" />
+              <base-input size="small" base-code="AlmAssetReceipt-status" :disabled="true" :value.sync="formData.status" :options-list="dictDataList" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="备注" class="noProp-item-textarea">
-              <el-input size="small" v-model="formData.remarks" type="textarea" placeholder="请输入内容" :maxlength="300" show-word-limit />
+              <el-input v-model="formData.remarks" size="small" type="textarea" placeholder="请输入内容" :maxlength="300" show-word-limit />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="验收原因" prop="receiptReason" class="noProp-item-textarea">
-              <el-input size="small" type="textarea" v-model="formData.receiptReason" placeholder="请选择验收原因" :maxlength="300" show-word-limit></el-input>
+              <el-input v-model="formData.receiptReason" size="small" type="textarea" placeholder="请选择验收原因" :maxlength="300" show-word-limit />
             </el-form-item>
           </el-col>
         </el-row>
       </SectionCard>
 
-      <SectionCard class="mt-8" title="申购信息" v-if="formData.accepterMethod==1">
+      <SectionCard v-if="formData.accepterMethod==1" class="mt-8" title="申购信息">
         <el-row>
           <el-col :span="8">
             <el-form-item label="申购单号" prop="purchaseApplicationId">
-              <el-input suffix-icon="el-icon-arrow-down" :disabled="!!editId" :value="formData.purchaseApplicationCode" @focus="focusApplication" placeholder="请选择申购单"></el-input>
+              <el-input suffix-icon="el-icon-arrow-down" :disabled="!!editId" :value="formData.purchaseApplicationCode" placeholder="请选择申购单" @focus="focusApplication" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申购日期" prop="subscriptionDate">
-              <el-date-picker size="small" disabled clearable v-model="formData.subscriptionDate" type="date" value-format="yyyy-MM-dd" placeholder="选择申购单自动带出"></el-date-picker>
+              <el-date-picker v-model="formData.subscriptionDate" size="small" disabled clearable type="date" value-format="yyyy-MM-dd" placeholder="选择申购单自动带出" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="联系电话">
-              <el-input size="small" disabled v-model="formData.phone" placeholder="选择申购单自动带出" />
+              <el-input v-model="formData.phone" size="small" disabled placeholder="选择申购单自动带出" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申购人">
-              <el-input size="small" disabled v-model="formData.poApplicantName" placeholder="选择申购单自动带出" />
+              <el-input v-model="formData.poApplicantName" size="small" disabled placeholder="选择申购单自动带出" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申购部门">
-              <el-input size="small" disabled v-model="formData.purchaseApplicantOrgName" placeholder="选择申购单自动带出" />
+              <el-input v-model="formData.purchaseApplicantOrgName" size="small" disabled placeholder="选择申购单自动带出" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申购公司">
-              <el-input size="small" disabled v-model="formData.purchaseApplicantCompanyName" placeholder="选择申购单自动带出" />
+              <el-input v-model="formData.purchaseApplicantCompanyName" size="small" disabled placeholder="选择申购单自动带出" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申购数量">
               <el-input-number
+                v-model="formData.subscriptionQuantity"
                 size="small"
                 disabled
                 :precision="formData.materialType==1?0:3"
                 :step="1"
-                v-model="formData.subscriptionQuantity"
                 controls-position="right"
                 placeholder="选择申购单自动带出"
-              ></el-input-number>
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申购不含税金额（元）">
-              <el-input-number size="small" disabled :precision="8" :step="1" v-model="formData.subscriptionExcTaxAmount" controls-position="right" placeholder="选择申购单自动带出"></el-input-number>
+              <el-input-number v-model="formData.subscriptionExcTaxAmount" size="small" disabled :precision="8" :step="1" controls-position="right" placeholder="选择申购单自动带出" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申购税额（元）">
-              <el-input-number size="small" disabled :precision="8" :step="1" v-model="formData.purchaseTaxAmount" controls-position="right" placeholder="选择申购单自动带出"></el-input-number>
+              <el-input-number v-model="formData.purchaseTaxAmount" size="small" disabled :precision="8" :step="1" controls-position="right" placeholder="选择申购单自动带出" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申购总金额（元）">
-              <el-input-number size="small" disabled :precision="2" :step="1" v-model="formData.subscriptionTaxAmount" controls-position="right" placeholder="选择申购单自动带出"></el-input-number>
+              <el-input-number v-model="formData.subscriptionTaxAmount" size="small" disabled :precision="2" :step="1" controls-position="right" placeholder="选择申购单自动带出" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="到货日期" prop="arrivalDate">
-              <el-date-picker size="small" disabled clearable v-model="formData.arrivalDate" type="date" value-format="yyyy-MM-dd" placeholder="选择申购单自动带出"></el-date-picker>
+              <el-date-picker v-model="formData.arrivalDate" size="small" disabled clearable type="date" value-format="yyyy-MM-dd" placeholder="选择申购单自动带出" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="到货要求">
-              <el-input size="small" disabled v-model="formData.arrivalRequirement" placeholder="选择申购单自动带出" />
+              <el-input v-model="formData.arrivalRequirement" size="small" disabled placeholder="选择申购单自动带出" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -240,14 +240,14 @@
           <el-col :span="24">
             <el-form-item label="使用区域" prop="location">
               <el-cascader
+                ref="categoryCascader"
+                v-model="formData.location"
                 size="small"
                 :props="propsUseAreaTree"
                 :options="useAreaTree"
                 placeholder="请选择使用区域"
                 :filterable="true"
                 clearable
-                ref="categoryCascader"
-                v-model="formData.location"
                 style="width: 100%"
                 @change="useAreaChange"
               >
@@ -316,14 +316,14 @@
               <base-input
                 style="width:calc(50% - 85px - 12px );"
                 size="small"
-                baseCode="listAgreement"
-                labelName="tenderAgreementName"
-                valueName="tenderAgreementId"
+                base-code="listAgreement"
+                label-name="tenderAgreementName"
+                value-name="tenderAgreementId"
                 :disabled="formData.accepterMethod==1"
                 :value.sync="formData.tenderAgreementId"
-                :preStore="[{tenderAgreementId:formData.tenderAgreementId,tenderAgreementName:formData.tenderAgreementName}]"
+                :pre-store="[{tenderAgreementId:formData.tenderAgreementId,tenderAgreementName:formData.tenderAgreementName}]"
                 :placeholder="formData.accepterMethod==1?'自动带出':'请选择招标协议'"
-                :returnObj="true"
+                :return-obj="true"
                 @change="changeTenderAgreement"
               />
             </el-form-item>
@@ -332,16 +332,16 @@
       </SectionCard>
     </el-form>
     <SectionCard class="mt-8" title="资产明细">
-      <assetReceiptDetail :editForm="editForm" ref="assetDetail" v-bind="{useAreaTree}" :form-data="formData" @calculate="calculate" />
+      <assetReceiptDetail ref="assetDetail" :edit-form="editForm" v-bind="{useAreaTree}" :form-data="formData" @calculate="calculate" />
     </SectionCard>
     <SectionCard v-if="formData.status" title="处理记录" class="mt-8">
-      <handleRecords :tableData="formData.assetReviewAuditList" />
+      <handleRecords :table-data="formData.assetReviewAuditList" />
     </SectionCard>
 
     <el-row>
       <el-col :span="12" class="pr-10">
         <SectionCard title="处理意见">
-          <el-input type="textarea" v-model="formData.curProcessOptions" placeholder="请输入内容" maxlength="300" show-word-limit></el-input>
+          <el-input v-model="formData.curProcessOptions" type="textarea" placeholder="请输入内容" maxlength="300" show-word-limit />
         </SectionCard>
       </el-col>
       <el-col :span="12" class="pl-10">
@@ -350,17 +350,17 @@
     </el-row>
 
     <div slot="footer" align="center">
-      <el-button type="primary" @click="submitForm(0,1)" v-if="formData.ynGenLine==0||!formData.ynGenLine">保存生成单个资产</el-button>
-      <el-button type="primary" @click="submitForm(0)" v-if="(!formData.status||formData.status==0)&&formData.ynGenLine!=1">保存继续录入资产明细</el-button>
-      <el-button type="success" @click="submitForm(0)" v-if="(!formData.status||formData.status==0||formData.status==3)&&formData.ynGenLine!=1">草 稿</el-button>
-      <el-button type="primary" @click="submitForm(2,6)" v-if="formData.ynGenLine==1&&formData.status==0||formData.status==3">提 交</el-button>
-      <el-button type="primary" @click="approve(2,1)" v-if="todo=='audit_superior'">通 过</el-button>
-      <el-button type="primary" @click="approve(2,1)" v-if="todo=='register_asset_admin'">登 记</el-button>
-      <el-button type="warning" @click="approve(0,4)" v-if="todo=='recall_add'">撤 回</el-button>
-      <el-button type="warning" @click="approve(2,4)" v-if="todo=='recall_superior'">撤 回</el-button>
-      <el-button type="warning" @click="approve(3,2)" v-if="todo=='audit_superior'">退 回</el-button>
-      <el-button type="warning" @click="approve(3,2)" v-if="todo=='register_asset_admin'">退 回</el-button>
-      <el-button type="danger" @click="approve(4,5)" v-if="todo=='invalid_add'">作 废</el-button>
+      <el-button v-if="formData.ynGenLine==0||!formData.ynGenLine" type="primary" @click="submitForm(0,1)">保存生成单个资产</el-button>
+      <el-button v-if="(!formData.status||formData.status==0)&&formData.ynGenLine!=1" type="primary" @click="submitForm(0)">保存继续录入资产明细</el-button>
+      <el-button v-if="(!formData.status||formData.status==0||formData.status==3)&&formData.ynGenLine!=1" type="success" @click="submitForm(0)">草 稿</el-button>
+      <el-button v-if="formData.ynGenLine==1&&formData.status==0||formData.status==3" type="primary" @click="submitForm(2,6)">提 交</el-button>
+      <el-button v-if="todo=='audit_superior'" type="primary" @click="approve(2,1)">通 过</el-button>
+      <el-button v-if="todo=='register_asset_admin'" type="primary" @click="approve(2,1)">登 记</el-button>
+      <el-button v-if="todo=='recall_add'" type="warning" @click="approve(0,4)">撤 回</el-button>
+      <el-button v-if="todo=='recall_superior'" type="warning" @click="approve(2,4)">撤 回</el-button>
+      <el-button v-if="todo=='audit_superior'" type="warning" @click="approve(3,2)">退 回</el-button>
+      <el-button v-if="todo=='register_asset_admin'" type="warning" @click="approve(3,2)">退 回</el-button>
+      <el-button v-if="todo=='invalid_add'" type="danger" @click="approve(4,5)">作 废</el-button>
     </div>
     <selectUser v-if="userDialogVisible" :visible.sync="userDialogVisible" title="选择验收人" @confirm="userSelect" />
     <supplier v-if="supplierDialogVisible" :visible.sync="supplierDialogVisible" title="选择供应商" @confirm="supplierSelect" />
@@ -370,8 +370,8 @@
     <purchaseApplication
       v-if="purchaseDialog"
       :visible.sync="purchaseDialog"
-      @confirm="purchaseHandler"
       :query="[{label:'centralizedBusinessId',value:formData.centralizedBusinessId},{label:'materialType',value:'1'}]"
+      @confirm="purchaseHandler"
     />
   </PageCard>
 </template>
@@ -416,7 +416,7 @@ export default {
         contractCode: { required: true, message: '合同编号不能为空', trigger: 'change' }
       },
       editId: '',
-      user: this.$store.state.user.info,
+      user: this.$store.getters.userInfo,
       propsUseAreaTree: {
         label: 'label',
         value: 'id',
@@ -497,7 +497,7 @@ export default {
         this.formData = {
           ...this.formData,
           ...{
-            sourceTerminal: 1, //终端来源    默认是   1 pc
+            sourceTerminal: 1, // 终端来源    默认是   1 pc
             applicantId: this.user.userId,
             applicantName: this.user.userName,
             applicantOrgId: this.user.deptId,
@@ -531,7 +531,7 @@ export default {
             return
           }
 
-          let submitData = {
+          var submitData = {
             ...this.formData,
             ...{
               almAssetReceiptDetailList: this.$refs.assetDetail.tableData.map((item, i) => {
@@ -553,7 +553,7 @@ export default {
                   return
                 }
                 this.submitLoading = false
-                this.$modal.msgSuccess('修改成功')
+                this.$message.success('修改成功')
                 if (status == 0) {
                   this.init()
                   return
@@ -567,13 +567,15 @@ export default {
             addReceipt(submitData)
               .then((res) => {
                 this.submitLoading = false
-                this.$modal.msgSuccess('新增成功')
+                this.$message.success('新增成功')
                 setTimeout(() => {
-                  this.$router.push({
-                    name: 'receipt-receiptUpdate',
-                    query: {
-                      id: res.msg
-                    }
+                  window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  window.$wujie.props.route({
+                    path: '/asset/receipt',
+                    module: 'Asset',
+                    fullPath: '/asset/receipt/edit',
+                    title: '编辑资产入库',
+                    condition: { id: res.msg }
                   })
                 }, 300)
               })
@@ -595,7 +597,7 @@ export default {
     },
     // 审核
     approve(status, curProcessResult) {
-      let obj = {
+      var obj = {
         6: '发起成功',
         1: this.todo == 'audit_superior' ? '审核成功' : '登记成功',
         2: '退回成功',
@@ -622,7 +624,7 @@ export default {
             return
           }
           this.submitLoading = true
-          let submitData = {
+          var submitData = {
             ...this.formData,
             ...{
               almAssetReceiptDetailList: this.$refs.assetDetail.tableData.map((item, i) => {
@@ -635,7 +637,7 @@ export default {
           }
           approveReceipt(submitData)
             .then((response) => {
-              this.$modal.msgSuccess(`${obj[curProcessResult]}！`)
+              this.$message.success(`${obj[curProcessResult]}！`)
               this.submitLoading = false
               setTimeout(() => {
                 this.$router.push({
@@ -670,19 +672,19 @@ export default {
       }
     },
     getDictData() {
-      let dictCodes = 'AlmAssetReceipt-accepterMethod' //入库方式
-      dictCodes += ',AlmAssetReceipt-assetSource' //资产来源
-      dictCodes += ',AlmAssetReceipt-status' //入库状态
+      var dictCodes = 'AlmAssetReceipt-accepterMethod' // 入库方式
+      dictCodes += ',AlmAssetReceipt-assetSource' // 资产来源
+      dictCodes += ',AlmAssetReceipt-status' // 入库状态
       listDictItems(dictCodes).then((res) => {
         this.dictDataList = res.sysDictionaryItemsList
       })
     },
-    //计算资产数量 税额等
+    // 计算资产数量 税额等
     calculate(arr) {
-      let receiptTaxAmount = 0 //验收总金额
-      let receiptTax = 0 //验收税额
-      let receiptExcTaxAmount = 0 //验收不含税金额
-      let receiptQuantity = 0 //验收数量
+      var receiptTaxAmount = 0 // 验收总金额
+      var receiptTax = 0 // 验收税额
+      var receiptExcTaxAmount = 0 // 验收不含税金额
+      var receiptQuantity = 0 // 验收数量
       arr.forEach((item) => {
         receiptTaxAmount = this.$vxe.add(receiptTaxAmount, this.$vxe.add(item.receiptQuantity, item.subtotal))
         receiptTax = this.$vxe.add(receiptTax, item.taxAmount)
@@ -715,7 +717,7 @@ export default {
           accountNumber: data.accountNumber
         }
       }
-      //入库方式为申购入库 需要将财务信息带出
+      // 入库方式为申购入库 需要将财务信息带出
       if (this.formData.accepterMethod == 1) {
         this.formData = {
           ...this.formData,
@@ -796,8 +798,8 @@ export default {
     },
     useAreaChange(val) {
       if (val.length == 2) {
-        let leftData = this.useAreaTree.find((item) => item.id == val[0])
-        let rightData = leftData.children.find((item) => item.id == val[1])
+        var leftData = this.useAreaTree.find((item) => item.id == val[0])
+        var rightData = leftData.children.find((item) => item.id == val[1])
         this.formData = {
           ...this.formData,
           ...{

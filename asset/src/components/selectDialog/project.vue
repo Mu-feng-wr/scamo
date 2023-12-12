@@ -1,16 +1,16 @@
 <template>
-  <vxe-modal title="选择项目" v-model="dialogVisible" width="70%" height="90%" esc-closable resize @hide="close">
+  <vxe-modal v-model="dialogVisible" title="选择项目" width="70%" height="90%" esc-closable resize @hide="close">
     <el-container>
       <el-header style="overflow: hidden;">
         <el-row :gutter="14" class="mb-10">
           <el-col :span="4">
-            <el-input size="mini" v-model="queryParams.projectCode" placeholder="请输入项目编号" clearable />
+            <el-input v-model="queryParams.projectCode" size="mini" placeholder="请输入项目编号" clearable />
           </el-col>
           <el-col :span="4">
-            <el-input size="mini" v-model="queryParams.projectName" placeholder="请输入项目名称" clearable />
+            <el-input v-model="queryParams.projectName" size="mini" placeholder="请输入项目名称" clearable />
           </el-col>
           <el-col :span="4">
-            <el-input size="mini" v-model="queryParams.abbreviation" placeholder="请输入建设单位" clearable />
+            <el-input v-model="queryParams.abbreviation" size="mini" placeholder="请输入建设单位" clearable />
           </el-col>
           <el-col :span="6">
             <el-button type="primary" icon="el-icon-search" size="mini" @click="load">查询</el-button>
@@ -38,7 +38,7 @@
         >
           <template #seqHeader>序号</template>
           <template v-slot:focusType="{row}">
-            <dictDateView :value="row.focusType" :dictDataList="dictDataList" dictCode="PmProject-focusType" />
+            <dictDateView :value="row.focusType" :dict-data-list="dictDataList" dict-code="PmProject-focusType" />
           </template>
         </vxe-grid>
       </el-main>
@@ -56,6 +56,7 @@ import vxeTable from '@/mixins/vxeTable'
 import { listDictItems, listProjectQuery } from '@/api/base.js'
 export default {
   name: 'Project',
+  mixins: [vxeTable],
   props: {
     visible: {
       type: Boolean,
@@ -66,7 +67,6 @@ export default {
       default: 'radio'
     }
   },
-  mixins: [vxeTable],
   data() {
     return {
       queryParams: {},
@@ -131,7 +131,7 @@ export default {
       this.load()
     },
     confirm() {
-      let data = ''
+      var data = ''
       if (this.selectType == 'radio') {
         data = this.$refs.xTable.getRadioRecord()
         if (!data) {
@@ -152,7 +152,7 @@ export default {
       this.$emit('update:visible', false)
     },
     getDictData() {
-      let dictCodes = 'PmProject-focusType' //项目类型
+      var dictCodes = 'PmProject-focusType' // 项目类型
       listDictItems(dictCodes).then((res) => {
         this.dictDataList = res.sysDictionaryItemsList
       })
