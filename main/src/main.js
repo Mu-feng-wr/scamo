@@ -35,6 +35,13 @@ setupApp({
   exec: true,
   alive: true
 })
+// 资产
+setupApp({
+  name: 'Asset',
+  url: hostMap('//localhost:9003/'),
+  exec: true,
+  alive: true
+})
 
 Vue.use(ElementUI)
 

@@ -25,7 +25,7 @@ router.beforeEach(async(to, from, next) => {
         next()
       } else {
         try {
-          if(window.$wujie){
+          if (window.$wujie) {
             const userInfo = window.$wujie.props.userInfo
             const permissions = window.$wujie.props.permissions
             const roles = window.$wujie.props.roles
