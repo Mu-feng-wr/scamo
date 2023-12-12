@@ -25,15 +25,13 @@ router.beforeEach(async(to, from, next) => {
         next()
       } else {
         try {
-          if (window.$wujie) {
-            const userInfo = window.$wujie.props.userInfo
-            const permissions = window.$wujie.props.permissions
-            const roles = window.$wujie.props.roles
-            store.commit('user/SET_USERINFO', userInfo)
-            store.commit('user/SET_PERMISSIONS', permissions)
-            store.commit('user/SET_ROLES', roles)
-            next({ path: to.redirectedFrom })
-          }
+          const userInfo = window.$wujie.props.userInfo
+          const permissions = window.$wujie.props.permissions
+          const roles = window.$wujie.props.roles
+          store.commit('user/SET_USERINFO', userInfo)
+          store.commit('user/SET_PERMISSIONS', permissions)
+          store.commit('user/SET_ROLES', roles)
+          next({ path: to.redirectedFrom })
         } catch (error) {
           next(`/standbook/classificationMaterialAccount`)
           NProgress.done()
