@@ -13,8 +13,9 @@
   </div>
 </template>
 <script>
-import { listAddressQueryUseAreaTree } from '@/api/library/address'
+import { listAddressQueryUseAreaTree } from '@/api/base.js'
 export default {
+  name: 'SelectArea',
   props: {
     title: {
       type: String,

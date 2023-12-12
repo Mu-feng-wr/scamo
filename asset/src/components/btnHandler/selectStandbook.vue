@@ -244,4 +244,4 @@ export default {
   font-size: 1.2em;
 }
 </style>
-<style lang="scss" scoped src="@/assets/styles/vxeTable.scss"></style>
+<style lang="scss" scoped src="@/styles/vxeTable.scss"></style>

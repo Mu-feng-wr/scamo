@@ -1,0 +1,175 @@
+<template>
+  <vxe-modal type="modal" title="选择申购单" v-model="dialogVisible" width="70%" height="90%" esc-closable resize @hide="close">
+    <el-container>
+      <el-header style="overflow:hidden;">
+        <el-row :gutter="14" class="mb-10">
+          <el-col :span="4">
+            <el-input size="mini" v-model="queryParams.purchaseApplicationCode" placeholder="请输入申购单号" clearable @keyup.enter.native="load" />
+          </el-col>
+          <el-col :span="4">
+            <el-input size="mini" v-model="queryParams.subscriptionReason" placeholder="请输入申购原因" clearable @keyup.enter.native="load" />
+          </el-col>
+          <el-col :span="4">
+            <el-input size="mini" v-model="queryParams.applicantName" placeholder="请输入申请人" clearable @keyup.enter.native="load" />
+          </el-col>
+          <el-col :span="6">
+            <el-button type="primary" icon="el-icon-search" size="mini" @click="load">查询</el-button>
+            <el-button icon="el-icon-refresh" size="mini" @click="reset">重置</el-button>
+          </el-col>
+          <el-col :span="6" class="text-right">
+            <el-button plain icon="el-icon-refresh" size="mini" @click="reload">刷新</el-button>
+          </el-col>
+        </el-row>
+      </el-header>
+      <el-main>
+        <vxe-grid
+          ref="xTable"
+          height="auto"
+          :loading="tableLoading"
+          header-align="center"
+          align="center"
+          :data="tableData"
+          :pager-config="tablePage"
+          border
+          :resizable="true"
+          :columns="tableColumn"
+          :row-config="{isHover:true,isCurrent:true}"
+          class="vxeTable"
+          @page-change="handlePageChange"
+          @checkbox-change="checkboxChange"
+          @cell-click="cellClick"
+        >
+          <template #seqHeader>序号</template>
+        </vxe-grid>
+      </el-main>
+      <el-footer style="height:32px;">
+        <div class="text-right">
+          <el-button icon="el-icon-circle-check" type="primary" size="small" @click="confirm">确认</el-button>
+          <el-button icon="el-icon-circle-close" size="small" @click="close">关闭</el-button>
+        </div>
+      </el-footer>
+    </el-container>
+  </vxe-modal>
+</template>
+<script>
+import vxeTable from '@/mixins/vxeTable'
+import { listApplicationQuery } from '@/api/base'
+export default {
+  name: 'PurchaseApplication',
+  props: {
+    visible: {
+      type: Boolean,
+      default: false
+    },
+    selectType: {
+      type: String,
+      default: 'radio'
+    },
+    query: {
+      type: Array,
+      default: () => {
+        return []
+      }
+    }
+  },
+  mixins: [vxeTable],
+  data() {
+    return {
+      queryParams: {},
+      dialogVisible: false,
+      currentParams: {}
+    }
+  },
+  computed: {
+    tableColumn() {
+      return [
+        { type: this.selectType, width: 50, align: 'center', fixed: 'left' },
+        { type: 'seq', width: 70, align: 'center', fixed: 'left', slots: { header: 'seqHeader' } },
+        { showOverflow: true, field: 'purchaseApplicationCode', title: '申购编号', minWidth: 140 },
+        { showOverflow: true, field: 'subscriptionDate', title: '申购日期', minWidth: 180 },
+        { showOverflow: true, field: 'centralizedBusinessName', title: '业务类型', minWidth: 120 },
+        { showOverflow: true, field: 'subscriptionReason', title: '申购原因', minWidth: 220, headerAlign: 'center', align: 'left' },
+        { showOverflow: true, field: 'subscriptionTaxAmount', title: '申购金额', minWidth: 120 },
+        { showOverflow: true, field: 'applicantName', title: '申请人', minWidth: 180 },
+        { showOverflow: true, field: 'createDate', title: '创建日期', minWidth: 180 }
+      ]
+    }
+  },
+  created() {
+    this.dialogVisible = this.visible
+    this.load()
+  },
+  methods: {
+    load() {
+      this.getQuery()
+      this.reload()
+    },
+    getQuery() {
+      let query = {}
+      this.query.forEach((item) => {
+        query[item.label] = item.value
+      })
+      this.currentParams = {
+        ...query,
+        ...this.queryParams,
+        ...{
+          pageNum: this.tablePage.currentPage,
+          pageSize: this.tablePage.pageSize
+        }
+      }
+    },
+    reload() {
+      this.tableLoading = true
+      listApplicationQuery(this.currentParams)
+        .then((res) => {
+          this.tableData = res.rows
+          this.tablePage.total = res.total
+        })
+        .finally(() => {
+          this.tableLoading = false
+        })
+    },
+    reset() {
+      this.queryParams = {}
+      this.load()
+    },
+    handlePageChange({ currentPage, pageSize }) {
+      this.tablePage.currentPage = currentPage
+      this.tablePage.pageSize = pageSize
+      // 触发列表请求
+      this.load()
+    },
+    checkboxChange(val) {},
+    confirm() {
+      let rowData = this.$refs.xTable.getRadioRecord()
+      if (rowData.length <= 0) {
+        this.$modal.msgWarning('请选择数据')
+        return
+      }
+      this.$emit('confirm', rowData)
+      this.close()
+    },
+    cellClick({ row }) {
+      if (this.selectType == 'radio') {
+        this.$refs.xTable.setRadioRow(row, true)
+      } else if (this.selectType == 'checkbox ') {
+        this.$refs.xTable.setCheckboxRow(row, true)
+      }
+    },
+    close() {
+      this.$emit('update:visible', false)
+    }
+  }
+}
+</script>
+<style lang="scss" scoped src="@/styles/vxeTable.scss"></style>
+<style lang="scss" scoped>
+::v-deep .vxe-modal--header {
+  background: #fff;
+  border-bottom: 0px;
+}
+::v-deep .vxe-modal--title {
+  font-weight: 500;
+  font-size: 1.2em;
+}
+</style>

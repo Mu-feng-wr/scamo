@@ -5,11 +5,8 @@
   </div>
 </template>
 <script>
-import selectUser from '@/views/components/selectDialog/user.vue'
 export default {
-  components: {
-    selectUser
-  },
+  name: 'SetUser',
   props: {
     title: {
       type: String,

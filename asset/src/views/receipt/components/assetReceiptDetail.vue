@@ -28,10 +28,10 @@
         @click="downloadAssetDetail('receipt')"
       >下载申购资产明细</el-button>
       <uploadFile v-if="showBtn && formData.ynGenLine != 1" class="pl-10" plain size="mini" url="/asset/receipt/importData" @uploadSuccess="uploadSuccess" />
-      <!--<uploadImg size="mini" v-if="showBtn && editForm && formData.ynGenLine != 1" :disabled="btnDisabled" class="pl-10 pr-10" @success="uploadImgSuccess" />
+      <uploadImg size="mini" v-if="showBtn && editForm && formData.ynGenLine != 1" :disabled="btnDisabled" class="pl-10 pr-10" @success="uploadImgSuccess" />
       <setUser size="mini" v-if="showBtn && editForm && formData.ynGenLine != 1" :disabled="btnDisabled" class="pr-10" @confirm="setUserHandler" />
       <selectArea size="mini" v-if="showBtn && editForm && formData.ynGenLine != 1" :disabled="btnDisabled" class="pr-10" @confirm="selectAreaHandler" />
-      <selectShelf size="mini" v-if="showBtn && editForm" :disabled="btnDisabled" :query="{ parentId: formData.warehouseId }" class="pr-10" @confirm="selectShelfHandler" />
+      <!--<selectShelf size="mini" v-if="showBtn && editForm" :disabled="btnDisabled" :query="{ parentId: formData.warehouseId }" class="pr-10" @confirm="selectShelfHandler" />
       <Pint v-if="formData.ynGenLine == 1 && formData.status == 1" v-bind="{ selectRows }" class="mr-10" type="qrCode" :disabled="btnDisabled"></Pint>-->
       <el-button size="mini" icon="el-icon-upload2" :disabled="tableData.length == 0" @click="exportAssetDeatil">导出</el-button>
       <el-button v-if="showBtn && editForm" size="mini" :disabled="btnDisabled" type="danger" icon="el-icon-delete" plain @click="batchDeleteRow">删除</el-button>
@@ -234,25 +234,10 @@
   </div>
 </template>
 <script>
-// import setUser from '@/views/components/btnHandler/setUser.vue'
-// import selectMaterial from '@/views/components/btnHandler/selectMaterial.vue'
-// import selectArea from '@/views/components/btnHandler/selectArea.vue'
-// import selectShelf from '@/views/components/btnHandler/selectShelf.vue'
-// import selectUser from '@/views/components/selectDialog/user.vue'
 import { listDictItems, listSchemeQuery, queryAddressTreeSelect, queryUnShippedByPurchaseApplicationId, queryCompanyWarehouseShelfTreeList } from '@/api/base.js'
-// import uploadFile from '@/views/components/btnHandler/uploadFile.vue'
 import vxeTable from '@/mixins/vxeTable'
 export default {
   name: 'AssetReceiptDetail',
-  components: {
-    // uploadImg,
-    // setUser,
-    // selectMaterial,
-    // selectArea,
-    // selectShelf,
-    // selectUser,
-    // uploadFile
-  },
   mixins: [vxeTable],
   props: {
     formData: {

@@ -332,7 +332,7 @@ export default {
         path: '/asset/receipt',
         module: 'Asset',
         fullPath: '/asset/receipt/detail',
-        title: '分类-资产信息详情',
+        title: '资产入库详情',
         condition: { id }
       })
       // this.$router.push({
@@ -350,11 +350,12 @@ export default {
     },
     // 新增 编辑
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'receipt-receiptUpdate' : 'receipt-receiptAdd',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/asset/receipt',
+        module: 'Asset',
+        fullPath: '/asset/receipt/edit',
+        title: '编辑资产入库',
+        condition: { id }
       })
     },
     // 审批  登记  撤回   作废

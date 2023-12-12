@@ -37,3 +37,31 @@ export function getReceipt (assetReceiptId) {
     method: 'get'
   })
 }
+
+
+// 新增资产入库单信息
+export function addReceipt (data) {
+  return requestFunc({
+    url: '/asset/receipt',
+    method: 'post',
+    data: data
+  })
+}
+
+// 修改资产入库单信息
+export function updateReceipt (data) {
+  return requestFunc({
+    url: '/asset/receipt',
+    method: 'put',
+    data: data
+  })
+}
+
+// 审核资产入库单信息
+export function approveReceipt (data) {
+  return requestFunc({
+    url: '/asset/receipt/approve',
+    method: 'post',
+    data: data
+  })
+}

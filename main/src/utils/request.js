@@ -48,7 +48,7 @@ service.interceptors.response.use(
         MessageBox.confirm('', res.msg, { showCancelButton: false }).then(() => {
           store.dispatch('system/logout')
         })
-        return new Promise.reject(res)
+        return new Promise(reject => reject(res))
       }
     }
     if (res.total) {

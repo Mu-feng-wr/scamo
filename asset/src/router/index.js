@@ -23,6 +23,12 @@ export const constantRoutes = [
     meta: { title: '资产入库详情' }
   },
   {
+    path: '/asset/receipt/edit',
+    name: 'asset-receipt-edit',
+    component: () => import('@/views/receipt/edit.vue'),
+    meta: { title: '编辑资产入库' }
+  },
+  {
     path: '/asset/collect',
     name: 'asset-collect',
     component: () => import('@/views/collect/index.vue'),

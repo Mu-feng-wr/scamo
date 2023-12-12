@@ -13,8 +13,9 @@
   </div>
 </template>
 <script>
-import { listAddressQuery } from '@/api/library/address'
+import { listAddressQuery } from '@/api/base.js'
 export default {
+  name: 'SelectShelf',
   props: {
     title: {
       type: String,

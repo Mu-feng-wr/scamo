@@ -114,10 +114,9 @@
 </template>
 <script>
 import vxeTable from '@/mixins/vxeTable'
-import { categoryTreeSelect } from '@/api/library/category.js'
-import { listMaterialQuery } from '@/api/library/material.js'
-import { listDictItems } from '@/api/system/dictionaries/items'
+import { listDictItems, categoryTreeSelect, listMaterialQuery } from '@/api/base.js'
 export default {
+  name: 'SelectMaterial',
   props: {
     title: {
       type: String,
@@ -495,4 +494,4 @@ aside {
   font-size: 1.2em;
 }
 </style>
-<style lang="scss" scoped src="@/assets/styles/vxeTable.scss"></style>
+<style lang="scss" scoped src="@/styles/vxeTable.scss"></style>

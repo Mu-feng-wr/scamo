@@ -185,3 +185,26 @@ export function queryUnShippedByPurchaseApplicationId (query) {
     params: query
   })
 }
+// 查询库位地址使用区域信息
+export function listAddressQueryUseAreaTree (query) {
+  return requestFunc({
+    url: '/library/address/queryUseAreaTree',
+    method: 'get',
+    params: query
+  })
+}
+// 查询部门下拉树结构
+export function categoryTreeSelect() {
+  return requestFunc({
+    url: '/library/category/categoryTree',
+    method: 'get'
+  })
+}
+// 查询物资基础信息列表
+export function listMaterialQuery(query) {
+  return requestFunc({
+    url: '/library/material/queryList',
+    method: 'get',
+    params: query
+  })
+}
