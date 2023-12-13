@@ -46,7 +46,8 @@ export default {
         },
         route: this.addWujiePage,
         setFunc: this.setFunc,
-        closeCurrentPage: this.closeCurrentPage
+        closeCurrentPage: this.closeCurrentPage,
+        origin: window.location.origin
       }
     }
   },
@@ -75,20 +76,21 @@ export default {
   },
   methods: {
     getUrl(item) {
+      console.log(window.location, '========')
       const wujieHost = {
-        Workbenche: 'http://localhost:9001/#',
-        Standbook: 'http://localhost:9002/#',
-        Asset: 'http://localhost:9003/#',
-        Consumable: 'http://localhost:9003/#',
-        Gift: 'http://localhost:9004/#',
-        Purchase: 'http://localhost:9005/#',
-        Inventory: 'http://localhost:9006/#',
-        Library: 'http://localhost:9007/#',
-        Portface: 'http://localhost:9008/#',
-        System: 'http://localhost:9009/#',
-        Monitor: 'http://localhost:9010/#',
-        Tool: 'http://localhost:9011/#',
-        Member: 'http://localhost:9012/#'
+        Workbenche: `http://${window.location.hostname}:9001/#`,
+        Standbook: `http://${window.location.hostname}:9002/#`,
+        Asset: `http://${window.location.hostname}:9003/#`,
+        Consumable: `http://${window.location.hostname}:9003/#`,
+        Gift: `http://${window.location.hostname}:9004/#`,
+        Purchase: `http://${window.location.hostname}:9005/#`,
+        Inventory: `http://${window.location.hostname}:9006/#`,
+        Library: `http://${window.location.hostname}:9007/#`,
+        Portface: `http://${window.location.hostname}:9008/#`,
+        System: `http://${window.location.hostname}:9009/#`,
+        Monitor: `http://${window.location.hostname}:9010/#`,
+        Tool: `http://${window.location.hostname}:9011/#`,
+        Member: `http://${window.location.hostname}:9012/#`
       }
       var query = []
       if (item.condition) {

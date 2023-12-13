@@ -11,11 +11,12 @@ const errorCode = {
   '404': '访问资源不存在',
   'default': '系统未知错误，请反馈给管理员'
 }
-
-// create an axios instance
+var baseURL = process.env.VUE_APP_BASE_API
+if (process.env.NODE_ENV == 'development' && window.$wujie) {
+  baseURL = window.$wujie.props.origin
+}
 const service = axios.create({
-  baseURL: process.env.VUE_APP_BASE_API // url = base url + request url
-  // timeout: 5000 // request timeout
+  baseURL: baseURL
 })
 
 service.interceptors.request.use(

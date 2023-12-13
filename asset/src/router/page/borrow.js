@@ -12,8 +12,8 @@ export default [
     meta: { title: '编辑资产借用' }
   },
   {
-    path: '/asset/borrow/edit',
-    name: 'asset-borrow-edit',
+    path: '/asset/borrow/add',
+    name: 'asset-borrow-add',
     component: () => import('@/views/borrow/edit.vue'),
     meta: { title: '新增资产借用' }
   },

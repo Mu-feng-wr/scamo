@@ -310,12 +310,22 @@ export default {
     },
     // 新增 || 编辑
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'borrow-borrowUpdate' : 'borrow-borrowAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/asset/borrow',
+          module: 'Asset',
+          fullPath: '/asset/borrow/edit',
+          title: '编辑资产借用',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/asset/borrow',
+          module: 'Asset',
+          fullPath: '/asset/borrow/add',
+          title: '新增资产借用'
+        })
+      }
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
@@ -338,11 +348,12 @@ export default {
     },
     // 查看详情
     detailHandle(id) {
-      this.$router.push({
-        name: 'borrow-borrowDetail',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/asset/borrow',
+        module: 'Asset',
+        fullPath: '/asset/borrow/detail',
+        title: '资产领用详情',
+        condition: { id }
       })
     },
     // 删除行

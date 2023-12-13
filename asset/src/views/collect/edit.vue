@@ -177,7 +177,7 @@ export default {
         collectReason: { required: true, message: '领用原因不能为空', trigger: 'change' }
       },
       editId: '',
-      user: this.$store.state.user.info,
+      user: this.$store.getters.userInfo,
       userDialogVisible: false,
       projectDialogVisible: false,
       propsUseAreaTree: {
