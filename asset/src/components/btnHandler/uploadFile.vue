@@ -60,10 +60,14 @@ export default {
   },
   computed: {
     upload() {
+      var url = process.env.VUE_APP_BASE_API
+      if (process.env.NODE_ENV == 'development' && window.$wujie) {
+        url = window.$wujie.props.origin
+      }
       return {
         title: this.title,
         headers: { Authorization: 'Bearer ' + getToken() },
-        url: process.env.VUE_APP_BASE_API + this.url
+        url: url + this.url
       }
     }
   },

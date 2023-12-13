@@ -22,6 +22,10 @@
 </template>
 <script>
 import { getToken } from '@/utils/auth'
+var url = process.env.VUE_APP_BASE_API
+if (process.env.NODE_ENV == 'development' && window.$wujie) {
+  url = window.$wujie.props.origin
+}
 export default {
   name: 'UploadImg',
   props: {
@@ -39,7 +43,7 @@ export default {
     },
     uploadUrl: {
       type: String,
-      default: process.env.VUE_APP_BASE_API + '/file/upload'
+      default: url + '/file/upload'
     },
     limit: {
       type: Number,
