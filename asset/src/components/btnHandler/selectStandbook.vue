@@ -1,21 +1,21 @@
 <template>
   <div style="display:inline-block">
     <el-button :disabled="disabled" type="primary" :size="size" icon="el-icon-plus" plain @click="openDialog">{{ title }}</el-button>
-    <vxe-modal :title="title" v-model="dialogVisible" width="70%" height="90%" esc-closable resize @hide="close">
+    <vxe-modal v-model="dialogVisible" :title="title" width="70%" height="90%" esc-closable resize @hide="close">
       <el-container>
         <el-header class="mb-10" style="overflow:hidden;">
           <el-row :gutter="14">
             <el-col :span="4">
-              <el-input size="mini" v-model="queryParams.assetCode" placeholder="资产编码" clearable />
+              <el-input v-model="queryParams.assetCode" size="mini" placeholder="资产编码" clearable />
             </el-col>
             <el-col :span="4">
-              <el-input size="mini" v-model="queryParams.assetName" placeholder="资产名称" clearable />
+              <el-input v-model="queryParams.assetName" size="mini" placeholder="资产名称" clearable />
             </el-col>
             <el-col :span="4">
-              <el-input size="mini" v-model="queryParams.subscriptionCode" placeholder="申购单编号" clearable />
+              <el-input v-model="queryParams.subscriptionCode" size="mini" placeholder="申购单编号" clearable />
             </el-col>
             <el-col :span="4">
-              <base-input size="mini" :value.sync="queryParams.assetCompanyId" baseCode="companyList" resultLabel="data" labelName="deptName" valueName="deptId" placeholder="公司名称"></base-input>
+              <base-input size="mini" :value.sync="queryParams.assetCompanyId" base-code="companyList" result-label="data" label-name="deptName" value-name="deptId" placeholder="公司名称" />
             </el-col>
             <el-col :span="4">
               <base-input
@@ -23,12 +23,12 @@
                 :disabled="disabledSelect.centralizedBusinessId"
                 :label.sync="queryParams.centralizedBusinessName"
                 :value.sync="queryParams.centralizedBusinessId"
-                :preStore="disabledSelect.centralizedBusinessId?[{businessId:queryParams.centralizedBusinessId,businessName:queryParams.centralizedBusinessName}]:[]"
-                baseCode="listType"
-                labelName="businessName"
-                valueName="businessId"
+                :pre-store="disabledSelect.centralizedBusinessId?[{businessId:queryParams.centralizedBusinessId,businessName:queryParams.centralizedBusinessName}]:[]"
+                base-code="listType"
+                label-name="businessName"
+                value-name="businessId"
                 placeholder="业务类型"
-              ></base-input>
+              />
             </el-col>
             <el-col :span="4">
               <el-button type="primary" icon="el-icon-search" size="mini" @click="load">搜索</el-button>
@@ -82,10 +82,10 @@
 </template>
 <script>
 import vxeTable from '@/mixins/vxeTable'
-import { listAccount } from '@/api/asset/account.js'
-import { listAccount as listConsumeAccount } from '@/api/consume/account.js'
-import { listAccount as listGiftAccount } from '@/api/gift/account.js'
+import { listAccount, listConsumeAccount, listGiftAccount } from '@/api/base.js'
 export default {
+  name: 'SelectStandbook',
+  mixins: [vxeTable],
   props: {
     title: {
       type: String,
@@ -114,7 +114,6 @@ export default {
       default: 'small'
     }
   },
-  mixins: [vxeTable],
   data() {
     return {
       dialogVisible: false,
@@ -229,7 +228,7 @@ export default {
       }
     },
     confirm() {
-      let list = this.$refs.xTable.getCheckboxRecords()
+      var list = this.$refs.xTable.getCheckboxRecords()
       this.$emit('confirm', list)
       this.close()
     },

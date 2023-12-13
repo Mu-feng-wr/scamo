@@ -290,12 +290,22 @@ export default {
     },
     // 新增  修改
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'collect-collectUpdate' : 'collect-collectAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/asset/collect',
+          module: 'Asset',
+          fullPath: '/asset/collect/edit',
+          title: '编辑资产领用',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/asset/collect',
+          module: 'Asset',
+          fullPath: '/asset/collect/add',
+          title: '新增资产领用'
+        })
+      }
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
@@ -309,11 +319,12 @@ export default {
     },
     //  查看详情
     handleDetail(row) {
-      this.$router.push({
-        name: 'collect-collectDetail',
-        query: {
-          id: row.assetCollectId
-        }
+      window.$wujie.props.route({
+        path: '/asset/collect',
+        module: 'Asset',
+        fullPath: '/asset/collect/detail',
+        title: '资产领用详情',
+        condition: { id: row.assetCollectId }
       })
     },
     handleDelete(row) {

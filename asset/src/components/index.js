@@ -16,6 +16,7 @@ import setUser from './btnHandler/setUser.vue'
 import uploadImg from './btnHandler/uploadImg.vue'
 import uploadFile from './btnHandler/uploadFile.vue'
 import selectShelf from './btnHandler/selectShelf.vue'
+import selectStandbook from './btnHandler/selectStandbook.vue'
 
 // 一些弹框组件
 import selectUser from './selectDialog/user.vue'
@@ -46,7 +47,8 @@ const com = [
   project,
   purchaseApplication,
   setUser,
-  selectShelf
+  selectShelf,
+  selectStandbook
 ]
 com.forEach(item => {
   Vue.component(item.name, item)

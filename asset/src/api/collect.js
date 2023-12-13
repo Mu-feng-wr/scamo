@@ -25,3 +25,37 @@ export function delCollect (assetCollectId) {
     method: 'delete'
   })
 }
+
+// 查询资产领用单信息详细
+export function getCollect (assetCollectId) {
+  return request({
+    url: '/asset/collect/' + assetCollectId,
+    method: 'get'
+  })
+}
+// 新增资产领用单信息
+export function addCollect (data) {
+  return request({
+    url: '/asset/collect',
+    method: 'post',
+    data: data
+  })
+}
+
+// 修改资产领用单信息
+export function updateCollect (data) {
+  return request({
+    url: '/asset/collect',
+    method: 'put',
+    data: data
+  })
+}
+
+// 领用单信息流程操作
+export function approveCollect (data) {
+  return request({
+    url: '/asset/collect/approve',
+    method: 'post',
+    data: data
+  })
+}

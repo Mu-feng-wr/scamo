@@ -204,3 +204,30 @@ export function listMaterialQuery(query) {
     params: query
   })
 }
+
+// 查询资产台账信息列表
+export function listAccount(query) {
+  return request({
+    url: '/asset/account/list',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询耗材台账信息列表
+export function listConsumeAccount(query) {
+  return request({
+    url: '/consume/account/list',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询礼品台账信息列表
+export function listGiftAccount(query) {
+  return request({
+    url: '/gift/account/list',
+    method: 'get',
+    params: query
+  })
+}
