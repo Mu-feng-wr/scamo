@@ -1,105 +1,33 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import receiptRouter from './page/receipt.js'
+import collectRouter from './page/collect.js'
+import borrowRouter from './page/borrow.js'
+import returnRouter from './page/return.js'
+import reshuffleRouter from './page/reshuffle.js'
+import transferRouter from './page/transfer.js'
+import repairRouter from './page/repair.js'
+import scrapRouter from './page/scrap.js'
+import changeRouter from './page/change.js'
 
 Vue.use(Router)
 
 export const constantRoutes = [
+  ...receiptRouter,
+  ...collectRouter,
+  ...borrowRouter,
+  ...returnRouter,
+  ...reshuffleRouter,
+  ...transferRouter,
+  ...repairRouter,
+  ...scrapRouter,
+  ...changeRouter,
   {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
   },
-  { path: '*', redirect: '/404', hidden: true },
-  {
-    path: '/asset/receipt',
-    name: 'asset-receipt',
-    component: () => import('@/views/receipt/index.vue'),
-    meta: { title: '资产入库' }
-  },
-  {
-    path: '/asset/receipt/detail',
-    name: 'asset-receipt-detail',
-    component: () => import('@/views/receipt/detail.vue'),
-    meta: { title: '资产入库详情' }
-  },
-  {
-    path: '/asset/receipt/add',
-    name: 'asset-receipt-add',
-    component: () => import('@/views/receipt/edit.vue'),
-    meta: { title: '新增资产入库' }
-  },
-  {
-    path: '/asset/receipt/edit',
-    name: 'asset-receipt-edit',
-    component: () => import('@/views/receipt/edit.vue'),
-    meta: { title: '编辑资产入库' }
-  },
-  {
-    path: '/asset/collect',
-    name: 'asset-collect',
-    component: () => import('@/views/collect/index.vue'),
-    meta: { title: '资产领用' }
-  },
-  {
-    path: '/asset/collect/detail',
-    name: 'asset-collect-detail',
-    component: () => import('@/views/collect/detail.vue'),
-    meta: { title: '资产领用详情' }
-  },
-  {
-    path: '/asset/collect/edit',
-    name: 'asset-collect-edit',
-    component: () => import('@/views/collect/edit.vue'),
-    meta: { title: '编辑资产领用' }
-  },
-  {
-    path: '/asset/collect/add',
-    name: 'asset-collect-add',
-    component: () => import('@/views/collect/edit.vue'),
-    meta: { title: '编辑资产领用' }
-  },
-  {
-    path: '/asset/borrow',
-    name: 'asset-borrow',
-    component: () => import('@/views/borrow/index.vue'),
-    meta: { title: '资产借用' }
-  },
-  {
-    path: '/asset/return',
-    name: 'asset-return',
-    component: () => import('@/views/return/index.vue'),
-    meta: { title: '资产归还' }
-  },
-  {
-    path: '/asset/reshuffle',
-    name: 'asset-reshuffle',
-    component: () => import('@/views/reshuffle/index.vue'),
-    meta: { title: '资产异动' }
-  },
-  {
-    path: '/asset/transfer',
-    name: 'asset-transfer',
-    component: () => import('@/views/transfer/index.vue'),
-    meta: { title: '资产调拨' }
-  },
-  {
-    path: '/asset/repair',
-    name: 'asset-repair',
-    component: () => import('@/views/repair/index.vue'),
-    meta: { title: '资产维修' }
-  },
-  {
-    path: '/asset/scrap',
-    name: 'asset-scrap',
-    component: () => import('@/views/scrap/index.vue'),
-    meta: { title: '资产处置' }
-  },
-  {
-    path: '/asset/change',
-    name: 'asset-change',
-    component: () => import('@/views/change/index.vue'),
-    meta: { title: '资产变更' }
-  }
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({

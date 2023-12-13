@@ -284,10 +284,10 @@ export default {
             updateCollect(submitData)
               .then((res) => {
                 if (status == 2) {
-                  this.$message, success('提交成功！')
+                  this.$message.success('提交成功！')
                   window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
                 } else {
-                  this.$message, success('修改成功！')
+                  this.$message.success('修改成功！')
                   this.init()
                 }
               })
