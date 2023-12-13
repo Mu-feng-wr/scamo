@@ -1,8 +1,8 @@
 import request from '@/utils/request.js'
 var requestFunc = request
-if (window.$wujie) {
-  requestFunc = window.$wujie.props.request
-}
+// if (window.$wujie) {
+//   requestFunc = window.$wujie.props.request
+// }
 
 // 查询资产入库单信息列表
 export function listReceipt (query) {
