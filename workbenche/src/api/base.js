@@ -1,13 +1,9 @@
 
 import request from '@/utils/request.js'
-var requestFunc = request
-if (window.$wujie) {
-  requestFunc = window.$wujie.props.request
-}
 
 // 查询申购单信息列表
 export function listApplicationQuery (query) {
-  return requestFunc({
+  return request({
     url: '/srm/application/queryList',
     method: 'get',
     params: query
@@ -16,7 +12,7 @@ export function listApplicationQuery (query) {
 
 // 根据字典Id查询字典项
 export function listDictItems (dictCodes) {
-  return requestFunc({
+  return request({
     url: '/system/items/getDicItemList/' + dictCodes,
     method: 'get'
   })

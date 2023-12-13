@@ -1,12 +1,8 @@
 import request from '@/utils/request.js'
-var requestFunc = request
-if (window.$wujie) {
-  requestFunc = window.$wujie.props.request
-}
 
 // 查询资产借用单信息列表
 export function listBorrow (query) {
-  return requestFunc({
+  return request({
     url: '/asset/borrow/list',
     method: 'get',
     params: query
@@ -15,7 +11,7 @@ export function listBorrow (query) {
 
 // 删除资产借用单信息
 export function delBorrow (assetBorrowId) {
-  return requestFunc({
+  return request({
     url: '/asset/borrow/' + assetBorrowId,
     method: 'delete'
   })
