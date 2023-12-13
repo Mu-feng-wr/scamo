@@ -68,7 +68,6 @@ export default {
             this.loading = false
           })
       } else if (node.level == 1) {
-        console.log(node)
         listAddressQuery({ parentId: node.data.locationAddressId }).then((res) => {
           resolve(res.rows)
         })
@@ -83,7 +82,6 @@ export default {
 
     confirm() {
       var data = this.$refs.tree.getCheckedNodes()
-      console.log(data)
       if (!data || data.length == 0) {
         this.$message({
           type: 'warning',

@@ -173,7 +173,6 @@ export default {
     },
     // 查询
     refresh() {
-      console.log(this.form)
       this.show = false
       this.$emit('update:formData', this.form)
       this.$emit('reload')
@@ -185,7 +184,6 @@ export default {
       this.$emit('reload')
     },
     change() {
-      console.log(this.form)
       this.$emit('update:formData', this.form)
     }
   }

@@ -60,7 +60,6 @@ export default {
       }
     },
     cachedViews() {
-      console.log(this.$store.getters.cachedViews)
       return this.$store.getters.cachedViews
     },
     wujieCacheView() {
@@ -76,7 +75,6 @@ export default {
   },
   methods: {
     getUrl(item) {
-      console.log(window.location, '========')
       const wujieHost = {
         Workbenche: `http://${window.location.hostname}:9001/#`,
         Standbook: `http://${window.location.hostname}:9002/#`,

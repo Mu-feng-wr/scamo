@@ -55,7 +55,6 @@ export default {
     },
     confirm() {
       let data = this.$refs.tree.getCheckedNodes()
-      console.log(data)
       if (!data || data.length == 0) {
         this.$message({
           type: 'warning',

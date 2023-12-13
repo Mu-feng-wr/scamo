@@ -530,7 +530,6 @@ export default {
     uploadImgSuccess(val) {
       // 图片上传成功
       var list = this.$refs.xTable.getCheckboxRecords()
-      console.log(list)
       list.forEach((item) => {
         this.$set(item, 'pictureRui', val.url)
         this.$set(item, 'pictureName', val.name)
