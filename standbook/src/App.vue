@@ -26,4 +26,7 @@ export default {
 ::-webkit-scrollbar-track {
   background-color: #efefef;
 }
+.vxe-table--tooltip-wrapper {
+  position: fixed !important;
+}
 </style>
