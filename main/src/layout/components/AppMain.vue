@@ -124,7 +124,6 @@ export default {
       })
     },
     closeCurrentPage({ path }) {
-      debugger
       var urlList = JSON.parse(JSON.stringify(this.$store.getters.cachedViews))
       var index = urlList.findIndex((item) => item.fullPath == this.$store.getters.currentPath)
       urlList.splice(index, 1)
