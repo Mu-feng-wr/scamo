@@ -99,7 +99,6 @@
                     header-align="center"
                     align="center"
                     :data="tableData"
-                    :pager-config="tablePage"
                     border
                     auto-resize
                     :resizable="true"
@@ -109,7 +108,6 @@
                     show-footer
                     :footer-method="getFooterData"
                     show-overflow="tooltip"
-                    @page-change="handlePageChange"
                     @checkbox-all="changeCheck"
                     @checkbox-change="changeCheck"
                   >
@@ -136,6 +134,18 @@
                       <div class="todo">
                         <el-button size="mini" type="text" @click="detailHandle(row.materialAccountId)">查看</el-button>
                       </div>
+                    </template>
+                    <template #pager>
+                      <el-pagination
+                        background
+                        :current-page="tablePage.currentPage"
+                        :page-sizes="[10, 20, 30, 50]"
+                        :page-size="tablePage.pageSize"
+                        layout="total, sizes, prev, pager, next, jumper"
+                        :total="tablePage.total"
+                        @size-change="handlePageChange($event,'pageSize')"
+                        @current-change="handlePageChange($event,'currentPage')"
+                      />
                     </template>
                   </vxe-grid>
                 </el-main>
@@ -387,9 +397,13 @@ export default {
           this.tableLoading = false
         })
     },
-    handlePageChange({ currentPage, pageSize }) {
-      this.tablePage.currentPage = currentPage
-      this.tablePage.pageSize = pageSize
+    handlePageChange(value, type) {
+      if (type == 'currentPage') {
+        this.tablePage.currentPage = value
+      }
+      if (type == 'pageSize') {
+        this.tablePage.pageSize = value
+      }
       // 触发列表请求
       this.load()
     },

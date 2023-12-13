@@ -122,7 +122,6 @@
               header-align="center"
               align="center"
               :data="tableData"
-              :pager-config="tablePage"
               border
               :resizable="true"
               :columns="tableColumn"
@@ -132,7 +131,6 @@
               :footer-method="getFooterData"
               auto-resize
               show-overflow="tooltip"
-              @page-change="handlePageChange"
             >
               <template #seqHeader>序号</template>
               <template #assetBorrowCode="{row}">
@@ -199,6 +197,18 @@
 
                   <el-button v-if="row.status == 0 || row.status == 3 || row.status == 4" v-hasPermi="['asset:borrow:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
+              </template>
+              <template #pager>
+                <el-pagination
+                  background
+                  :current-page="tablePage.currentPage"
+                  :page-sizes="[10, 20, 30, 50]"
+                  :page-size="tablePage.pageSize"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="tablePage.total"
+                  @size-change="handlePageChange($event,'pageSize')"
+                  @current-change="handlePageChange($event,'currentPage')"
+                />
               </template>
             </vxe-grid>
           </el-main>
@@ -288,9 +298,13 @@ export default {
       this.queryParams = {}
       this.load()
     },
-    handlePageChange({ currentPage, pageSize }) {
-      this.tablePage.currentPage = currentPage
-      this.tablePage.pageSize = pageSize
+    handlePageChange(value, type) {
+      if (type == 'currentPage') {
+        this.tablePage.currentPage = value
+      }
+      if (type == 'pageSize') {
+        this.tablePage.pageSize = value
+      }
       // 触发列表请求
       this.load()
     },

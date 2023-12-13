@@ -18,7 +18,6 @@
       :columns="tableColumn"
       :row-config="{isHover:true,isCurrent:true}"
       class="vxeTable"
-      :pager-config="tablePage"
     >
       <template #seqHeader>序号</template>
     </vxe-grid>

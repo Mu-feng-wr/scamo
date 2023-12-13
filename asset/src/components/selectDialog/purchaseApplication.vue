@@ -29,7 +29,6 @@
           header-align="center"
           align="center"
           :data="tableData"
-          :pager-config="tablePage"
           border
           :resizable="true"
           :columns="tableColumn"
@@ -37,11 +36,22 @@
           class="vxeTable"
           auto-resize
           show-overflow="tooltip"
-          @page-change="handlePageChange"
           @checkbox-change="checkboxChange"
           @cell-click="cellClick"
         >
           <template #seqHeader>序号</template>
+          <template #pager>
+            <el-pagination
+              background
+              :current-page="tablePage.currentPage"
+              :page-sizes="[10, 20, 30, 50]"
+              :page-size="tablePage.pageSize"
+              layout="total, sizes, prev, pager, next, jumper"
+              :total="tablePage.total"
+              @size-change="handlePageChange($event,'pageSize')"
+              @current-change="handlePageChange($event,'currentPage')"
+            />
+          </template>
         </vxe-grid>
       </el-main>
       <el-footer style="height:32px;">
@@ -135,9 +145,13 @@ export default {
       this.queryParams = {}
       this.load()
     },
-    handlePageChange({ currentPage, pageSize }) {
-      this.tablePage.currentPage = currentPage
-      this.tablePage.pageSize = pageSize
+    handlePageChange(value, type) {
+      if (type == 'currentPage') {
+        this.tablePage.currentPage = value
+      }
+      if (type == 'pageSize') {
+        this.tablePage.pageSize = value
+      }
       // 触发列表请求
       this.load()
     },

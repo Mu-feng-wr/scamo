@@ -99,7 +99,6 @@
               header-align="center"
               align="center"
               :data="tableData"
-              :pager-config="tablePage"
               border
               :resizable="true"
               :columns="tableColumn"
@@ -108,11 +107,22 @@
               show-footer
               :footer-method="getFooterData"
               show-overflow="tooltip"
-              @page-change="handlePageChange"
             >
               <template #seqHeader>序号</template>
               <template #assetRegisterCode="{row}">
                 <el-link :underline="false" type="primary">{{ row.assetRegisterCode }}</el-link>
+              </template>
+              <template #pager>
+                <el-pagination
+                  background
+                  :current-page="tablePage.currentPage"
+                  :page-sizes="[10, 20, 30, 50]"
+                  :page-size="tablePage.pageSize"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="tablePage.total"
+                  @size-change="handlePageChange($event,'pageSize')"
+                  @current-change="handlePageChange($event,'currentPage')"
+                />
               </template>
             </vxe-grid>
           </el-main>
@@ -202,7 +212,16 @@ export default {
       this.queryParams = {}
       this.load()
     },
-    handlePageChange() {},
+    handlePageChange(value, type) {
+      if (type == 'currentPage') {
+        this.tablePage.currentPage = value
+      }
+      if (type == 'pageSize') {
+        this.tablePage.pageSize = value
+      }
+      // 触发列表请求
+      this.load()
+    },
     getFooterData() {
       return [[]]
     },
