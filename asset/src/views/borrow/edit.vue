@@ -1,44 +1,44 @@
 <template>
-  <PageCard v-loading="submitLoading">
-    <el-form ref="form" :disabled="!editForm" :model="form" :rules="rules" label-width="170px" class="form-table form-table-edit" style="margin-bottom: 8px">
+  <PageCard v-loading="submitLoading" :return-url="returnUrl">
+    <el-form ref="form" :disabled="!editForm" :model="formData" :rules="rules" label-width="170px" class="form-table form-table-edit" style="margin-bottom: 8px">
       <SectionCard title="基本信息">
         <el-row>
           <el-col :span="8">
             <el-form-item label="借用单号" prop="assetBorrowCode">
-              <el-input v-model="form.assetBorrowCode" disabled placeholder="自动生成" />
+              <el-input v-model="formData.assetBorrowCode" disabled placeholder="自动生成" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请日期" prop="applicantDate">
-              <el-date-picker v-model="form.applicantDate" size="small" clearable type="date" value-format="yyyy-MM-dd" placeholder="请选择申请日期" />
+              <el-date-picker v-model="formData.applicantDate" size="small" clearable type="date" value-format="yyyy-MM-dd" placeholder="请选择申请日期" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="业务类型" prop="centralizedBusinessId">
               <base-input
                 base-code="listType"
-                :value.sync="form.centralizedBusinessId"
-                :label.sync="form.centralizedBusinessName"
+                :value.sync="formData.centralizedBusinessId"
+                :label.sync="formData.centralizedBusinessName"
                 label-name="businessName"
                 value-name="businessId"
-                :pre-store="[{businessId: form.centralizedBusinessId,businessName: form.centralizedBusinessName,}]"
+                :pre-store="[{businessId: formData.centralizedBusinessId,businessName: formData.centralizedBusinessName,}]"
                 placeholder="请选择业务类型"
               />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请人" prop="applicantName">
-              <el-input v-model="form.applicantName" disabled placeholder="请输入申请人" />
+              <el-input v-model="formData.applicantName" disabled placeholder="请输入申请人" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请部门" prop="applicantOrgName">
-              <el-input v-model="form.applicantOrgName" disabled placeholder="请输入申请部门" />
+              <el-input v-model="formData.applicantOrgName" disabled placeholder="请输入申请部门" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请公司" prop="applicantCompanyName">
-              <el-input v-model="form.applicantCompanyName" disabled placeholder="请输入申请公司" />
+              <el-input v-model="formData.applicantCompanyName" disabled placeholder="请输入申请公司" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -47,45 +47,45 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="借用日期" prop="borrowDate">
-              <el-date-picker v-model="form.borrowDate" value-format="yyyy-MM-dd Hh:mm:ss" type="date" placeholder="借用日期" />
+              <el-date-picker v-model="formData.borrowDate" value-format="yyyy-MM-dd Hh:mm:ss" type="date" placeholder="借用日期" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="资产数量">
-              <el-input-number v-model="form.assetQuantity" disabled controls-position="right" :precision="3" placeholder="自动计算" />
+              <el-input-number v-model="formData.assetQuantity" disabled controls-position="right" :precision="3" placeholder="自动计算" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="资产含税金额（元）">
-              <el-input-number v-model="form.assetAmount" disabled controls-position="right" :precision="3" placeholder="自动计算" />
+              <el-input-number v-model="formData.assetAmount" disabled controls-position="right" :precision="3" placeholder="自动计算" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="使用人" prop="userName">
-              <el-input suffix-icon="el-icon-arrow-down" :value="form.userName" placeholder="请输入使用人" @focus="userDialogVisible = true" />
+              <el-input suffix-icon="el-icon-arrow-down" :value="formData.userName" placeholder="请输入使用人" @focus="userDialogVisible = true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="使用部门" prop="userOrgName">
-              <el-input v-model="form.userOrgName" disabled placeholder="选择使用人自动带出" />
+              <el-input v-model="formData.userOrgName" disabled placeholder="选择使用人自动带出" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="使用公司" prop="companyName">
-              <el-input v-model="form.companyName" disabled placeholder="选择使用人自动带出" />
+              <el-input v-model="formData.companyName" disabled placeholder="选择使用人自动带出" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="项目名称">
-              <el-input v-model="form.projectName" suffix-icon="el-icon-arrow-down" placeholder="请输入项目名称" @focus="projectDialogVisible = true" />
+              <el-input v-model="formData.projectName" suffix-icon="el-icon-arrow-down" placeholder="请输入项目名称" @focus="projectDialogVisible = true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="方案名称">
               <base-input
-                :value.sync="form.schemeId"
-                :label.sync="form.schemeName"
-                :code.sync="form.schemeCode"
+                :value.sync="formData.schemeId"
+                :label.sync="formData.schemeName"
+                :code.sync="formData.schemeCode"
                 :options-list="schemeList"
                 code-name="schemeCode"
                 label-name="schemeName"
@@ -98,7 +98,7 @@
             <el-form-item label="使用区域" prop="location">
               <el-cascader
                 ref="categoryCascader"
-                v-model="form.location"
+                v-model="formData.location"
                 :props="propsUseAreaTree"
                 :options="useAreaTree"
                 placeholder="请选择使用区域"
@@ -117,34 +117,34 @@
 
           <el-col :span="8">
             <el-form-item label="是否需要归还" prop="ynExpectReturn">
-              <base-input base-code="AlmAssetBorrow-ynExpectReturn" :value.sync="form.ynExpectReturn" :options-list="dictDataList" placeholder="是否需要归还" />
+              <base-input base-code="AlmAssetBorrow-ynExpectReturn" :value.sync="formData.ynExpectReturn" :options-list="dictDataList" placeholder="是否需要归还" />
             </el-form-item>
           </el-col>
           <el-col :span="16">
             <el-form-item label="预计归还日期">
-              <el-date-picker v-model="form.expectReturnDate" style="width: calc(50% - 100px)" type="date" placeholder="选择预计归还日期" />
+              <el-date-picker v-model="formData.expectReturnDate" style="width: calc(50% - 100px)" type="date" placeholder="选择预计归还日期" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="借用原因" prop="borrowReason" class="noProp-item-textarea">
-              <el-input v-model="form.borrowReason" type="textarea" placeholder="请输入领用原因" show-word-limit :maxlength="300" />
+              <el-input v-model="formData.borrowReason" type="textarea" placeholder="请输入领用原因" show-word-limit :maxlength="300" />
             </el-form-item>
           </el-col>
         </el-row>
       </SectionCard>
     </el-form>
     <SectionCard title="资产明细">
-      <assetBorrowDetail ref="assetDetail" v-bind="{ useAreaTree, dictDataList, schemeList }" :form="form" :edit-form="editForm" @calculate="calculate" />
+      <assetBorrowDetail ref="assetBorrowDetail" v-bind="{ useAreaTree, dictDataList, schemeList }" :form-data="formData" :edit-form="editForm" @calculate="calculate" />
     </SectionCard>
-    <SectionCard v-if="form.status && form.status!=0" title="处理记录">
+    <SectionCard v-if="formData.status && formData.status!=0" title="处理记录">
       <handleRecords :table-data="form.assetReviewAuditList" />
     </SectionCard>
     <SectionCard title="处理意见">
-      <el-input v-model="form.curProcessOptions" type="textarea" placeholder="请输入内容" maxlength="300" show-word-limit />
+      <el-input v-model="formData.curProcessOptions" type="textarea" placeholder="请输入内容" maxlength="300" show-word-limit />
     </SectionCard>
     <div slot="footer" align="center">
-      <el-button v-if="(!form.status||form.status==0||form.status==3)" type="primary" @click="submitForm(2,6)">提 交</el-button>
-      <el-button v-if="(!form.status||form.status==0||form.status==3)" type="success" @click="submitForm(0)">草 稿</el-button>
+      <el-button v-if="(!formData.status||formData.status==0||formData.status==3)" type="primary" @click="submitForm(2,6)">提 交</el-button>
+      <el-button v-if="(!formData.status||formData.status==0||formData.status==3)" type="success" @click="submitForm(0)">草 稿</el-button>
       <el-button v-if="todo=='audit_superior'" type="primary" @click="approve(2,1)">通 过</el-button>
       <el-button v-if="todo=='register_asset_admin'" type="primary" @click="approve(2,1)">登 记</el-button>
       <el-button v-if="todo=='user_confirm'" type="primary" @click="approve(2,1)">确 认</el-button>
@@ -168,8 +168,9 @@ export default {
   },
   data() {
     return {
+      returnUrl: '/asset/borrow',
       submitLoading: false,
-      form: {},
+      formData: {},
       rules: {
         applicantDate: { required: true, message: '申请日期不能为空', trigger: 'change' },
         borrowDate: { required: true, message: '借用日期不能为空', trigger: 'change' },
@@ -226,7 +227,7 @@ export default {
         this.submitLoading = true
         getBorrow(this.editId)
           .then((res) => {
-            this.form = {
+            this.formData = {
               ...res.data,
               ...{
                 location: [res.data.useAreaId, res.data.specificLocationId]
@@ -237,8 +238,8 @@ export default {
             this.submitLoading = false
           })
       } else {
-        this.form = {
-          ...this.form,
+        this.formData = {
+          ...this.formData,
           ...{
             borrowDate: this.$vxe.toDateString(new Date()),
             sourceTerminal: 1, // 来源终端  默认1  pc
@@ -248,33 +249,34 @@ export default {
             applicantOrgName: this.user.deptName,
             applicantCompanyId: this.user.companyId,
             applicantCompanyName: this.user.companyName,
-            collectDate: this.parseTime(new Date()) // 领用日期
+            collectDate: this.$vxe.toDateString(new Date(), 'yyyy-mm-dd') // 领用日期
           }
         }
-        this.$set(this.form, 'applicantDate', this.$vxe.toDateString(new Date(), 'yyyy-MM-dd'))
-        this.$set(this.form, 'userId', this.user.userId)
-        this.$set(this.form, 'userName', this.user.userName)
-        this.$set(this.form, 'userOrgId', this.user.deptId)
-        this.$set(this.form, 'userOrgName', this.user.deptName)
-        this.$set(this.form, 'companyId', this.user.companyName)
-        this.$set(this.form, 'companyName', this.user.companyName)
+        this.$set(this.formData, 'applicantDate', this.$vxe.toDateString(new Date(), 'yyyy-MM-dd'))
+        this.$set(this.formData, 'userId', this.user.userId)
+        this.$set(this.formData, 'userName', this.user.userName)
+        this.$set(this.formData, 'userOrgId', this.user.deptId)
+        this.$set(this.formData, 'userOrgName', this.user.deptName)
+        this.$set(this.formData, 'companyId', this.user.companyName)
+        this.$set(this.formData, 'companyName', this.user.companyName)
       }
     },
     // 草稿  提交
     submitForm(status, curProcessResult) {
       this.$refs['form'].validate(async (valid) => {
         if (valid) {
-          if (this.$refs.assetDetail.tableData.length == 0) {
+          console.log(this.$refs.assetBorrowDetail)
+          if (this.$refs.assetBorrowDetail.tableData.length == 0) {
             this.$message({
               type: 'warning',
               message: '请添加明细表数据'
             })
             return
           }
-          if (await this.$refs.assetDetail.validTable()) {
+          if (await this.$refs.assetBorrowDetail.validTable()) {
             return
           }
-          if (status != 0 && curProcessResult != 4 && !this.form.curProcessOptions) {
+          if (status != 0 && curProcessResult != 4 && !this.formData.curProcessOptions) {
             this.$message({
               message: `处理意见不能为空！`,
               type: 'warning'
@@ -282,9 +284,9 @@ export default {
             return
           }
           var submitData = {
-            ...this.form,
+            ...this.formData,
             ...{
-              almAssetBorrowDetailList: this.$refs.assetDetail.tableData.map((item, i) => {
+              almAssetBorrowDetailList: this.$refs.assetBorrowDetail.tableData.map((item, i) => {
                 item.sort = i + 1
                 return item
               }),
@@ -295,8 +297,12 @@ export default {
           if (this.editId) {
             updateBorrow(submitData)
               .then((res) => {
-                this.$modal.msgSuccess(status == 2 ? '提交成功' : '修改成功')
-                this.init()
+                this.$message.success(status == 2 ? '提交成功' : '修改成功')
+                if (status == 2) {
+                  console.log(11)
+                } else {
+                  this.init()
+                }
               })
               .finally(() => {
                 this.submitLoading = false
@@ -304,14 +310,15 @@ export default {
           } else {
             addBorrow(submitData)
               .then((res) => {
-                this.$modal.msgSuccess(status == 2 ? '提交成功' : '新增成功')
-                this.$router.push({
-                  name: 'borrow-borrowUpdate',
-                  query: {
-                    id: res.msg
-                  }
+                this.$message.success(status == 2 ? '提交成功' : '新增成功')
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                window.$wujie.props.route({
+                  path: '/asset/borrow',
+                  module: 'Asset',
+                  fullPath: '/asset/borrow/edit',
+                  title: '编辑资产领用',
+                  condition: { id: res.msg }
                 })
-                // Global.$emit('closeCurrentTag', this.$route)
               })
               .finally(() => {
                 this.submitLoading = false
@@ -340,17 +347,17 @@ export default {
       }
       this.$refs['form'].validate(async (valid) => {
         if (valid) {
-          if (this.$refs.assetDetail.tableData.length == 0) {
+          if (this.$refs.assetBorrowDetail.tableData.length == 0) {
             this.$message({
               type: 'warning',
               message: '请添加明细表数据'
             })
             return
           }
-          if (await this.$refs.assetDetail.validTable()) {
+          if (await this.$refs.assetBorrowDetail.validTable()) {
             return
           }
-          if (!this.form.curProcessOptions && curProcessResult != 4) {
+          if (!this.formData.curProcessOptions && curProcessResult != 4) {
             this.$message({
               type: 'warning',
               message: '处理意见不能为空'
@@ -359,9 +366,9 @@ export default {
           }
           this.submitLoading = true
           var submitData = {
-            ...this.form,
+            ...this.formData,
             ...{
-              almAssetBorrowDetailList: this.$refs.assetDetail.tableData.map((item, i) => {
+              almAssetBorrowDetailList: this.$refs.assetBorrowDetail.tableData.map((item, i) => {
                 item.sort = i + 1
                 return item
               }),
@@ -410,8 +417,8 @@ export default {
     },
     // 选择使用人
     userSelect(val) {
-      this.form = {
-        ...this.form,
+      this.formData = {
+        ...this.formData,
         ...{
           userId: val.userId,
           userName: val.userName,
@@ -424,8 +431,8 @@ export default {
     },
     // 选择项目
     projectSelect(val) {
-      this.form = {
-        ...this.form,
+      this.formData = {
+        ...this.formData,
         ...{
           projectId: val.projectId,
           projectName: val.projectName,
@@ -438,8 +445,8 @@ export default {
       if (val.length == 2) {
         var leftData = this.useAreaTree.find((item) => item.id == val[0])
         var rightData = leftData.children.find((item) => item.id == val[1])
-        this.form = {
-          ...this.form,
+        this.formData = {
+          ...this.formData,
           ...{
             useAreaId: val[0],
             useAreaName: leftData.label,
@@ -448,8 +455,8 @@ export default {
           }
         }
       } else {
-        this.form = {
-          ...this.form,
+        this.formData = {
+          ...this.formData,
           ...{
             useAreaId: '',
             useAreaName: '',
@@ -480,8 +487,8 @@ export default {
         assetQuantity = this.$vxe.add(assetQuantity, item.borrowQuantity)
         assetAmount = this.$vxe.add(assetAmount, item.subtotal)
       })
-      this.$set(this.form, 'assetQuantity', assetQuantity)
-      this.$set(this.form, 'assetAmount', assetAmount)
+      this.$set(this.formData, 'assetQuantity', assetQuantity)
+      this.$set(this.formData, 'assetAmount', assetAmount)
     }
   }
 }

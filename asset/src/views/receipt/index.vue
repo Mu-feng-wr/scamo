@@ -377,12 +377,19 @@ export default {
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
-      this.$router.push({
-        name: 'receipt-receiptUpdate',
-        query: {
-          id: row.assetReceiptId,
-          todo: todo
-        }
+      var statusObj = {
+        audit_superior: '审批',
+        recall_add: '撤回',
+        register_asset_admin: '登记',
+        recall_superior: '撤回',
+        invalid_add: '作废'
+      }
+      window.$wujie.props.route({
+        path: '/asset/receipt',
+        module: 'Asset',
+        fullPath: '/asset/receipt/edit',
+        title: `资产入库${statusObj[todo]}`,
+        condition: { id: row.assetReceiptId, todo: todo }
       })
     },
     // 删除

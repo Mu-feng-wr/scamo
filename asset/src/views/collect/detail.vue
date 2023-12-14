@@ -1,5 +1,5 @@
 <template>
-  <PageCard v-loading="submitLoading">
+  <PageCard v-loading="submitLoading" :return-url="returnUrl">
     <el-form ref="form" label-width="170px" class="form-table" style="margin-bottom: 8px">
       <SectionCard title="基本信息">
         <el-row>
@@ -101,6 +101,7 @@ export default {
   },
   data() {
     return {
+      returnUrl: '/asset/collect',
       submitLoading: false,
       formData: {},
       dictDataList: [],

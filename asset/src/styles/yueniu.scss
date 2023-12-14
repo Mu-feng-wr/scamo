@@ -173,6 +173,162 @@
     }
   }
 }
+
+
+ /**打印样式*/
+ .print_obj {
+  position: relative;
+  padding: 0px;
+
+
+  &::before {
+    display: none;
+    position: absolute;
+    content: '广州机施建设集团有限公司';
+    top: 0;
+    right: 0;
+    color: #000;
+    font-size: 12px;
+    opacity: 0.2;
+  }
+
+  &::after {
+    display: none;
+    position: absolute;
+    content: '广州机施建设集团有限公司';
+    top: 0;
+    left: 0;
+    color: #000;
+    font-size: 12px;
+    opacity: 0.2;
+  }
+
+  .el-card {
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+
+    .el-card__header {
+      border-bottom: none;
+    }
+
+    .text-tip {
+      font-weight: 900;
+      color: #262626;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .el-card__body {
+      padding: 2px;
+    }
+  }
+
+  .el-table {
+    border-top: 0 !important;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+    background: transparent;
+    border: 1px solid #333;
+    margin-top: 1px;
+    margin-bottom: 10px;
+
+    &::before {
+      height: 0;
+    }
+
+    th {
+      font-weight: 500;
+    }
+
+    th,
+    td {
+      border: 1px solid #333;
+      padding: 5px;
+      line-height: 1.4;
+      text-align: center;
+      color: #002340;
+    }
+
+    td {
+      border-top: none;
+
+      &:last-child {
+        height: 25px;
+      }
+    }
+
+    tr {
+      th {
+        &:nth-child(1) {
+          width: 160px
+        }
+
+        &:nth-child(2) {
+          width: 20%
+        }
+
+
+        &:nth-child(3),
+        &:nth-child(4) {
+          width: 60px
+        }
+
+        &:nth-child(5),
+        &:nth-child(6) {
+          width: 110px
+        }
+
+        &:last-child {
+          width: auto;
+        }
+      }
+
+      td {
+
+        &:nth-child(5),
+        &:nth-child(6) {
+          text-align: right;
+        }
+
+        &:nth-child(2),
+        &:last-child {
+          text-align: left;
+        }
+      }
+
+    }
+
+  }
+
+  .el-form-item {
+    margin-bottom: 12px;
+
+    .el-form-item__label {
+      font-size: 14px;
+      font-weight: 400;
+      padding-right: 6px;
+      color: #606266;
+    }
+
+    .el-form-item__content,
+    .el-form-item__label {
+      line-height: 1;
+    }
+
+    .el-form-item__content,
+    .el-form-item__content .el-input,
+    .el-input--medium {
+      font-size: 14px;
+      font-weight: 400;
+      color: #002340;
+
+    }
+  }
+}
+
+
 .vxe-modal--box{
   position: absolute !important;
 }
@@ -182,3 +338,5 @@
 .vxe-modal--wrapper:before{
   position: absolute !important;
 }
+
+

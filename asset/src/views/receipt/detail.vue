@@ -167,18 +167,18 @@
     <div slot="footer" align="center">
       <el-button type="success" @click="printVisible=true">打印</el-button>
     </div>
-    <!-- <Print ref="printRef" v-if="printVisible" :printVisible.sync="printVisible" :printData="form" :dictDataList="dictDataList"></Print> -->
+    <Print v-if="printVisible" ref="printRef" :print-visible.sync="printVisible" :print-data="formData" :dict-data-list="dictDataList" />
   </PageCard>
 </template>
 <script>
 import { getReceipt } from '@/api/receipt.js'
 import assetReceiptDetail from './components/assetReceiptDetail.vue'
 import { listDictItems } from '@/api/base.js'
-// import Print from './components/print.vue'
+import Print from './components/print.vue'
 export default {
   components: {
-    assetReceiptDetail
-    // Print
+    assetReceiptDetail,
+    Print
   },
   data() {
     return {
