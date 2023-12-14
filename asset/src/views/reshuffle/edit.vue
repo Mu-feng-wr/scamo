@@ -92,8 +92,8 @@
                 default-expand-all
                 filterable
                 popper-append-to-body
+                @node-click="selectDept"
               />
-              <!-- <treeselect :flat="true" :multiple="false" v-model="formData.crossOrgId" :options="deptTree" :normalizer="normalizerDept" placeholder="请选择部门" @select="selectDept" /> -->
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -110,7 +110,7 @@
       </SectionCard>
     </el-form>
     <SectionCard class="mt-8" title="资产明细">
-      <assetReshuffleDetail ref="assetDetail" :form-data="formData" @calculate="calculate" />
+      <assetReshuffleDetail ref="assetReshuffleDetail" :form-data="formData" @calculate="calculate" />
     </SectionCard>
     <SectionCard v-if="formData.status && formData.status!=0" title="处理记录">
       <handleRecords :table-data="formData.poPurchaseApplicationAuditList" />
@@ -238,13 +238,20 @@ export default {
               type: 'warning'
             })
           }
-          if (await this.$refs.assetDetail.validTable()) {
+          if (this.$refs.assetReshuffleDetail.tableData.length == 0) {
+            this.$message({
+              message: `请填写资产明细`,
+              type: 'warning'
+            })
+            return
+          }
+          if (await this.$refs.assetReshuffleDetail.validTable()) {
             return
           }
           var submitData = {
             ...this.formData,
             ...{
-              assetReshuffleDetail: this.$refs.assetDetail.tableData.map((item, i) => {
+              assetReshuffleDetail: this.$refs.assetReshuffleDetail.tableData.map((item, i) => {
                 item.sort = i + 1
                 return item
               }),
@@ -253,12 +260,12 @@ export default {
           }
           if (this.editId) {
             updateReshuffle(submitData).then((res) => {
-              this.$modal.msgSuccess('修改成功')
+              this.$message.success('修改成功')
               this.init()
             })
           } else {
             addReshuffle(submitData).then((res) => {
-              this.$modal.msgSuccess('新增成功')
+              this.$message.success('新增成功')
               this.$router.push({
                 name: 'reshuffle-reshuffleUpdate',
                 query: {
@@ -282,14 +289,14 @@ export default {
       }
       this.$refs['form'].validate(async (valid) => {
         if (valid) {
-          if (this.$refs.assetDetail.tableData.length == 0) {
+          if (this.$refs.assetReshuffleDetail.tableData.length == 0) {
             this.$message({
               type: 'warning',
               message: '请添加明细表数据'
             })
             return
           }
-          if (await this.$refs.assetDetail.validTable()) {
+          if (await this.$refs.assetReshuffleDetail.validTable()) {
             return
           }
           if (!this.formData.curProcessOptions && curProcessResult != 4) {
@@ -303,7 +310,7 @@ export default {
           var submitData = {
             ...this.formData,
             ...{
-              assetReshuffleDetail: this.$refs.assetDetail.tableData.map((item, i) => {
+              assetReshuffleDetail: this.$refs.assetReshuffleDetail.tableData.map((item, i) => {
                 item.sort = i + 1
                 return item
               }),
@@ -313,7 +320,7 @@ export default {
           }
           approveReshuffle(submitData)
             .then((res) => {
-              this.$modal.msgSuccess(`${obj[curProcessResult]}！`)
+              this.$message.success(`${obj[curProcessResult]}！`)
               this.submitLoading = false
               setTimeout(() => {
                 // Global.$emit('closeCurrentTag', this.$route)

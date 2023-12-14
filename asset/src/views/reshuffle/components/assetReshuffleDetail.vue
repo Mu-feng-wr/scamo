@@ -215,7 +215,7 @@ export default {
   watch: {
     'formData.assetReshuffleDetail': {
       handler(newVal, oldVal) {
-        this.tableData = newVal
+        this.tableData = newVal || []
       },
       immediate: true
     }
