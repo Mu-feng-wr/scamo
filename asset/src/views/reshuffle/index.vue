@@ -312,21 +312,32 @@ export default {
     },
     // 查看
     detailHandle(id) {
-      this.$router.push({
-        name: 'reshuffle-reshuffleDetail',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/asset/reshuffle',
+        module: 'Asset',
+        fullPath: '/asset/reshuffle/detail',
+        title: '资产异动详情',
+        condition: { id }
       })
     },
     // 新增 编辑
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'reshuffle-reshuffleUpdate' : 'reshuffle-reshuffleAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/asset/reshuffle',
+          module: 'Asset',
+          fullPath: '/asset/reshuffle/edit',
+          title: '编辑资产异动',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/asset/reshuffle',
+          module: 'Asset',
+          fullPath: '/asset/reshuffle/add',
+          title: '新增资产异动'
+        })
+      }
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {

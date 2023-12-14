@@ -8,6 +8,7 @@ import dictDataView from './dictDataView/index.vue'
 import PageCard from './PageCard/index.vue'
 import sectionCard from './sectionCard/index.vue'
 import HandleRecords from './HandleRecords/index.vue'
+import ElTreeSelect from './ElTreeSelect/index.vue'
 
 // 一些按钮组件
 import selectArea from './btnHandler/selectArea.vue'
@@ -48,7 +49,8 @@ const com = [
   purchaseApplication,
   setUser,
   selectShelf,
-  selectStandbook
+  selectStandbook,
+  ElTreeSelect
 ]
 com.forEach(item => {
   Vue.component(item.name, item)
