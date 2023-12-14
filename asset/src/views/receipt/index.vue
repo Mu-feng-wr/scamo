@@ -290,6 +290,9 @@ export default {
     }
   },
   created() {
+    if (window.$wujie) {
+      window.$wujie.props.setFunc(this.reload)
+    }
     this.load()
     this.getDictData()
   },
@@ -313,8 +316,8 @@ export default {
         }
       }
     },
-    reload() {
-      this.tableLoading = true
+    reload(loading = true) {
+      this.tableLoading = loading
       listReceipt(this.currentParams)
         .then((res) => {
           this.tableData = res.rows

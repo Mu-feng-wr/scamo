@@ -1,14 +1,14 @@
 <template>
   <div ref="top_menu" class="top_menu">
     <el-menu :default-active="activeMenu" :unique-opened="true" menu-trigger="hover" :collapse-transition="false" mode="horizontal">
-      <template v-for="(item,i) in menuList">
-        <el-menu-item v-if="i<visibleMenuNumber" :key="item.path+i" :index="item.path" @click="toLink(item)">{{ item.meta.title }}</el-menu-item>
+      <template v-for="(item) in menuList">
+        <el-menu-item :key="item.path" :index="item.path" @click="toLink(item)">{{ item.meta.title }}</el-menu-item>
       </template>
 
       <el-submenu v-if="moreMenuList.length>0" index="more" title="更多">
         <template slot="title">更多</template>
-        <template v-for="(item, i) in moreMenuList">
-          <el-menu-item :key="item.path+i" :index="item.path" @click="toLink(item)">{{ item.meta.title }}</el-menu-item>
+        <template v-for="(item) in moreMenuList">
+          <el-menu-item :key="item.path" :index="item.path" @click="toLink(item)">{{ item.meta.title }}</el-menu-item>
         </template>
       </el-submenu>
     </el-menu>

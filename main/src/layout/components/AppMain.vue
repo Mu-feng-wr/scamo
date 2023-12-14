@@ -48,7 +48,8 @@ export default {
         setFunc: this.setFunc,
         closeCurrentPage: this.closeCurrentPage,
         origin: window.location.origin
-      }
+      },
+      reloadFunc: {}
     }
   },
   computed: {
@@ -70,7 +71,12 @@ export default {
       return this.$route.fullPath
     },
     currentPath() {
-      return this.$store.getters.currentPath
+      var currentPath = this.$store.getters.currentPath
+      var key = currentPath.split('/').join('')
+      if (this.reloadFunc[key]) {
+        this.reloadFunc[key](false)
+      }
+      return currentPath
     }
   },
   methods: {
@@ -132,9 +138,8 @@ export default {
       })
     },
     setFunc(func) {
-      for (var i in func) {
-        this.props[i] = func[i]
-      }
+      var key = this.currentPath.split('/').join('')
+      this.reloadFunc[key] = func
     },
     getProps(item) {
       return {
