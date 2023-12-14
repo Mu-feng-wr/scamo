@@ -251,6 +251,9 @@ export default {
     }
   },
   created() {
+    if (window.$wujie) {
+      window.$wujie.props.setFunc(this.reload)
+    }
     this.getDictData()
     this.load()
   },
@@ -268,8 +271,8 @@ export default {
         }
       }
     },
-    reload() {
-      this.tableLoading = true
+    reload(loading = true) {
+      this.tableLoading = loading
       listTransfer(this.currentParams)
         .then((res) => {
           this.tableData = res.rows

@@ -154,7 +154,6 @@ export default {
       warehouseList: [],
       validRules: {},
       btnDisabled: true,
-      dictDataList: [],
       userDialogVisible: false,
       useAreaTree: [],
       schemeList: [],

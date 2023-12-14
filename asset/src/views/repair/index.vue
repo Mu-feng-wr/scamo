@@ -230,6 +230,9 @@ export default {
     }
   },
   created() {
+    if (window.$wujie) {
+      window.$wujie.props.setFunc(this.reload)
+    }
     this.getDictData()
     this.load()
   },
@@ -247,8 +250,8 @@ export default {
         }
       }
     },
-    reload() {
-      this.tableLoading = true
+    reload(loading = true) {
+      this.tableLoading = loading
       listRepair(this.currentParams)
         .then((res) => {
           this.tableData = res.rows
@@ -303,12 +306,22 @@ export default {
     },
     // 新增 编辑
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'repair-repairUpdate' : 'repair-repairAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/asset/repair',
+          module: 'Asset',
+          fullPath: '/asset/repair/edit',
+          title: '编辑资产维修',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/asset/repair',
+          module: 'Asset',
+          fullPath: '/asset/repair/add',
+          title: '新增资产维修'
+        })
+      }
     },
     // 删除
     handleDelete(row) {
