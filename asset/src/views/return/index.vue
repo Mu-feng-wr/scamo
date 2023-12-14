@@ -236,6 +236,9 @@ export default {
     }
   },
   created() {
+    if (window.$wujie) {
+      window.$wujie.props.setFunc(this.reload)
+    }
     this.getDictData()
     this.load()
   },
@@ -253,8 +256,8 @@ export default {
         }
       }
     },
-    reload() {
-      this.tableLoading = true
+    reload(loading = true) {
+      this.tableLoading = loading
       listReturn(this.currentParams)
         .then((res) => {
           this.tableData = res.rows
@@ -280,12 +283,22 @@ export default {
     },
     // 新增  修改
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'return-returnUpdate' : 'return-returnAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/asset/return',
+          module: 'Asset',
+          fullPath: '/asset/return/edit',
+          title: '编辑资产归还',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/asset/return',
+          module: 'Asset',
+          fullPath: '/asset/return/add',
+          title: '新增资产归还'
+        })
+      }
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
@@ -299,11 +312,12 @@ export default {
     },
     // 查看详情
     detailHandle(id) {
-      this.$router.push({
-        name: 'return-returnDetail',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/asset/return',
+        module: 'Asset',
+        fullPath: '/asset/return/detail',
+        title: '资产归还详情',
+        condition: { id }
       })
     },
     handleDelete(row) {
