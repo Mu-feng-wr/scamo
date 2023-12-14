@@ -335,11 +335,11 @@ export default {
       } else {
         if (node.isLeaf) {
           return (
-            <span class="el-tree-node__label node-tree-isLeaf">{node.label}</span>
+            <span class = 'el-tree-node__label node-tree-isLeaf'>{node.label}</span>
           )
         } else {
           return (
-            <span class="el-tree-node__label node-tree-isParent">{node.label}</span>
+            <span class = 'el-tree-node__label node-tree-isParent'>{node.label}</span>
           )
         }
       }

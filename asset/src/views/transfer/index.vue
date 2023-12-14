@@ -209,7 +209,6 @@ export default {
   data() {
     return {
       printVisible: false,
-
       showAllSearch: false,
       queryParams: {},
       currentParams: {},
@@ -309,21 +308,32 @@ export default {
     },
     // 查看
     detailHandle(id) {
-      this.$router.push({
-        name: 'transfer-transferDetail',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/asset/transfer',
+        module: 'Asset',
+        fullPath: '/asset/transfer/detail',
+        title: '资产调拨详情',
+        condition: { id }
       })
     },
     // 新增 编辑
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'transfer-transferUpdate' : 'transfer-transferAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/asset/transfer',
+          module: 'Asset',
+          fullPath: '/asset/transfer/edit',
+          title: '编辑资产调拨',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/asset/transfer',
+          module: 'Asset',
+          fullPath: '/asset/transfer/add',
+          title: '新增资产调拨'
+        })
+      }
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
