@@ -37,27 +37,26 @@ service.interceptors.response.use(
     const res = response.data
 
     if (res.code !== 200) {
-      Message({
-        message: res.message || 'Error',
-        type: 'error',
-        duration: 1500
-      })
-
-      if (res.code === 50008 || res.code === 50012 || res.code === 50014) {
-        MessageBox.confirm('', '', {
-          confirmButtonText: 'Re-Login',
-          cancelButtonText: 'Cancel',
-          type: 'warning'
-        }).then(() => {
-          store.dispatch('user/resetToken').then(() => {
-            location.reload()
-          })
+      if (res.code == 500 || res.code == 500000) {
+        Message({
+          message: res.msg || res.message || 'Error',
+          type: 'error',
+          duration: 1500
         })
       }
-      return Promise.reject(new Error(res.message || 'Error'))
-    } else {
-      return res
+      if (res.code == 401) {
+        MessageBox.confirm(res.msg, { showCancelButton: false, type: 'warning' }).then(() => {
+          if (window.$wujie) {
+            window.$wujie.props.logout()
+          }
+        })
+      }
     }
+    if (res.total) {
+      res.total = Number(res.total)
+    } 
+    return res
+    
   },
   error => {
     Message({

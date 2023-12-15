@@ -45,7 +45,7 @@ service.interceptors.response.use(
         })
       }
       if (res.code == 401) {
-        MessageBox.confirm('', res.msg, { showCancelButton: false }).then(() => {
+        MessageBox.confirm(res.msg, { showCancelButton: false, type: 'warning' }).then(() => {
           store.dispatch('system/logout')
         })
         return new Promise(reject => reject(res))

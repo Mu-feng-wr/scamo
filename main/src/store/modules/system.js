@@ -71,10 +71,14 @@ const actions = {
   getInfo({ commit }) {
     return new Promise((resolve, reject) => {
       getUserInfo().then(res => {
-        commit('SET_USERINFO', res.user)
-        commit('SET_PERMISSIONS', res.permissions)
-        commit('SET_ROLES', res.roles)
-        resolve()
+        if (res.code == 200) {
+          commit('SET_USERINFO', res.user)
+          commit('SET_PERMISSIONS', res.permissions)
+          commit('SET_ROLES', res.roles)
+          resolve()
+        } else {
+          reject()
+        }
       })
     })
   },

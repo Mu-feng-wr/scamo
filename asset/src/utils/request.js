@@ -46,7 +46,7 @@ service.interceptors.response.use(
         })
       }
       if (res.code == 401) {
-        MessageBox.confirm('', res.msg, { showCancelButton: false }).then(() => {
+        MessageBox.confirm(res.msg, { showCancelButton: false, type: 'warning' }).then(() => {
           if (window.$wujie) {
             window.$wujie.props.logout()
           }

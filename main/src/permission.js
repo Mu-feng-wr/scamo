@@ -14,7 +14,6 @@ router.beforeEach(async(to, from, next) => {
   NProgress.start()
   document.title = getPageTitle()
   const hasToken = getToken()
-
   if (to.path === '/dashboard') {
     store.commit('system/SET_CURRENTPATH', to.fullPath)
   }

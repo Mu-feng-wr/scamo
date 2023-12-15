@@ -6,6 +6,6 @@ const getters = {
   permissions: state => state.system.permissions,
   roles: state => state.system.roles,
   currentPath: state => state.system.currentPath,
-  name: state => 'yuiyiu'
+  name: state => '约纽科技'
 }
 export default getters
