@@ -384,8 +384,8 @@ export default {
           }
           approveBorrow(submitData)
             .then((res) => {
-              this.$message.success(`${obj[curProcessResult]}！`)
               this.submitLoading = false
+              this.$message.success(`${obj[curProcessResult]}！`)
               setTimeout(() => {
                 window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
               }, 500)

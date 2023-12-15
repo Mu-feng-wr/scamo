@@ -296,16 +296,18 @@ export default {
           } else {
             addCollect(submitData)
               .then((res) => {
-                this.$message.success('新增成功')
+                this.$message.success(status == 2 ? '提交成功！' : '新增成功')
                 setTimeout(() => {
                   window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
-                  window.$wujie.props.route({
-                    path: '/asset/collect',
-                    module: 'Asset',
-                    fullPath: '/asset/collect/edit',
-                    title: '编辑资产领用',
-                    condition: { id: res.msg }
-                  })
+                  if (status != 2) {
+                    window.$wujie.props.route({
+                      path: '/asset/collect',
+                      module: 'Asset',
+                      fullPath: '/asset/collect/edit',
+                      title: '编辑资产领用',
+                      condition: { id: res.msg }
+                    })
+                  }
                 }, 500)
               })
               .finally(() => {
@@ -366,8 +368,8 @@ export default {
           }
           approveCollect(submitData)
             .then((res) => {
-              this.$message.success(`${obj[curProcessResult]}！`)
               this.submitLoading = false
+              this.$message.success(`${obj[curProcessResult]}！`)
               setTimeout(() => {
                 window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
               }, 500)

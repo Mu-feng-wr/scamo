@@ -577,7 +577,7 @@ export default {
                     title: '编辑资产入库',
                     condition: { id: res.msg }
                   })
-                }, 300)
+                }, 500)
               })
               .finally(() => {
                 this.submitLoading = false
@@ -641,7 +641,7 @@ export default {
               this.submitLoading = false
               setTimeout(() => {
                 window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
-              }, 300)
+              }, 500)
             })
             .catch(() => {
               this.submitLoading = false
