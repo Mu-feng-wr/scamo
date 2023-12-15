@@ -10,14 +10,14 @@
         <div v-html="styleText"></div>
         <el-card class="box-card" style="page-break-after: always">
           <div slot="header" class="clearfix text-tip">{{ $store.getters.userInfo.companyName }}</div>
-          <div slot="header" class="clearfix text-tip">{{ $vxe.toDateString(new Date(),'yyyy')+'年'+$vxe.toDateString(printData.returnDate,'MM')+'月' }}资产归还入库确认单</div>
+          <div slot="header" class="clearfix text-tip">{{ $vxe.toDateString(printData.reshuffleDate,'yyyy')+'年'+$vxe.toDateString(printData.reshuffleDate,'MM')+'月' }}资产异动确认单</div>
 
           <el-row>
             <el-col :span="8">
-              <el-form-item label="归还单号">{{ printData.assetReturnCode }}</el-form-item>
+              <el-form-item label="异动单号">{{ printData.assetReshuffleCode }}</el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="归还日期">{{ printData.returnDate }}</el-form-item>
+              <el-form-item label="异动日期">{{ printData.reshuffleDate }}</el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="业务类别">{{ printData.centralizedBusinessName }}</el-form-item>
@@ -25,10 +25,10 @@
           </el-row>
           <el-row>
             <el-col :span="8">
-              <el-form-item label="使用人">{{ printData.userName }}</el-form-item>
+              <el-form-item label="异动人">{{ printData.reshuffleUserName }}</el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="使用部门">{{ printData.userOrgName }}</el-form-item>
+              <el-form-item label="异动部门">{{ printData.reshuffleOrgName }}</el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="制单日期">{{ $vxe.toDateString(new Date(), "yyyy-MM-dd") }}</el-form-item>
@@ -47,7 +47,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, index) in printData.almAssetReturnDetailList" :key="index">
+              <tr v-for="(item, index) in printData.almAssetReshuffleAuditList" :key="index">
                 <td>{{ item.assetCode }}</td>
                 <td>
                   {{ item.serialNum?item.serialNum+'-':'' }}
@@ -60,11 +60,11 @@
                 <td>{{ $vxe.commafy(item.priceIncludTax,{digits:3}) }}</td>
                 <td>
                   {{ item.currentEreaName }}{{ item.currentLocationName?'/'+item.currentLocationName+'-':'' }}
-                  {{ printData.returnReason }}
-                  {{ item.remarks&&printData.returnReason?'-'+item.remarks:item.remarks }}
+                  {{ printData.reshuffleReason }}
+                  {{ item.remarks&&printData.reshuffleReason?'-'+item.remarks:item.remarks }}
                 </td>
               </tr>
-              <template v-if="form.almAssetReturnDetailList && printData.almAssetReturnDetailList.length < 3">
+              <template v-if="printData.almAssetReshuffleAuditList && printData.almAssetReshuffleAuditList.length < 3">
                 <tr>
                   <td v-for="(item, index) in 6" :key="index"></td>
                 </tr>
@@ -75,7 +75,7 @@
               <tr>
                 <td>情况说明</td>
                 <td colspan="5">
-                  <div class="u-line-1">{{ printData.returnReason }}</div>
+                  <div class="u-line-1">{{ printData.reshuffleReason }}</div>
                   <div class="u-line-1">{{ getRecords() }}</div>
                 </td>
               </tr>

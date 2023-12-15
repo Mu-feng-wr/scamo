@@ -31,7 +31,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="状态">
-              <dictDateView :value="formData.status" :dictdata-list="dictDataList" dict-code="AlmAssetCollect-status" />
+              <dictDateView :value="formData.status" :dictdata-list="dictDataList" dict-code="AlmAssetReshuffle-reshuffleStatus" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -79,17 +79,18 @@
     <div slot="footer" align="center">
       <el-button type="success" @click="printVisible=true">打印</el-button>
     </div>
-    <!-- <Print v-if="printVisible" :printVisible.sync="printVisible" :printData="formData" /> -->
+    <Print v-if="printVisible" :print-visible.sync="printVisible" :print-data="formData" />
   </PageCard>
 </template>
 <script>
 import assetReshuffleDetail from './components/assetReshuffleDetail.vue'
 import { getReshuffle } from '@/api/reshuffle.js'
-// import Print from './components/print.vue'
+import { listDictItems } from '@/api/base.js'
+import Print from './components/print.vue'
 export default {
   components: {
-    assetReshuffleDetail
-    // Print
+    assetReshuffleDetail,
+    Print
   },
   data() {
     return {
@@ -97,7 +98,8 @@ export default {
       submitLoading: false,
       formData: {},
       editId: '',
-      printVisible: false
+      printVisible: false,
+      dictDataList: []
     }
   },
   created() {
@@ -116,6 +118,13 @@ export default {
         .finally(() => {
           this.submitLoading = false
         })
+    },
+    getDictData() {
+      let dictCodes = 'System-sourceTerminal' // 来源终端
+      dictCodes += ',AlmAssetReshuffle-reshuffleStatus' // 异动状态
+      listDictItems(dictCodes).then((res) => {
+        this.dictDataList = res.sysDictionaryItemsList
+      })
     }
   }
 }

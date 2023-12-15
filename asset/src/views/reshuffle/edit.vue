@@ -232,15 +232,16 @@ export default {
     submitForm(status, curProcessStepName) {
       this.$refs['form'].validate(async (valid) => {
         if (valid) {
-          if (status != 0 && !this.formData.curProcessOptions) {
-            this.$message({
-              message: `处理意见不能为空！`,
-              type: 'warning'
-            })
-          }
           if (this.$refs.assetReshuffleDetail.tableData.length == 0) {
             this.$message({
               message: `请填写资产明细`,
+              type: 'warning'
+            })
+            return
+          }
+          if (status != 0 && !this.formData.curProcessOptions) {
+            this.$message({
+              message: `处理意见不能为空！`,
               type: 'warning'
             })
             return
@@ -259,21 +260,40 @@ export default {
             }
           }
           if (this.editId) {
-            updateReshuffle(submitData).then((res) => {
-              this.$message.success('修改成功')
-              this.init()
-            })
-          } else {
-            addReshuffle(submitData).then((res) => {
-              this.$message.success('新增成功')
-              this.$router.push({
-                name: 'reshuffle-reshuffleUpdate',
-                query: {
-                  id: res.msg
+            updateReshuffle(submitData)
+              .then((res) => {
+                this.$message.success(status == 2 ? '提交成功' : '修改成功')
+                if (status == 2) {
+                  setTimeout(() => {
+                    window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  }, 500)
+                  return
                 }
+                this.init()
               })
-              // Global.$emit('closeCurrentTag', this.$route)
-            })
+              .finally(() => {
+                this.submitLoading = false
+              })
+          } else {
+            addReshuffle(submitData)
+              .then((res) => {
+                this.$message.success(status == 2 ? '提交成功' : '新增成功')
+                setTimeout(() => {
+                  window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  if (status != 2) {
+                    window.$wujie.props.route({
+                      path: '/asset/reshuffle',
+                      module: 'Asset',
+                      fullPath: '/asset/reshuffle/edit',
+                      title: '编辑资产异动',
+                      condition: { id: res.msg }
+                    })
+                  }
+                }, 500)
+              })
+              .finally(() => {
+                this.submitLoading = false
+              })
           }
         }
       })
@@ -323,8 +343,8 @@ export default {
               this.$message.success(`${obj[curProcessResult]}！`)
               this.submitLoading = false
               setTimeout(() => {
-                // Global.$emit('closeCurrentTag', this.$route)
-              }, 1000)
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+              }, 500)
             })
             .catch(() => {
               this.submitLoading = false

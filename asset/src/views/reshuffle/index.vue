@@ -152,7 +152,7 @@
                     @click="audit(row,'audit_superior')"
                   >审批</el-button>
                   <el-button
-                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL') && row.applicantId == $store.state.user.info.userId"
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL') && row.applicantId == $store.getters.userInfo.userId"
                     v-hasPermi="['asset:reshuffle:recall']"
                     size="mini"
                     type="text"
@@ -167,7 +167,7 @@
                     @click="audit(row,'register_asset_admin')"
                   >登记</el-button>
                   <el-button
-                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&& row.assetReviewAuditVO.preProcessorId == $store.state.user.info.userId)"
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&& row.assetReviewAuditVO.preProcessorId == $store.getters.userInfo.userId)"
                     v-hasPermi="['asset:reshuffle:recall']"
                     size="mini"
                     type="text"
@@ -200,8 +200,6 @@
               </template>
             </vxe-grid>
           </el-main>
-
-          <!-- <Print ref="printRef" v-if="printVisible"></Print> -->
         </el-container>
       </el-main>
     </el-container>
@@ -215,8 +213,6 @@ export default {
   mixins: [vxeTable],
   data() {
     return {
-      printVisible: false,
-
       showAllSearch: false,
       queryParams: {},
       currentParams: {},
@@ -344,12 +340,19 @@ export default {
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
-      this.$router.push({
-        name: 'reshuffle-reshuffleUpdate',
-        query: {
-          id: row.assetReshuffleId,
-          todo: todo
-        }
+      var statusObj = {
+        audit_superior: '审批',
+        recall_add: '撤回',
+        register_asset_admin: '登记',
+        recall_superior: '撤回',
+        invalid_add: '作废'
+      }
+      window.$wujie.props.route({
+        path: '/asset/reshuffle',
+        module: 'Asset',
+        fullPath: '/asset/reshuffle/edit',
+        title: `资产异动${statusObj[todo]}`,
+        condition: { id: row.assetReshuffleId, todo: todo }
       })
     },
     // 删除

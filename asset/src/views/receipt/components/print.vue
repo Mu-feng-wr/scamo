@@ -5,7 +5,7 @@
       <el-button v-show="false" ref="printBtn" v-print="printObj" type="primary">打印</el-button>
     </div>
 
-    <el-form ref="form" :model="form" label-width="95px" label-suffix="：" class="bg-white">
+    <el-form ref="form" label-width="95px" label-suffix="：" class="bg-white">
       <div id="printWrap" ref="demo" class="print_obj bgClass">
         <div v-html="styleText"></div>
         <el-card class="box-card" style="page-break-after: always">

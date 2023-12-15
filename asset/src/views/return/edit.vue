@@ -329,7 +329,7 @@ export default {
               this.submitLoading = false
               setTimeout(() => {
                 window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
-              }, 300)
+              }, 500)
             })
             .catch(() => {
               this.submitLoading = false
