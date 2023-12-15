@@ -286,21 +286,32 @@ export default {
     },
     // 查看
     detailHandle(id) {
-      this.$router.push({
-        name: 'scrap-scrapDetail',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/asset/scrap',
+        module: 'Asset',
+        fullPath: '/asset/scrap/detail',
+        title: '资产处置详情',
+        condition: { id }
       })
     },
     // 新增 编辑
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'scrap-scrapUpdate' : 'scrap-scrapAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/asset/scrap',
+          module: 'Asset',
+          fullPath: '/asset/scrap/edit',
+          title: '编辑资产处置',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/asset/scrap',
+          module: 'Asset',
+          fullPath: '/asset/scrap/add',
+          title: '新增资产处置'
+        })
+      }
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
