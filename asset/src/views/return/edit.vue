@@ -242,7 +242,7 @@ export default {
                 if (status == 2) {
                   setTimeout(() => {
                     window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
-                  }, 300)
+                  }, 500)
                   return
                 }
                 this.init()
@@ -254,14 +254,18 @@ export default {
             addReturn(submitData)
               .then((res) => {
                 this.$message.success(status == 2 ? '提交成功' : '新增成功')
-                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
-                window.$wujie.props.route({
-                  path: '/asset/return',
-                  module: 'Asset',
-                  fullPath: '/asset/return/edit',
-                  title: '编辑资产归还',
-                  condition: { id: res.msg }
-                })
+                setTimeout(() => {
+                  window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  if (status != 2) {
+                    window.$wujie.props.route({
+                      path: '/asset/return',
+                      module: 'Asset',
+                      fullPath: '/asset/return/edit',
+                      title: '编辑资产归还',
+                      condition: { id: res.msg }
+                    })
+                  }
+                }, 500)
               })
               .finally(() => {
                 this.submitLoading = false

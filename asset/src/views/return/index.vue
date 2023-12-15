@@ -133,7 +133,7 @@
                     @click="audit(row,'audit_superior')"
                   >审批</el-button>
                   <el-button
-                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL') && row.applicantId == $store.state.user.info.userId"
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL') && row.applicantId == $store.getters.userInfo.userId"
                     v-hasPermi="['asset:return:recall']"
                     size="mini"
                     type="text"
@@ -148,7 +148,7 @@
                     @click="audit(row,'register_asset_admin')"
                   >登记</el-button>
                   <el-button
-                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&& row.assetReviewAuditVO.preProcessorId == $store.state.user.info.userId)"
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&& row.assetReviewAuditVO.preProcessorId == $store.getters.userInfo.userId)"
                     v-hasPermi="['asset:return:recall']"
                     size="mini"
                     type="text"
@@ -302,12 +302,19 @@ export default {
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
-      this.$router.push({
-        name: 'return-returnUpdate',
-        query: {
-          id: row.assetReturnId,
-          todo: todo
-        }
+      var statusObj = {
+        audit_superior: '审批',
+        recall_add: '撤回',
+        register_asset_admin: '登记',
+        recall_superior: '撤回',
+        invalid_add: '作废'
+      }
+      window.$wujie.props.route({
+        path: '/asset/return',
+        module: 'Asset',
+        fullPath: '/asset/return/edit',
+        title: `资产归还${statusObj[todo]}`,
+        condition: { id: row.assetReturnId, todo: todo }
       })
     },
     // 查看详情
