@@ -64,7 +64,7 @@ import vxeTable from '@/mixins/vxeTable'
 export default {
   mixins: [vxeTable],
   props: {
-    form: {
+    formData: {
       type: Object,
       default: () => {
         return {}
@@ -98,10 +98,10 @@ export default {
       return [
         { type: 'checkbox', width: 40, align: 'center', fixed: 'left' },
         { type: 'seq', width: 70, align: 'center', fixed: 'left', visible: true, visibleDisabled: true, slots: { header: 'seqHeader' } },
-        { showOverflow: true, field: 'assetCode', title: '资产编号', width: 150, fixed: 'left' },
-        { showOverflow: true, field: 'assetName', title: '资产名称', width: 150, fixed: 'left' },
-        { showOverflow: true, field: 'categoryName', title: '资产分类', width: 130 },
-        { showOverflow: true, field: 'pictureName', title: '资产图片', width: 80, slots: { default: 'pictureName' } },
+        { field: 'assetCode', title: '资产编号', width: 150, fixed: 'left' },
+        { field: 'assetName', title: '资产名称', width: 150, fixed: 'left' },
+        { field: 'categoryName', title: '资产分类', width: 130 },
+        { field: 'pictureName', title: '资产图片', width: 80, slots: { default: 'pictureName' } },
         {
           showOverflow: true,
           field: 'repairAmount',
@@ -113,33 +113,33 @@ export default {
           align: 'right',
           formatter: 'formatMoney'
         },
-        { showOverflow: true, field: 'repairQuantity', title: '维修数量', width: 110 },
-        { showOverflow: true, field: '', title: '是否已完成', width: 100 },
-        { showOverflow: true, field: 'remarks', title: '备注', width: 100, slots: { edit: 'remarks' }, editRender: {} },
-        { showOverflow: true, field: '', title: '上次维修日期', width: 160 },
-        { showOverflow: true, field: '', title: '过往累计维修次数', width: 160 },
-        { showOverflow: true, field: '', title: '预计完成维修时间', width: 160 },
-        { showOverflow: true, field: 'serialNum', title: '序列号', width: 100 },
-        { showOverflow: true, field: 'specificationModel', title: '规格型号', width: 100 },
-        { showOverflow: true, field: 'brandName', title: '品牌', width: 100 },
-        { showOverflow: true, field: 'inventoryQuantity', title: '库存/在用数量', width: 110 },
-        { showOverflow: true, field: 'quantityUnit', title: '数量单位', width: 80 },
-        { showOverflow: true, field: 'priceExcludTax', title: '不含税单价（元）', width: 160, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { showOverflow: true, field: 'taxRate', title: '税率（%）', width: 90, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { showOverflow: true, field: 'taxAmount', title: '税额（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { showOverflow: true, field: 'priceIncludTax', title: '含税单价（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { showOverflow: true, field: 'subtotal', title: '金额小计（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { showOverflow: true, field: 'currentUserName', title: '使用人', width: 130 },
-        { showOverflow: true, field: 'currentOrgName', title: '使用部门', width: 130 },
-        { showOverflow: true, field: 'currentEreaName', title: '使用区域', width: 130 },
-        { showOverflow: true, field: 'currentLocationName', title: '具体位置', width: 130 },
-        { showOverflow: true, field: 'firstShelfName', title: '存放货架', width: 130, slots: { default: 'firstShelfName' } },
-        { showOverflow: true, field: 'assetCharacteristic', title: '资产特性', width: 130, slots: { default: 'assetCharacteristic' } },
-        { showOverflow: true, field: 'assetPhysicalState', title: '资产物态', width: 130, slots: { default: 'assetPhysicalState' } },
-        { showOverflow: true, field: '', title: '质保期', width: 130 },
-        { showOverflow: true, field: '', title: '有效期', width: 130 },
-        { showOverflow: true, field: '', title: '启用日期', width: 130 },
-        { showOverflow: true, field: '', title: '招标资产编码', width: 130 },
+        { field: 'repairQuantity', title: '维修数量', width: 110 },
+        { field: '', title: '是否已完成', width: 100 },
+        { field: 'remarks', title: '备注', width: 100, slots: { edit: 'remarks' }, editRender: {} },
+        { field: '', title: '上次维修日期', width: 160 },
+        { field: '', title: '过往累计维修次数', width: 160 },
+        { field: '', title: '预计完成维修时间', width: 160 },
+        { field: 'serialNum', title: '序列号', width: 100 },
+        { field: 'specificationModel', title: '规格型号', width: 100 },
+        { field: 'brandName', title: '品牌', width: 100 },
+        { field: 'inventoryQuantity', title: '库存/在用数量', width: 110 },
+        { field: 'quantityUnit', title: '数量单位', width: 80 },
+        { field: 'priceExcludTax', title: '不含税单价（元）', width: 160, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { field: 'taxRate', title: '税率（%）', width: 90, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { field: 'taxAmount', title: '税额（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { field: 'priceIncludTax', title: '含税单价（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { field: 'subtotal', title: '金额小计（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { field: 'currentUserName', title: '使用人', width: 130 },
+        { field: 'currentOrgName', title: '使用部门', width: 130 },
+        { field: 'currentEreaName', title: '使用区域', width: 130 },
+        { field: 'currentLocationName', title: '具体位置', width: 130 },
+        { field: 'firstShelfName', title: '存放货架', width: 130, slots: { default: 'firstShelfName' } },
+        { field: 'assetCharacteristic', title: '资产特性', width: 130, slots: { default: 'assetCharacteristic' } },
+        { field: 'assetPhysicalState', title: '资产物态', width: 130, slots: { default: 'assetPhysicalState' } },
+        { field: '', title: '质保期', width: 130 },
+        { field: '', title: '有效期', width: 130 },
+        { field: '', title: '启用日期', width: 130 },
+        { field: '', title: '招标资产编码', width: 130 },
 
         { field: 'todo', title: '操作', slots: { default: 'todo' }, width: 100, fixed: 'right', visible: this.showBtn && this.editForm }
       ]
@@ -149,8 +149,8 @@ export default {
         {
           labelName: 'centralizedBusinessName',
           valueName: 'centralizedBusinessId',
-          label: this.form.centralizedBusinessName,
-          value: this.form.centralizedBusinessId,
+          label: this.formData.centralizedBusinessName,
+          value: this.formData.centralizedBusinessId,
           name: '业务类别',
           require: true
         }
@@ -158,7 +158,7 @@ export default {
     }
   },
   watch: {
-    'form.almAssetRepairDetailList': {
+    'formData.almAssetRepairDetailList': {
       handler(newVal, oldVal) {
         if (newVal && newVal.length > 0) {
           this.tableData = newVal

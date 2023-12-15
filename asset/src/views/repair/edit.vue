@@ -136,7 +136,7 @@ export default {
     return {
       returnUrl: '/asset/repair',
       editId: '',
-      user: this.$store.state.user.info,
+      user: this.$store.getters.userInfo,
       formData: {},
       userDialogVisible: false,
       projectDialogVisible: false,
@@ -258,21 +258,18 @@ export default {
 
           if (this.editId) {
             updateRepair(submitData).then((res) => {
-              this.$modal.msgSuccess(status == 2 ? '提交成功' : '修改成功')
+              this.$message.success(status == 2 ? '提交成功' : '修改成功')
               if (status == 2) {
                 setTimeout(() => {
-                  this.$router.push({
-                    name: 'asset-repair'
-                  })
-                }, 300)
-                // Global.$emit('closeCurrentTag', this.$route)
+                  window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                }, 500)
                 return
               }
               this.init()
             })
           } else {
             addRepair(submitData).then((res) => {
-              this.$modal.msgSuccess(status == 2 ? '提交成功' : '新增成功')
+              this.$message.success(status == 2 ? '提交成功' : '新增成功')
               setTimeout(() => {
                 if (status == 2) {
                   this.$router.push({

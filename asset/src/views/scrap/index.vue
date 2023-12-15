@@ -125,7 +125,7 @@
                     @click="audit(row,'audit_superior')"
                   >审批</el-button>
                   <el-button
-                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL') && row.applicantId == $store.state.user.info.userId"
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL') && row.applicantId == $store.getters.userInfo.userId"
                     v-hasPermi="['asset:scrap:recall']"
                     size="mini"
                     type="text"
@@ -140,7 +140,7 @@
                     @click="audit(row,'register_asset_admin')"
                   >登记</el-button>
                   <el-button
-                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&& row.assetReviewAuditVO.preProcessorId == $store.state.user.info.userId)"
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&& row.assetReviewAuditVO.preProcessorId == $store.getters.userInfo.userId)"
                     v-hasPermi="['asset:scrap:recall']"
                     size="mini"
                     type="text"
