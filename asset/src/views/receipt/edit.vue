@@ -640,9 +640,7 @@ export default {
               this.$message.success(`${obj[curProcessResult]}！`)
               this.submitLoading = false
               setTimeout(() => {
-                this.$router.push({
-                  name: 'asset-receipt'
-                })
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
               }, 300)
             })
             .catch(() => {

@@ -326,7 +326,7 @@ export default {
     },
     // 删除
     handleDelete(row) {
-      this.$modal.confirm('是否确认删除变更单信息编号为"' + row.assetChangeCode + '"的数据项？').then(() => {
+      this.$modal.confirm('是否确认删除变更单信息编号为"' + row.assetChangeCode + '"的数据项？', '删除', { type: 'warning' }).then(() => {
         delChange(row.assetChangeId).then(() => {
           this.reload()
           this.$modal.msgSuccess('删除成功')

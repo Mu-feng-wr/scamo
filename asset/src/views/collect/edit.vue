@@ -285,7 +285,9 @@ export default {
               .then((res) => {
                 if (status == 2) {
                   this.$message.success('提交成功！')
-                  window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  setTimeout(() => {
+                    window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  }, 500)
                 } else {
                   this.$message.success('修改成功！')
                   this.init()
@@ -297,15 +299,17 @@ export default {
           } else {
             addCollect(submitData)
               .then((res) => {
-                this.$modal.msgSuccess('新增成功')
-                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
-                window.$wujie.props.route({
-                  path: '/asset/collect',
-                  module: 'Asset',
-                  fullPath: '/asset/collect/edit',
-                  title: '编辑资产领用',
-                  condition: { id: res.msg }
-                })
+                this.$message.success('新增成功')
+                setTimeout(() => {
+                  window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  window.$wujie.props.route({
+                    path: '/asset/collect',
+                    module: 'Asset',
+                    fullPath: '/asset/collect/edit',
+                    title: '编辑资产领用',
+                    condition: { id: res.msg }
+                  })
+                }, 500)
               })
               .finally(() => {
                 this.submitLoading = false
@@ -332,7 +336,7 @@ export default {
         4: '撤回成功',
         5: '作废成功'
       }
-      this.$refs['formData'].validate(async (valid) => {
+      this.$refs['form'].validate(async (valid) => {
         if (valid) {
           if (this.$refs.assetDetail.tableData.length == 0) {
             this.$message({
@@ -365,11 +369,11 @@ export default {
           }
           approveCollect(submitData)
             .then((res) => {
-              this.$modal.msgSuccess(`${obj[curProcessResult]}！`)
+              this.$message.success(`${obj[curProcessResult]}！`)
               this.submitLoading = false
               setTimeout(() => {
-                // Global.$emit('closeCurrentTag', this.$route)
-              }, 1000)
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+              }, 500)
             })
             .catch(() => {
               this.submitLoading = false

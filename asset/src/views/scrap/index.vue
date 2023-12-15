@@ -325,7 +325,7 @@ export default {
     },
     // 删除
     handleDelete(row) {
-      this.$confirm('是否确认删除终结单信息编号为"' + row.assetScrapCode + '"的数据项？').then(() => {
+      this.$confirm('是否确认删除终结单信息编号为"' + row.assetScrapCode + '"的数据项？', '删除', { type: 'warning' }).then(() => {
         delScrap(row.assetScrapId).then(() => {
           this.reload()
           this.$message.success('删除成功')

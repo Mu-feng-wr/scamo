@@ -358,7 +358,7 @@ export default {
     },
     // 删除行
     handleDelete(row) {
-      this.$confirm('是否确认删除资产借用单信息编号为"' + row.assetBorrowCode + '"的数据项？').then(() => {
+      this.$confirm('是否确认删除资产借用单信息编号为"' + row.assetBorrowCode + '"的数据项？', '删除', { type: 'warning' }).then(() => {
         delBorrow(row.assetBorrowId).then(() => {
           this.reload()
           this.$message.success('删除成功！')

@@ -350,7 +350,7 @@ export default {
     },
     // 删除
     handleDelete(row) {
-      this.$confirm('是否确认删除调拨单信息编号为"' + row.assetTransferCode + '"的数据项？').then(() => {
+      this.$confirm('是否确认删除调拨单信息编号为"' + row.assetTransferCode + '"的数据项？', '删除', { type: 'warning' }).then(() => {
         delTransfer(row.assetTransferId).then(() => {
           this.reload()
           this.$message.success('删除成功')

@@ -325,7 +325,7 @@ export default {
     },
     // 删除
     handleDelete(row) {
-      this.$confirm('是否确认删除维修单信息编号为"' + row.assetRepairCode + '"的数据项？').then(() => {
+      this.$confirm('是否确认删除维修单信息编号为"' + row.assetRepairCode + '"的数据项？', '删除', { type: 'warning' }).then(() => {
         delRepair(row.assetRepairId).then(() => {
           this.reload()
           this.$message.success('删除成功')

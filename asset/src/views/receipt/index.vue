@@ -397,7 +397,7 @@ export default {
     },
     // 删除
     handleDelete(row) {
-      this.$confirm('是否确认删除资产入库单信息编号为"' + row.assetReceiptCode + '"的数据项？', '删除').then(() => {
+      this.$confirm('是否确认删除资产入库单信息编号为"' + row.assetReceiptCode + '"的数据项？', '删除', { type: 'warning' }).then(() => {
         delReceipt(row.assetReceiptId).then(() => {
           this.reload()
           this.$message.success('删除成功！')

@@ -245,6 +245,9 @@ export default {
     }
   },
   created() {
+    if (window.$wujie) {
+      window.$wujie.props.setFunc(this.reload)
+    }
     this.getDictData()
     this.load()
   },
@@ -262,8 +265,8 @@ export default {
         }
       }
     },
-    reload() {
-      this.tableLoading = true
+    reload(loading = true) {
+      this.tableLoading = loading
       listCollect(this.currentParams)
         .then((res) => {
           this.tableData = res.rows
@@ -309,12 +312,21 @@ export default {
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
-      this.$router.push({
-        name: 'collect-collectUpdate',
-        query: {
-          id: row.assetCollectId,
-          todo: todo
-        }
+      var statusObj = {
+        audit_superior: '审批',
+        recall_add: '撤回',
+        register_asset_admin: '登记',
+        recall_superior: '撤回',
+        invalid_add: '作废',
+        user_confirm: '确认',
+        recall_superior_asset_admin: '撤回'
+      }
+      window.$wujie.props.route({
+        path: '/asset/collect',
+        module: 'Asset',
+        fullPath: '/asset/collect/edit',
+        title: `资产领用${statusObj[todo]}`,
+        condition: { id: row.assetCollectId, todo: todo }
       })
     },
     //  查看详情
@@ -328,7 +340,7 @@ export default {
       })
     },
     handleDelete(row) {
-      this.$confirm('是否确认删除资产领用单信息编号为"' + row.assetCollectCode + '"的数据项？', '删除').then(() => {
+      this.$confirm('是否确认删除资产领用单信息编号为"' + row.assetCollectCode + '"的数据项？', '删除', { type: 'warning' }).then(() => {
         delCollect(row.assetCollectId).then(() => {
           this.reload()
           this.$message.success('删除成功！')
