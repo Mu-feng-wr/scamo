@@ -105,6 +105,7 @@ export default {
   created() {
     this.editId = this.$route.query.id
     this.init()
+    this.getDictData()
   },
   methods: {
     init() {

@@ -340,12 +340,21 @@ export default {
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
-      this.$router.push({
-        name: 'transfer-transferUpdate',
-        query: {
-          id: row.assetTransferId,
-          todo: todo
-        }
+      var statusObj = {
+        audit_superior: '审批',
+        recall_add: '撤回',
+        register_asset_admin: '登记',
+        recall_superior: '撤回',
+        invalid_add: '作废',
+        user_confirm: '确认',
+        recall_superior_asset_admin: '撤回'
+      }
+      window.$wujie.props.route({
+        path: '/asset/transfer',
+        module: 'Asset',
+        fullPath: '/asset/transfer/edit',
+        title: `资产调拨${statusObj[todo]}`,
+        condition: { id: row.assetTransferId, todo: todo }
       })
     },
     // 删除

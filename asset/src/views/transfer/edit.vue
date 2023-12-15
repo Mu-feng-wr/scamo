@@ -256,18 +256,26 @@ export default {
           }
           if (this.editId) {
             updateTransfer(submitData).then((res) => {
-              this.$modal.msgSuccess('修改成功')
+              this.$message.success(status == 2 ? '提交成功！' : '修改成功')
+              if (status == 2) {
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                return
+              }
               this.init()
             })
           } else {
             addTransfer(submitData).then((res) => {
-              this.$modal.msgSuccess('新增成功')
-              this.$router.push({
-                name: 'transfer-transferUpdate',
-                query: {
-                  id: res.msg
-                }
-              })
+              this.$message.success('新增成功')
+              setTimeout(() => {
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                window.$wujie.props.route({
+                  path: '/asset/transfer',
+                  module: 'Asset',
+                  fullPath: '/asset/transfer/edit',
+                  title: '编辑资产调拨',
+                  condition: { id: res.msg }
+                })
+              }, 500)
             })
           }
         } else {

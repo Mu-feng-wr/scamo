@@ -283,15 +283,12 @@ export default {
           if (this.editId) {
             updateCollect(submitData)
               .then((res) => {
+                this.$message.success(status == 2 ? '提交成功！' : '修改成功！')
                 if (status == 2) {
-                  this.$message.success('提交成功！')
-                  setTimeout(() => {
-                    window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
-                  }, 500)
-                } else {
-                  this.$message.success('修改成功！')
-                  this.init()
+                  window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  return
                 }
+                this.init()
               })
               .finally(() => {
                 this.submitLoading = false

@@ -31,7 +31,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="状态">
-              <dictDateView :value="formData.status" :dict-data-list="dictDataList" dict-code="AlmAssetCollect-status" />
+              <dictDateView :value="formData.status" :dict-data-list="dictDataList" dict-code="AlmAssetTransfer-status" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -79,17 +79,18 @@
     <div slot="footer" align="center">
       <el-button type="success" @click="printVisible=true">打印</el-button>
     </div>
-    <!-- <Print ref="printRef" v-if="printVisible" :printVisible.sync="printVisible" :printData="form"></Print> -->
+    <Print v-if="printVisible" ref="printRef" :print-visible.sync="printVisible" :print-data="form" />
   </PageCard>
 </template>
 <script>
 import assetTransferDetail from './components/assetTransferDetail.vue'
 import { getTransfer } from '@/api/transfer.js'
-// import Print from './components/print.vue'
+import { listDictItems } from '@/api/base.js'
+import Print from './components/print.vue'
 export default {
   components: {
-    assetTransferDetail
-    // Print
+    assetTransferDetail,
+    Print
   },
   data() {
     return {
@@ -97,12 +98,14 @@ export default {
       submitLoading: false,
       formData: {},
       editId: '',
-      printVisible: false
+      printVisible: false,
+      dictDataList: []
     }
   },
   created() {
     this.editId = this.$route.query.id
     this.init()
+    this.getDictData()
   },
   methods: {
     init() {
@@ -116,6 +119,14 @@ export default {
         .finally(() => {
           this.submitLoading = false
         })
+    },
+    // 获取字典数据
+    getDictData() {
+      let dictCodes = 'System-sourceTerminal' // 来源终端
+      dictCodes += ',AlmAssetTransfer-status' // 调拨状态
+      listDictItems(dictCodes).then((res) => {
+        this.dictDataList = res.sysDictionaryItemsList
+      })
     }
   }
 }
