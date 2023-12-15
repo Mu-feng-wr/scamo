@@ -225,7 +225,6 @@
   }
 
   .el-table {
-    border-top: 0 !important;
     border-collapse: collapse;
     width: 100%;
     font-size: 14px;
@@ -257,47 +256,6 @@
       &:last-child {
         height: 25px;
       }
-    }
-
-    tr {
-      th {
-        &:nth-child(1) {
-          width: 160px
-        }
-
-        &:nth-child(2) {
-          width: 20%
-        }
-
-
-        &:nth-child(3),
-        &:nth-child(4) {
-          width: 60px
-        }
-
-        &:nth-child(5),
-        &:nth-child(6) {
-          width: 110px
-        }
-
-        &:last-child {
-          width: auto;
-        }
-      }
-
-      td {
-
-        &:nth-child(5),
-        &:nth-child(6) {
-          text-align: right;
-        }
-
-        &:nth-child(2),
-        &:last-child {
-          text-align: left;
-        }
-      }
-
     }
 
   }

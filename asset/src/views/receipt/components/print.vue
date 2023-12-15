@@ -38,12 +38,12 @@
           <table class="el-table">
             <thead>
               <tr>
-                <th>资产编号</th>
-                <th>资产名称</th>
-                <th>数量</th>
-                <th>单位</th>
-                <th>含税单价（元）</th>
-                <th>备注</th>
+                <td>资产编号</td>
+                <td>资产名称</td>
+                <td>数量</td>
+                <td>单位</td>
+                <td>含税单价（元）</td>
+                <td>备注</td>
               </tr>
             </thead>
             <tbody>
@@ -133,7 +133,7 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      this.remarksWidth = this.$refs.remarks.clientWidth
+      this.remarksWidth = this.$refs.remarks.clientWidth - 10
     })
   },
   methods: {
@@ -162,7 +162,7 @@ export default {
 <style lang="scss" scoped>
 /* 打印 */
 .bgClass {
-  color: #333333;
+  // color: #333333;
 }
 .print_obj >>> .el-table tr td:last-child {
   height: 25px;
@@ -181,7 +181,7 @@ export default {
     height: inherit;
   }
   .bgClass {
-    -webkit-print-color-adjust: exact;
+    // -webkit-print-color-adjust: exact;
     /* font-size: 10px; */
     font-size: 14px;
     width: 98%;
@@ -189,7 +189,7 @@ export default {
 }
 ::v-deep .vxe-modal--header {
   background: #fff;
-  border-bottom: 0px;
+  // border-bottom: 0px;
 }
 ::v-deep .vxe-modal--title {
   font-weight: 500;
