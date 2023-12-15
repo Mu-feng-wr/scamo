@@ -137,7 +137,7 @@
       <assetBorrowDetail ref="assetBorrowDetail" v-bind="{ useAreaTree, dictDataList, schemeList }" :form-data="formData" :edit-form="editForm" @calculate="calculate" />
     </SectionCard>
     <SectionCard v-if="formData.status && formData.status!=0" title="处理记录">
-      <handleRecords :table-data="form.assetReviewAuditList" />
+      <handleRecords :table-data="formData.assetReviewAuditList" />
     </SectionCard>
     <SectionCard title="处理意见">
       <el-input v-model="formData.curProcessOptions" type="textarea" placeholder="请输入内容" maxlength="300" show-word-limit />
@@ -299,7 +299,9 @@ export default {
               .then((res) => {
                 this.$message.success(status == 2 ? '提交成功' : '修改成功')
                 if (status == 2) {
-                  console.log(11)
+                  setTimeout(() => {
+                    window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  }, 500)
                 } else {
                   this.init()
                 }
@@ -311,14 +313,18 @@ export default {
             addBorrow(submitData)
               .then((res) => {
                 this.$message.success(status == 2 ? '提交成功' : '新增成功')
-                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
-                window.$wujie.props.route({
-                  path: '/asset/borrow',
-                  module: 'Asset',
-                  fullPath: '/asset/borrow/edit',
-                  title: '编辑资产领用',
-                  condition: { id: res.msg }
-                })
+                setTimeout(() => {
+                  window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  if (status != 2) {
+                    window.$wujie.props.route({
+                      path: '/asset/borrow',
+                      module: 'Asset',
+                      fullPath: '/asset/borrow/edit',
+                      title: '编辑资产借用',
+                      condition: { id: res.msg }
+                    })
+                  }
+                }, 500)
               })
               .finally(() => {
                 this.submitLoading = false
@@ -381,13 +387,8 @@ export default {
               this.$message.success(`${obj[curProcessResult]}！`)
               this.submitLoading = false
               setTimeout(() => {
-                this.$route.push({
-                  name: 'asset-borrow'
-                })
-              }, 200)
-              setTimeout(() => {
-                // Global.$emit('closeCurrentTag', this.$route)
-              }, 300)
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+              }, 500)
             })
             .catch(() => {
               this.submitLoading = false

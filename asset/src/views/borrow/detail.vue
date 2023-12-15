@@ -90,18 +90,18 @@
     <div slot="footer" align="center">
       <el-button type="success" @click="printVisible=true">打印</el-button>
     </div>
-    <!-- <Print v-if="printVisible" :printVisible.sync="printVisible" :printData="form" /> -->
+    <Print v-if="printVisible" :print-visible.sync="printVisible" :print-data="formData" />
   </PageCard>
 </template>
 <script>
 import { getBorrow } from '@/api/borrow.js'
 import assetBorrowDetail from './components/assetBorrowDetail.vue'
-// import Print from './components/print.vue'
+import Print from './components/print.vue'
 import { listDictItems } from '@/api/base.js'
 export default {
   components: {
-    assetBorrowDetail
-    // Print
+    assetBorrowDetail,
+    Print
   },
   data() {
     return {

@@ -158,7 +158,7 @@
                     @click="audit(row,'audit_superior')"
                   >审批</el-button>
                   <el-button
-                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL') && row.applicantId == $store.state.user.info.userId"
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL') && row.applicantId == $store.getters.userInfo.userId"
                     v-hasPermi="['asset:borrow:recall']"
                     size="mini"
                     type="text"
@@ -173,7 +173,7 @@
                     @click="audit(row,'register_asset_admin')"
                   >登记</el-button>
                   <el-button
-                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&& row.assetReviewAuditVO.preProcessorId == $store.state.user.info.userId) "
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&& row.assetReviewAuditVO.preProcessorId == $store.getters.userInfo.userId) "
                     v-hasPermi="['asset:borrow:recall']"
                     size="mini"
                     type="text"
@@ -188,7 +188,7 @@
                   >作废</el-button>
                   <el-button v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='CONFIRM')" size="mini" type="text" @click="audit(row,'user_confirm')">确认</el-button>
                   <el-button
-                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='CONFIRM'&& row.assetReviewAuditVO.preProcessorId == $store.state.user.info.userId)"
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='CONFIRM'&& row.assetReviewAuditVO.preProcessorId == $store.getters.userInfo.userId)"
                     v-hasPermi="['asset:collect:recall']"
                     size="mini"
                     type="text"
@@ -266,6 +266,9 @@ export default {
     }
   },
   created() {
+    if (window.$wujie) {
+      window.$wujie.props.setFunc(this.reload)
+    }
     this.getDictData()
     this.load()
   },
@@ -283,8 +286,8 @@ export default {
         }
       }
     },
-    reload() {
-      this.tableLoading = true
+    reload(loading = true) {
+      this.tableLoading = loading
       listBorrow(this.currentParams)
         .then((res) => {
           this.tableData = res.rows
@@ -329,12 +332,21 @@ export default {
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
-      this.$router.push({
-        name: 'borrow-borrowUpdate',
-        query: {
-          id: row.assetBorrowId,
-          todo: todo
-        }
+      var statusObj = {
+        audit_superior: '审批',
+        recall_add: '撤回',
+        register_asset_admin: '登记',
+        recall_superior: '撤回',
+        invalid_add: '作废',
+        user_confirm: '确认',
+        recall_superior_asset_admin: '撤回'
+      }
+      window.$wujie.props.route({
+        path: '/asset/borrow',
+        module: 'Asset',
+        fullPath: '/asset/borrow/edit',
+        title: `资产借用${statusObj[todo]}`,
+        condition: { id: row.assetBorrowId, todo: todo }
       })
     },
     // 获取字典表
