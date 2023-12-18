@@ -85,16 +85,16 @@ export default {
         Workbenche: `http://${window.location.hostname}:9001/#`,
         Standbook: `http://${window.location.hostname}:9002/#`,
         Asset: `http://${window.location.hostname}:9003/#`,
-        Consumable: `http://${window.location.hostname}:9003/#`,
-        Gift: `http://${window.location.hostname}:9004/#`,
-        Purchase: `http://${window.location.hostname}:9005/#`,
-        Inventory: `http://${window.location.hostname}:9006/#`,
-        Library: `http://${window.location.hostname}:9007/#`,
-        Portface: `http://${window.location.hostname}:9008/#`,
-        System: `http://${window.location.hostname}:9009/#`,
-        Monitor: `http://${window.location.hostname}:9010/#`,
-        Tool: `http://${window.location.hostname}:9011/#`,
-        Member: `http://${window.location.hostname}:9012/#`
+        Consumable: `http://${window.location.hostname}:9004/#`,
+        Gift: `http://${window.location.hostname}:9005/#`,
+        Purchase: `http://${window.location.hostname}:9006/#`,
+        Inventory: `http://${window.location.hostname}:9007/#`,
+        Library: `http://${window.location.hostname}:9008/#`,
+        Portface: `http://${window.location.hostname}:9009/#`,
+        System: `http://${window.location.hostname}:9010/#`,
+        Monitor: `http://${window.location.hostname}:9011/#`,
+        Tool: `http://${window.location.hostname}:9012/#`,
+        Member: `http://${window.location.hostname}:9013/#`
       }
       var query = []
       if (item.condition) {
