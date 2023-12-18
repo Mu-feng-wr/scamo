@@ -2,54 +2,54 @@
   <div class="card-container app-container">
     <el-container>
       <el-header>
-        <SearchArea :showAllSearch.sync="showAllSearch" class="p-16">
+        <SearchArea :show-all-search.sync="showAllSearch" class="p-16">
           <div class="flex">
             <div class="searchLeft">
               <el-row :gutter="14">
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.planCode" placeholder="盘点单号" clearable />
+                  <el-input v-model="queryParams.planCode" size="mini" placeholder="盘点单号" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.planTitle" placeholder="盘点标题" clearable />
+                  <el-input v-model="queryParams.planTitle" size="mini" placeholder="盘点标题" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.applicantName" placeholder="申请人姓名" clearable />
+                  <el-input v-model="queryParams.applicantName" size="mini" placeholder="申请人姓名" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.applicantOrgName" placeholder="申请部门名称" clearable />
+                  <el-input v-model="queryParams.applicantOrgName" size="mini" placeholder="申请部门名称" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.applicantCompanyName" placeholder="申请公司名称" clearable />
+                  <el-input v-model="queryParams.applicantCompanyName" size="mini" placeholder="申请公司名称" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.reporterOrgName" placeholder="部门名称" clearable />
+                  <el-input v-model="queryParams.reporterOrgName" size="mini" placeholder="部门名称" clearable />
                 </el-col>
               </el-row>
-              <el-row :gutter="14" v-show="showAllSearch" class="mt-10">
+              <el-row v-show="showAllSearch" :gutter="14" class="mt-10">
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.releaserName" placeholder="下达人姓名" clearable />
+                  <el-input v-model="queryParams.releaserName" size="mini" placeholder="下达人姓名" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.releaserOrgName" placeholder="下达部门名称" clearable />
+                  <el-input v-model="queryParams.releaserOrgName" size="mini" placeholder="下达部门名称" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.reporterName" placeholder="盘点报告人姓名" clearable />
+                  <el-input v-model="queryParams.reporterName" size="mini" placeholder="盘点报告人姓名" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.completerName" placeholder="完成人姓名" clearable />
+                  <el-input v-model="queryParams.completerName" size="mini" placeholder="完成人姓名" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.completerOrgName" placeholder="完成部门名称" clearable />
+                  <el-input v-model="queryParams.completerOrgName" size="mini" placeholder="完成部门名称" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.planReason" placeholder="计划原因" clearable />
+                  <el-input v-model="queryParams.planReason" size="mini" placeholder="计划原因" clearable />
                 </el-col>
               </el-row>
             </div>
             <div class="ml-10 searchRight">
               <el-button type="primary" icon="el-icon-search" size="mini" @click="load">搜索</el-button>
               <el-button icon="el-icon-refresh" size="mini" @click="reset">重置</el-button>
-              <MoreQuery :filterOptions="filterOptions" labelWidth="150px" :formData.sync="moreQueryParams" @reload="load" />
+              <MoreQuery :filter-options="filterOptions" label-width="150px" :form-data.sync="moreQueryParams" @reload="load" />
             </div>
           </div>
         </SearchArea>
@@ -59,8 +59,8 @@
           <el-header>
             <el-row class="mb-15">
               <el-col :span="12">
-                <el-button type="primary" plain icon="el-icon-plus" size="mini" v-hasPermi="['inventory:plan:add']" @click="addOrUpdateHandle()">新增盘点报告</el-button>
-                <el-button plain icon="el-icon-upload2" size="mini" v-hasPermi="['inventory:plan:export']" @click="handleExport">导出</el-button>
+                <el-button v-hasPermi="['inventory:plan:add']" type="primary" plain icon="el-icon-plus" size="mini" @click="addOrUpdateHandle()">新增盘点报告</el-button>
+                <el-button v-hasPermi="['inventory:plan:export']" plain icon="el-icon-upload2" size="mini" @click="handleExport">导出</el-button>
               </el-col>
               <el-col :span="12" class="text-right">
                 <el-button plain icon="el-icon-refresh" size="mini" @click="reload">刷新</el-button>
@@ -70,8 +70,8 @@
           </el-header>
           <el-main>
             <vxe-grid
-              height="auto"
               v-loading="tableLoading"
+              height="auto"
               header-align="center"
               align="center"
               :data="tableData"
@@ -91,25 +91,25 @@
               <template v-slot:todo="{ row }">
                 <div class="todo">
                   <el-button size="mini" type="text" @click="detailHandle(row.assetReceiptId)">查看</el-button>
-                  <el-button v-if="row.status == 0 || row.status == 3" size="mini" type="text" @click="addOrUpdateHandle(row.assetReceiptId)" v-hasPermi="['inventory:plan:edit']">修改</el-button>
-                  <el-button size="mini" type="text" @click="audit(row,'audit_superior')" v-hasPermi="['inventory:plan:audit']" v-if="row.status == 2  && !row.reviewBy">审批</el-button>
-                  <el-button size="mini" type="text" @click="audit(row,'register_asset_admin')" v-hasPermi="['inventory:plan:register']" v-if="row.status == 2  && row.reviewBy">登记</el-button>
+                  <el-button v-if="row.status == 0 || row.status == 3" v-hasPermi="['inventory:plan:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.assetReceiptId)">修改</el-button>
+                  <el-button v-if="row.status == 2 && !row.reviewBy" v-hasPermi="['inventory:plan:audit']" size="mini" type="text" @click="audit(row,'audit_superior')">审批</el-button>
+                  <el-button v-if="row.status == 2 && row.reviewBy" v-hasPermi="['inventory:plan:register']" size="mini" type="text" @click="audit(row,'register_asset_admin')">登记</el-button>
                   <el-button
+                    v-if="row.status == 2 && !row.reviewBy && row.applicantId == $store.getters.userInfo.userId"
+                    v-hasPermi="['inventory:plan:recall']"
                     size="mini"
                     type="text"
                     @click="audit(row,'recall_add')"
-                    v-hasPermi="['inventory:plan:recall']"
-                    v-if="row.status == 2  && !row.reviewBy && row.applicantId == $store.state.user.info.userId"
                   >撤回</el-button>
                   <el-button
+                    v-if="row.status == 2 && !row.registerId && row.reviewBy == $store.getters.userInfo.userId"
+                    v-hasPermi="['inventory:plan:recall']"
                     size="mini"
                     type="text"
                     @click="audit(row,'recall_superior')"
-                    v-hasPermi="['inventory:plan:recall']"
-                    v-if="row.status == 2  && !row.registerId && row.reviewBy == $store.state.user.info.userId"
                   >撤回</el-button>
-                  <el-button size="mini" type="text" @click="audit(row,'invalid_add')" v-hasPermi="['inventory:plan:invalid']" v-if="row.status == 2  && !row.registerId">作废</el-button>
-                  <el-button size="mini" type="text" @click="handleDelete(row)" v-hasPermi="['inventory:plan:remove']" v-if="row.status == 0 || row.status == 3 || row.status == 4">删除</el-button>
+                  <el-button v-if="row.status == 2 && !row.registerId" v-hasPermi="['inventory:plan:invalid']" size="mini" type="text" @click="audit(row,'invalid_add')">作废</el-button>
+                  <el-button v-if="row.status == 0 || row.status == 3 || row.status == 4" v-hasPermi="['inventory:plan:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
               </template>
               <template #pager>
@@ -236,11 +236,6 @@ export default {
           this.tableLoading = false
         })
     },
-
-    reset() {
-      this.queryParams = {}
-      this.load()
-    },
     reset() {
       this.queryParams = {}
       this.load()
@@ -264,7 +259,7 @@ export default {
         }
       })
     },
-    //详情
+    // 详情
     detailHandle(id) {
       this.$router.push({
         name: 'report-reportDetail',
@@ -275,17 +270,11 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const inventoryReportIds = row.inventoryReportId || this.ids
-      this.$modal
-        .confirm('是否确认删除盘点报告信息编号为"' + inventoryReportIds + '"的数据项？')
-        .then(function () {
-          return delReport(inventoryReportIds)
+      this.$confirm('是否确认删除盘点报告信息编号为"' + row.inventoryReportId + '"的数据项？').then(() => {
+        delReport(row.inventoryReportId).then((res) => {
+          this.$message.success('删除成功')
         })
-        .then(() => {
-          this.getList()
-          this.$modal.msgSuccess('删除成功')
-        })
-        .catch(() => {})
+      })
     },
     /** 导出按钮操作 */
     handleExport() {

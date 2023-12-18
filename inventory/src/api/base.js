@@ -148,3 +148,11 @@ export function listUser (query) {
     params: query
   })
 }
+
+// 查询部门下拉树结构
+export function deptTreeSelect() {
+  return request({
+    url: '/system/user/deptTree',
+    method: 'get'
+  })
+}
