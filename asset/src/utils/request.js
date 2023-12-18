@@ -52,6 +52,7 @@ service.interceptors.response.use(
           }
         })
       }
+      return Promise.reject(res)
     }
     if (res.total) {
       res.total = Number(res.total)
