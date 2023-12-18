@@ -1,63 +1,300 @@
-::v-deep .app-main {
-  height: 100vh !important;
+.searchLeft {
+  width: calc(100% - 280px);
 }
-.card-container {
-  height: 100%;
-  background-color: white;
-  border-radius: 4px;
-  ::v-deep .el-container {
-    height: 100% !important;
-  }
-}
-::v-deep .el-header {
-  padding: 0 !important;
-  height: auto !important;
-}
-::v-deep .el-main {
-  padding: 0 !important;
-}
-.vxeTable {
-  ::v-deep .vxe-header--row {
-    color: #222943 ;
-    background-color: #F8F9F9 !important;
-  }
-  ::v-deep .vxe-table--header .vxe-header--column .vxe-cell {
-    font-weight: normal;
-  }
-  ::v-deep .vxe-footer--column{
-    padding: 2px 0;
-    color: red;
-  }
-  ::v-deep .vxe-body--column{
-    padding: 0px 0;
-    height: 40px !important;
-    line-height: normal;
-  }
- .todo{
-    .el-button{
-      position: relative;
-      font-size: 14px;
-      color: #236DFF;
 
-      i {
-        display: none;
+.searchRight {
+  width: 280px;
+  line-height: 26px;
+}
+
+.treeBox {
+  padding-top: 10px;
+  background-color: #F8F9F9;
+  height: 100%;
+  overflow: auto;
+
+  .el-tree {
+    background: transparent;
+    color: #222943;
+
+    .el-tree-node__content {
+      border-radius: 4px;
+      padding-right: 3px;
+
+      .el-tree-node__label {
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+      }
+    }
+
+    .el-tree-node__content:hover {
+      background-color: #E9EAEC;
+    }
+
+    &.el-tree--highlight-current .el-tree-node.is-current>.el-tree-node__content {
+      background-color: #236DFF;
+      color: #fff;
+
+      .el-icon-caret-right {
+        color: #fff;
+      }
+    }
+  }
+
+  .el-tree-node>.el-tree-node__children {
+    overflow: visible;
+  }
+
+  &::-webkit-scrollbar {
+    height: 6px;
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background-color: #fff;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #999;
+  }
+
+}
+.form-detail,
+.form-table {
+  .el-form-item {
+    margin-bottom: 5px;
+
+    .el-form-item__label {
+      font-family: PingFang SC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #7A7F8E;
+    }
+
+    .el-form-item__content {
+      font-family: PingFang SC-Regular, PingFang SC;
+      font-weight: 400;
+      color: #222943;
+
+      span {
+        word-break: break-all;
+      }
+    }
+  }
+
+  &:not(.form-table-edit3) {
+    .el-form-item {
+      display: flex;
+
+      .el-form-item__label {
+        display: flex;
+        align-items: center;
       }
 
-      &+.el-button {
-        padding-left: 10px;
-
-        &::before {
-          width: 1px;
-          height: 14px;
-          background: #E9EAEC;
-          content: '';
-          display: block;
-          position: absolute;
-          left: 0;
-          top: 50%;
-          transform: translateY(-50%);
-        }
+      .el-form-item__content {
+        flex-grow: 1;
+        flex-shrink: 1;
+        flex-basis: 0;
+        margin-left: 0 !important;
       }
     }
   }
 }
+.form-table {
+  .section-card-wrap {
+    margin-bottom: 0 !important;
+  }
+
+  .el-form-item {
+    border-left: 1px solid #E9EAEC;
+    border-bottom: 1px solid #E9EAEC;
+    margin-bottom: 0;
+
+    .el-form-item__label {
+      color: #5a5b5f;
+      text-align: left;
+      background: #F8F9F9;
+      padding-left: 12px;
+      border-right: 1px solid #E9EAEC;
+    }
+
+    .el-form-item__content {
+      color: #4E5469;
+      padding: 0 12px;
+    }
+  }
+
+  .section-card__body {
+    .el-row {
+      border-right: 1px solid #E9EAEC;
+
+      &:first-child {
+        border-top: 1px solid #E9EAEC;
+      }
+    }
+
+  }
+}
+.form-table-edit {
+  .el-form-item {
+    .el-form-item__label {
+      padding-top: 8px;
+      padding-bottom: 12px;
+    }
+
+    .el-form-item__content {
+      padding-top: 6px;
+
+      .el-form-item__error {
+        top: 70%;
+        padding-left: 12px;
+      }
+
+      textarea {
+        margin-bottom: 10px;
+      }
+    }
+
+  }
+
+  .noProp-item-input {
+    .el-form-item__label {
+      padding-top: 10px;
+      padding-bottom: 10px;
+    }
+  }
+
+  .noProp-item-textarea {
+
+    .el-form-item__content {
+      .el-form-item__error {
+        top: 85%;
+      }
+    }
+  }
+}
+
+
+ /**打印样式*/
+ .print_obj {
+  position: relative;
+  padding: 0px;
+
+
+  &::before {
+    display: none;
+    position: absolute;
+    content: '广州机施建设集团有限公司';
+    top: 0;
+    right: 0;
+    color: #000;
+    font-size: 12px;
+    opacity: 0.2;
+  }
+
+  &::after {
+    display: none;
+    position: absolute;
+    content: '广州机施建设集团有限公司';
+    top: 0;
+    left: 0;
+    color: #000;
+    font-size: 12px;
+    opacity: 0.2;
+  }
+
+  .el-card {
+    border: 0;
+    box-shadow: none;
+    background: transparent;
+
+    .el-card__header {
+      border-bottom: none;
+    }
+
+    .text-tip {
+      font-weight: 900;
+      color: #262626;
+      line-height: 1.7;
+      text-align: center;
+    }
+
+    .el-card__body {
+      padding: 2px;
+    }
+  }
+
+  .el-table {
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 14px;
+    background: transparent;
+    border: 1px solid #333;
+    margin-top: 1px;
+    margin-bottom: 10px;
+
+    &::before {
+      height: 0;
+    }
+
+    th {
+      font-weight: 500;
+    }
+
+    th,
+    td {
+      border: 1px solid #333;
+      padding: 5px;
+      line-height: 1.4;
+      text-align: center;
+      color: #002340;
+    }
+
+    td {
+      border-top: none;
+
+      &:last-child {
+        height: 25px;
+      }
+    }
+
+  }
+
+  .el-form-item {
+    margin-bottom: 12px;
+
+    .el-form-item__label {
+      font-size: 14px;
+      font-weight: 400;
+      padding-right: 6px;
+      color: #606266;
+    }
+
+    .el-form-item__content,
+    .el-form-item__label {
+      line-height: 1;
+    }
+
+    .el-form-item__content,
+    .el-form-item__content .el-input,
+    .el-input--medium {
+      font-size: 14px;
+      font-weight: 400;
+      color: #002340;
+
+    }
+  }
+}
+
+
+.vxe-modal--box{
+  position: absolute !important;
+}
+.vxe-modal--wrapper{
+  position: absolute !important;
+}
+.vxe-modal--wrapper:before{
+  position: absolute !important;
+}
+
+

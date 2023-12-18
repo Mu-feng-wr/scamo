@@ -17,7 +17,7 @@ router.beforeEach(async(to, from, next) => {
   const hasToken = getToken()
   if (hasToken) {
     if (to.path === '/') {
-      next({ path: '/workbenche/todo' })
+      next({ path: '/inventory/plan' })
       NProgress.done()
     } else {
       const hasGetUserInfo = store.getters.userInfo
@@ -33,7 +33,7 @@ router.beforeEach(async(to, from, next) => {
           store.commit('user/SET_ROLES', roles)
           next({ path: to.redirectedFrom })
         } catch (error) {
-          next(`/workbenche/todo`)
+          next(`/inventory/plan`)
           NProgress.done()
         }
       }
@@ -42,7 +42,7 @@ router.beforeEach(async(to, from, next) => {
     if (whiteList.indexOf(to.path) !== -1) {
       next()
     } else {
-      next({ path: '/workbenche/todo' })
+      next({ path: '/inventory/plan' })
       NProgress.done()
     }
   }
