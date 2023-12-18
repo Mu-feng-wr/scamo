@@ -79,18 +79,18 @@
     <div slot="footer" align="center">
       <el-button type="success" @click="printVisible=true">打印</el-button>
     </div>
-    <!-- <Print v-if="printVisible" :printVisible.sync="printVisible" :printData="formData" /> -->
+    <Print v-if="printVisible" :print-visible.sync="printVisible" :print-data="formData" />
   </PageCard>
 </template>
 <script>
 import { getScrap } from '@/api/scrap.js'
 import assetScrapDetail from './components/assetScrapDetail.vue'
-// import Print from './components/print.vue'
+import Print from './components/print.vue'
 import { listDictItems } from '@/api/base.js'
 export default {
   components: {
-    assetScrapDetail
-    // Print
+    assetScrapDetail,
+    Print
   },
   data() {
     return {

@@ -264,38 +264,33 @@ export default {
 
           this.submitLoading = true
           if (this.editId) {
-            updateScrap(submitData).then((res) => {
-              this.$message.success(status == 2 ? '提交成功' : '修改成功')
-              if (status == 2) {
-                setTimeout(() => {
-                  this.$router.push({
-                    name: 'asset-scrap'
-                  })
-                }, 300)
-                // Global.$emit('closeCurrentTag', this.$route)
-                return
-              }
-              this.init()
-            })
+            updateScrap(submitData)
+              .then((res) => {
+                this.$message.success(status == 2 ? '提交成功' : '修改成功')
+                if (status == 2) {
+                  setTimeout(() => {
+                    window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  }, 500)
+                  return
+                }
+                this.init()
+              })
+              .finally(() => [(this.submitLoading = false)])
           } else {
             addScrap(submitData).then((res) => {
-              this.$message.success('新增成功')
+              this.$message.success(status == 2 ? '提交成功' : '新增成功')
               setTimeout(() => {
-                if (status == 2) {
-                  this.$router.push({
-                    name: 'asset-scrap'
-                  })
-                } else {
-                  this.$router.push({
-                    name: 'scrap-scrapUpdate',
-                    query: {
-                      id: res.msg
-                    }
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                if (status != 2) {
+                  window.$wujie.props.route({
+                    path: '/asset/scrap',
+                    module: 'Asset',
+                    fullPath: '/asset/scrap/edit',
+                    title: '编辑资产处置',
+                    condition: { id: res.msg }
                   })
                 }
-              }, 300)
-
-              // Global.$emit('closeCurrentTag', this.$route)
+              }, 500)
             })
           }
         }
@@ -346,8 +341,8 @@ export default {
               this.$modal.msgSuccess(`${obj[curProcessResult]}！`)
               this.submitLoading = false
               setTimeout(() => {
-                // Global.$emit('closeCurrentTag', this.$route)
-              }, 1000)
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+              }, 500)
             })
             .catch(() => {
               this.submitLoading = false
