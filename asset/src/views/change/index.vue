@@ -233,6 +233,9 @@ export default {
     }
   },
   created() {
+    if (window.$wujie) {
+      window.$wujie.props.setFunc(this.reload)
+    }
     this.getDictData()
     this.load()
   },
@@ -250,8 +253,8 @@ export default {
         }
       }
     },
-    reload() {
-      this.tableLoading = true
+    reload(loading = true) {
+      this.tableLoading = loading
       listChange(this.currentParams)
         .then((res) => {
           this.tableData = res.rows
@@ -302,7 +305,7 @@ export default {
           path: '/asset/change',
           module: 'Asset',
           fullPath: '/asset/change/edit',
-          title: '编辑资产变更',
+          title: '编辑资产变动',
           condition: { id }
         })
       } else {
@@ -310,26 +313,33 @@ export default {
           path: '/asset/change',
           module: 'Asset',
           fullPath: '/asset/change/add',
-          title: '新增资产变更'
+          title: '新增资产变动'
         })
       }
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
-      this.$router.push({
-        name: 'change-changeUpdate',
-        query: {
-          id: row.assetChangeId,
-          todo: todo
-        }
+      var statusObj = {
+        audit_superior: '审批',
+        recall_add: '撤回',
+        register_asset_admin: '登记',
+        recall_superior: '撤回',
+        invalid_add: '作废'
+      }
+      window.$wujie.props.route({
+        path: '/asset/change',
+        module: 'Asset',
+        fullPath: '/asset/change/edit',
+        title: `资产变动${statusObj[todo]}`,
+        condition: { id: row.assetChangeId, todo: todo }
       })
     },
     // 删除
     handleDelete(row) {
-      this.$modal.confirm('是否确认删除变更单信息编号为"' + row.assetChangeCode + '"的数据项？', '删除', { type: 'warning' }).then(() => {
+      this.$confirm('是否确认删除变更单信息编号为"' + row.assetChangeCode + '"的数据项？', '删除', { type: 'warning' }).then(() => {
         delChange(row.assetChangeId).then(() => {
           this.reload()
-          this.$modal.msgSuccess('删除成功')
+          this.$message.success('删除成功')
         })
       })
     },

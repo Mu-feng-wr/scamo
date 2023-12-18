@@ -62,23 +62,23 @@
       </SectionCard>
     </el-form>
     <SectionCard title="资产明细">
-      <assetChangeDetail ref="assetDetail" :form="form" :show-btn="false" />
+      <assetChangeDetail ref="assetDetail" :form-data="formData" :show-btn="false" />
     </SectionCard>
     <div slot="footer" align="center">
       <el-button type="success" @click="printVisible=true">打印</el-button>
     </div>
-    <!-- <Print v-if="printVisible" :printVisible.sync="printVisible" :printData="form" /> -->
+    <Print v-if="printVisible" :printVisible.sync="printVisible" :printData="formData" />
   </PageCard>
 </template>
 <script>
 import { getChange } from '@/api/change.js'
 import assetChangeDetail from './components/assetChangeDetail.vue'
-// import Print from './components/print.vue'
+import Print from './components/print.vue'
 import { listDictItems } from '@/api/base.js'
 export default {
   components: {
-    assetChangeDetail
-    // Print
+    assetChangeDetail,
+    Print
   },
   data() {
     return {

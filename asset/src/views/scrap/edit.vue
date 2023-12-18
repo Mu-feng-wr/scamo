@@ -275,7 +275,9 @@ export default {
                 }
                 this.init()
               })
-              .finally(() => [(this.submitLoading = false)])
+              .finally(() => {
+                this.submitLoading = false
+              })
           } else {
             addScrap(submitData).then((res) => {
               this.$message.success(status == 2 ? '提交成功' : '新增成功')

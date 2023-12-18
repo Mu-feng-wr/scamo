@@ -129,7 +129,7 @@ import { listDictItems, listSchemeQuery, listAddressQueryUseAreaTree, listAddres
 export default {
   mixins: [vxeTable],
   props: {
-    form: {
+    formData: {
       type: Object,
       default: () => {
         return {}
@@ -205,8 +205,8 @@ export default {
         {
           labelName: 'centralizedBusinessName',
           valueName: 'centralizedBusinessId',
-          label: this.form.centralizedBusinessName,
-          value: this.form.centralizedBusinessId,
+          label: this.formData.centralizedBusinessName,
+          value: this.formData.centralizedBusinessId,
           name: '业务类别',
           require: true
         }
@@ -214,10 +214,10 @@ export default {
     }
   },
   watch: {
-    'form.almAssetChangeDetailList': {
+    'formData.almAssetChangeDetailList': {
       handler(newVal, oldVal) {
         if (newVal && newVal.length) {
-          this.tableData = newVal
+          this.tableData = newVal || []
         }
       },
       deep: true,
