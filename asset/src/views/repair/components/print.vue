@@ -9,7 +9,7 @@
       <div id="printWrap" ref="demo" class="print_obj bgClass">
         <div v-html="styleText"></div>
         <el-card class="box-card" style="page-break-after: always">
-          <div slot="header" class="clearfix text-tip">{{ $store.state.user.info.companyName }}</div>
+          <div slot="header" class="clearfix text-tip">{{ $store.getters.userInfo.companyName }}</div>
           <div slot="header" class="clearfix text-tip">{{ $vxe.toDateString(printData.repairDate,'yyyy')+'年'+$vxe.toDateString(printData.repairDate,'MM')+'月' }}资产维修确认单</div>
 
           <el-row>
@@ -31,20 +31,20 @@
               <el-form-item label="维修部门">{{ printData.maintainerOrgName }}</el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="制单日期">{{ $vxe.toDateString($util.getNowTime(), "yyyy-MM-dd") }}</el-form-item>
+              <el-form-item label="制单日期">{{ $vxe.toDateString(new Date(), "yyyy-MM-dd") }}</el-form-item>
             </el-col>
           </el-row>
 
           <table class="el-table">
             <thead>
               <tr>
-                <th>资产编号</th>
-                <th>资产名称</th>
-                <th>数量</th>
-                <th>单位</th>
-                <th>含税单价（元）</th>
-                <th>维修费用（元）</th>
-                <th>备注</th>
+                <td>资产编号</td>
+                <td>资产名称</td>
+                <td>数量</td>
+                <td>单位</td>
+                <td>含税单价（元）</td>
+                <td>维修费用（元）</td>
+                <td>备注</td>
               </tr>
             </thead>
             <tbody>

@@ -287,11 +287,12 @@ export default {
     },
     // 查看
     detailHandle(id) {
-      this.$router.push({
-        name: 'repair-repairDetail',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/asset/repair',
+        module: 'Asset',
+        fullPath: '/asset/repair/detail',
+        title: '资产维修详情',
+        condition: { id }
       })
     },
     // 审批  登记  撤回   作废

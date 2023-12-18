@@ -241,6 +241,13 @@ export default {
             })
             return false
           }
+          if (this.$refs.assetDetail.tableData.length == 0) {
+            this.$message({
+              message: `资产明细不能为空！`,
+              type: 'warning'
+            })
+            return
+          }
           if (await this.$refs.assetDetail.validTable()) {
             return
           }
@@ -332,11 +339,8 @@ export default {
               this.$modal.msgSuccess(`${obj[curProcessResult]}！`)
               this.submitLoading = false
               setTimeout(() => {
-                this.$router.push({
-                  name: 'asset-repair'
-                })
-              }, 300)
-              // Global.$emit('closeCurrentTag', this.$route)
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+              }, 500)
             })
             .catch(() => {
               this.submitLoading = false

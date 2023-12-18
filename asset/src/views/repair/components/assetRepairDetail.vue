@@ -161,7 +161,7 @@ export default {
     'formData.almAssetRepairDetailList': {
       handler(newVal, oldVal) {
         if (newVal && newVal.length > 0) {
-          this.tableData = newVal
+          this.tableData = newVal || []
         }
       },
       deep: true,

@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { MessageBox, Message, Loading } from 'element-ui'
-import store from '@/store'
+// import store from '@/store'
 import { getToken } from '@/utils/auth'
 import { tansParams, blobValidate } from '@/utils/index.js'
 import { saveAs } from 'file-saver'
@@ -55,9 +55,8 @@ service.interceptors.response.use(
     }
     if (res.total) {
       res.total = Number(res.total)
-    } 
+    }
     return res
-    
   },
   error => {
     Message({

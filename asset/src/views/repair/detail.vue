@@ -76,7 +76,7 @@
     <div slot="footer" align="center">
       <el-button type="success" @click="printVisible=true">打印</el-button>
     </div>
-    <Print v-if="printVisible" :print-visible.sync="printVisible" :print-data="form" />
+    <Print v-if="printVisible" :print-visible.sync="printVisible" :print-data="formData" />
   </PageCard>
 </template>
 <script>
