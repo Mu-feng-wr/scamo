@@ -6,7 +6,6 @@ import dictDataView from './dictDataView/index.vue'
 import MoreQuery from './MoreQuery/index.vue'
 import InputRange from './InputRange/index.vue'
 
-
 const com = [
   searchArea,
   baseInput,
