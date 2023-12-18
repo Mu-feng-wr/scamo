@@ -1,7 +1,7 @@
 <template>
-  <vxe-modal :title="title" v-model="dialogVisible" width="400px" height="50%" esc-closable resize @hide="close" show-footer>
+  <vxe-modal v-model="dialogVisible" :title="title" width="400px" height="50%" esc-closable resize show-footer @hide="close">
     <div v-loading="loading">
-      <el-tree lazy check-strictly :load="loadNode" :props="props" node-key="id" ref="tree" show-checkbox></el-tree>
+      <el-tree ref="tree" lazy check-strictly :load="loadNode" :props="props" node-key="id" show-checkbox />
     </div>
     <template #footer>
       <div class="text-center">
@@ -12,8 +12,9 @@
   </vxe-modal>
 </template>
 <script>
-import { findCompanyList, getDeptByCompanyId } from '@/api/system/user.js'
+import { findCompanyList, getDeptByCompanyId } from '@/api/base.js'
 export default {
+  name: 'ComponyDept',
   props: {
     title: {
       type: String,
@@ -52,7 +53,7 @@ export default {
         this.loading = true
         findCompanyList()
           .then((res) => {
-            let data = res.data.map((item) => {
+            var data = res.data.map((item) => {
               return {
                 ...item,
                 ...{
@@ -67,7 +68,7 @@ export default {
           })
       } else if (this.level >= 1 && node.level == 1) {
         getDeptByCompanyId(node.data.deptId).then((res) => {
-          let data = res.data.map((item) => {
+          var data = res.data.map((item) => {
             return {
               ...item,
               ...{
@@ -85,7 +86,7 @@ export default {
       resolve([])
     },
     confirm() {
-      let data = this.$refs.tree.getCheckedNodes()
+      var data = this.$refs.tree.getCheckedNodes()
       if (!data || data.length == 0) {
         this.$message({
           type: 'warning',

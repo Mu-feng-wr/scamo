@@ -277,12 +277,22 @@ export default {
     },
     // 新增 编辑
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'plan-planUpdate' : 'plan-planAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/inventory/plan',
+          module: 'Inventory',
+          fullPath: '/inventory/plan/edit',
+          title: '编辑计划',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/inventory/plan',
+          module: 'Inventory',
+          fullPath: '/inventory/plan/add',
+          title: '新增计划'
+        })
+      }
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {

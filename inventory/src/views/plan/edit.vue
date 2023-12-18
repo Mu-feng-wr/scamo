@@ -1,26 +1,26 @@
 <template>
   <PageCard v-loading="submitLoading">
-    <el-form ref="form" :model="form" :rules="rules" label-width="180px" class="form-table form-table-edit" style="margin-bottom: 8px">
+    <el-form ref="form" :model="formData" :rules="rules" label-width="180px" class="form-table form-table-edit" style="margin-bottom: 8px">
       <SectionCard title="基本信息">
         <el-row>
           <el-col :span="8">
             <el-form-item label="盘点单号">
-              <el-input v-model="form.planCode" disabled size="small" placeholder="自动生成" />
+              <el-input v-model="formData.planCode" disabled size="small" placeholder="自动生成" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请日期" prop="applicantDate">
-              <el-date-picker v-model="form.applicantDate" size="small" value-format="yyyy-MM-dd" placeholder="申请日期" />
+              <el-date-picker v-model="formData.applicantDate" size="small" value-format="yyyy-MM-dd" placeholder="申请日期" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="业务类型" prop="centralizedBusinessId">
               <base-input
                 size="small"
-                :value.sync="form.centralizedBusinessId"
-                :label.sync="form.centralizedBusinessName"
+                :value.sync="formData.centralizedBusinessId"
+                :label.sync="formData.centralizedBusinessName"
                 base-code="listType"
-                :pre-store="[{businessId:form.centralizedBusinessId,businessName:form.centralizedBusinessName}]"
+                :pre-store="[{businessId:formData.centralizedBusinessId,businessName:formData.centralizedBusinessName}]"
                 label-name="businessName"
                 value-name="businessId"
                 placeholder="请选择业务类型"
@@ -29,17 +29,17 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请人" prop="applicantName">
-              <el-input v-model="form.applicantName" size="small" disabled placeholder="申请人" />
+              <el-input v-model="formData.applicantName" size="small" disabled placeholder="申请人" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请部门" prop="applicantOrgName">
-              <el-input v-model="form.applicantOrgName" size="small" disabled placeholder="申请部门" />
+              <el-input v-model="formData.applicantOrgName" size="small" disabled placeholder="申请部门" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请公司" prop="applicantCompanyName">
-              <el-input v-model="form.applicantCompanyName" size="small" disabled placeholder="申请公司" />
+              <el-input v-model="formData.applicantCompanyName" size="small" disabled placeholder="申请公司" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -49,140 +49,140 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="盘点标题" prop="planTitle">
-              <el-input v-model="form.planTitle" size="small" placeholder="盘点标题" maxlength="300" show-word-limit />
+              <el-input v-model="formData.planTitle" size="small" placeholder="盘点标题" maxlength="300" show-word-limit />
             </el-form-item>
           </el-col>
 
           <el-col :span="8">
             <el-form-item label="计划年月" prop="yearMonth">
-              <el-date-picker v-model="form.yearMonth" size="small" type="month" value-format="yyyy-MM" placeholder="选择计划年月" />
+              <el-date-picker v-model="formData.yearMonth" size="small" type="month" value-format="yyyy-MM" placeholder="选择计划年月" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="执行时间" prop="startDate">
-              <InputRange size="small" type="daterange" value-format="yyyy-MM-dd" format="yyyy-MM-dd" :start-value.sync="form.startDate" :end-value.sync="form.endDate" />
+              <InputRange size="small" type="daterange" value-format="yyyy-MM-dd" format="yyyy-MM-dd" :start-value.sync="formData.startDate" :end-value.sync="formData.endDate" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="应盘资产数量" prop="offereQuantity">
-              <el-input-number v-model="form.offereQuantity" disabled :precision="3" controls-position="right" placeholder="自动计算" />
+              <el-input-number v-model="formData.offereQuantity" disabled :precision="3" controls-position="right" placeholder="自动计算" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="责任人" prop="responsiblerName">
-              <el-input v-model="form.responsiblerName" size="small" suffix-icon="el-icon-arrow-down" placeholder="请选择责任人" @focus="openSelectUser('responsibler')" />
+              <el-input v-model="formData.responsiblerName" size="small" suffix-icon="el-icon-arrow-down" placeholder="请选择责任人" @focus="openSelectUser('responsibler')" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="责任部门" prop="responsiblerOrgName">
-              <el-input v-model="form.responsiblerOrgName" disabled size="small" placeholder="选择责任人自动带出" />
+              <el-input v-model="formData.responsiblerOrgName" disabled size="small" placeholder="选择责任人自动带出" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="应盘资产总金额（元）" prop="offereAssetTotalAmount">
-              <el-input-number v-model="form.offereAssetTotalAmount" disabled :precision="3" controls-position="right" placeholder="自动计算" />
+              <el-input-number v-model="formData.offereAssetTotalAmount" disabled :precision="3" controls-position="right" placeholder="自动计算" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="盘点周期" prop="cycleInventory">
-              <base-input size="small" :value.sync="form.cycleInventory" base-code="ImInventoryPlan-cycleInventory" :options-list="dictDataList" placeholder="盘点周期" />
+              <base-input size="small" :value.sync="formData.cycleInventory" base-code="ImInventoryPlan-cycleInventory" :options-list="dictDataList" placeholder="盘点周期" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="覆盖范围" prop="coverageRange">
-              <base-input size="small" :value.sync="form.coverageRange" base-code="ImInventoryPlan-coverageRange" :options-list="dictDataList" placeholder="覆盖范围" />
+              <base-input size="small" :value.sync="formData.coverageRange" base-code="ImInventoryPlan-coverageRange" :options-list="dictDataList" placeholder="覆盖范围" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="覆盖数据" prop="coverageDate">
-              <base-input size="small" :value.sync="form.coverageDate" :options-list="typeList" label-name="businessName" value-name="businessId" placeholder="请选择覆盖数据" />
+              <base-input size="small" :value.sync="formData.coverageDate" :options-list="typeList" label-name="businessName" value-name="businessId" placeholder="请选择覆盖数据" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="资产状态" prop="assetStatus">
-              <base-input size="small" :value.sync="form.assetStatus" base-code="ImInventoryPlan-assetStatus" :options-list="dictDataList" placeholder="请选择资产状态" />
+              <base-input size="small" :value.sync="formData.assetStatus" base-code="ImInventoryPlan-assetStatus" :options-list="dictDataList" placeholder="请选择资产状态" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="是否自盘" prop="ynSelfInventory">
-              <base-input :value.sync="form.ynSelfInventory" size="small" base-code="ImInventoryPlan-ynSelfInventory" :options-list="dictDataList" placeholder="是否自盘" />
+              <base-input :value.sync="formData.ynSelfInventory" size="small" base-code="ImInventoryPlan-ynSelfInventory" :options-list="dictDataList" placeholder="是否自盘" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="计划状态" prop="planStatus">
-              <base-input :value.sync="form.planStatus" size="small" base-code="ImInventoryPlan-assetStatus" :options-list="dictDataList" placeholder="请选择资产状态" />
+              <base-input :value.sync="formData.planStatus" size="small" base-code="ImInventoryPlan-assetStatus" :options-list="dictDataList" placeholder="请选择资产状态" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="盘点原因" class="noProp-item-textarea" prop="planReason">
-              <el-input v-model="form.planReason" type="textarea" size="small" placeholder="盘点原因" maxlength="300" show-word-limit />
+              <el-input v-model="formData.planReason" type="textarea" size="small" placeholder="盘点原因" maxlength="300" show-word-limit />
             </el-form-item>
           </el-col>
         </el-row>
       </SectionCard>
-      <SectionCard v-if="form.releaserName" title="下达信息" class="mt-8">
+      <SectionCard v-if="formData.releaserName" title="下达信息" class="mt-8">
         <el-row>
           <el-col :span="8">
             <el-form-item label="下达人" prop="releaserName">
-              <el-input v-model="form.releaserName" size="small" placeholder="下达人" />
+              <el-input v-model="formData.releaserName" size="small" placeholder="下达人" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="下达部门" prop="releaserOrgName">
-              <el-input v-model="form.releaserOrgName" size="small" placeholder="下达部门" />
+              <el-input v-model="formData.releaserOrgName" size="small" placeholder="下达部门" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="下达日期" prop="releaseDate">
-              <el-date-picker v-model="form.releaseDate" type="date" placeholder="选择下达日期" />
+              <el-date-picker v-model="formData.releaseDate" type="date" placeholder="选择下达日期" />
             </el-form-item>
           </el-col>
         </el-row>
       </SectionCard>
-      <SectionCard v-if="form.completerName" title="任务信息" class="mt-8">
+      <SectionCard v-if="formData.completerName" title="任务信息" class="mt-8">
         <el-row>
           <el-col :span="8">
             <el-form-item label="任务完成人">
-              <el-input v-model="form.completerName" size="small" placeholder="任务完成人" />
+              <el-input v-model="formData.completerName" size="small" placeholder="任务完成人" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="任务完成部门">
-              <el-input v-model="form.completerOrgName" size="small" placeholder="任务完成部门" />
+              <el-input v-model="formData.completerOrgName" size="small" placeholder="任务完成部门" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="任务完成日期">
-              <el-date-picker v-model="form.completeDate" type="date" placeholder="选择任务完成日期" />
+              <el-date-picker v-model="formData.completeDate" type="date" placeholder="选择任务完成日期" />
             </el-form-item>
           </el-col>
         </el-row>
       </SectionCard>
-      <SectionCard v-if="form.reporteName" title="报告信息" class="mt-8">
+      <SectionCard v-if="formData.reporteName" title="报告信息" class="mt-8">
         <el-row>
           <el-col :span="8">
             <el-form-item label="报告人">
-              <el-input v-model="form.reporteName" size="small" placeholder="报告人" />
+              <el-input v-model="formData.reporteName" size="small" placeholder="报告人" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="报告部门">
-              <el-input v-model="form.reporteOrgName" size="small" placeholder="报告部门" />
+              <el-input v-model="formData.reporteOrgName" size="small" placeholder="报告部门" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="完成报告时间">
-              <el-date-picker v-model="form.reporteDate" disabled type="date" placeholder="完成报告时间" />
+              <el-date-picker v-model="formData.reporteDate" disabled type="date" placeholder="完成报告时间" />
             </el-form-item>
           </el-col>
         </el-row>
       </SectionCard>
     </el-form>
     <SectionCard title="目标责任人">
-      <!-- <targetResponsibler ref="targetResponsibler" :prop-dict-dataList="dictDataList" :type-list="typeList" :form="form" /> -->
+      <targetResponsibler ref="targetResponsibler" :prop-dict-data-list="dictDataList" :type-list="typeList" :form-data="formData" />
     </SectionCard>
     <SectionCard title="资产明细">
-      <!-- <inventoryLockDoc /> -->
+      <inventoryLockDoc />
     </SectionCard>
 
     <div slot="footer" align="center">
@@ -196,12 +196,12 @@
 <script>
 import { getPlan, addPlan, updatePlan } from '@/api/plan.js'
 import { listDictItems, listTypeQuery } from '@/api/base.js'
-// import targetResponsibler from '@/views/inventory/plan/components/targetResponsibler.vue'
-// import inventoryLockDoc from '@/views/inventory/plan/components/inventoryLockDoc.vue'
+import targetResponsibler from './components/targetResponsibler.vue'
+import inventoryLockDoc from './components/inventoryLockDoc.vue'
 export default {
   components: {
-    // targetResponsibler,
-    // inventoryLockDoc
+    targetResponsibler,
+    inventoryLockDoc
   },
   data() {
     return {
@@ -229,7 +229,7 @@ export default {
         title: '',
         type: ''
       },
-      form: {},
+      formData: {},
       editId: '',
       user: this.$store.getters.userInfo
     }
@@ -245,10 +245,10 @@ export default {
         this.submitLoading = true
         getPlan(this.editId)
           .then((res) => {
-            this.form = res.data
-            if (this.form.status == 0 && this.form.applicantId != this.user.userId) {
-              this.form = {
-                ...this.form,
+            this.formData = res.data
+            if (this.formData.status == 0 && this.formData.applicantId != this.user.userId) {
+              this.formData = {
+                ...this.formData,
                 ...{
                   applicantId: this.user.userId,
                   applicantName: this.user.userName,
@@ -260,15 +260,15 @@ export default {
                 }
               }
 
-              this.$set(this.form, 'applicantDate', this.$vxe.toDateString(new Date(), 'yyyy-MM-dd HH:mm:ss'))
+              this.$set(this.formData, 'applicantDate', this.$vxe.toDateString(new Date(), 'yyyy-MM-dd HH:mm:ss'))
             }
           })
           .finally(() => {
             this.submitLoading = false
           })
       } else {
-        this.form = {
-          ...this.form,
+        this.formData = {
+          ...this.formData,
           ...{
             sourceTerminal: 1, // 终端来源    默认是   1 pc
             applicantId: this.user.userId,
@@ -280,7 +280,7 @@ export default {
             unifiedSystemNumber: this.user.unifiedSystemNumber
           }
         }
-        this.$set(this.form, 'applicantDate', this.$vxe.toDateString(new Date(), 'yyyy-MM-dd HH:mm:ss'))
+        this.$set(this.formData, 'applicantDate', this.$vxe.toDateString(new Date(), 'yyyy-MM-dd HH:mm:ss'))
       }
     },
     // 打开用户选择列表
@@ -294,10 +294,10 @@ export default {
     // 选择用户
     userSelect(val) {
       if (this.userDialog.type == 'responsibler') {
-        this.$set(this.form, 'responsiblerId', val.userId)
-        this.$set(this.form, 'responsiblerName', val.userName)
-        this.$set(this.form, 'responsiblerOrgId', val.deptId)
-        this.$set(this.form, 'responsiblerOrgName', val.deptName)
+        this.$set(this.formData, 'responsiblerId', val.userId)
+        this.$set(this.formData, 'responsiblerName', val.userName)
+        this.$set(this.formData, 'responsiblerOrgId', val.deptId)
+        this.$set(this.formData, 'responsiblerOrgName', val.deptName)
       }
     },
     // 获取字典数据
@@ -320,9 +320,9 @@ export default {
           if (this.$refs.targetResponsibler.validTable()) {
             return
           }
-          this.form = { ...this.form, ...{ almAssetReturnDetailList: this.$refs.targetResponsibler.tableData, status } }
+          this.formData = { ...this.formData, ...{ almAssetReturnDetailList: this.$refs.targetResponsibler.tableData, status } }
           if (this.editId != null) {
-            updatePlan(this.form)
+            updatePlan(this.formData)
               .then((response) => {
                 this.$modal.msgSuccess('修改成功')
                 if (status == 1) {
@@ -339,7 +339,7 @@ export default {
                 this.submitLoading = false
               })
           } else {
-            addPlan(this.form)
+            addPlan(this.formData)
               .then((response) => {
                 this.$modal.msgSuccess('新增成功')
                 if (status == 1) {

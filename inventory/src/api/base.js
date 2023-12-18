@@ -156,3 +156,20 @@ export function deptTreeSelect() {
     method: 'get'
   })
 }
+
+// 根据公司ID查询部门下拉树结构
+export function getDeptByCompanyId(companyId) {
+  return request({
+    url: '/system/user/getDeptByCompanyId/' + companyId,
+    method: 'get'
+  })
+}
+
+// 带查询条件下拉树结构
+export function queryAddressTreeSelect (query) {
+  return request({
+    url: '/library/address/addressTree',
+    method: 'get',
+    params: query
+  })
+}

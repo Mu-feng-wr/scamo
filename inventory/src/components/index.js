@@ -5,9 +5,14 @@ import tableHeaderConfig from '@/components/tableHeaderConfig/index.vue'
 import dictDataView from './dictDataView/index.vue'
 import MoreQuery from './MoreQuery/index.vue'
 import InputRange from './InputRange/index.vue'
+import PageCard from './PageCard/index.vue'
+import sectionCard from './sectionCard/index.vue'
 
 // 一些弹框组件
 import selectUser from './selectDialog/user.vue'
+import project from './selectDialog/project.vue'
+import selectWarehouse from './selectDialog/selectWarehouse.vue'
+import componyDept from './selectDialog/componyDept.vue'
 
 const com = [
   searchArea,
@@ -16,7 +21,12 @@ const com = [
   dictDataView,
   MoreQuery,
   InputRange,
-  selectUser
+  selectUser,
+  project,
+  selectWarehouse,
+  componyDept,
+  PageCard,
+  sectionCard
 ]
 com.forEach(item => {
   Vue.component(item.name, item)

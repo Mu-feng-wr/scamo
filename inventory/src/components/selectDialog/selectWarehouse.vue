@@ -1,7 +1,7 @@
 <template>
-  <vxe-modal :title="title" v-model="dialogVisible" width="400px" height="50%" esc-closable @hide="close" resize show-footer>
+  <vxe-modal v-model="dialogVisible" :title="title" width="400px" height="50%" esc-closable resize show-footer @hide="close">
     <div v-loading="loading">
-      <el-tree check-strictly :data="treeList" :props="props" node-key="id" ref="tree" show-checkbox></el-tree>
+      <el-tree ref="tree" check-strictly :data="treeList" :props="props" node-key="id" show-checkbox />
     </div>
     <template #footer>
       <div class="text-center">
@@ -12,8 +12,9 @@
   </vxe-modal>
 </template>
 <script>
-import { queryAddressTreeSelect } from '@/api/library/address'
+import { queryAddressTreeSelect } from '@/api/base.js'
 export default {
+  name: 'SelectWarehouse',
   props: {
     title: {
       type: String,
@@ -54,7 +55,7 @@ export default {
       })
     },
     confirm() {
-      let data = this.$refs.tree.getCheckedNodes()
+      var data = this.$refs.tree.getCheckedNodes()
       if (!data || data.length == 0) {
         this.$message({
           type: 'warning',
