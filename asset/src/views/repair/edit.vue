@@ -271,20 +271,17 @@ export default {
             addRepair(submitData).then((res) => {
               this.$message.success(status == 2 ? '提交成功' : '新增成功')
               setTimeout(() => {
-                if (status == 2) {
-                  this.$router.push({
-                    name: 'asset-repair'
-                  })
-                } else {
-                  this.$router.push({
-                    name: 'repair-repairUpdate',
-                    query: {
-                      id: res.msg
-                    }
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                if (status != 2) {
+                  window.$wujie.props.route({
+                    path: '/asset/repair',
+                    module: 'Asset',
+                    fullPath: '/asset/repair/edit',
+                    title: '编辑资产维修',
+                    condition: { id: res.msg }
                   })
                 }
-              }, 300)
-              // Global.$emit('closeCurrentTag', this.$route)
+              }, 500)
             })
           }
         }

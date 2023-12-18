@@ -335,8 +335,8 @@ export default {
               this.$modal.msgSuccess(`${obj[curProcessResult]}！`)
               this.submitLoading = false
               setTimeout(() => {
-                // Global.$emit('closeCurrentTag', this.$route)
-              }, 1000)
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+              }, 500)
             })
             .catch(() => {
               this.submitLoading = false

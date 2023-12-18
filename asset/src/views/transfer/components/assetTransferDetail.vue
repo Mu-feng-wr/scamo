@@ -217,7 +217,7 @@ export default {
   watch: {
     'formData.assetTransferDetail': {
       handler(newVal, oldVal) {
-        this.tableData = newVal
+        this.tableData = newVal || []
       },
       immediate: true
     }

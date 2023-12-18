@@ -1,12 +1,12 @@
 <template>
-  <vxe-modal title="预览" :close-on-click-modal="false" v-model="visible" height="70%" width="1200px" v-loading="submitLoading" @hide="close">
+  <vxe-modal v-model="visible" v-loading="submitLoading" width="1200px" title="预览" :close-on-click-modal="false" height="70%" @hide="close">
     <div>
       <el-button type="primary" icon="el-icon-printer" size="small" style="margin-bottom: 10px" @click="handlePrint">打印</el-button>
-      <el-button ref="printBtn" v-show="false" type="primary" v-print="printObj">打印</el-button>
+      <el-button v-show="false" ref="printBtn" v-print="printObj" type="primary">打印</el-button>
     </div>
 
-    <el-form :model="form" ref="form" label-width="95px" label-suffix="：" class="bg-white">
-      <div ref="demo" id="printWrap" class="print_obj bgClass">
+    <el-form ref="form" :model="form" label-width="95px" label-suffix="：" class="bg-white">
+      <div id="printWrap" ref="demo" class="print_obj bgClass">
         <div v-html="styleText"></div>
         <el-card class="box-card" style="page-break-after: always">
           <div slot="header" class="clearfix text-tip">{{ $store.state.user.info.companyName }}</div>
@@ -86,13 +86,13 @@
 
           <el-row>
             <el-col :span="8">
-              <el-form-item label="确认人"></el-form-item>
+              <el-form-item label="确认人" />
             </el-col>
             <el-col :span="8">
-              <el-form-item label="确认日期"></el-form-item>
+              <el-form-item label="确认日期" />
             </el-col>
             <el-col :span="8">
-              <el-form-item label="资产管理员"></el-form-item>
+              <el-form-item label="资产管理员" />
             </el-col>
           </el-row>
         </el-card>
@@ -100,7 +100,6 @@
     </el-form>
   </vxe-modal>
 </template>
-
 
 <script>
 import printMixin from '@/mixins/print-mixin'
@@ -137,13 +136,13 @@ export default {
       this.$emit('update:printVisible', false)
     },
     getRecords() {
-      let text = ''
-      let arr = ['ASSET_ADMINISTRATOR_REGISTRATION', 'DIRECT_SUPERIOR_APPROVAL', 'PROCESS_INITIATE']
+      var text = ''
+      var arr = ['ASSET_ADMINISTRATOR_REGISTRATION', 'DIRECT_SUPERIOR_APPROVAL', 'PROCESS_INITIATE']
       arr.forEach((item) => {
         if (this.printData.assetReviewAuditList && this.printData.assetReviewAuditList.length > 0) {
-          let index = this.printData.assetReviewAuditList.findIndex((temp) => temp.processId == item)
+          var index = this.printData.assetReviewAuditList.findIndex((temp) => temp.processId == item)
           if (index >= 0) {
-            let data = this.printData.assetReviewAuditList[index]
+            var data = this.printData.assetReviewAuditList[index]
             text += data.curProcessDate + `【${data.curProcessorName}】`
             text += data.curProcessStepName + '-' + data.curProcessOptions + '；'
           }
