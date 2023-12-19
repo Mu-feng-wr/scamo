@@ -18,7 +18,7 @@ export default [
     meta: { title: '编辑发货' }
   },
   {
-    path: '/purchase/detail',
+    path: '/purchase/shipment/detail',
     name: 'Purchase-Shipment-Detail',
     component: () => import('@/views/shipment/detail.vue'),
     meta: { title: '发货详情' }

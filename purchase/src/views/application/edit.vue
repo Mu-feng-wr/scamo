@@ -477,6 +477,7 @@ export default {
               this.submitLoading = false
               this.$message.success(status == 2 ? '提交成功' : '修改成功')
               if (status == 2) {
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
                 setTimeout(() => {
                   window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
                 }, 500)

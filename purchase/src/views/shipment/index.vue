@@ -321,11 +321,12 @@ export default {
       this.load()
     },
     detailHandle(id) {
-      this.$router.push({
-        name: 'shipment-shipmentDetail',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/purchase/shipment',
+        module: 'Purchase',
+        fullPath: '/purchase/shipment/detail',
+        title: '发货详情',
+        condition: { id }
       })
     },
     addOrUpdateHandle(id) {
@@ -338,12 +339,11 @@ export default {
     },
     handleDelete(row) {
       const shipmentIds = row.shipmentId
-      this.$modal
-        .confirm('是否确认删除发货单信息编号为"' + row.shipmentCode + '"的数据项？')
+      this.$confirm('是否确认删除发货单信息编号为"' + row.shipmentCode + '"的数据项？')
         .then(() => {
           delShipment(shipmentIds).then(() => {
             this.reload()
-            this.$modal.msgSuccess('删除成功')
+            this.$message.success('删除成功')
           })
         })
         .catch(() => {})
