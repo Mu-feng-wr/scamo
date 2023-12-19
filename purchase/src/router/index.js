@@ -1,9 +1,17 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import applicationRouter from './page/application.js';
+import rejectRouter from './page/reject.js';
+import shipmentRouter from './page/shipment.js';
+import purchaseRouter from './page/purchase.js';
 
 Vue.use(Router)
 
 export const constantRoutes = [
+  ...applicationRouter,
+  ...rejectRouter,
+  ...shipmentRouter,
+  ...purchaseRouter,
   {
     path: '/404',
     component: () => import('@/views/404'),
