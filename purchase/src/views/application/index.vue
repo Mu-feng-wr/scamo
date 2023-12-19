@@ -293,6 +293,9 @@ export default {
     }
   },
   created() {
+    if (window.$wujie) {
+      window.$wujie.props.setFunc(this.reload)
+    }
     this.load()
     this.getDictData()
   },
@@ -310,8 +313,8 @@ export default {
         }
       }
     },
-    reload() {
-      this.tableLoading = true
+    reload(loading = true) {
+      this.tableLoading = loading
       listApplication(this.currentParams)
         .then((res) => {
           this.tableData = res.rows
@@ -368,30 +371,48 @@ export default {
     },
     // 新增  编辑
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'application-applicationUpdate' : 'application-applicationAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/purchase/application',
+          module: 'Purchase',
+          fullPath: 'purchase/application/edit',
+          title: '编辑申购',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/purchase/application',
+          module: 'Purchase',
+          fullPath: 'purchase/application/add',
+          title: '新增申购'
+        })
+      }
     },
     // 查看
     detailHandle(id) {
-      this.$router.push({
-        name: 'application-applicationDetail',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/purchase/application',
+        module: 'Purchase',
+        fullPath: '/purchase/application/detail',
+        title: '申购详情',
+        condition: { id }
       })
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
-      this.$router.push({
-        name: 'application-applicationUpdate',
-        query: {
-          id: row.purchaseApplicationId,
-          todo: todo
-        }
+      var statusObj = {
+        audit_superior: '审批',
+        recall_add: '撤回',
+        register_asset_admin: '登记',
+        recall_superior: '撤回',
+        invalid_add: '作废'
+      }
+      window.$wujie.props.route({
+        path: '/purchase/application',
+        module: 'Purchase',
+        fullPath: '/purchase/application/edit',
+        title: `申购${statusObj[todo]}`,
+        condition: { id: row.purchaseApplicationId, todo: todo }
       })
     },
     /** 删除按钮操作 */

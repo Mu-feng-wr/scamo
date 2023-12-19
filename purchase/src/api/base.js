@@ -148,3 +148,37 @@ export function listUser (query) {
     params: query
   })
 }
+
+// 查询部门下拉树结构
+export function categoryTreeSelect() {
+  return request({
+    url: '/library/category/categoryTree',
+    method: 'get'
+  })
+}
+
+// 查询物资基础信息列表
+export function listMaterialQuery(query) {
+  return request({
+    url: '/library/material/queryList',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询库位地址使用区域信息
+export function listAddressQueryUseAreaTree (query) {
+  return request({
+    url: '/library/address/queryUseAreaTree',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询部门下拉树结构
+export function deptTreeSelect() {
+  return request({
+    url: '/system/user/deptTree',
+    method: 'get'
+  })
+}

@@ -28,6 +28,9 @@ if (window.$wujie) {
   Vue.prototype.download = download
 }
 
+import Print from 'vue-print-nb'
+Vue.use(Print) // 注册
+
 Vue.config.productionTip = false
 
 new Vue({

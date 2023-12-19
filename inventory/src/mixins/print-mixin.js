@@ -32,7 +32,7 @@ export default {
         "  @page { size: A4 portrait; font-size: 14px;margin: 4mm 2.8mm 4mm 6mm; }\n" +
         "  .print_obj .el-table tr th:nth-child(2) { width: 160px }\n" + 
         "</style>";
-      var title = `${this.typeName}_` + this.$util.getNowTime(true);
+      var title = `${this.typeName}_` + this.$vxe.toDateString(new Date(), 'yyyy-MM-dd')
       document.head.getElementsByTagName("title")[0].innerText = title;
       this.printObj.popTitle = title;
 

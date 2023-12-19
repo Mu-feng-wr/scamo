@@ -1,23 +1,23 @@
 <template>
-  <vxe-modal v-model="visible" v-loading="submitLoading" title="预览" :close-on-click-modal="false" height="70%" width="1200px" @hide="close">
+  <vxe-modal v-model="visible" v-loading="submitLoading" title="预览" :close-on-click-modal="false" height="70%" width="800px" resize @hide="close">
     <div>
       <el-button type="primary" icon="el-icon-printer" size="small" style="margin-bottom: 10px" @click="handlePrint">打印</el-button>
       <el-button v-show="false" ref="printBtn" v-print="printObj" type="primary">打印</el-button>
     </div>
 
-    <el-form ref="form" :model="form" label-width="95px" label-suffix="：" class="bg-white">
+    <el-form ref="form" label-width="120px" label-suffix="：" class="bg-white">
       <div id="printWrap" ref="demo" class="print_obj bgClass">
         <div v-html="styleText"></div>
         <el-card class="box-card" style="page-break-after: always">
-          <div slot="header" class="clearfix text-tip">{{ $store.state.user.info.companyName }}</div>
-          <div slot="header" class="clearfix text-tip">{{ $vxe.toDateString(printData.scrapDate,'yyyy')+'年'+$vxe.toDateString(printData.scrapDate,'MM')+'月' }}资产归还入库确认单</div>
+          <div slot="header" class="clearfix text-tip">{{ printData.supplierName }}</div>
+          <div slot="header" class="clearfix text-tip">{{ $vxe.toDateString(printData.subscriptionDate,'yyyy')+'年'+$vxe.toDateString(printData.subscriptionDate,'MM')+'月' }}资产申购确认单</div>
 
           <el-row>
             <el-col :span="8">
-              <el-form-item label="终结单号">{{ printData.assetScrapCode }}</el-form-item>
+              <el-form-item label="申购单号">{{ printData.purchaseApplicationCode }}</el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="终结日期">{{ printData.scrapDate }}</el-form-item>
+              <el-form-item label="申购日期">{{ printData.subscriptionDate }}</el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="业务类别">{{ printData.centralizedBusinessName }}</el-form-item>
@@ -25,10 +25,10 @@
           </el-row>
           <el-row>
             <el-col :span="8">
-              <el-form-item label="终结人">{{ printData.terminatorName }}</el-form-item>
+              <el-form-item label="到货联系人">{{ printData.arrivalContact }}</el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="终结部门">{{ printData.terminatorOrgName }}</el-form-item>
+              <el-form-item label="到货联系电话">{{ printData.arrivalMobile }}</el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="制单日期">{{ $vxe.toDateString(new Date(), "yyyy-MM-dd") }}</el-form-item>
@@ -40,43 +40,44 @@
               <tr>
                 <td>资产编号</td>
                 <td>资产名称</td>
-                <td>数量</td>
+                <td style="widtd:120px">购买数量</td>
                 <td>单位</td>
                 <td>含税单价（元）</td>
-                <td>回收残值（元）</td>
                 <td>备注</td>
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, index) in printData.almAssetScrapDetailList" :key="index">
-                <td>{{ item.assetCode }}</td>
+              <tr v-for="(item, index) in printData.assetApplicationDetail" :key="index">
+                <td>{{ item.materialCode }}</td>
                 <td>
-                  {{ item.serialNum?item.serialNum+'-':'' }}
-                  {{ item.specificationModel?item.specificationModel+'-':'' }}
+                  {{ item.sn?item.sn+'-':'' }}
+                  {{ item.modelType?item.modelType+'-':'' }}
                   {{ item.brandName }}
-                  {{ item.assetName&&item.brandName?'-'+item.assetName:item.assetName }}
+                  {{ item.brandName&&item.materialName?'-':'' }}
+                  {{ item.materialName }}
                 </td>
-                <td>{{ item.scrapQuantity }}</td>
-                <td>{{ item.quantityUnit }}</td>
-                <td>{{ $vxe.commafy(item.priceIncludTax,{digits:3}) }}</td>
-                <td>{{ $vxe.commafy(item.recovereResidualValue,{digits:3}) }}</td>
+                <td class="text-right">{{ $vxe.commafy(item.buyQuantity,{digits:3}) }}</td>
+                <td>{{ item.unitName }}</td>
+                <td class="text-right">{{ $vxe.commafy(item.priceIncludTax,{digits:3}) }}</td>
                 <td>
-                  {{ item.inventoryQuantity }}
-                  {{ item.remarks&&item.inventoryQuantity?'-'+item.remarks:item.remarks }}
+                  {{ printData.arrivalDate?printData.arrivalDate+'-':"" }}
+                  {{ printData.arrivalRequirement?printData.arrivalRequirement+'-':'' }}
+                  {{ printData.ereaName }}{{ printData.locationName ? "/" + printData.locationName : "" }}
+                  {{ item.remarks?'-'+item.remarks:'' }}
                 </td>
               </tr>
-              <template v-if=" printData.almAssetScrapDetailList &&printData.almAssetScrapDetailList.length < 3 ">
+              <template v-if=" printData.assetApplicationDetail &&printData.assetApplicationDetail.length < 3">
                 <tr>
-                  <td v-for="(item, index) in 7" :key="index"></td>
+                  <td v-for="(item, index) in 6" :key="index"></td>
                 </tr>
                 <tr>
-                  <td v-for="(item, index) in 7" :key="index"></td>
+                  <td v-for="(item, index) in 6" :key="index"></td>
                 </tr>
               </template>
               <tr>
                 <td>情况说明</td>
-                <td colspan="6">
-                  <div class="u-line-1">{{ printData.scrapReason }}</div>
+                <td ref="remarks" colspan="5">
+                  <div class="u-line-1">{{ printData.subscriptionReason }}</div>
                   <div class="u-line-1">{{ getRecords() }}</div>
                 </td>
               </tr>
@@ -114,21 +115,21 @@ export default {
     printVisible: {
       type: Boolean,
       default: false
-    },
-    dictDataList: {
-      type: Array,
-      default: () => {
-        return []
-      }
     }
   },
   data() {
     return {
-      visible: false
+      visible: false,
+      remarksWidth: 0
     }
   },
   created() {
     this.visible = this.printVisible
+  },
+  mounted() {
+    // this.$nextTick(() => {
+    //   this.remarksWidth = this.$refs.remarks.clientWidth
+    // })
   },
   methods: {
     close() {
@@ -137,16 +138,17 @@ export default {
     getRecords() {
       var text = ''
       var arr = ['ASSET_ADMINISTRATOR_REGISTRATION', 'DIRECT_SUPERIOR_APPROVAL', 'PROCESS_INITIATE']
-      arr.forEach((item) => {
-        if (this.printData.assetReviewAuditList && this.printData.assetReviewAuditList.length > 0) {
+      if (this.printData.assetReviewAuditList && this.printData.assetReviewAuditList.length > 0) {
+        arr.forEach((item) => {
           var index = this.printData.assetReviewAuditList.findIndex((temp) => temp.processId == item)
           if (index >= 0) {
             var data = this.printData.assetReviewAuditList[index]
             text += data.curProcessDate + `【${data.curProcessorName}】`
             text += data.curProcessStepName + '-' + data.curProcessOptions + '；'
           }
-        }
-      })
+        })
+      }
+
       return text
     }
   }
