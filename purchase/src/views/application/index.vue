@@ -165,7 +165,7 @@
                     @click="audit(row,'recall_add')"
                   >撤回</el-button>
                   <el-button
-                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&& row.assetReviewAuditVO.preProcessorId == $store.state.user.info.userId)"
+                    v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='ASSET_ADMINISTRATOR_REGISTRATION'&& row.assetReviewAuditVO.preProcessorId == $store.getters.userInfo.userId)"
                     v-hasPermi="['srm:application:recall']"
                     size="mini"
                     type="text"
