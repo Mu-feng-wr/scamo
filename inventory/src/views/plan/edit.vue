@@ -339,7 +339,7 @@ export default {
               })
           } else {
             addPlan(this.formData)
-              .then((response) => {
+              .then((res) => {
                 this.$modal.msgSuccess(status == 1 ? '提交成功' : '新增成功')
                 setTimeout(() => {
                   window.$wujie.props.closeCurrentPage({ path: this.returnUrl })

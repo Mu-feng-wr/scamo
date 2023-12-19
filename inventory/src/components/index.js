@@ -9,7 +9,6 @@ import PageCard from './PageCard/index.vue'
 import sectionCard from './sectionCard/index.vue'
 import HandleRecords from './HandleRecords/index.vue'
 
-
 // 一些弹框组件
 import selectUser from './selectDialog/user.vue'
 import project from './selectDialog/project.vue'
