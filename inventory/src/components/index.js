@@ -7,6 +7,8 @@ import MoreQuery from './MoreQuery/index.vue'
 import InputRange from './InputRange/index.vue'
 import PageCard from './PageCard/index.vue'
 import sectionCard from './sectionCard/index.vue'
+import HandleRecords from './HandleRecords/index.vue'
+
 
 // 一些弹框组件
 import selectUser from './selectDialog/user.vue'
@@ -26,7 +28,8 @@ const com = [
   selectWarehouse,
   componyDept,
   PageCard,
-  sectionCard
+  sectionCard,
+  HandleRecords
 ]
 com.forEach(item => {
   Vue.component(item.name, item)

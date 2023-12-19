@@ -1,5 +1,5 @@
 <template>
-  <PageCard v-loading="submitLoading">
+  <PageCard v-loading="submitLoading" :return-url="returnUrl">
     <el-form ref="form" :model="formData" :rules="rules" label-width="180px" class="form-table form-table-edit" style="margin-bottom: 8px">
       <SectionCard title="基本信息">
         <el-row>
@@ -205,6 +205,7 @@ export default {
   },
   data() {
     return {
+      returnUrl: '/inventory/plan',
       submitLoading: false,
       typeList: [],
       rules: {
@@ -324,14 +325,12 @@ export default {
           if (this.editId != null) {
             updatePlan(this.formData)
               .then((response) => {
-                this.$modal.msgSuccess('修改成功')
+                this.$modal.msgSuccess(status == 1 ? '提交成功' : '修改成功')
                 if (status == 1) {
                   setTimeout(() => {
-                    this.$router.push({
-                      name: 'inventory-plan'
-                    })
-                  }, 300)
-                  // Global.$emit('closeCurrentTag', this.$route)
+                    window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  }, 500)
+                  return
                 }
                 this.init()
               })
@@ -341,21 +340,19 @@ export default {
           } else {
             addPlan(this.formData)
               .then((response) => {
-                this.$modal.msgSuccess('新增成功')
-                if (status == 1) {
-                  setTimeout(() => {
-                    this.$router.push({
-                      name: 'inventory-plan'
-                    })
-                  }, 300)
-                  // Global.$emit('closeCurrentTag', this.$route)
-                }
+                this.$modal.msgSuccess(status == 1 ? '提交成功' : '新增成功')
                 setTimeout(() => {
-                  this.$router.push({
-                    name: 'plan-planUpdate'
-                  })
-                }, 300)
-                // Global.$emit('closeCurrentTag', this.$route)
+                  window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  if (status == 0) {
+                    window.$wujie.props.route({
+                      path: '/inventory/plan',
+                      module: 'Inventory',
+                      fullPath: '/inventory/plan/edit',
+                      title: '编辑计划',
+                      condition: { id: res.msg }
+                    })
+                  }
+                }, 500)
               })
               .finally(() => {
                 this.submitLoading = false
