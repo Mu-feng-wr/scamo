@@ -7,54 +7,54 @@
             <div class="searchLeft">
               <el-row :gutter="14">
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.consumableDistributeCode" placeholder="派发单号" clearable />
+                  <el-input v-model="queryParams.consumableDistributeCode" size="mini" placeholder="派发单号" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.user_name" placeholder="使用人" clearable />
+                  <el-input v-model="queryParams.user_name" size="mini" placeholder="使用人" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.user_org_name" placeholder="使用部门" clearable />
+                  <el-input v-model="queryParams.user_org_name" size="mini" placeholder="使用部门" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.applicant_name" placeholder="申请人" clearable />
+                  <el-input v-model="queryParams.applicant_name" size="mini" placeholder="申请人" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.applicant_org_name" placeholder="申请部门" clearable />
+                  <el-input v-model="queryParams.applicant_org_name" size="mini" placeholder="申请部门" clearable />
                 </el-col>
                 <el-col :span="4">
-                  <el-input size="mini" v-model="queryParams.distributeReason" placeholder="派发原因" clearable />
+                  <el-input v-model="queryParams.distributeReason" size="mini" placeholder="派发原因" clearable />
                 </el-col>
               </el-row>
-              <el-row :gutter="14" v-show="showAllSearch" class="mt-10">
+              <el-row v-show="showAllSearch" :gutter="14" class="mt-10">
                 <el-col :span="4">
-                  <base-input size="mini" :value.sync="queryParams.centralizedBusinessId" baseCode="listType" labelName="businessName" valueName="businessId" placeholder="业务归口类型"></base-input>
+                  <base-input size="mini" :value.sync="queryParams.centralizedBusinessId" base-code="listType" label-name="businessName" value-name="businessId" placeholder="业务归口类型" />
                 </el-col>
                 <el-col :span="4">
-                  <base-input size="mini" :value.sync="queryParams.accepterOrgId" baseCode="companyList" resultLabel="data" labelName="deptName" valueName="deptId" placeholder="使用公司"></base-input>
+                  <base-input size="mini" :value.sync="queryParams.accepterOrgId" base-code="companyList" result-label="data" label-name="deptName" value-name="deptId" placeholder="使用公司" />
                 </el-col>
                 <el-col :span="4">
-                  <base-input size="mini" :value.sync="queryParams.companyId" baseCode="companyList" resultLabel="data" labelName="deptName" valueName="deptId" placeholder="申请公司"></base-input>
+                  <base-input size="mini" :value.sync="queryParams.companyId" base-code="companyList" result-label="data" label-name="deptName" value-name="deptId" placeholder="申请公司" />
                 </el-col>
                 <el-col :span="4">
-                  <base-input size="mini" :value.sync="queryParams.projectId" baseCode="listProject" labelName="projectName" valueName="projectId" placeholder="项目名称"></base-input>
+                  <base-input size="mini" :value.sync="queryParams.projectId" base-code="listProject" label-name="projectName" value-name="projectId" placeholder="项目名称" />
                 </el-col>
                 <el-col :span="4">
-                  <base-input size="mini" :value.sync="queryParams.schemeId" baseCode="listScheme" labelName="schemeName" valueName="schemeId" placeholder="方案名称"></base-input>
+                  <base-input size="mini" :value.sync="queryParams.schemeId" base-code="listScheme" label-name="schemeName" value-name="schemeId" placeholder="方案名称" />
                 </el-col>
                 <el-col :span="4">
-                  <base-input size="mini" :value.sync="queryParams.sourceTerminal" baseCode="System-sourceTerminal" placeholder="使用终端"></base-input>
+                  <base-input size="mini" :value.sync="queryParams.sourceTerminal" base-code="System-sourceTerminal" placeholder="使用终端" />
                 </el-col>
               </el-row>
-              <el-row :gutter="14" v-show="showAllSearch" class="mt-10">
+              <el-row v-show="showAllSearch" :gutter="14" class="mt-10">
                 <el-col :span="8">
                   <input-range
                     type="daterange"
                     size="mini"
-                    :startValue.sync="queryParams.distributeDateStart"
-                    :endValue.sync="queryParams.distributeDateEnd"
-                    startPlaceholder="派发日期开始"
-                    endPlaceholder="派发日期结束"
-                    valueFormat="yyyy-MM-dd HH:mm:ss"
+                    :start-value.sync="queryParams.distributeDateStart"
+                    :end-value.sync="queryParams.distributeDateEnd"
+                    start-placeholder="派发日期开始"
+                    end-placeholder="派发日期结束"
+                    value-format="yyyy-MM-dd HH:mm:ss"
                     format="yyyy-MM-dd HH:mm:ss"
                     clearable
                   />
@@ -64,7 +64,7 @@
             <div class="ml-10 searchRight">
               <el-button type="primary" icon="el-icon-search" size="mini" @click="load">搜索</el-button>
               <el-button icon="el-icon-refresh" size="mini" @click="reset">重置</el-button>
-              <MoreQuery :filterOptions="filterOptions" :formData.sync="moreQueryParams" @reload="load" />
+              <MoreQuery :filter-options="filterOptions" :form-data.sync="moreQueryParams" @reload="load" />
             </div>
           </div>
         </SearchArea>
@@ -72,10 +72,10 @@
       <el-main style="padding:0;">
         <el-container>
           <el-header>
-            <el-row class="mb15">
+            <el-row class="mb-15">
               <el-col :span="12">
-                <el-button type="primary" plain icon="el-icon-plus" size="mini" v-hasPermi="['srm:return:add']" @click="addOrUpdateHandle()">新增派发</el-button>
-                <el-button plain icon="el-icon-upload2" size="mini" v-hasPermi="['srm:return:export']" @click="handleExport">导出</el-button>
+                <el-button v-hasPermi="['srm:return:add']" type="primary" plain icon="el-icon-plus" size="mini" @click="addOrUpdateHandle()">新增派发</el-button>
+                <el-button v-hasPermi="['srm:return:export']" plain icon="el-icon-upload2" size="mini" @click="handleExport">导出</el-button>
               </el-col>
               <el-col :span="12" class="text-right">
                 <el-button plain icon="el-icon-refresh" size="mini" @click="reload">刷新</el-button>
@@ -85,8 +85,8 @@
           </el-header>
           <el-main>
             <vxe-grid
-              height="auto"
               v-loading="tableLoading"
+              height="auto"
               header-align="center"
               align="center"
               :data="tableData"
@@ -97,40 +97,48 @@
               class="vxeTable"
               show-footer
               :footer-method="getFooterData"
+              auto-resize
+              show-overflow="tooltip"
             >
               <template #seqHeader>序号</template>
               <template #sourceTerminal="{row}">
-                <dictDateView :value="row.sourceTerminal" :dictDataList="dictDataList" dictCode="System-sourceTerminal" />
+                <dictDateView :value="row.sourceTerminal" :dict-data-list="dictDataList" dict-code="System-sourceTerminal" />
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
                   <el-button size="mini" type="text" @click="detailHandle(row.consumableDistributeId)">查看</el-button>
-                  <el-button size="mini" type="text" @click="addOrUpdateHandle(row.consumableDistributeId)" v-hasPermi="['asset:receipt:edit']">修改</el-button>
-                  <el-button size="mini" type="text" @click="handleDelete(row)" v-hasPermi="['asset:receipt:remove']">删除</el-button>
+                  <el-button v-hasPermi="['asset:receipt:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.consumableDistributeId)">修改</el-button>
+                  <el-button v-hasPermi="['asset:receipt:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
+              </template>
+              <template #pager>
+                <el-pagination
+                  background
+                  :current-page="tablePage.currentPage"
+                  :page-sizes="[10, 20, 30, 50]"
+                  :page-size="tablePage.pageSize"
+                  layout="total, sizes, prev, pager, next, jumper"
+                  :total="tablePage.total"
+                  @size-change="handlePageChange($event,'pageSize')"
+                  @current-change="handlePageChange($event,'currentPage')"
+                />
               </template>
             </vxe-grid>
           </el-main>
         </el-container>
       </el-main>
     </el-container>
-    <router-view></router-view>
   </div>
 </template>
 <script>
-import { listDistribute, delDistribute } from '@/api/consume/distribute'
+import { listDistribute, delDistribute } from '@/api/distribute.js'
 import vxeTable from '@/mixins/vxeTable'
-import dictDateView from '@/components/DictDataView/index.vue'
-import { listDictItems } from '@/api/system/dictionaries/items'
+import { listDictItems } from '@/api/base.js'
 export default {
-  components: {
-    dictDateView
-  },
   mixins: [vxeTable],
   data() {
     return {
       showAllSearch: false,
-      form: {},
       queryParams: {},
       moreQueryParams: {},
       currentParams: {},
@@ -217,9 +225,13 @@ export default {
       this.queryParams = {}
       this.load()
     },
-    handlePageChange({ currentPage, pageSize }) {
-      this.tablePage.currentPage = currentPage
-      this.tablePage.pageSize = pageSize
+    handlePageChange(value, type) {
+      if (type == 'currentPage') {
+        this.tablePage.currentPage = value
+      }
+      if (type == 'pageSize') {
+        this.tablePage.pageSize = value
+      }
       // 触发列表请求
       this.load()
     },
@@ -263,7 +275,7 @@ export default {
     },
     // 获取字典数据
     getDictData() {
-      let dictCodes = 'System-sourceTerminal'
+      var dictCodes = 'System-sourceTerminal'
       listDictItems(dictCodes).then((res) => {
         this.dictDataList = res.sysDictionaryItemsList
       })
