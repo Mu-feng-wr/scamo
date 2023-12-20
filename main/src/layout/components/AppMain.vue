@@ -91,10 +91,10 @@ export default {
         Inventory: `http://${window.location.hostname}:9007/#`,
         Library: `http://${window.location.hostname}:9008/#`,
         Portface: `http://${window.location.hostname}:9009/#`,
-        System: `http://${window.location.hostname}:9010/#`,
-        Monitor: `http://${window.location.hostname}:9011/#`,
-        Tool: `http://${window.location.hostname}:9012/#`,
-        Member: `http://${window.location.hostname}:9013/#`
+        System: `http://${window.location.hostname}:9011/#`,
+        Monitor: `http://${window.location.hostname}:9012/#`,
+        Tool: `http://${window.location.hostname}:9013/#`,
+        Member: `http://${window.location.hostname}:9015/#`
       }
       var query = []
       if (item.condition) {
