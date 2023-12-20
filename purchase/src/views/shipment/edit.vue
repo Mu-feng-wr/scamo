@@ -5,12 +5,12 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="发货单号">
-              <el-input disabled v-model="formData.shipmentCode" placeholder="自动生成发货单号" />
+              <el-input v-model="formData.shipmentCode" disabled placeholder="自动生成发货单号" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请日期" prop="applicantDate">
-              <el-date-picker v-model="formData.applicantDate" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="请选择申请日期"></el-date-picker>
+              <el-date-picker v-model="formData.applicantDate" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="请选择申请日期" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -39,27 +39,27 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="申购单号" prop="purchaseApplicationCode">
-              <el-input suffix-icon="el-icon-arrow-down" :disabled="!!editId" v-model="formData.purchaseApplicationCode" @focus="purchaseDialog = true" placeholder="请选择申购单"></el-input>
+              <el-input v-model="formData.purchaseApplicationCode" suffix-icon="el-icon-arrow-down" :disabled="!!editId" placeholder="请选择申购单" @focus="purchaseDialog = true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申购日期" prop="subscriptionDate">
-              <el-date-picker clearable v-model="formData.subscriptionDate" type="date" value-format="yyyy-MM-dd" placeholder="选择申购单自动带出" disabled></el-date-picker>
+              <el-date-picker v-model="formData.subscriptionDate" clearable type="date" value-format="yyyy-MM-dd" placeholder="选择申购单自动带出" disabled />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="到货联系人" prop="arrivalContact">
-              <el-input v-model="formData.arrivalContact" placeholder="选择申购单自动带出" :disabled="true"></el-input>
+              <el-input v-model="formData.arrivalContact" placeholder="选择申购单自动带出" :disabled="true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="到货联系电话" prop="arrivalMobile">
-              <el-input v-model="formData.arrivalMobile" placeholder="选择申购单自动带出" maxlength="11" show-word-limit :disabled="true"></el-input>
+              <el-input v-model="formData.arrivalMobile" placeholder="选择申购单自动带出" maxlength="11" show-word-limit :disabled="true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="到货日期" prop="arrivalDate">
-              <el-date-picker clearable v-model="formData.arrivalDate" type="date" value-format="yyyy-MM-dd" placeholder="选择申购单自动带出" :disabled="true"></el-date-picker>
+              <el-date-picker v-model="formData.arrivalDate" clearable type="date" value-format="yyyy-MM-dd" placeholder="选择申购单自动带出" :disabled="true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -69,30 +69,43 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="使用区域" prop="ereaName">
-              <el-input v-model="formData.ereaName" placeholder="选择申购单自动带出" :disabled="true"></el-input>
+              <el-input v-model="formData.ereaName" placeholder="选择申购单自动带出" :disabled="true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申购数量" prop="subscriptionQuantity">
               <el-input-number
+                v-model.number="formData.subscriptionQuantity"
                 :disabled="true"
                 :precision="formData.materialType==1?0:3"
                 :step="1"
                 :max="999999.99"
-                v-model.number="formData.subscriptionQuantity"
                 controls-position="right"
                 placeholder="选择申购单自动带出"
-              ></el-input-number>
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申购总金额（元）" prop="subscriptionTaxAmount">
-              <el-input-number :disabled="true" :precision="2" :step="1" :max="999999.99" v-model.number="formData.subscriptionTaxAmount" controls-position="right" placeholder="选择申购单自动带出"></el-input-number>
+              <el-input-number
+                v-model.number="formData.subscriptionTaxAmount"
+                :disabled="true"
+                :precision="2"
+                :step="1"
+                :max="999999.99"
+                controls-position="right"
+                placeholder="选择申购单自动带出"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="具体位置" prop="locationName">
-              <el-input style="width: calc((100% - 340px)/3 - 24px)" :value="(formData.ereaName||'')+(formData.locationName?'/'+formData.locationName:'')" placeholder="选择申购单自动带出" disabled></el-input>
+              <el-input
+                style="width: calc((100% - 340px)/3 - 24px)"
+                :value="(formData.ereaName||'')+(formData.locationName?'/'+formData.locationName:'')"
+                placeholder="选择申购单自动带出"
+                disabled
+              />
             </el-form-item>
           </el-col>
         </el-row>
@@ -101,53 +114,53 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="供应商编号" prop="supplierCode">
-              <el-input v-model="formData.supplierCode" placeholder="选择申购单自动带出" :disabled="true"></el-input>
+              <el-input v-model="formData.supplierCode" placeholder="选择申购单自动带出" :disabled="true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="供应商名称" prop="supplierName">
-              <el-input v-model="formData.supplierName" placeholder="选择申购单自动带出" :disabled="true"></el-input>
+              <el-input v-model="formData.supplierName" placeholder="选择申购单自动带出" :disabled="true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="出账公司编号" prop="accountNumber">
-              <el-input v-model="formData.accountNumber" placeholder="选择申购单自动带出" :disabled="true"></el-input>
+              <el-input v-model="formData.accountNumber" placeholder="选择申购单自动带出" :disabled="true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="出账公司名称" prop="accountName">
-              <el-input v-model="formData.accountName" placeholder="选择申购单自动带出" :disabled="true"></el-input>
+              <el-input v-model="formData.accountName" placeholder="选择申购单自动带出" :disabled="true" />
             </el-form-item>
           </el-col>
 
           <el-col :span="8">
             <el-form-item label="合同编号" prop="contractCode">
-              <el-input v-model="formData.contractCode" placeholder="选择申购单自动带出" :disabled="true"></el-input>
+              <el-input v-model="formData.contractCode" placeholder="选择申购单自动带出" :disabled="true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="合同名称" prop="contractName">
-              <el-input v-model="formData.contractName" placeholder="选择申购单自动带出" :disabled="true"></el-input>
+              <el-input v-model="formData.contractName" placeholder="选择申购单自动带出" :disabled="true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="项目编号">
-              <el-input v-model="formData.projectCode" placeholder="选择申购单自动带出" :disabled="true"></el-input>
+              <el-input v-model="formData.projectCode" placeholder="选择申购单自动带出" :disabled="true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="项目名称">
-              <el-input v-model="formData.projectName" placeholder="选择申购单自动带出" :disabled="true"></el-input>
+              <el-input v-model="formData.projectName" placeholder="选择申购单自动带出" :disabled="true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="招标协议编号">
-              <el-input v-model="formData.tenderAgreementCode" placeholder="选择申购单自动带出" :disabled="true"></el-input>
+              <el-input v-model="formData.tenderAgreementCode" placeholder="选择申购单自动带出" :disabled="true" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="招标协议标题">
-              <el-input style="width: calc((100% - 340px)/3 - 24px)" v-model="formData.tenderAgreementName" placeholder="选择申购单自动带出" :disabled="true"></el-input>
+              <el-input v-model="formData.tenderAgreementName" style="width: calc((100% - 340px)/3 - 24px)" placeholder="选择申购单自动带出" :disabled="true" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -157,17 +170,17 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="采购单号">
-              <el-input v-model="formData.purchaseCode" placeholder="选择申购单自动带出" disabled></el-input>
+              <el-input v-model="formData.purchaseCode" placeholder="选择申购单自动带出" disabled />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="采购人">
-              <el-input v-model="formData.purchaserName" placeholder="选择申购单自动带出" disabled></el-input>
+              <el-input v-model="formData.purchaserName" placeholder="选择申购单自动带出" disabled />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="采购部门">
-              <el-input v-model="formData.purchaserOrgName" placeholder="选择申购单自动带出" disabled></el-input>
+              <el-input v-model="formData.purchaserOrgName" placeholder="选择申购单自动带出" disabled />
             </el-form-item>
           </el-col>
         </el-row>
@@ -176,72 +189,72 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="发货日期" prop="shipmentDate">
-              <el-date-picker clearable v-model="formData.shipmentDate" type="date" value-format="yyyy-MM-dd" placeholder="请选择申请日期" :disabled="formIsDisabled"></el-date-picker>
+              <el-date-picker v-model="formData.shipmentDate" clearable type="date" value-format="yyyy-MM-dd" placeholder="请选择申请日期" :disabled="formIsDisabled" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="发货人" prop="shipperName">
-              <el-input v-model="formData.shipperName" placeholder="请选择申购人" maxlength="10" show-word-limit></el-input>
+              <el-input v-model="formData.shipperName" placeholder="请选择申购人" maxlength="10" show-word-limit />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="本次发货数量" prop="shipmentQuantity">
               <el-input-number
+                v-model.number="formData.shipmentQuantity"
                 disabled
                 :precision="formData.materialType==1?0:3"
                 :step="1"
                 :max="999999.99"
-                v-model.number="formData.shipmentQuantity"
                 controls-position="right"
                 placeholder="请输入本次发货数量"
-              ></el-input-number>
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="本次发货金额（元）" prop="shipmentAmount">
-              <el-input-number disabled :precision="2" :step="1" v-model.number="formData.shipmentAmount" controls-position="right" placeholder="请输入本次发货金额（元）"></el-input-number>
+              <el-input-number v-model.number="formData.shipmentAmount" disabled :precision="2" :step="1" controls-position="right" placeholder="请输入本次发货金额（元）" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="剩余未发货数量" prop="unShipmentQuantity">
               <el-input-number
+                v-model.number="formData.unShipmentQuantity"
                 :disabled="true"
                 :precision="formData.materialType==1?0:3"
                 :step="1"
                 :max="999999.99"
-                v-model.number="formData.unShipmentQuantity"
                 controls-position="right"
                 placeholder="请输入剩余未发货数量"
-              ></el-input-number>
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="剩余未发货金额（元）" prop="unShipmentAmount">
-              <el-input-number :disabled="true" :precision="2" :step="1" :max="999999.99" v-model.number="formData.unShipmentAmount" controls-position="right" placeholder="请输入剩余未发货金额（元）"></el-input-number>
+              <el-input-number v-model.number="formData.unShipmentAmount" :disabled="true" :precision="2" :step="1" :max="999999.99" controls-position="right" placeholder="请输入剩余未发货金额（元）" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="发货原因" prop="shipmentReason" class="noProp-item-textarea">
-              <el-input type="textarea" v-model="formData.shipmentReason" placeholder="请输入发货原因" maxlength="300" show-word-limit :disabled="formIsDisabled"></el-input>
+              <el-input v-model="formData.shipmentReason" type="textarea" placeholder="请输入发货原因" maxlength="300" show-word-limit :disabled="formIsDisabled" />
             </el-form-item>
           </el-col>
         </el-row>
       </SectionCard>
     </el-form>
     <SectionCard class="mt-8" title="资产明细">
-      <assetShipmentDetail ref="assetShipmentDetail" :editId="editId" :form-data="formData" @calculate="uploadTotal" />
+      <assetShipmentDetail ref="assetShipmentDetail" :edit-id="editId" :form-data="formData" @calculate="uploadTotal" />
     </SectionCard>
     <div slot="footer" align="center">
-      <el-button type="primary" @click="submitForm(0,1)" v-if="(formData.ynGenLine==0||!formData.ynGenLine)&&formData.materialType==1">保存生成单个资产</el-button>
-      <el-button :disabled="submitButton" type="success" v-if="(!formData.status||formData.status==0)" @click="submitForm(0,formData.ynGenLine||0)">草 稿</el-button>
+      <el-button v-if="(formData.ynGenLine==0||!formData.ynGenLine)&&formData.materialType==1" type="primary" @click="submitForm(0,1)">保存生成单个资产</el-button>
+      <el-button v-if="(!formData.status||formData.status==0)" :disabled="submitButton" type="success" @click="submitForm(0,formData.ynGenLine||0)">草 稿</el-button>
       <el-button
+        v-if="(!formData.status||formData.status==0)&&(formData.ynGenLine==1||formData.materialType!=1)"
         :disabled="submitButton"
         type="primary"
-        v-if="(!formData.status||formData.status==0)&&(formData.ynGenLine==1||formData.materialType!=1)"
         @click="submitForm(1,formData.materialType==1?1:0,'提交成功')"
       >提 交</el-button>
     </div>
-    <purchaseApplication v-if="purchaseDialog" :visible.sync="purchaseDialog" @confirm="purchaseHandler" :query="[{label:'businessKey',value:'PO_SHIPMENT'}]" />
+    <purchaseApplication v-if="purchaseDialog" :visible.sync="purchaseDialog" :query="[{label:'businessKey',value:'PO_SHIPMENT'}]" @confirm="purchaseHandler" />
   </PageCard>
 </template>
 <script>
@@ -306,7 +319,7 @@ export default {
         this.formData = {
           ...this.formData,
           ...{
-            sourceTerminal: 1, //来源终端  默认1:pc
+            sourceTerminal: 1, // 来源终端  默认1:pc
             applicantId: this.user.userId,
             applicantName: this.user.userName,
             applicantOrgId: this.user.deptId,
@@ -414,10 +427,7 @@ export default {
           subscriptionExcTaxAmount: value.subscriptionExcTaxAmount,
           purchaseTaxAmount: value.purchaseTaxAmount,
           purchaseId: value.purchaseId,
-          purchaseCode: value.purchaseCode,
-          purchaserName: value.purchaserName,
           purchaserOrId: value.purchaserOrId,
-          purchaserOrgName: value.purchaserOrgName,
           remarks: value.remarks,
           materialType: value.materialType,
           shipmentReason: value.subscriptionReason

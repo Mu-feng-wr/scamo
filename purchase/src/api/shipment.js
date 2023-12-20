@@ -50,3 +50,12 @@ export function getTotalAmount (query) {
     params: query
   })
 }
+
+// 查询申购单未发货的资产明细
+export function queryUnShippedByPurchaseApplicationId (query) {
+  return request({
+    url: '/srm/material/queryUnShippedByPurchaseApplicationId',
+    method: 'get',
+    params: query
+  })
+}

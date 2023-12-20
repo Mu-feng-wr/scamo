@@ -16,7 +16,7 @@
             <el-form-item label="申请人">{{ formData.applicantName }}</el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="申请部门">{{formData.applicantOrgName}}</el-form-item>
+            <el-form-item label="申请部门">{{ formData.applicantOrgName }}</el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请公司名称">{{ formData.applicantCompanyName }}</el-form-item>
@@ -104,7 +104,7 @@
           </el-col>
           <el-col :span="16">
             <el-form-item label="来源终端">
-              <dictDateView :value="formData.sourceTerminal" :dictDataList="dictDataList" dictCode="System-sourceTerminal" />
+              <dictDateView :value="formData.sourceTerminal" :dict-data-list="dictDataList" dict-code="System-sourceTerminal" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -145,15 +145,15 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="发货状态">
-              <dictDateView :value="formData.status" :dictDataList="dictDataList" dictCode="PoPurchaseShipment-status" />
+              <dictDateView :value="formData.status" :dict-data-list="dictDataList" dict-code="PoPurchaseShipment-status" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="创建时间" v-if="formData.shipmentId ? true : false">{{ formData.createDate }}</el-form-item>
+            <el-form-item v-if="formData.shipmentId ? true : false" label="创建时间">{{ formData.createDate }}</el-form-item>
           </el-col>
 
           <el-col :span="8">
-            <el-form-item label="更新时间" v-if="formData.shipmentId ? true : false">{{ formData.updateDate }}</el-form-item>
+            <el-form-item v-if="formData.shipmentId ? true : false" label="更新时间">{{ formData.updateDate }}</el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="发货原因" class="noProp-item-textarea">{{ formData.shipmentReason }}</el-form-item>
@@ -162,13 +162,13 @@
       </SectionCard>
 
       <SectionCard class="mt-8" title="资产明细">
-        <shipmentAssetDetail ref="assetShipmentDetail" :showBtn="false" :editId="editId" :form="form" />
+        <assetShipmentDetail ref="assetShipmentDetail" :show-btn="false" :edit-id="editId" :form-data="formData" />
       </SectionCard>
     </el-form>
     <div slot="footer" align="center">
       <el-button type="success" @click="printDialog=true">打印</el-button>
     </div>
-    <Print v-if="printDialog" :print-data="formData" :printVisible.sync="printDialog" />
+    <Print v-if="printDialog" :print-data="formData" :print-visible.sync="printDialog" />
   </PageCard>
 </template>
 <script>
@@ -201,7 +201,7 @@ export default {
       this.submitLoading = true
       getShipment(this.editId)
         .then((res) => {
-          let poPurchaseApplication = res.data.poPurchaseApplication || {}
+          var poPurchaseApplication = res.data.poPurchaseApplication || {}
           this.formData = {
             ...res.data,
             ...{
@@ -241,8 +241,8 @@ export default {
         })
     },
     getDictData() {
-      var dictCodes = 'System-sourceTerminal' //来源终端
-      dictCodes += ',PoPurchaseShipment-status' //发货状态
+      var dictCodes = 'System-sourceTerminal' // 来源终端
+      dictCodes += ',PoPurchaseShipment-status' // 发货状态
       listDictItems(dictCodes).then((res) => {
         this.dictDataList = res.sysDictionaryItemsList
       })

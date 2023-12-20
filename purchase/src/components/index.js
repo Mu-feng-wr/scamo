@@ -12,6 +12,7 @@ import sectionCard from '@/components/sectionCard/index.vue'
 // 一些按钮组件
 import uploadFile from './btnHandler/uploadFile.vue'
 import selectMaterial from './btnHandler/selectMaterial.vue'
+import uploadImg from './btnHandler/uploadImg.vue'
 
 // 一些弹框组件
 import selectUser from './selectDialog/user.vue'
@@ -38,7 +39,8 @@ const com = [
   chargeOff,
   contract,
   project,
-  purchaseApplication
+  purchaseApplication,
+  uploadImg
 ]
 com.forEach(item => {
   Vue.component(item.name, item)

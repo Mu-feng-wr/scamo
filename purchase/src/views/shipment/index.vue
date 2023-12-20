@@ -330,12 +330,22 @@ export default {
       })
     },
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'shipment-shipmentUpdate' : 'shipment-shipmentAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/purchase/shipment',
+          module: 'Purchase',
+          fullPath: 'purchase/shipment/edit',
+          title: '编辑发货',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/purchase/shipment',
+          module: 'Purchase',
+          fullPath: 'purchase/shipment/add',
+          title: '新增发货'
+        })
+      }
     },
     handleDelete(row) {
       const shipmentIds = row.shipmentId

@@ -1,12 +1,12 @@
 <template>
-  <vxe-modal title="预览" :close-on-click-modal="false" v-model="visible" height="70%" width="1200px" v-loading="submitLoading" resize @hide="close">
+  <vxe-modal v-model="visible" v-loading="submitLoading" title="预览" :close-on-click-modal="false" height="70%" width="1200px" resize @hide="close">
     <div>
       <el-button type="primary" icon="el-icon-printer" size="small" style="margin-bottom: 10px" @click="handlePrint">打印</el-button>
-      <el-button ref="printBtn" v-show="false" type="primary" v-print="printObj">打印</el-button>
+      <el-button v-show="false" ref="printBtn" v-print="printObj" type="primary">打印</el-button>
     </div>
 
-    <el-form :model="form" ref="form" label-width="95px" label-suffix="：" class="bg-white">
-      <div ref="demo" id="printWrap" class="print_obj bgClass">
+    <el-form ref="form" label-width="95px" label-suffix="：" class="bg-white">
+      <div id="printWrap" ref="demo" class="print_obj bgClass">
         <div v-html="styleText"></div>
         <el-card class="box-card" style="page-break-after: always">
           <div slot="header" class="clearfix text-tip">{{ printData.supplierName }}</div>
@@ -55,7 +55,7 @@
                 <td>
                   {{ item.serialNum?item.serialNum+'-':'' }}
                   {{ item.specificationModel?item.specificationModel+'-':'' }}
-                  {{ item.brandName}}
+                  {{ item.brandName }}
                   {{ item.brandName&&item.materialName?'-':'' }}
                   {{ item.materialName }}
                 </td>
