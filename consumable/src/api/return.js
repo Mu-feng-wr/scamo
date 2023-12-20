@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@/utils/request.js'
 
 // 查询耗材归还单信息列表
 export function listReturn(query) {

@@ -1,4 +1,4 @@
-import request from '@/utils/request'
+import request from '@/utils/request.js'
 
 // 查询耗材派发单信息列表
 export function listDistribute(query) {
