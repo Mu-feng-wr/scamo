@@ -292,20 +292,29 @@ export default {
           this.submitLoading = true
           if (this.editId) {
             updateBorrow(this.formData).then((res) => {
-              this.$modal.msgSuccess('修改成功')
+              this.$message.success(status == 2 ? '新增成功！' : '修改成功！')
+              if (status == 2) {
+                setTimeout(() => {
+                  window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                }, 500)
+                return
+              }
               this.init()
             }).finally(() => {this.submitLoading = false})
           } else {
             addBorrow(this.formData)
               .then((res) => {
                 this.$modal.msgSuccess('新增成功')
-                this.$router.push({
-                  name: 'borrow-borrowUpdate',
-                  query: {
-                    id: res.msg
-                  }
-                })
-                // Global.$emit('closeCurrentTag', this.$route)
+                setTimeout(() => {
+                  window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  window.$wujie.props.route({
+                    path: '/consumable/borrow',
+                    module: 'Consumable',
+                    fullPath: '/consumable/borrow/edit',
+                    title: '编辑耗材借用',
+                    condition: { id: res.msg }
+                  })
+                }, 500)
               })
               .finally(() => {
                 this.submitLoading = false
@@ -362,16 +371,11 @@ export default {
           }
           approveBorrow(submitData)
             .then((response) => {
-              this.$modal.msgSuccess(`${obj[curProcessResult]}！`)
+              this.$message.success(`${obj[curProcessResult]}！`)
               this.submitLoading = false
               setTimeout(() => {
-                this.$route.push({
-                  name: 'consumable-borrow'
-                })
-              }, 200)
-              setTimeout(() => {
-                // Global.$emit('closeCurrentTag', this.$route)
-              }, 300)
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+              }, 500)
             })
             .catch(() => {
               this.submitLoading = false

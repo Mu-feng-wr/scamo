@@ -301,36 +301,54 @@ export default {
       this.load()
     },
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'consumableReturn-returnUpdate' : 'consumableReturn-returnAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/consumable/return',
+          module: 'Consumable',
+          fullPath: '/consumable/return/edit',
+          title: '编辑耗材归还',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/consumable/return',
+          module: 'Consumable',
+          fullPath: '/consumable/return/add',
+          title: '新增耗材归还'
+        })
+      }
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
-      this.$router.push({
-        name: 'consumableReturn-returnUpdate',
-        query: {
-          id: row.consumableReturnId,
-          todo: todo
-        }
+      var statusObj = {
+        audit_superior: '审批',
+        recall_add: '撤回',
+        register_asset_admin: '登记',
+        recall_superior: '撤回',
+        invalid_add: '作废'
+      }
+      window.$wujie.props.route({
+        path: '/consumable/return',
+        module: 'Consumable',
+        fullPath: '/consumable/return/edit',
+        title: `耗材归还${statusObj[todo]}`,
+        condition: { id: row.consumableReturnId, todo: todo }
       })
     },
     detailHandle(id) {
-      this.$router.push({
-        name: 'consumableReturn-returnDetail',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/consumable/return',
+        module: 'Consumable',
+        fullPath: '/consumable/return/detail',
+        title: '耗材归还详情',
+        condition: { id }
       })
     },
     handleDelete(row) {
-      this.$modal.confirm('是否确认删除资产归还单信息编号为"' + row.consumableReturnCode + '"的数据项？').then(() => {
+      this.$confirm('是否确认删除资产归还单信息编号为"' + row.consumableReturnCode + '"的数据项？').then(() => {
         delReturn(row.consumableReturnId).then(() => {
           this.reload()
-          this.$modal.msgSuccess('删除成功')
+          this.$message.success('删除成功')
         })
       })
     },

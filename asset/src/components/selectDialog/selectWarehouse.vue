@@ -12,7 +12,7 @@
   </vxe-modal>
 </template>
 <script>
-import { queryAddressTreeSelect } from '@/api/library/address'
+import { queryAddressTreeSelect } from '@/api/base.js'
 export default {
   props: {
     title: {

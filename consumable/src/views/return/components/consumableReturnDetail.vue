@@ -1,11 +1,11 @@
 <template>
   <div>
     <div class="pt-10 mb-10">
-      <selectStandbook v-if="showBtn" :type="2" size="mini" class="mr-10" :query="standBookQuery" @confirm="selectStandbookHandler" />
+      <selectStandbook v-if="showBtn && editForm" :type="2" size="mini" class="mr-10" :query="standBookQuery" @confirm="selectStandbookHandler" />
       <selectArea v-if="showBtn" size="mini" :disabled="btnDisabled" class="pr-10" @confirm="selectAreaHandler" />
-      <!-- <Pint v-if="!showBtn" :selectRows="tableData" class="mr-10" :disabled="btnDisabled"></Pint> -->
-      <el-button v-if="!showBtn" size="mini" icon="el-icon-upload2" :disabled="formData.consumableBorrowId?false:true" @click="exportAssetDeatil">导出</el-button>
-      <el-button v-if="showBtn" icon="el-icon-delete" type="danger" :disabled="btnDisabled" plain size="mini" @click="handleDeleteBatch">删除</el-button>
+      <!-- <Pint v-if="!showBtn" :select-rows="tableData" class="mr-10" :disabled="btnDisabled"></Pint> -->
+      <el-button v-if="!showBtn" size="mini" icon="el-icon-upload2" :disabled="tableData.length==0" @click="exportAssetDeatil">导出</el-button>
+      <el-button v-if="showBtn && editForm" icon="el-icon-delete" type="danger" size="mini" plain :disabled="btnDisabled" @click="handleDeleteBatch">删除</el-button>
     </div>
     <vxe-grid
       ref="xTable"
@@ -22,10 +22,10 @@
       class="vxeTable"
       :edit-config="{trigger: 'manual', mode: 'row',showIcon:false,autoClear:false}"
       :edit-rules="validRules"
-      show-footer
-      :footer-method="getFooterData"
       auto-resize
       show-overflow="tooltip"
+      show-footer
+      :footer-method="getFooterData"
       @checkbox-all="changeCheck"
       @checkbox-change="changeCheck"
     >
@@ -36,9 +36,9 @@
       <template #discountAmount="{row}">
         <el-input-number v-model="row.discountAmount" placeholder="优惠金额" :precision="3" controls-position="right" />
       </template>
-      <!--<template #currentUserName="{row}">
+      <template #currentUserName="{row}">
         <el-input :value="row.currentUserName" suffix-icon="el-icon-arrow-down" placeholder="选择使用人" @focus="userDialogVisible=true" />
-      </template>-->
+      </template>
       <template #currentLocationName="{row}">
         <el-cascader
           v-if="$refs.xTable.isActiveByRow(row)"
@@ -57,37 +57,34 @@
             <span v-if="!node.isLeaf">({{ data.children.length }})</span>
           </template>
         </el-cascader>
-        <span v-else>{{ row.currentEreaName }}/{{ row.currentLocationName }}</span>
+
+        <span v-else>{{ row.currentEreaName }} {{ row.currentLocationName?'/'+row.currentLocationName:'' }}</span>
       </template>
-      <template #firstShelfName="{row}">{{ row.firstShelfName }}/{{ row.secondShelfName }}</template>
+      <template #firstShelfName="{row}">{{ row.firstShelfName }}{{ row.secondShelfName?'/'+row.secondShelfName:'' }}</template>
       <template #assetCharacteristic="{row}">
         <dictDateView :value="row.assetCharacteristic" :dict-data-list="dictDataList" dict-code="AamMaterialAccount-assetCharacteristic" />
       </template>
       <template #assetPhysicalState="{row}">
         <dictDateView :value="row.assetPhysicalState" :dict-data-list="dictDataList" dict-code="AamMaterialAccount-assetPhysicalState" />
       </template>
-      <template #remarks="{row}">
-        <el-input v-model="row.remarks" type="text" placeholder="备注" :maxlength="300" :show-word-limit="true" />
-      </template>
       <template #schemeName="{row}">
         <base-input :value.sync="row.schemeId" :label.sync="row.schemeName" label-name="schemeName" value-name="schemeId" :options-list="schemeList" placeholder="方案名称" />
       </template>
-      <template #usePurpose="{row}">
-        <base-input v-if="$refs.xTable.isActiveByRow(row)" base-code="AlmAssetCollect-usePurpose" :value.sync="row.usePurpose" :options-list="dictDataList" placeholder="使用目的" />
-        <dictDateView v-else :value="row.usePurpose" :dict-data-list="dictDataList" dict-code="AlmAssetCollect-usePurpose" />
+      <template #remarks="{row}">
+        <el-input v-model="row.remarks" placeholder="备注" />
       </template>
-      <template #borrowQuantity="{ row }">
-        <span v-if="!$refs.xTable.isActiveByRow(row)">{{ $vxe.commafy(row.borrowQuantity,{digits:3}) }}</span>
+      <template #returnQuantity="{ row }">
+        <span v-if="!$refs.xTable.isActiveByRow(row)">{{ $vxe.commafy(row.returnQuantity,{digits:3}) }}</span>
         <el-input-number
           v-else
-          v-model="row.borrowQuantity"
+          v-model="row.returnQuantity"
           size="mini"
           controls-position="right"
           :precision="3"
           :step="1"
           :min="0"
           :max="row.inventoryQuantity"
-          placeholder="请输入借用数量"
+          placeholder="请输入本次归还数量"
         />
       </template>
       <template #todo="{row,rowIndex}">
@@ -104,6 +101,7 @@
   </div>
 </template>
 <script>
+import { listAddressQueryUseAreaTree, listDictItems } from '@/api/base.js'
 import vxeTable from '@/mixins/vxeTable'
 export default {
   mixins: [vxeTable],
@@ -114,68 +112,62 @@ export default {
         return {}
       }
     },
-    useAreaTree: {
-      type: Array,
-      default: () => {
-        return []
-      }
-    },
     showBtn: {
       type: Boolean,
       default: true
-    },
-    dictDataList: {
-      type: Array,
-      default: () => {
-        return []
-      }
     },
     schemeList: {
       type: Array,
       default: () => {
         return []
       }
+    },
+    editForm: {
+      type: Boolean,
+      default: false
     }
   },
   data() {
     return {
       selectRows: [],
-      elImageViewer: false,
       loading: false,
       tableData: [],
       validRules: {},
-      btnDisabled: true,
       userDialogVisible: false,
-      imgList: []
+      useAreaTree: [],
+      btnDisabled: true,
+      elImageViewer: false,
+      imgList: [],
+      dictDataList: []
     }
   },
   computed: {
     tableColumn() {
       return [
         { type: 'checkbox', width: 40, align: 'center', fixed: 'left' },
-        { type: 'seq', width: 70, align: 'center', fixed: 'left', visible: true, visibleDisabled: true, slots: { header: 'seqHeader' } },
-        { field: 'assetCode', title: '资产编号', width: 130, fixed: 'left' },
-        { field: 'assetName', title: '资产名称', width: 130, fixed: 'left' },
-        { field: 'categoryName', title: '资产分类', width: 150, fixed: 'left' },
-        { field: 'pictureName', title: '资产图片', width: 80, slots: { default: 'pictureName' } },
+        { type: 'seq', width: 70, align: 'center', fixed: 'left', visible: true, slots: { header: 'seqHeader' } },
+        { field: 'assetCode', title: '资产编号', fixed: 'left', width: 130 },
+        { field: 'assetName', title: '资产名称', fixed: 'left', width: 150 },
+        { field: 'categoryName', title: '资产分类', width: 150 },
+        { field: 'pictureName', title: '资产图片', width: 90, slots: { default: 'pictureName' } },
+        { field: 'currentUserName', title: '使用人', width: 130 },
+        { field: 'currentOrgName', title: '使用部门', width: 130 },
+        { field: 'currentLocationName', title: '使用区域', width: 200, slots: { default: 'currentLocationName', edit: 'currentLocationName' }, editRender: {} },
+        { field: 'schemeName', title: '方案名称', width: 160, slots: { edit: 'schemeName' } },
+        { field: 'remarks', title: '备注', width: 100, slots: { edit: 'remarks' }, editRender: {}, headerAlign: 'center', align: 'left' },
+        { field: 'inventoryQuantity', title: '库存数量', width: 110, headerAlign: 'center', align: 'right', formatter: ['formatMoney', this.formData.materialType == 1 ? 0 : 3] },
+        { field: 'borrowCollectQuantity', title: '借用/领用数量', width: 130, headerAlign: 'center', align: 'right' },
+        { field: 'returnQuantity', title: '本次归还数量', width: 130, headerAlign: 'center', align: 'right', slots: { default: 'returnQuantity', edit: 'returnQuantity' }, editRender: {} },
+        { field: 'quantityUnit', title: '数量单位', width: 80 },
         { field: 'serialNum', title: '序列号', width: 100 },
         { field: 'specificationModel', title: '规格型号', width: 100 },
-        { field: 'usePurpose', title: '使用目的', width: 130, slots: { default: 'usePurpose', edit: 'usePurpose' }, editRender: {} },
-        { field: 'currentLocationName', title: '使用区域', width: 160, slots: { default: 'currentLocationName', edit: 'currentLocationName' }, editRender: {} },
-        { field: 'schemeName', title: '方案名称', width: 160, slots: { edit: 'schemeName' }, editRender: {} },
-        { field: 'remarks', title: '备注', width: 100, slots: { edit: 'remarks' }, editRender: {}, headerAlign: 'center', align: 'left' },
-        { field: 'borrowQuantity', title: '借用数量', width: 130, slots: { default: 'borrowQuantity', edit: 'borrowQuantity' }, editRender: {} },
-        { field: 'inventoryQuantity', title: '库存数量', width: 110, headerAlign: 'center', align: 'right', formatter: ['formatMoney', this.formData.materialType == 1 ? 0 : 3] },
-        { field: 'quantityUnit', title: '数量单位', width: 80 },
-        { field: 'brandName', title: '品牌', width: 130 },
+        { field: 'brandName', title: '品牌', width: 100 },
         { field: 'priceExcludTax', title: '不含税单价（元）', width: 160, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { field: 'taxRate', title: '税率（%）', width: 90, headerAlign: 'center', align: 'right' },
+        { field: 'taxRate', title: '税率（%）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
         { field: 'taxAmount', title: '税额（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
         { field: 'priceIncludTax', title: '含税单价（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
         { field: 'subtotal', title: '金额小计（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { field: 'discountAmount', title: '优惠金额（元）', width: 130, editRender: {}, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { field: 'currentUserName', title: '使用人', width: 130 },
-        { field: 'currentOrgName', title: '使用部门', width: 130 },
+        { field: 'discountAmount', title: '优惠金额（元）', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
         { field: 'firstShelfName', title: '存放货架', width: 180, slots: { default: 'firstShelfName' } },
         { field: 'assetCharacteristic', title: '资产特性', width: 160, slots: { default: 'assetCharacteristic' } },
         { field: 'assetPhysicalState', title: '资产物态', width: 160, slots: { default: 'assetPhysicalState' } },
@@ -183,7 +175,7 @@ export default {
         { field: 'termValidity', title: '有效期', width: 130 },
         { field: 'startDate', title: '启用日期', width: 130 },
         { field: 'ynInviteTender', title: '招标资产编码', width: 130 },
-        { field: 'todo', title: '操作', width: 120, slots: { default: 'todo' }, fixed: 'right', visible: this.showBtn }
+        { field: 'todo', title: '操作', width: 120, slots: { default: 'todo' }, fixed: 'right', visible: this.showBtn && this.editForm }
       ]
     },
     standBookQuery() {
@@ -193,15 +185,21 @@ export default {
     }
   },
   watch: {
-    'formData.clmConsumableBorrowDetailList': {
+    'formData.clmConsumableReturnDetailList': {
       handler(newVal, oldVal) {
-        this.tableData = newVal
+        if (newVal && newVal.length > 0) {
+          this.tableData = newVal
+        }
       },
       immediate: true
     }
   },
+  created() {
+    this.getUserArea()
+    this.getDictData()
+  },
   methods: {
-    // 全选  单选
+    // 列表 全选 单选
     changeCheck() {
       this.selectRows = this.$refs.xTable.getCheckboxRecords()
       this.btnDisabled = this.selectRows.length <= 0
@@ -223,44 +221,11 @@ export default {
         this.$set(item, 'currentOrgName', this.formData.userOrgName)
         this.$set(item, 'currentCompanyId', this.formData.companyId)
         this.$set(item, 'currentCompanyName', this.formData.companyName)
-        this.$set(item, 'currentEreaId', this.formData.useAreaId)
-        this.$set(item, 'currentEreaName', this.formData.useAreaName)
-        this.$set(item, 'currentLocationId', this.formData.specificLocationId)
-        this.$set(item, 'currentLocationName', this.formData.specificLocationName)
-        this.$set(item, 'borrowQuantity', null)
-        if (!item.subscriptionId) {
-          item.discountAmount = undefined
-        }
+        this.$set(item, 'borrowCollectQuantity', this.formData.specificLocationName)
+        this.$set(item, 'returnQuantity', null)
         return item
       })
       this.$emit('calculate', this.tableData)
-    },
-    // 选择具体位置
-    selectAreaHandler(val) {
-      var list = this.$refs.xTable.getCheckboxRecords()
-      list.forEach((item) => {
-        this.$set(item, 'currentEreaId', val.data.parentId)
-        this.$set(item, 'currentEreaName', val.data.parentName)
-        this.$set(item, 'currentLocationId', val.data.locationAddressId)
-        this.$set(item, 'currentLocationName', val.data.locationName)
-      })
-    },
-    // 批量删除行
-    handleDeleteBatch() {
-      var list = this.$refs.xTable.getCheckboxRecords()
-      if (list.length == 0 || !list) {
-        this.$message({
-          message: `请选择数据！`,
-          type: 'warning'
-        })
-        return
-      }
-      list.forEach((item) => {
-        var index = this.tableData.findIndex((temp) => {
-          return item.sort == temp.sort
-        })
-        this.tableData.splice(index, 1)
-      })
     },
     // 行编辑
     async editRow(row) {
@@ -289,7 +254,7 @@ export default {
     async saveRow(row) {
       var errMap = await this.$refs.xTable.validate(row).catch((errMap) => errMap)
       if (!errMap) {
-        this.$set(row, 'subtotal', this.$vxe.multiply(row.borrowQuantity, row.priceIncludTax))
+        this.$set(row, 'subtotal', this.$vxe.multiply(row.returnQuantity, row.priceIncludTax))
         this.$refs.xTable.clearActived(row)
         this.$emit('calculate', this.tableData)
         return
@@ -331,18 +296,24 @@ export default {
         this.$set(row, 'currentLocationName', '')
       }
     },
-    // 图片查看大图
-    openImg(row) {
-      this.imgList = [row.pictureRui]
-      this.elImageViewer = true
+    // 获取使用区域树
+    getUserArea() {
+      listAddressQueryUseAreaTree().then((res) => {
+        this.useAreaTree = res.data
+        this.useAreaTree.forEach((item) => {
+          if (!item.children) {
+            item['disabled'] = true
+          }
+        })
+      })
     },
-    // 关闭大图预览
-    imgViewerClose() {
-      this.elImageViewer = false
-    },
-    // 表尾合计
-    getFooterData({ columns, data }) {
-      return this.footerMethod(columns, data, '', ['borrowQuantity', 'priceExcludTax', 'taxAmount', 'priceIncludTax', 'subtotal', 'discountAmount'], 1)
+    // 获取字典表数据
+    getDictData() {
+      var dictCodes = 'AamMaterialAccount-assetCharacteristic' // 资产特性
+      dictCodes += ',AamMaterialAccount-assetPhysicalState' // 资产物态
+      listDictItems(dictCodes).then((res) => {
+        this.dictDataList = res.sysDictionaryItemsList
+      })
     },
     // 校验明细表
     validTable() {
@@ -352,9 +323,49 @@ export default {
         })
       })
     },
-    // 导出借用资产明细
+    // 选择具体位置
+    selectAreaHandler(val) {
+      var list = this.$refs.xTable.getCheckboxRecords()
+      list.forEach((item) => {
+        this.$set(item, 'currentEreaId', val.data.parentId)
+        this.$set(item, 'currentEreaName', val.data.parentName)
+        this.$set(item, 'currentLocationId', val.data.locationAddressId)
+        this.$set(item, 'currentLocationName', val.data.locationName)
+      })
+    },
+    // 批量删除
+    handleDeleteBatch() {
+      var list = this.$refs.xTable.getCheckboxRecords()
+      if (list.length == 0 || !list) {
+        this.$message({
+          message: `请选择数据！`,
+          type: 'warning'
+        })
+        return
+      }
+      list.forEach((item) => {
+        var index = this.tableData.findIndex((temp) => {
+          return item.sort == temp.sort
+        })
+        this.tableData.splice(index, 1)
+      })
+    },
+    // 图片查看大图
+    openImg(row) {
+      this.imgList = [row.pictureRui]
+      this.elImageViewer = true
+    },
+    // 关闭大图查看
+    imgViewerClose() {
+      this.elImageViewer = false
+    },
+    // 表尾合计
+    getFooterData({ columns, data }) {
+      return this.footerMethod(columns, data, '', ['inventoryQuantity', 'borrowCollectQuantity', 'returnQuantity', 'priceExcludTax', 'taxAmount', 'priceIncludTax', 'subtotal', 'discountAmount'], 1)
+    },
+    // 导出归还资产明细
     exportAssetDeatil() {
-      this.download('/consume/borrowDetail/export', { consumableBorrowId: this.formData.consumableBorrowId }, `耗材借用明细_${new Date().getTime()}.xlsx`)
+      this.download('/consume/returnDetail/export', { consumableBorrowId: this.formData.consumableBorrowId }, `耗材归还明细_${new Date().getTime()}.xlsx`)
     }
   }
 }
