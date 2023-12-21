@@ -325,21 +325,38 @@ export default {
       this.load()
     },
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'consumableBorrow-borrowUpdate' : 'consumableBorrow-borrowAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/consumable/borrow',
+          module: 'Consumable',
+          fullPath: '/consumable/borrow/edit',
+          title: '编辑耗材借用',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/consumable/borrow',
+          module: 'Consumable',
+          fullPath: '/consumable/borrow/add',
+          title: '新增耗材借用'
+        })
+      }
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
-      this.$router.push({
-        name: 'consumableBorrow-borrowUpdate',
-        query: {
-          id: row.consumableBorrowId,
-          todo: todo
-        }
+      var statusObj = {
+        audit_superior: '审批',
+        recall_add: '撤回',
+        register_asset_admin: '登记',
+        recall_superior: '撤回',
+        invalid_add: '作废'
+      }
+      window.$wujie.props.route({
+        path: '/consumable/borrow',
+        module: 'Consumable',
+        fullPath: '/consumable/borrow/edit',
+        title: `耗材借用${statusObj[todo]}`,
+        condition: { id: row.consumableBorrowId, todo: todo }
       })
     },
     // 获取字典表
@@ -352,11 +369,12 @@ export default {
       })
     },
     detailHandle(id) {
-      this.$router.push({
-        name: 'consumableBorrow-borrowDetail',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/consumable/borrow',
+        module: 'Consumable',
+        fullPath: '/consumable/borrow/detail',
+        title: '耗材借用详情',
+        condition: { id }
       })
     },
     handleDelete(row) {
