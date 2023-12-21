@@ -42,6 +42,26 @@ export function delReceipt(consumableReceiptId) {
     method: 'delete'
   })
 }
+
+// 新增耗材入库单信息
+export function generateReceiptAssetCode(data) {
+  return request({
+    url: '/consume/receipt/generateAssetCode',
+    method: 'post',
+    data: data
+  })
+}
+
+// 审核资产入库单信息
+export function approveReceipt (data) {
+  return request({
+    url: '/consume/receipt/approve',
+    method: 'post',
+    data: data
+  })
+}
+
+
 // 获取入库单合计
 export function getTotalAmount (query) {
   return request({

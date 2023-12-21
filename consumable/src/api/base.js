@@ -148,3 +148,94 @@ export function listUser (query) {
     params: query
   })
 }
+// 查询部门下拉树结构
+export function deptTreeSelect() {
+  return request({
+    url: '/system/user/deptTree',
+    method: 'get'
+  })
+}
+
+// 带查询条件下拉树结构
+export function queryAddressTreeSelect (query) {
+  return request({
+    url: '/library/address/addressTree',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询一级和二级货架
+export function queryCompanyWarehouseShelfTreeList (query) {
+  return request({
+    url: '/library/address/queryCompanyWarehouseShelfTreeList',
+    method: 'get',
+    params: query
+  })
+}
+// 查询申购单未发货的资产明细
+export function queryUnShippedByPurchaseApplicationId (query) {
+  return request({
+    url: '/srm/material/queryUnShippedByPurchaseApplicationId',
+    method: 'get',
+    params: query
+  })
+}
+// 查询库位地址使用区域信息
+export function listAddressQueryUseAreaTree (query) {
+  return request({
+    url: '/library/address/queryUseAreaTree',
+    method: 'get',
+    params: query
+  })
+}
+// 查询部门下拉树结构
+export function categoryTreeSelect() {
+  return request({
+    url: '/library/category/categoryTree',
+    method: 'get'
+  })
+}
+// 查询物资基础信息列表
+export function listMaterialQuery(query) {
+  return request({
+    url: '/library/material/queryList',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询资产台账信息列表
+export function listAccount(query) {
+  return request({
+    url: '/asset/account/list',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询耗材台账信息列表
+export function listConsumeAccount(query) {
+  return request({
+    url: '/consume/account/list',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询礼品台账信息列表
+export function listGiftAccount(query) {
+  return request({
+    url: '/gift/account/list',
+    method: 'get',
+    params: query
+  })
+}
+// 查询部门下拉树结构
+export function deptTreeFilter(query) {
+  return request({
+    url: '/system/user/deptTree',
+    method: 'get',
+    params: query
+  })
+}
