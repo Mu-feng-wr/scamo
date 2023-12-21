@@ -19,14 +19,15 @@ import 'vxe-table/lib/style.css'
 import directive from './directive' // directive
 Vue.use(directive)
 
+import elImageViewer from 'element-ui/packages/image/src/image-viewer'
+Vue.component('elImageViewer', elImageViewer)
 Vue.use(ElementUI)
 
 import { download } from '@/utils/request.js'
-if (window.$wujie) {
-  Vue.prototype.download = window.$wujie.props.download
-} else {
-  Vue.prototype.download = download
-}
+Vue.prototype.download = download
+
+import Print from 'vue-print-nb'
+Vue.use(Print) // 注册
 
 Vue.config.productionTip = false
 

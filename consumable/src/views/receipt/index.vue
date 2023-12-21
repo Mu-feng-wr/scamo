@@ -369,29 +369,46 @@ export default {
     },
     // 新增 编辑
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'consumableReceipt-receiptUpdate' : 'consumableReceipt-receiptAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/consumable/receipt',
+          module: 'Consumable',
+          fullPath: '/consumable/receipt/edit',
+          title: '编辑耗材入库',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/consumable/receipt',
+          module: 'Consumable',
+          fullPath: '/consumable/receipt/add',
+          title: '新增耗材入库'
+        })
+      }
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
-      this.$router.push({
-        name: 'consumableReceipt-receiptUpdate',
-        query: {
-          id: row.consumableReceiptId,
-          todo: todo
-        }
+      var statusObj = {
+        audit_superior: '审批',
+        recall_add: '撤回',
+        register_asset_admin: '登记',
+        recall_superior: '撤回',
+        invalid_add: '作废'
+      }
+      window.$wujie.props.route({
+        path: '/consumable/receipt',
+        module: 'Consumable',
+        fullPath: '/consumable/receipt/edit',
+        title: `耗材入库${statusObj[todo]}`,
+        condition: { id: row.consumableReceiptId, todo: todo }
       })
     },
     // 删除
     handleDelete(row) {
-      this.$modal.confirm('是否确认删除耗材入库单信息编号为"' + row.consumableReceiptCode + '"的数据项？').then(() => {
+      this.$confirm('是否确认删除耗材入库单信息编号为"' + row.consumableReceiptCode + '"的数据项？').then(() => {
         delReceipt(row.consumableReceiptId).then(() => {
           this.reload()
-          this.$modal.msgSuccess('删除成功')
+          this.$message.success('删除成功')
         })
       })
     },

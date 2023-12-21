@@ -1,5 +1,5 @@
 <template>
-  <PageCard v-loading="submitLoading">
+  <PageCard v-loading="submitLoading" :return-url="returnUrl">
     <el-form ref="form" :disabled="!editForm" :model="formData" :rules="rules" label-width="170px" class="form-table form-table-edit" style="margin-bottom: 8px">
       <SectionCard title="基本信息">
         <el-row>
@@ -317,7 +317,7 @@
       </SectionCard>
     </el-form>
     <SectionCard class="mt-8" title="耗材明细">
-      <!-- <assetReceiptDetail ref="assetDetail" :edit-form="editForm" v-bind="{useAreaTree}" :form-data="formData" @calculate="calculate" /> -->
+      <consumableReceiptDetail ref="consumableReceiptDetail" :edit-form="editForm" v-bind="{useAreaTree}" :form-data="formData" @calculate="calculate" />
     </SectionCard>
     <SectionCard v-if="formData.status" title="处理记录" class="mt-8">
       <handleRecords :table-data="formData.assetReviewAuditList" />
@@ -359,14 +359,15 @@
 </template>
 <script>
 import { getReceipt, addReceipt, updateReceipt, approveReceipt, generateReceiptAssetCode } from '@/api/receipt.js'
-// import assetReceiptDetail from '@/views/consume/receipt/components/assetReceiptDetail.vue'
+import consumableReceiptDetail from './components/consumableReceiptDetail.vue'
 import { listDictItems, listAddressQueryUseAreaTree } from '@/api/base.js'
 export default {
   components: {
-    // assetReceiptDetail,
+    consumableReceiptDetail
   },
   data() {
     return {
+      returnUrl: '/consumable/receipt',
       submitLoading: false,
       formData: {},
       userDialogVisible: false,
@@ -485,14 +486,14 @@ export default {
     submitForm(status, ynGenLine) {
       this.$refs['form'].validate(async (valid) => {
         if (valid) {
-          if (this.$refs.assetDetail.tableData.length == 0) {
+          if (this.$refs.consumableReceiptDetail.tableData.length == 0) {
             this.$message({
               type: 'warning',
               message: '请添加明细表数据'
             })
             return
           }
-          if (await this.$refs.assetDetail.validTable()) {
+          if (await this.$refs.consumableReceiptDetail.validTable()) {
             return
           }
           if (this.editId && status == 2 && !this.formData.curProcessOptions) {
@@ -506,7 +507,7 @@ export default {
           var submitData = {
             ...this.formData,
             ...{
-              clmConsumableReceiptDetailList: this.$refs.assetDetail.tableData.map((item, i) => {
+              clmConsumableReceiptDetailList: this.$refs.consumableReceiptDetail.tableData.map((item, i) => {
                 item.sort = i + 1
                 return item
               }),
@@ -525,12 +526,11 @@ export default {
                   return
                 }
                 this.submitLoading = false
-                this.$modal.msgSuccess('修改成功')
+                this.$message.success('修改成功')
                 if (status == 0) {
                   this.init()
                   return
                 }
-                this.$router.back()
               })
               .finally(() => {
                 this.submitLoading = false
@@ -539,16 +539,17 @@ export default {
             addReceipt(submitData)
               .then((res) => {
                 this.submitLoading = false
-                this.$modal.msgSuccess('新增成功')
+                this.$message.success('新增成功')
                 setTimeout(() => {
-                  this.$router.push({
-                    name: 'consumableReceipt-receiptUpdate',
-                    query: {
-                      id: res.msg
-                    }
+                  window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  window.$wujie.props.route({
+                    path: '/consumable/receipt',
+                    module: 'Consumable',
+                    fullPath: '/consumable/receipt/edit',
+                    title: '编辑耗材入库',
+                    condition: { id: res.msg }
                   })
-                }, 300)
-                // Global.$emit('closeCurrentTag', this.$route)
+                }, 500)
               })
               .finally(() => [(this.submitLoading = false)])
           }
@@ -569,21 +570,21 @@ export default {
     generateReceiptAssetCode(status, ynGenLine) {
       this.$refs['form'].validate(async (valid) => {
         if (valid) {
-          if (this.$refs.assetDetail.tableData.length == 0) {
+          if (this.$refs.consumableReceiptDetail.tableData.length == 0) {
             this.$message({
               type: 'warning',
               message: '请添加明细表数据'
             })
             return
           }
-          if (await this.$refs.assetDetail.validTable()) {
+          if (await this.$refs.consumableReceiptDetail.validTable()) {
             return
           }
 
           var submitData = {
             ...this.formData,
             ...{
-              clmConsumableReceiptDetailList: this.$refs.assetDetail.tableData.map((item, i) => {
+              clmConsumableReceiptDetailList: this.$refs.consumableReceiptDetail.tableData.map((item, i) => {
                 item.sort = i + 1
                 return item
               }),
@@ -596,24 +597,17 @@ export default {
           generateReceiptAssetCode(submitData).then((res) => {
             if (this.editId != null) {
               this.submitLoading = false
-              this.$modal.msgSuccess('生成耗材编码成功')
+              this.$message.success('生成耗材编码成功')
               if (status == 0) {
                 this.init()
                 return
               }
-              this.$router.back()
             } else {
               this.submitLoading = false
-              this.$modal.msgSuccess('生成耗材编码成功')
+              this.$message.success('生成耗材编码成功')
               setTimeout(() => {
-                this.$router.push({
-                  name: 'consumableReceipt-receiptUpdate',
-                  query: {
-                    id: res.msg
-                  }
-                })
-              }, 300)
-              // Global.$emit('closeCurrentTag', this.$route)
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+              }, 500)
             }
           }).finally(() => {
             this.submitLoading = false
@@ -673,10 +667,10 @@ export default {
           }
           approveReceipt(submitData)
             .then((response) => {
-              this.$modal.msgSuccess(`${obj[curProcessResult]}！`)
+              this.$message.success(`${obj[curProcessResult]}！`)
               this.submitLoading = false
               setTimeout(() => {
-                // Global.$emit('closeCurrentTag', this.$route)
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
               }, 1000)
             })
             .catch(() => {
