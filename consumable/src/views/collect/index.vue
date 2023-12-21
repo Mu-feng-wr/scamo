@@ -311,36 +311,54 @@ export default {
     },
     // 新增  修改
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'consumableCollect-collectUpdate' : 'consumableCollect-collectAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/consumable/collect',
+          module: 'Consumable',
+          fullPath: '/consumable/collect/edit',
+          title: '编辑耗材领用',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/consumable/collect',
+          module: 'Consumable',
+          fullPath: '/consumable/collect/add',
+          title: '新增耗材领用'
+        })
+      }
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
-      this.$router.push({
-        name: 'consumableCollect-collectUpdate',
-        query: {
-          id: row.consumableCollectId,
-          todo: todo
-        }
+      var statusObj = {
+        audit_superior: '审批',
+        recall_add: '撤回',
+        register_asset_admin: '登记',
+        recall_superior: '撤回',
+        invalid_add: '作废'
+      }
+      window.$wujie.props.route({
+        path: '/consumable/collect',
+        module: 'Consumable',
+        fullPath: '/consumable/collect/edit',
+        title: `耗材领用${statusObj[todo]}`,
+        condition: { id: row.consumableReceiptId, todo: todo }
       })
     },
     handleDetail(row) {
-      this.$router.push({
-        name: 'consumableCollect-collectDetail',
-        query: {
-          id: row.consumableCollectId
-        }
+      window.$wujie.props.route({
+        path: '/consumable/collect',
+        module: 'Consumable',
+        fullPath: '/consumable/collect/detail',
+        title: '耗材领用详情',
+        condition: { id: row.consumableCollectId }
       })
     },
     handleDelete(row) {
-      this.$modal.confirm('是否确认删除资产领用单信息编号为"' + row.consumableCollectCode + '"的数据项？').then(() => {
+      this.$confirm('是否确认删除资产领用单信息编号为"' + row.consumableCollectCode + '"的数据项？').then(() => {
         delCollect(row.consumableCollectId).then(() => {
           this.reload()
-          this.$modal.msgSuccess('删除成功')
+          this.$message.success('删除成功')
         })
       })
     },

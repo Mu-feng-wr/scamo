@@ -9,15 +9,15 @@
       <div id="printWrap" ref="demo" class="print_obj bgClass">
         <div v-html="styleText"></div>
         <el-card class="box-card" style="page-break-after: always">
-          <div slot="header" class="clearfix text-tip">{{ printData.accountName }}</div>
-          <div slot="header" class="clearfix text-tip">{{ $vxe.toDateString(printData.registeDate,'yyyy')+'年'+$vxe.toDateString(printData.registeDate,'MM')+'月' }}耗材入库确认单</div>
+          <div slot="header" class="clearfix text-tip">{{ $store.state.user.info.companyName }}</div>
+          <div slot="header" class="clearfix text-tip">{{ $vxe.toDateString(printData.collectDate,'yyyy')+'年'+$vxe.toDateString(printData.collectDate,'MM')+'月' }}耗材领用出库签收单</div>
 
           <el-row>
             <el-col :span="8">
-              <el-form-item label="入库单号">{{ printData.consumableReceiptCode }}</el-form-item>
+              <el-form-item label="领用单号">{{ printData.consumableCollectCode }}</el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="入库日期">{{ $vxe.toDateString(printData.registeDate, "yyyy-MM-dd") }}</el-form-item>
+              <el-form-item label="领用日期">{{ printData.collectDate }}</el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="业务类别">{{ printData.centralizedBusinessName }}</el-form-item>
@@ -25,10 +25,10 @@
           </el-row>
           <el-row>
             <el-col :span="8">
-              <el-form-item label="验收人">{{ printData.accepterName }}</el-form-item>
+              <el-form-item label="使用人">{{ printData.userName }}</el-form-item>
             </el-col>
             <el-col :span="8">
-              <el-form-item label="验收部门">{{ printData.accepterOrgName }}</el-form-item>
+              <el-form-item label="使用部门">{{ printData.userOrgName }}</el-form-item>
             </el-col>
             <el-col :span="8">
               <el-form-item label="制单日期">{{ $vxe.toDateString(new Date(), "yyyy-MM-dd") }}</el-form-item>
@@ -38,8 +38,8 @@
           <table class="el-table">
             <thead>
               <tr>
-                <td>耗材编号</td>
-                <td>耗材名称</td>
+                <td>资产编号</td>
+                <td>资产名称</td>
                 <td>数量</td>
                 <td>单位</td>
                 <td>含税单价（元）</td>
@@ -47,7 +47,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr v-for="(item, index) in printData.clmConsumableReceiptDetailList" :key="index">
+              <tr v-for="(item, index) in printData.clmConsumableCollectDetailList" :key="index">
                 <td>{{ item.assetCode }}</td>
                 <td>
                   {{ item.serialNum?item.serialNum+'-':'' }}
@@ -55,17 +55,16 @@
                   {{ item.brandName }}
                   {{ item.assetName?'-'+item.assetName:'' }}
                 </td>
-                <td>{{ item.receiptQuantity }}</td>
+                <td>{{ item.collectQuantity }}</td>
                 <td>{{ item.quantityUnit }}</td>
                 <td>{{ $vxe.commafy(item.priceIncludTax,{digits:3}) }}</td>
                 <td>
-                  <dictDateView :value="printData.accepterMethod" :dict-data-list="dictDataList" dict-code="AlmAssetReceipt-accepterMethod" />-
-                  <dictDateView :value="printData.assetSource" :dict-data-list="dictDataList" dict-code="AlmAssetReceipt-assetSource" />
-                  {{ item.warehouseName?'-'+item.warehouseName:'' }}
+                  {{ item.currentEreaName }}{{ item.currentLocationName?'/'+item.currentLocationName:'' }}
+                  {{ item.collectReason&&item.currentEreaName?'-'+item.collectReason:item.collectReason }}
                   {{ item.remarks?'-'+item.remarks:'' }}
                 </td>
               </tr>
-              <template v-if="printData.clmConsumableReceiptDetailList && printData.clmConsumableReceiptDetailList.length < 3">
+              <template v-if="printData.clmConsumableCollectDetailList && printData.clmConsumableCollectDetailList.length < 3">
                 <tr>
                   <td v-for="(item, index) in 6" :key="index"></td>
                 </tr>
@@ -76,7 +75,7 @@
               <tr>
                 <td>情况说明</td>
                 <td colspan="5">
-                  <div class="u-line-1">{{ printData.receiptReason }}</div>
+                  <div class="u-line-1">{{ printData.collectReason }}</div>
                   <div class="u-line-1">{{ getRecords() }}</div>
                 </td>
               </tr>
@@ -85,10 +84,10 @@
 
           <el-row>
             <el-col :span="8">
-              <el-form-item label="确认人" />
+              <el-form-item label="签收人" />
             </el-col>
             <el-col :span="8">
-              <el-form-item label="确认日期" />
+              <el-form-item label="签收日期" />
             </el-col>
             <el-col :span="8">
               <el-form-item label="资产管理员" />
@@ -175,7 +174,7 @@ export default {
     height: inherit;
   }
   .bgClass {
-    // -webkit-print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
     /* font-size: 10px; */
     font-size: 14px;
     width: 98%;

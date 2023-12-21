@@ -350,11 +350,12 @@ export default {
       this.load()
     },
     detailHandle(id) {
-      this.$router.push({
-        name: 'consumableReceipt-receiptDetail',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/consumable/receipt',
+        module: 'Consumable',
+        fullPath: '/consumable/receipt/detail',
+        title: '耗材入库详情',
+        condition: { id }
       })
     },
     handlePageChange(value, type) {
