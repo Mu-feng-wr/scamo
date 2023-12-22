@@ -103,8 +103,8 @@
               show-overflow="tooltip"
             >
               <template #seqHeader>序号</template>
-              <template #assetScrapCode="{row}">
-                <el-link type="primary" :underline="false" @click="detailHandle(row.assetScrapId)">{{ row.assetScrapCode }}</el-link>
+              <template #consumableScrapCode="{row}">
+                <el-link type="primary" :underline="false" @click="detailHandle(row.consumableScrapId)">{{ row.consumableScrapCode }}</el-link>
               </template>
               <template #sourceTerminal="{row}">
                 <dictDateView :value="row.sourceTerminal" :dict-data-list="dictDataList" dict-code="System-sourceTerminal" />
@@ -114,8 +114,8 @@
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
-                  <el-button size="mini" type="text" @click="detailHandle(row.assetScrapId)">查看</el-button>
-                  <el-button v-if="row.status == 0|| row.status == 3" v-hasPermi="['asset:return:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.assetScrapId)">修改</el-button>
+                  <el-button size="mini" type="text" @click="detailHandle(row.consumableScrapId)">查看</el-button>
+                  <el-button v-if="row.status == 0|| row.status == 3" v-hasPermi="['asset:return:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.consumableScrapId)">修改</el-button>
                   <el-button
                     v-if="row.status == 2 && (row.assetReviewAuditVO&&row.assetReviewAuditVO.processId=='DIRECT_SUPERIOR_APPROVAL')"
                     v-hasPermi="['asset:scrap:audit']"
@@ -193,17 +193,17 @@ export default {
       dictDataList: [],
       tableColumn: [
         { type: 'seq', width: 70, align: 'center', fixed: 'left', visible: true, visibleDisabled: true, slots: { header: 'seqHeader' } },
-        { showOverflow: true, visible: true, field: 'assetScrapCode', title: '终结单号', width: 150, visibleDisabled: true, fixed: 'left', slots: { default: 'assetScrapCode' } },
-        { showOverflow: true, visible: true, field: 'scrapDate', title: '终结日期', width: 130, visibleDisabled: true, fixed: 'left' },
-        { showOverflow: true, visible: true, field: 'centralizedBusinessName', title: '业务类型', visibleDisabled: true, width: 130, fixed: 'left' },
-        { showOverflow: true, visible: true, field: 'applicantName', title: '申请人', width: 130 },
-        { showOverflow: true, visible: true, field: 'applicantOrgName', title: '申请部门', width: 130 },
-        { showOverflow: true, visible: true, field: 'applicantCompanyName', title: '申请公司', width: 200, headerAlign: 'center', align: 'left' },
-        { showOverflow: true, visible: true, field: 'assetQuantity', title: '资产数量', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { showOverflow: true, visible: true, field: 'assetAmount', title: '资产含税金额（元）', width: 160, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
-        { showOverflow: true, visible: true, field: 'terminatorName', title: '终结人', width: 130 },
-        { showOverflow: true, visible: true, field: 'terminatorOrgName', title: '终结部门', width: 130 },
-        { showOverflow: true, visible: true, field: 'scrapReason', title: '终结原因', width: 220, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'consumableScrapCode', title: '处置单号', width: 150, visibleDisabled: true, fixed: 'left', slots: { default: 'consumableScrapCode' } },
+        { visible: true, field: 'scrapDate', title: '处置日期', width: 130, visibleDisabled: true, fixed: 'left' },
+        { visible: true, field: 'centralizedBusinessName', title: '业务类型', visibleDisabled: true, width: 130, fixed: 'left' },
+        { visible: true, field: 'applicantName', title: '申请人', width: 130 },
+        { visible: true, field: 'applicantOrgName', title: '申请部门', width: 130 },
+        { visible: true, field: 'applicantCompanyName', title: '申请公司', width: 200, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'assetQuantity', title: '资产数量', width: 130, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { visible: true, field: 'assetAmount', title: '资产含税金额（元）', width: 160, headerAlign: 'center', align: 'right', formatter: 'formatMoney' },
+        { visible: true, field: 'terminatorName', title: '终结人', width: 130 },
+        { visible: true, field: 'terminatorOrgName', title: '终结部门', width: 130 },
+        { visible: true, field: 'scrapReason', title: '终结原因', width: 220, headerAlign: 'center', align: 'left' },
         {
           showOverflow: true,
           visible: true,
@@ -214,13 +214,13 @@ export default {
           align: 'right',
           formatter: 'formatMoney'
         },
-        { showOverflow: true, visible: true, field: 'projectCode', title: '项目编号', width: 130 },
-        { showOverflow: true, visible: true, field: 'projectName', title: '项目名称', width: 170, headerAlign: 'center', align: 'left' },
-        { showOverflow: true, visible: true, field: 'maintainerCompanyName', title: '回收供应商', width: 130 },
-        { showOverflow: true, visible: true, field: 'sourceTerminal', title: '使用终端', width: 130, slots: { default: 'sourceTerminal' } },
-        // { showOverflow: true, visible: true, field: 'createDate', title: '创建时间', width: 130 },
-        // { showOverflow: true, visible: true, field: 'updateDate', title: '更新时间', width: 130 },
-        { showOverflow: true, visible: true, field: 'status', title: '状态', width: 130, slots: { default: 'status' } },
+        { visible: true, field: 'projectCode', title: '项目编号', width: 130 },
+        { visible: true, field: 'projectName', title: '项目名称', width: 170, headerAlign: 'center', align: 'left' },
+        { visible: true, field: 'maintainerCompanyName', title: '回收供应商', width: 130 },
+        { visible: true, field: 'sourceTerminal', title: '使用终端', width: 130, slots: { default: 'sourceTerminal' } },
+        // { visible: true, field: 'createDate', title: '创建时间', width: 130 },
+        // { visible: true, field: 'updateDate', title: '更新时间', width: 130 },
+        { visible: true, field: 'status', title: '状态', width: 130, slots: { default: 'status' } },
         { field: 'todo', title: '操作', width: 200, slots: { default: 'todo' }, fixed: 'right' }
       ]
     }
@@ -288,38 +288,56 @@ export default {
     },
     // 查看
     detailHandle(id) {
-      this.$router.push({
-        name: 'scrap-scrapDetail',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/consumable/scrap',
+        module: 'Consumable',
+        fullPath: '/consumable/scrap/detail',
+        title: '耗材处置详情',
+        condition: { id }
       })
     },
     // 新增 编辑
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'consumableScrap-scrapUpdate' : 'consumableScrap-scrapAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/consumable/scrap',
+          module: 'Consumable',
+          fullPath: '/consumable/scrap/edit',
+          title: '编辑耗材处置',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/consumable/scrap',
+          module: 'Consumable',
+          fullPath: '/consumable/scrap/add',
+          title: '新增耗材处置'
+        })
+      }
     },
     // 审批  登记  撤回   作废
     audit(row, todo) {
-      this.$router.push({
-        name: 'consumableScrap-scrapUpdate',
-        query: {
-          id: row.assetScrapId,
-          todo: todo
-        }
+      var statusObj = {
+        audit_superior: '审批',
+        recall_add: '撤回',
+        register_asset_admin: '登记',
+        recall_superior: '撤回',
+        invalid_add: '作废'
+      }
+      window.$wujie.props.route({
+        path: '/consumable/scrap',
+        module: 'Consumable',
+        fullPath: '/consumable/scrap/edit',
+        title: `耗材处置${statusObj[todo]}`,
+        condition: { id: row.assetScrapId, todo: todo }
       })
     },
     // 删除
     handleDelete(row) {
-      this.$modal.confirm('是否确认删除终结单信息编号为"' + row.assetScrapCode + '"的数据项？').then(() => {
+      this.$confirm('是否确认删除处置单信息编号为"' + row.consumableScrapCode + '"的数据项？').then(() => {
         delScrap(row.assetScrapId).then(() => {
           this.reload()
-          this.$modal.msgSuccess('删除成功')
+          this.$message.success('删除成功')
         })
       })
     },

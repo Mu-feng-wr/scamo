@@ -41,3 +41,12 @@ export function delScrap(consumableScrapId) {
     method: 'delete'
   })
 }
+
+// 审核耗材处置单信息
+export function approveScrap (data) {
+  return request({
+    url: '/consume/approve/Scrap',
+    method: 'post',
+    data: data
+  })
+}
