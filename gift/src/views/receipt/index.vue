@@ -393,7 +393,7 @@ export default {
     },
     // 删除
     handleDelete(row) {
-      this.$confirm('是否确认删除礼品入库单信息编号为"' + row.giftReceiptCode + '"的数据项？').then(() => {
+      this.$confirm('是否确认删除礼品入库单信息编号为"' + row.giftReceiptCode + '"的数据项？', '', { type: 'warning' }).then(() => {
         delReceipt(row.giftReceiptId).then(() => {
           this.reload()
           this.$message.success('删除成功')
