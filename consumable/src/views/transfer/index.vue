@@ -72,7 +72,7 @@
       <el-main style="padding:0;">
         <el-container>
           <el-header>
-            <el-row class="mb15">
+            <el-row class="mb-15">
               <el-col :span="12">
                 <el-button v-hasPermi="['srm:return:add']" type="primary" plain icon="el-icon-plus" size="mini" @click="addOrUpdateHandle()">新增调拨</el-button>
                 <el-button v-hasPermi="['srm:return:export']" plain icon="el-icon-upload2" size="mini" @click="handleExport">导出</el-button>
@@ -95,6 +95,8 @@
               :columns="tableColumn"
               :row-config="{isHover:true,isCurrent:true}"
               class="vxeTable"
+              auto-resize
+              show-overflow="tooltip"
               show-footer
               :footer-method="getFooterData"
             >
@@ -231,26 +233,37 @@ export default {
       this.load()
     },
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'consumableTransfer-transferUpdate' : 'consumableTransfer-transferAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/consumable/transfer',
+          module: 'Consumable',
+          fullPath: '/consumable/transfer/edit',
+          title: '编辑耗材调拨',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/consumable/transfer',
+          module: 'Consumable',
+          fullPath: '/consumable/transfer/add',
+          title: '新增耗材调拨'
+        })
+      }
     },
     detailHandle(id) {
-      this.$router.push({
-        name: 'consumableTransfer-transferDetail',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/consumable/transfer',
+        module: 'Consumable',
+        fullPath: '/consumable/transfer/detail',
+        title: '耗材调拨详情',
+        condition: { id }
       })
     },
     handleDelete(row) {
       this.$modal.confirm('是否确认删除资产调拨单信息编号为"' + row.consumableTransferCode + '"的数据项？').then(() => {
         delTransfer(row.consumableTransferId).then(() => {
           this.reload()
-          this.$modal.msgSuccess('删除成功')
+          this.$message.success('删除成功')
         })
       })
     },

@@ -57,7 +57,7 @@
       <el-main style="padding:0;">
         <el-container>
           <el-header>
-            <el-row class="mb15">
+            <el-row class="mb-15">
               <el-col :span="12">
                 <el-button v-hasPermi="['srm:return:add']" type="primary" plain icon="el-icon-plus" size="mini" @click="addOrUpdateHandle()">新增异动</el-button>
                 <el-button v-hasPermi="['srm:return:export']" plain icon="el-icon-upload2" size="mini" @click="handleExport">导出</el-button>
