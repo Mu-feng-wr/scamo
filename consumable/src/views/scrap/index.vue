@@ -91,7 +91,6 @@
               header-align="center"
               align="center"
               :data="tableData"
-              :pager-config="tablePage"
               border
               :resizable="true"
               :columns="tableColumn"
