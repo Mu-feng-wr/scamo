@@ -5,6 +5,8 @@ import tableHeaderConfig from '@/components/tableHeaderConfig/index.vue'
 import MoreQuery from '@/components/MoreQuery/index.vue'
 import PageCard from '@/components/PageCard/index.vue'
 import sectionCard from '@/components/sectionCard/index.vue'
+import InputRange from '@/components/InputRange/index.vue'
+import dictDataView from '@/components/dictDataView/index.vue'
 
 // 一些按钮组件
 import selectArea from './btnHandler/selectArea.vue'
@@ -42,7 +44,9 @@ const com = [
   purchaseApplication,
   MoreQuery,
   PageCard,
-  sectionCard
+  sectionCard,
+  InputRange,
+  dictDataView
 ]
 com.forEach(item => {
   Vue.component(item.name, item)
