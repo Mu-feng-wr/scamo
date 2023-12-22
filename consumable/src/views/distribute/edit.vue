@@ -1,44 +1,44 @@
 <template>
   <PageCard v-loading="submitLoading">
-    <el-form ref="form" :model="form" :rules="rules" label-width="170px" class="form-table form-table-edit" style="margin-bottom: 8px">
+    <el-form ref="form" :model="formData" :rules="rules" label-width="170px" class="form-table form-table-edit" style="margin-bottom: 8px">
       <SectionCard title="基本信息">
         <el-row>
           <el-col :span="8">
             <el-form-item label="派发单号">
-              <el-input disabled v-model="form.consumableDistributeCode" placeholder="系统自动生成" />
+              <el-input v-model="formData.consumableDistributeCode" disabled placeholder="系统自动生成" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请日期" prop="applicantDate">
-              <el-date-picker clearable v-model="form.applicantDate" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="请选择申请日期"></el-date-picker>
+              <el-date-picker v-model="formData.applicantDate" clearable type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="请选择申请日期" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="业务类型" prop="centralizedBusinessId">
               <base-input
-                baseCode="listType"
-                :value.sync="form.centralizedBusinessId"
-                :label.sync="form.centralizedBusinessName"
-                labelName="businessName"
-                valueName="businessId"
-                :preStore="[{businessId:form.centralizedBusinessId,businessName:form.centralizedBusinessName}]"
+                base-code="listType"
+                :value.sync="formData.centralizedBusinessId"
+                :label.sync="formData.centralizedBusinessName"
+                label-name="businessName"
+                value-name="businessId"
+                :pre-store="[{businessId:formData.centralizedBusinessId,businessName:formData.centralizedBusinessName}]"
                 placeholder="请选择业务类型"
               />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请人" prop="applicantName">
-              <el-input disabled v-model="form.applicantName" placeholder="请输入申请人" />
+              <el-input v-model="formData.applicantName" disabled placeholder="请输入申请人" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请部门" prop="applicantOrgName">
-              <el-input disabled v-model="form.applicantOrgName" placeholder="请输入申请部门" />
+              <el-input v-model="formData.applicantOrgName" disabled placeholder="请输入申请部门" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请公司" prop="applicantCompanyName">
-              <el-input disabled v-model="form.applicantCompanyName" placeholder="请输入申请公司" />
+              <el-input v-model="formData.applicantCompanyName" disabled placeholder="请输入申请公司" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -47,63 +47,63 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="派发日期" prop="distributeDate">
-              <el-date-picker v-model="form.distributeDate" type="date" placeholder="选择派发日期"></el-date-picker>
+              <el-date-picker v-model="formData.distributeDate" type="date" placeholder="选择派发日期" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="耗材数量 " prop="distributeQuantity">
-              <el-input-number disabled v-model="form.distributeQuantity" controls-position="right" :precision="3" placeholder="自动计算"></el-input-number>
+              <el-input-number v-model="formData.distributeQuantity" disabled controls-position="right" :precision="3" placeholder="自动计算" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="耗材含税金额（元） " prop="distributeAmount">
-              <el-input-number controls-position="right" disabled v-model="form.distributeAmount" :precision="3" placeholder="自动计算"></el-input-number>
+              <el-input-number v-model="formData.distributeAmount" controls-position="right" disabled :precision="3" placeholder="自动计算" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="派发人" prop="istributerName">
-              <el-input suffix-icon="el-icon-arrow-down" v-model="form.istributerName" placeholder="请选择派发人" @focus="userDialogVisible=true" />
+              <el-input v-model="formData.istributerName" suffix-icon="el-icon-arrow-down" placeholder="请选择派发人" @focus="userDialogVisible=true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="派发部门" prop="istributerOrgName">
-              <el-input disabled v-model="form.istributerOrgName" placeholder="选择派发人自动带出" />
+              <el-input v-model="formData.istributerOrgName" disabled placeholder="选择派发人自动带出" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="派发公司" prop="istributerCompayName">
-              <el-input disabled v-model="form.istributerCompayName" placeholder="选择派发人自动带出" />
+              <el-input v-model="formData.istributerCompayName" disabled placeholder="选择派发人自动带出" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="项目名称">
-              <el-input suffix-icon="el-icon-arrow-down" v-model="form.projectName" placeholder="请选择项目名称" @focus="projectDialogVisible=true" />
+              <el-input v-model="formData.projectName" suffix-icon="el-icon-arrow-down" placeholder="请选择项目名称" @focus="projectDialogVisible=true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="方案名称">
               <base-input
-                :value.sync="form.schemeId"
-                :label.sync="form.schemeName"
-                :code.sync="form.schemeCode"
-                :optionsList="schemeList"
-                codeName="schemeCode"
-                labelName="schemeName"
-                valueName="schemeId"
+                :value.sync="formData.schemeId"
+                :label.sync="formData.schemeName"
+                :code.sync="formData.schemeCode"
+                :options-list="schemeList"
+                code-name="schemeCode"
+                label-name="schemeName"
+                value-name="schemeId"
                 placeholder="方案名称"
-              ></base-input>
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="使用区域">
               <el-cascader
+                ref="categoryCascader"
+                v-model="formData.location"
                 :props="propsUseAreaTree"
                 :options="useAreaTree"
                 placeholder="请选择使用区域"
                 :filterable="true"
                 clearable
-                ref="categoryCascader"
-                v-model="form.location"
                 style="width: 100%"
                 @change="useAreaChange"
               >
@@ -116,17 +116,17 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="接收人" prop="recipientor">
-              <el-input suffix-icon="el-icon-arrow-down" v-model="form.userName" placeholder="请选择接收人" @focus="userDialogVisible=true" />
+              <el-input v-model="formData.userName" suffix-icon="el-icon-arrow-down" placeholder="请选择接收人" @focus="userDialogVisible=true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="接收人手机号码" prop="recipientorMobile">
-              <el-input v-model="form.recipientorMobile" placeholder="接收人手机号码" />
+              <el-input v-model="formData.recipientorMobile" placeholder="接收人手机号码" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="派发类型" prop="istributeType">
-              <el-select v-model="form.istributeType">
+              <el-select v-model="formData.istributeType">
                 <!-- <el-option
                   v-for="item in statusList"
                   :key="item.itemsValue"
@@ -139,7 +139,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="派发方式" prop="istributeMethod">
-              <el-select v-model="form.istributeMethod">
+              <el-select v-model="formData.istributeMethod">
                 <!-- <el-option
                   v-for="item in statusList"
                   :key="item.itemsValue"
@@ -152,17 +152,17 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="快递单号">
-              <el-input v-model="form.courierNumber" placeholder=" 快递单号" />
+              <el-input v-model="formData.courierNumber" placeholder=" 快递单号" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label=" 快递公司">
-              <el-input v-model="form.courierCompany" placeholder=" 快递公司" />
+              <el-input v-model="formData.courierCompany" placeholder=" 快递公司" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="派发状态" prop="status">
-              <el-select v-model="form.status" style="width:calc(25% - 30px)">
+              <el-select v-model="formData.status" style="width:calc(25% - 30px)">
                 <!-- <el-option
                   v-for="item in statusList"
                   :key="item.itemsValue"
@@ -175,14 +175,14 @@
           </el-col>
           <el-col :span="24">
             <el-form-item label="派发原因" prop="distributeReason" class="noProp-item-textarea">
-              <el-input type="textarea" v-model="form.distributeReason" placeholder="请输入派发原因" />
+              <el-input v-model="formData.distributeReason" type="textarea" placeholder="请输入派发原因" />
             </el-form-item>
           </el-col>
         </el-row>
       </SectionCard>
     </el-form>
     <SectionCard title="耗材明细">
-      <consumableDistributeDetail ref="consumableDistributeDetail" :form="form" v-bind="{schemeList}" @calculate="calculate" />
+      <consumableDistributeDetail ref="consumableDistributeDetail" :form-data="formData" v-bind="{schemeList}" @calculate="calculate" />
     </SectionCard>
     <div slot="footer" align="center">
       <el-button type="success" @click="submitForm(0)">草 稿</el-button>
@@ -193,12 +193,9 @@
   </PageCard>
 </template>
 <script>
-import { getDistribute, addDistribute, updateDistribute } from '@/api/consume/distribute'
-import selectUser from '@/views/components/selectDialog/user.vue'
-import project from '@/views/components/selectDialog/project.vue'
+import { getDistribute, addDistribute, updateDistribute } from '@/api/distribute.js'
 import consumableDistributeDetail from './components/consumableDistributeDetail.vue'
-import { listSchemeQuery } from '@/api/datac/scheme'
-import { listAddressQueryUseAreaTree } from '@/api/library/address'
+import { listSchemeQuery, listAddressQueryUseAreaTree } from '@/api/base.js'
 export default {
   components: {
     consumableDistributeDetail
@@ -206,7 +203,7 @@ export default {
   data() {
     return {
       submitLoading: false,
-      form: {},
+      formData: {},
       rules: {
         distributeDate: { required: true, message: '派发日期不能为空', trigger: 'change' },
         applicantDate: { required: true, message: '申请日期不能为空', trigger: 'change' },
@@ -215,39 +212,26 @@ export default {
         projectName: { required: true, message: '项目名称不能为空', trigger: 'change' },
         schemeId: { required: true, message: '方案名称不能为空', trigger: 'change' },
         distributeReason: { required: true, message: '派发原因不能为空', trigger: 'change' },
-        applicantDate: { required: true, message: '申请日期不能为空', trigger: 'change' },
-        applicantName: {
-          required: true,
-          message: '申请人不能为空',
-          trigger: 'blur'
-        },
-        applicantOrgName: {
-          required: true,
-          message: '申请部门不能为空',
-          trigger: 'blur'
-        },
-        applicantCompanyName: {
-          required: true,
-          message: '申请公司不能为空',
-          trigger: 'blur'
-        },
-        userOrgName: { required: true, message: '使用部门不能为空', trigger: 'blur' },
-        companyName: { required: true, message: '使用公司不能为空', trigger: 'blur' },
-        distributeQuantity: { required: true, message: '耗材数量不能为空', trigger: 'blur' },
-        distributeAmount: { required: true, message: '耗材含税金额（元）不能为空', trigger: 'blur' },
-        istributerName: { required: true, message: '派发人不能为空', trigger: 'blur' },
-        istributerOrgName: { required: true, message: '派发部门不能为空', trigger: 'blur' },
-        istributerCompayName: { required: true, message: '派发公司不能为空', trigger: 'blur' },
+        applicantName: { required: true, message: '申请人不能为空', trigger: 'change' },
+        applicantOrgName: { required: true, message: '申请部门不能为空', trigger: 'change' },
+        applicantCompanyName: { required: true, message: '申请公司不能为空', trigger: 'change' },
+        userOrgName: { required: true, message: '使用部门不能为空', trigger: 'change' },
+        companyName: { required: true, message: '使用公司不能为空', trigger: 'change' },
+        distributeQuantity: { required: true, message: '耗材数量不能为空', trigger: 'change' },
+        distributeAmount: { required: true, message: '耗材含税金额（元）不能为空', trigger: 'change' },
+        istributerName: { required: true, message: '派发人不能为空', trigger: 'change' },
+        istributerOrgName: { required: true, message: '派发部门不能为空', trigger: 'change' },
+        istributerCompayName: { required: true, message: '派发公司不能为空', trigger: 'change' },
         status: { required: true, message: '借用状态不能为空', trigger: 'change' },
-        recipientor: { required: true, message: '接收人不能为空', trigger: 'blur' },
-        recipientorMobile: { required: true, message: '接收人手机号码不能为空', trigger: 'blur' },
-        istributeType: { required: true, message: '派发类型不能为空', trigger: 'blur' },
-        istributeMethod: { required: true, message: '派发方式不能为空', trigger: 'blur' }
+        recipientor: { required: true, message: '接收人不能为空', trigger: 'change' },
+        recipientorMobile: { required: true, message: '接收人手机号码不能为空', trigger: 'change' },
+        istributeType: { required: true, message: '派发类型不能为空', trigger: 'change' },
+        istributeMethod: { required: true, message: '派发方式不能为空', trigger: 'change' }
       },
       editId: '',
       userDialogVisible: false,
       projectDialogVisible: false,
-      user: this.$store.state.user.info,
+      user: this.$store.getters.userInfo,
       schemeList: [],
       propsUseAreaTree: {
         label: 'label',
@@ -280,18 +264,18 @@ export default {
         this.submitLoading = true
         getDistribute(this.editId)
           .then((res) => {
-            this.form = res.data
+            this.formData = res.data
           })
           .finally(() => {
             this.submitLoading = false
           })
       } else {
-        this.form = {
-          ...this.form,
+        this.formData = {
+          ...this.formData,
           ...{
             applicantDate: this.$vxe.toDateString(new Date()),
             distributeDate: this.$vxe.toDateString(new Date()),
-            sourceTerminal: 1, //来源终端  默认 1 pc
+            sourceTerminal: 1, // 来源终端  默认 1 pc
             applicantId: this.user.userId,
             applicantName: this.user.userName,
             applicantOrgId: this.user.deptId,
@@ -312,9 +296,9 @@ export default {
             })
             return
           }
-          this.form = { ...this.form, ...{ almAssetReturnDetailList: this.$refs.consumableDistributeDetail.tableData, status } }
+          this.formData = { ...this.formData, ...{ almAssetReturnDetailList: this.$refs.consumableDistributeDetail.tableData, status } }
           if (this.editId != null) {
-            updateDistribute(this.form)
+            updateDistribute(this.formData)
               .then((response) => {
                 this.$modal.msgSuccess('修改成功')
                 this.$router.back()
@@ -323,7 +307,7 @@ export default {
                 this.submitLoading = false
               })
           } else {
-            addDistribute(this.form)
+            addDistribute(this.formData)
               .then((response) => {
                 this.$modal.msgSuccess('新增成功')
                 this.$router.back()
@@ -337,8 +321,8 @@ export default {
     },
     // 选择使用人
     userSelect(val) {
-      this.form = {
-        ...this.form,
+      this.formData = {
+        ...this.formData,
         ...{
           userId: val.userId,
           userName: val.userName,
@@ -351,8 +335,8 @@ export default {
     },
     // 选择项目
     projectSelect(val) {
-      this.form = {
-        ...this.form,
+      this.formData = {
+        ...this.formData,
         ...{
           projectId: val.projectId,
           projectName: val.projectName,
@@ -363,7 +347,7 @@ export default {
     // 获取字典数据
     getDictData() {
       listSchemeQuery().then((response) => {
-        //方案信息
+        // 方案信息
         this.schemeList = response.rows
       })
     },
@@ -374,8 +358,8 @@ export default {
         distributeQuantity = this.$vxe.add(distributeQuantity, item.returnQuantity)
         distributeAmount = this.$vxe.add(distributeAmount, item.subtotal)
       })
-      this.$set(this.form, 'distributeQuantity', distributeQuantity)
-      this.$set(this.form, 'distributeAmount', distributeAmount)
+      this.$set(this.formData, 'distributeQuantity', distributeQuantity)
+      this.$set(this.formData, 'distributeAmount', distributeAmount)
     }
   }
 }

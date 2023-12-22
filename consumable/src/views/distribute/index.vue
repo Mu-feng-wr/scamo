@@ -236,26 +236,37 @@ export default {
       this.load()
     },
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'consumableDistribute-distributeUpdate' : 'consumableDistribute-distributeAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/consumable/distribute',
+          module: 'Consumable',
+          fullPath: '/consumable/distribute/edit',
+          title: '编辑耗材派发',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/consumable/distribute',
+          module: 'Consumable',
+          fullPath: '/consumable/distribute/add',
+          title: '新增耗材派发'
+        })
+      }
     },
     detailHandle(id) {
-      this.$router.push({
-        name: 'consumableDistribute-distributeDetail',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/consumable/distribute',
+        module: 'Consumable',
+        fullPath: '/consumable/distribute/detail',
+        title: '耗材派发详情',
+        condition: { id }
       })
     },
     handleDelete(row) {
-      this.$modal.confirm('是否确认删除资产派发单信息编号为"' + row.assetReturnCode + '"的数据项？').then(() => {
+      this.$confirm('是否确认删除资产派发单信息编号为"' + row.assetReturnCode + '"的数据项？').then(() => {
         delDistribute(row.consumableDistributeId).then(() => {
           this.reload()
-          this.$modal.msgSuccess('删除成功')
+          this.$message.success('删除成功')
         })
       })
     },
