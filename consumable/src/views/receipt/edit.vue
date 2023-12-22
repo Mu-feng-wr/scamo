@@ -10,7 +10,15 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="申请日期" prop="applicantDate">
-              <el-date-picker v-model="formData.applicantDate" :disabled="!!formData.consumableReceiptId" size="small" clearable type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="请选择申请日期" />
+              <el-date-picker
+                v-model="formData.applicantDate"
+                :disabled="!!formData.consumableReceiptId"
+                size="small"
+                clearable
+                type="date"
+                value-format="yyyy-MM-dd HH:mm:ss"
+                placeholder="请选择申请日期"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -189,7 +197,15 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="申购数量">
-              <el-input-number v-model="formData.subscriptionQuantity" size="small" disabled :precision="formData.materialType==1?0:3" :step="1" controls-position="right" placeholder="选择申购单自动带出" />
+              <el-input-number
+                v-model="formData.subscriptionQuantity"
+                size="small"
+                disabled
+                :precision="formData.materialType==1?0:3"
+                :step="1"
+                controls-position="right"
+                placeholder="选择申购单自动带出"
+              />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -398,7 +414,7 @@ export default {
         contractCode: { required: true, message: '合同编号不能为空', trigger: 'change' }
       },
       editId: '',
-      user: this.$store.state.user.info,
+      user: this.$store.getters.userInfo,
       propsUseAreaTree: {
         label: 'label',
         value: 'id',
@@ -594,24 +610,26 @@ export default {
             }
           }
           this.submitLoading = true
-          generateReceiptAssetCode(submitData).then((res) => {
-            if (this.editId != null) {
-              this.submitLoading = false
-              this.$message.success('生成耗材编码成功')
-              if (status == 0) {
-                this.init()
-                return
+          generateReceiptAssetCode(submitData)
+            .then((res) => {
+              if (this.editId != null) {
+                this.submitLoading = false
+                this.$message.success('生成耗材编码成功')
+                if (status == 0) {
+                  this.init()
+                  return
+                }
+              } else {
+                this.submitLoading = false
+                this.$message.success('生成耗材编码成功')
+                setTimeout(() => {
+                  window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                }, 500)
               }
-            } else {
+            })
+            .finally(() => {
               this.submitLoading = false
-              this.$message.success('生成耗材编码成功')
-              setTimeout(() => {
-                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
-              }, 500)
-            }
-          }).finally(() => {
-            this.submitLoading = false
-          })
+            })
         } else {
           this.$nextTick(() => {
             var isError = this.$refs['form'].$el.getElementsByClassName('is-error')

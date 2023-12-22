@@ -179,7 +179,7 @@ export default {
       editId: '',
       userDialogVisible: false,
       projectDialogVisible: false,
-      user: this.$store.state.user.info,
+      user: this.$store.getters.userInfo,
       schemeList: [],
       todo: '',
       todoObj: {
@@ -270,36 +270,40 @@ export default {
           }
           this.submitLoading = true
           if (this.editId != null) {
-            updateReturn(submitData).then((res) => {
-              this.$message.succcess(status == 2 ? '提交成功' : '修改成功')
-              if (status == 2) {
+            updateReturn(submitData)
+              .then((res) => {
+                this.$message.succcess(status == 2 ? '提交成功' : '修改成功')
+                if (status == 2) {
+                  setTimeout(() => {
+                    window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  }, 500)
+                  return
+                }
+                this.init()
+              })
+              .finally(() => {
+                this.submitLoading = false
+              })
+          } else {
+            addReturn(submitData)
+              .then((res) => {
+                this.message.succcess(status == 2 ? '提交成功' : '新增成功')
                 setTimeout(() => {
                   window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  if (status == 2) {
+                    window.$wujie.props.route({
+                      path: '/consumable/return',
+                      module: 'Consumable',
+                      fullPath: '/consumable/return/edit',
+                      title: '编辑归还入库',
+                      condition: { id: res.msg }
+                    })
+                  }
                 }, 500)
-                return
-              }
-              this.init()
-            }).finally(() => {
-              this.submitLoading = false
-            })
-          } else {
-            addReturn(submitData).then((res) => {
-              this.message.succcess(status == 2 ? '提交成功' : '新增成功')
-              setTimeout(() => {
-                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
-                if (status == 2) {
-                  window.$wujie.props.route({
-                    path: '/consumable/return',
-                    module: 'Consumable',
-                    fullPath: '/consumable/return/edit',
-                    title: '编辑归还入库',
-                    condition: { id: res.msg }
-                  })
-                }
-              }, 500)
-            }).finally(() => {
-              this.submitLoading = false
-            })
+              })
+              .finally(() => {
+                this.submitLoading = false
+              })
           }
         } else {
           this.$nextTick(() => {
@@ -352,15 +356,17 @@ export default {
               curProcessResult: curProcessResult
             }
           }
-          approveReturn(submitData).then((res) => {
-            this.$message.success(`${obj[curProcessResult]}！`)
-            this.submitLoading = false
-            setTimeout(() => {
-              window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
-            }, 500)
-          }).catch(() => {
-            this.submitLoading = false
-          })
+          approveReturn(submitData)
+            .then((res) => {
+              this.$message.success(`${obj[curProcessResult]}！`)
+              this.submitLoading = false
+              setTimeout(() => {
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+              }, 500)
+            })
+            .catch(() => {
+              this.submitLoading = false
+            })
         } else {
           this.$nextTick(() => {
             var isError = this.$refs['form'].$el.getElementsByClassName('is-error')

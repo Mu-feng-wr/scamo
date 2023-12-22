@@ -203,7 +203,7 @@ export default {
       editId: '',
       userDialogVisible: false,
       projectDialogVisible: false,
-      user: this.$store.state.user.info,
+      user: this.$store.getters.userInfo,
       propsUseAreaTree: {
         label: 'label',
         value: 'id',
@@ -291,16 +291,20 @@ export default {
           }
           this.submitLoading = true
           if (this.editId) {
-            updateBorrow(this.formData).then((res) => {
-              this.$message.success(status == 2 ? '新增成功！' : '修改成功！')
-              if (status == 2) {
-                setTimeout(() => {
-                  window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
-                }, 500)
-                return
-              }
-              this.init()
-            }).finally(() => {this.submitLoading = false})
+            updateBorrow(this.formData)
+              .then((res) => {
+                this.$message.success(status == 2 ? '新增成功！' : '修改成功！')
+                if (status == 2) {
+                  setTimeout(() => {
+                    window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  }, 500)
+                  return
+                }
+                this.init()
+              })
+              .finally(() => {
+                this.submitLoading = false
+              })
           } else {
             addBorrow(this.formData)
               .then((res) => {

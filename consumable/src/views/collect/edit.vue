@@ -58,15 +58,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="耗材含税金额（元）" prop="consumableAmount">
-              <el-input-number
-                v-model="formData.consumableAmount"
-                disabled
-                :precision="2"
-                controls-position="right"
-                :min="0"
-                :step="1"
-                placeholder="自动计算"
-              />
+              <el-input-number v-model="formData.consumableAmount" disabled :precision="2" controls-position="right" :min="0" :step="1" placeholder="自动计算" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -200,7 +192,7 @@ export default {
         consumableAmount: { required: true, message: '耗材金额不能为空', trigger: 'blur' }
       },
       editId: '',
-      user: this.$store.state.user.info,
+      user: this.$store.getters.userInfo,
       userDialogVisible: false,
       projectDialogVisible: false,
       propsUseAreaTree: {
