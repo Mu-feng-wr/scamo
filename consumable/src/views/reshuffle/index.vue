@@ -80,6 +80,8 @@
               :columns="tableColumn"
               :row-config="{isHover:true,isCurrent:true}"
               class="vxeTable"
+              auto-resize
+              show-overflow="tooltip"
               show-footer
               :footer-method="getFooterData"
             >
@@ -234,26 +236,37 @@ export default {
       this.load()
     },
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'consumableReshuffle-reshuffleUpdate' : 'consumableReshuffle-reshuffleAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/consumable/reshuffle',
+          module: 'Consumable',
+          fullPath: '/consumable/reshuffle/edit',
+          title: '编辑耗材异动',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/consumable/reshuffle',
+          module: 'Consumable',
+          fullPath: '/consumable/reshuffle/add',
+          title: '新增耗材异动'
+        })
+      }
     },
     detailHandle(id) {
-      this.$router.push({
-        name: 'consumableReshuffle-reshuffleDetail',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/consumable/reshuffle',
+        module: 'Consumable',
+        fullPath: '/consumable/reshuffle/detail',
+        title: '耗材异动详情',
+        condition: { id }
       })
     },
     handleDelete(row) {
-      this.$modal.confirm('是否确认删除资产异动单信息编号为"' + row.assetReturnCode + '"的数据项？').then(() => {
+      this.$confirm('是否确认删除资产异动单信息编号为"' + row.assetReturnCode + '"的数据项？').then(() => {
         delReshuffle(row.consumableReshuffleId).then(() => {
           this.reload()
-          this.$modal.msgSuccess('删除成功')
+          this.$message.success('删除成功')
         })
       })
     },

@@ -5,5 +5,11 @@
 <script>
 // import { listDetail, getDetail, delDetail, addDetail, updateDetail } from '@/api/distribute.js'
 
-export default {}
+export default {
+  data() {
+    return {
+      returnUrl: '/consumable/distribute'
+    }
+  }
+}
 </script>

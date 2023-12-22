@@ -1,5 +1,5 @@
 <template>
-  <PageCard v-loading="submitLoading">
+  <PageCard v-loading="submitLoading" :return-url="returnUrl">
     <el-form ref="form" :model="formData" :rules="rules" label-width="170px" class="form-table form-table-edit" style="margin-bottom: 8px">
       <SectionCard title="基本信息">
         <el-row>
@@ -202,6 +202,7 @@ export default {
   },
   data() {
     return {
+      returnUrl: '/consumable/distribute',
       submitLoading: false,
       formData: {},
       rules: {
@@ -300,17 +301,32 @@ export default {
           if (this.editId != null) {
             updateDistribute(this.formData)
               .then((response) => {
-                this.$modal.msgSuccess('修改成功')
-                this.$router.back()
+                this.$message.success(status == 2 ? '提交成功' : '修改成功')
+                if (status == 2) {
+                  setTimeout(() => {
+                    window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  }, 500)
+                  return
+                }
+                this.init()
               })
               .finally(() => {
                 this.submitLoading = false
               })
           } else {
             addDistribute(this.formData)
-              .then((response) => {
-                this.$modal.msgSuccess('新增成功')
-                this.$router.back()
+              .then((res) => {
+                this.$message.success('新增成功')
+                setTimeout(() => {
+                  window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+                  window.$wujie.props.route({
+                    path: '/consumable/distribute',
+                    module: 'Consumable',
+                    fullPath: '/consumable/distribute/edit',
+                    title: '编辑耗材派发',
+                    condition: { id: res.msg }
+                  })
+                }, 500)
               })
               .finally(() => {
                 this.submitLoading = false
