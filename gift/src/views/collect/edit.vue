@@ -263,10 +263,10 @@ export default {
                   setTimeout(() => {
                     window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
                     window.$wujie.props.route({
-                      path: '/gift/receipt',
+                      path: '/gift/collect',
                       module: 'Gift',
-                      fullPath: '/gift/receipt/edit',
-                      title: '编辑礼品入库',
+                      fullPath: '/gift/collect/edit',
+                      title: '编辑礼品领用',
                       condition: { id: res.msg }
                     })
                   }, 500)
