@@ -99,6 +99,9 @@
               :footer-method="getFooterData"
             >
               <template #seqHeader>序号</template>
+              <template #giftReshuffleCode="{row}">
+                <el-link :underline="false" type="primary" @click="detailHandle(row.giftReshuffleId)">{{ row.giftReshuffleCode }}</el-link>
+              </template>
               <template #sourceTerminal="{row}">
                 <dictDateView :value="row.sourceTerminal" :dict-data-list="dictDataList" dict-code="System-sourceTerminal" />
               </template>
@@ -144,7 +147,7 @@ export default {
       dictDataList: [],
       tableColumn: [
         { type: 'seq', width: 70, align: 'center', fixed: 'left', slots: { header: 'seqHeader' } },
-        { visible: true, field: 'giftReshuffleCode', title: '异动单号', fixed: 'left', width: 160, visibleDisabled: true },
+        { visible: true, field: 'giftReshuffleCode', title: '异动单号', fixed: 'left', width: 160, visibleDisabled: true, slots: { default: 'giftReshuffleCode' } },
         { visible: true, field: 'reshuffleDate', title: '异动日期', fixed: 'left', width: 130, visibleDisabled: true },
         { visible: true, field: 'centralizedBusinessName', title: '业务类型', fixed: 'left', width: 130, visibleDisabled: true },
         { visible: true, field: 'applicantName', title: '申请人', width: 130 },
@@ -248,19 +251,30 @@ export default {
       this.load()
     },
     addOrUpdateHandle(id) {
-      this.$router.push({
-        name: id ? 'giftReshuffle-reshuffleUpdate' : 'giftReshuffle-reshuffleAdd',
-        query: {
-          id: id
-        }
-      })
+      if (id) {
+        window.$wujie.props.route({
+          path: '/gift/reshuffle',
+          module: 'Gift',
+          fullPath: '/gift/reshuffle/edit',
+          title: '编辑礼品异动',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/gift/reshuffle',
+          module: 'Gift',
+          fullPath: '/gift/reshuffle/add',
+          title: '新增礼品异动'
+        })
+      }
     },
     detailHandle(id) {
-      this.$router.push({
-        name: 'giftReshuffle-reshuffleDetail',
-        query: {
-          id: id
-        }
+      window.$wujie.props.route({
+        path: '/gift/reshuffle',
+        module: 'Gift',
+        fullPath: '/gift/reshuffle/detail',
+        title: '礼品异动详情',
+        condition: { id }
       })
     },
     handleDelete(row) {

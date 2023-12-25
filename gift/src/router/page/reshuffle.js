@@ -18,8 +18,8 @@ export default [
     meta: { title: '编辑礼品异动' }
   },
   {
-    path: '/gift/reshuffle',
-    name: 'Gift-Reshuffle',
+    path: '/gift/reshuffle/detail',
+    name: 'Gift-Reshuffle-Detail',
     component: () => import('@/views/reshuffle/detail.vue'),
     meta: { title: '礼品异动详情' }
   }
