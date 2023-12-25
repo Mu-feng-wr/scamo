@@ -7,6 +7,7 @@ import PageCard from '@/components/PageCard/index.vue'
 import sectionCard from '@/components/sectionCard/index.vue'
 import InputRange from '@/components/InputRange/index.vue'
 import dictDataView from '@/components/dictDataView/index.vue'
+import HandleRecords from '@/components/HandleRecords/index.vue'
 
 // 一些按钮组件
 import selectArea from './btnHandler/selectArea.vue'
@@ -46,7 +47,8 @@ const com = [
   PageCard,
   sectionCard,
   InputRange,
-  dictDataView
+  dictDataView,
+  HandleRecords
 ]
 com.forEach(item => {
   Vue.component(item.name, item)

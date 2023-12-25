@@ -4,10 +4,10 @@
       <SectionCard title="基本信息">
         <el-row>
           <el-col :span="8">
-            <el-form-item label="礼品入库单号">{{formData.giftReceiptCode}}</el-form-item>
+            <el-form-item label="礼品入库单号">{{ formData.giftReceiptCode }}</el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="申请日期">{{$vxe.toDateString(formData.applicantDate,'yyyy-MM-dd') }}</el-form-item>
+            <el-form-item label="申请日期">{{ $vxe.toDateString(formData.applicantDate,'yyyy-MM-dd') }}</el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="业务类别">{{ formData.centralizedBusinessName }}</el-form-item>
@@ -30,21 +30,21 @@
             <el-form-item label="验收单号">{{ formData.centralizedBusinessName }}</el-form-item>
           </el-col>
           <el-col :span="8">
-            <el-form-item label="验收日期">{{$vxe.toDateString(formData.registeDate,'yyyy-MM-dd') }}</el-form-item>
+            <el-form-item label="验收日期">{{ $vxe.toDateString(formData.registeDate,'yyyy-MM-dd') }}</el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="验收方式">
-              <dictDateView :value="formData.accepterMethod" :dictDataList="dictDataList" dictCode="AlmAssetReceipt-accepterMethod" />
+              <dictDateView :value="formData.accepterMethod" :dict-data-list="dictDataList" dict-code="AlmAssetReceipt-accepterMethod" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="礼品来源">
-              <dictDateView :value="formData.giftSource" :dictDataList="dictDataList" dictCode="AlmAssetReceipt-giftSource" />
+              <dictDateView :value="formData.giftSource" :dict-data-list="dictDataList" dict-code="AlmAssetReceipt-giftSource" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="资产来源">
-              <dictDateView :value="formData.giftSource" :dictDataList="dictDataList" dictCode="AlmAssetReceipt-giftSource" />
+              <dictDateView :value="formData.giftSource" :dict-data-list="dictDataList" dict-code="AlmAssetReceipt-giftSource" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -72,7 +72,7 @@
             <el-form-item label="验收总金额 ">{{ $vxe.commafy(formData.receiptTaxAmount , { digits: 2 }) }}</el-form-item>
           </el-col>
           <el-col :span="16">
-            <el-form-item label="验收状态 ">{{ formData.status}}</el-form-item>
+            <el-form-item label="验收状态 ">{{ formData.status }}</el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="备注" prop="remarks" class="noProp-item-textarea">{{ formData.remarks }}</el-form-item>
@@ -83,7 +83,7 @@
         </el-row>
       </SectionCard>
 
-      <SectionCard class="mt-8" title="申购信息" v-if="formData.accepterMethod==1">
+      <SectionCard v-if="formData.accepterMethod==1" class="mt-8" title="申购信息">
         <el-row>
           <el-col :span="8">
             <el-form-item label="申购单号">{{ formData.purchaseApplicationCode }}</el-form-item>
@@ -96,7 +96,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="申购人">
-              <el-input disabled v-model="formData.applicantName" placeholder="选择申购单自动带出" />
+              <el-input v-model="formData.applicantName" disabled placeholder="选择申购单自动带出" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -129,7 +129,7 @@
       <SectionCard class="mt-8" title="使用信息">
         <el-row>
           <el-col :span="24">
-            <el-form-item label="使用区域">{{ formData.currentEreaName }}/{{ formData.currentLocationName}}</el-form-item>
+            <el-form-item label="使用区域">{{ formData.currentEreaName }}/{{ formData.currentLocationName }}</el-form-item>
           </el-col>
         </el-row>
       </SectionCard>
@@ -153,7 +153,7 @@
         </el-row>
       </SectionCard>
       <SectionCard class="mt-8" title="礼品明细">
-        <giftReceiptDetail ref="giftReceiptDetail" :form-data="formData" :showBtn="false" />
+        <giftReceiptDetail ref="giftReceiptDetail" :form-data="formData" :show-btn="false" />
       </SectionCard>
     </el-form>
   </PageCard>

@@ -451,7 +451,7 @@ export default {
           }
           if (this.editId != null) {
             updateReceipt(this.formData).then((res) => {
-              this.$message.success(statu == 2 ? '提交成功' : '修改成功')
+              this.$message.success(status == 2 ? '提交成功' : '修改成功')
               if (status == 2) {
                 setTimeout(() => {
                   window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
@@ -462,7 +462,7 @@ export default {
             })
           } else {
             addReceipt(this.formData).then((res) => {
-              this.$message.success(statu == 2 ? '提交成功' : '新增成功')
+              this.$message.success(status == 2 ? '提交成功' : '新增成功')
               if (status == 2) {
                 setTimeout(() => {
                   window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
@@ -474,9 +474,7 @@ export default {
                     condition: { id: res.msg }
                   })
                 }, 500)
-                return
               }
-              this.init()
             })
           }
         }
