@@ -82,19 +82,19 @@ export default {
   methods: {
     getUrl(item) {
       const wujieHost = {
-        Workbenche: `http://${window.location.hostname}:9001/#`,
-        Standbook: `http://${window.location.hostname}:9002/#`,
-        Asset: `http://${window.location.hostname}:9003/#`,
-        Consumable: `http://${window.location.hostname}:9004/#`,
-        Gift: `http://${window.location.hostname}:9005/#`,
-        Purchase: `http://${window.location.hostname}:9006/#`,
-        Inventory: `http://${window.location.hostname}:9007/#`,
-        Library: `http://${window.location.hostname}:9008/#`,
-        Portface: `http://${window.location.hostname}:9009/#`,
-        System: `http://${window.location.hostname}:9011/#`,
-        Monitor: `http://${window.location.hostname}:9012/#`,
-        Tool: `http://${window.location.hostname}:9013/#`,
-        Member: `http://${window.location.hostname}:9015/#`
+        Workbenche: `http://${window.location.hostname}:19001/#`,
+        Standbook: `http://${window.location.hostname}:19002/#`,
+        Asset: `http://${window.location.hostname}:19003/#`,
+        Consumable: `http://${window.location.hostname}:19004/#`,
+        Gift: `http://${window.location.hostname}:19005/#`,
+        Purchase: `http://${window.location.hostname}:19006/#`,
+        Inventory: `http://${window.location.hostname}:19007/#`,
+        Library: `http://${window.location.hostname}:19008/#`,
+        Portface: `http://${window.location.hostname}:19009/#`,
+        System: `http://${window.location.hostname}:19011/#`,
+        Monitor: `http://${window.location.hostname}:19012/#`,
+        Tool: `http://${window.location.hostname}:19013/#`,
+        Member: `http://${window.location.hostname}:19015/#`
       }
       var query = []
       if (item.condition) {

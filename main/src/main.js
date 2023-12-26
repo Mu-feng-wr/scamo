@@ -24,21 +24,21 @@ const { setupApp } = WujieVue
 // 工作台
 setupApp({
   name: 'workbenche',
-  url: hostMap('//localhost:9001/'),
+  url: hostMap('//localhost:19001/'),
   exec: true,
   alive: true
 })
 // 台账
 setupApp({
   name: 'standbook',
-  url: hostMap('//localhost:9002/'),
+  url: hostMap('//localhost:19002/'),
   exec: true,
   alive: true
 })
 // 资产
 setupApp({
   name: 'Asset',
-  url: hostMap('//localhost:9003/'),
+  url: hostMap('//localhost:19003/'),
   exec: true,
   alive: true
 })
