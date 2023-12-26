@@ -7,7 +7,7 @@ function resolve(dir) {
 }
 
 const name = defaultSettings.title || 'scamo'
-const port = 9007
+const port = 19007
 const server = process.env.VUE_APP_SERVER // 后台地址、
 module.exports = {
   publicPath: '/',
