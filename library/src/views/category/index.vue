@@ -54,64 +54,68 @@
               </div>
             </SearchArea>
           </el-header>
-          <el-container>
-            <el-header>
-              <el-row class="mb-15">
-                <el-col :span="12">
-                  <el-button v-hasPermi="['asset:borrow:add']" type="primary" plain icon="el-icon-plus" size="mini" @click="handleUpdate()">新增</el-button>
-                  <el-button v-hasPermi="['asset:borrow:export']" plain icon="el-icon-upload2" size="mini" @click="handleExport">导出</el-button>
-                </el-col>
-                <el-col :span="12" class="text-right">
-                  <el-button plain icon="el-icon-refresh" size="mini" @click="reload">刷新</el-button>
-                  <TableHeaderConfig class="ml-10" :columns.sync="tableColumn" />
-                </el-col>
-              </el-row>
-            </el-header>
-            <el-main>
-              <vxe-grid
-                ref="multipleTable"
-                v-loading="tableLoading"
-                highlight-current-row
-                height="auto"
-                style="min-height: 500px"
-                header-align="center"
-                align="center"
-                :data="tableData"
-                border
-                :resizable="true"
-                :columns="tableColumn"
-                :row-config="{ isHover: true, isCurrent: true }"
-                class="vxeTable"
-              >
-                <template #seqHeader>序号</template>
-                <template #categoryCode="{row}">
-                  <el-link :underline="false" type="primary" @click="handleDetail(row.categoryId)">{{ row.categoryCode }}</el-link>
-                </template>
-                <template #status="{ row }">
-                  <dictDateView :value="row.status" :dict-data-list="dictDataList" dict-code="System-status" />
-                </template>
-                <template #todo="{ row }">
-                  <div class="todo">
-                    <el-button v-hasPermi="['library:category:list']" size="small" type="text" @click="handleDetail(row.categoryId)">查看</el-button>
-                    <el-button v-hasPermi="['library:category:edit']" size="mini" type="text" @click="handleUpdate(row.categoryId)">修改</el-button>
-                    <el-button v-hasPermi="['library:category:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
-                  </div>
-                </template>
-                <template #pager>
-                  <el-pagination
-                    background
-                    :current-page="tablePage.currentPage"
-                    :page-sizes="[10, 20, 30, 50]"
-                    :page-size="tablePage.pageSize"
-                    layout="total, sizes, prev, pager, next, jumper"
-                    :total="tablePage.total"
-                    @size-change="handlePageChange($event,'pageSize')"
-                    @current-change="handlePageChange($event,'currentPage')"
-                  />
-                </template>
-              </vxe-grid>
-            </el-main>
-          </el-container>
+          <el-main>
+            <el-container>
+              <el-header>
+                <el-row class="mb-15">
+                  <el-col :span="12">
+                    <el-button v-hasPermi="['asset:borrow:add']" type="primary" plain icon="el-icon-plus" size="mini" @click="handleUpdate()">新增</el-button>
+                    <el-button v-hasPermi="['asset:borrow:export']" plain icon="el-icon-upload2" size="mini" @click="handleExport">导出</el-button>
+                  </el-col>
+                  <el-col :span="12" class="text-right">
+                    <el-button plain icon="el-icon-refresh" size="mini" @click="reload">刷新</el-button>
+                    <TableHeaderConfig class="ml-10" :columns.sync="tableColumn" />
+                  </el-col>
+                </el-row>
+              </el-header>
+              <el-main>
+                <vxe-grid
+                  ref="multipleTable"
+                  v-loading="tableLoading"
+                  highlight-current-row
+                  height="auto"
+                  style="min-height: 500px"
+                  header-align="center"
+                  align="center"
+                  :data="tableData"
+                  border
+                  :resizable="true"
+                  :columns="tableColumn"
+                  :row-config="{ isHover: true, isCurrent: true }"
+                  class="vxeTable"
+                  auto-resize
+                  show-overflow="tooltip"
+                >
+                  <template #seqHeader>序号</template>
+                  <template #categoryCode="{row}">
+                    <el-link :underline="false" type="primary" @click="handleDetail(row.categoryId)">{{ row.categoryCode }}</el-link>
+                  </template>
+                  <template #status="{ row }">
+                    <dictDateView :value="row.status" :dict-data-list="dictDataList" dict-code="System-status" />
+                  </template>
+                  <template #todo="{ row }">
+                    <div class="todo">
+                      <el-button v-hasPermi="['library:category:list']" size="small" type="text" @click="handleDetail(row.categoryId)">查看</el-button>
+                      <el-button v-hasPermi="['library:category:edit']" size="mini" type="text" @click="handleUpdate(row.categoryId)">修改</el-button>
+                      <el-button v-hasPermi="['library:category:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
+                    </div>
+                  </template>
+                  <template #pager>
+                    <el-pagination
+                      background
+                      :current-page="tablePage.currentPage"
+                      :page-sizes="[10, 20, 30, 50]"
+                      :page-size="tablePage.pageSize"
+                      layout="total, sizes, prev, pager, next, jumper"
+                      :total="tablePage.total"
+                      @size-change="handlePageChange($event,'pageSize')"
+                      @current-change="handlePageChange($event,'currentPage')"
+                    />
+                  </template>
+                </vxe-grid>
+              </el-main>
+            </el-container>
+          </el-main>
         </el-container>
       </el-main>
     </el-container>
@@ -120,7 +124,7 @@
   </div>
 </template>
 <script>
-import { categoryTreeSelect, listCategory } from '@/api/category.js'
+import { categoryTreeSelect, listCategory, delCategory } from '@/api/category.js'
 import vxeTable from '@/mixins/vxeTable'
 import { listDictItems } from '@/api/base.js'
 import edit from './components/edit.vue'

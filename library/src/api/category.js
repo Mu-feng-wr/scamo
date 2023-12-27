@@ -50,3 +50,12 @@ export function delCategory(categoryId) {
     method: 'delete'
   })
 }
+
+// 查询物资分类信息列表
+export function listCategoryQuery(query) {
+  return request({
+    url: '/library/category/queryList',
+    method: 'get',
+    params: query
+  })
+}
