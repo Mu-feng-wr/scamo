@@ -1,11 +1,13 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import categoryRouter from './page/category.js'
+import materialRouter from './page/material.js'
 
 Vue.use(Router)
 
 export const constantRoutes = [
   ...categoryRouter,
+  ...materialRouter,
   {
     path: '/404',
     component: () => import('@/views/404'),

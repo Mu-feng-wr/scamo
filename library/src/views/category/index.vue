@@ -84,6 +84,9 @@
                 class="vxeTable"
               >
                 <template #seqHeader>序号</template>
+                <template #categoryCode="{row}">
+                  <el-link :underline="false" type="primary" @click="handleDetail(row.categoryId)">{{ row.categoryCode }}</el-link>
+                </template>
                 <template #status="{ row }">
                   <dictDateView :value="row.status" :dict-data-list="dictDataList" dict-code="System-status" />
                 </template>
@@ -144,7 +147,7 @@ export default {
       tableColumn: [
         // { type: 'checkbox', width: 50, align: 'center', fixed: 'left' },
         { type: 'seq', width: 70, align: 'center', fixed: 'left', visible: true, visibleDisabled: true, slots: { header: 'seqHeader' } },
-        { field: 'categoryCode', title: '分类编号', width: 200, fixed: 'left', visible: true, visibleDisabled: true },
+        { field: 'categoryCode', title: '分类编号', width: 200, fixed: 'left', visible: true, visibleDisabled: true, slots: { default: 'categoryCode' } },
         { field: 'categoryName', title: '分类名称', width: 180, fixed: 'left', visible: true, visibleDisabled: true },
         { field: 'parentCode', title: '父分类编号', width: 120, visible: true },
         { field: 'parentName', title: '父分类名称', width: 120, visible: true },

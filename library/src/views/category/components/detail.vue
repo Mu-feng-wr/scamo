@@ -6,7 +6,7 @@
       <el-form-item label="父级分类">{{ formData.parentName }}</el-form-item>
       <el-form-item label="排序">{{ formData.sort }}</el-form-item>
       <el-form-item label="状态">
-        <dictDateView :value="row.status" :dict-data-list="dictDataList" dict-code="System-status" />
+        <dictDateView :value="formData.status" :dict-data-list="dictDataList" dict-code="System-status" />
       </el-form-item>
       <el-form-item label="备注">{{ formData.remarks }}</el-form-item>
     </el-form>
@@ -33,7 +33,7 @@ export default {
       default: ''
     },
     dictDataList: {
-      type: Boolean,
+      type: Array,
       default: () => {
         return []
       }
