@@ -115,7 +115,7 @@
 </template>
 <script>
 import { getMaterial } from '@/api/material.js'
-import { listDictItems, listTypeQuery, listBrandQuery } from '@/api/base.js'
+import { listDictItems } from '@/api/base.js'
 export default {
   data() {
     return {

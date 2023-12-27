@@ -62,32 +62,32 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="不含税单价（元）" prop="priceExcludTax">
-              <el-input-number style="width: 100%" v-model.number="formData.priceExcludTax" :precision="8" :step="1" placeholder="请输入不含税单价（元）" :max="9999999999.99"></el-input-number>
+              <el-input-number v-model.number="formData.priceExcludTax" style="width: 100%" :precision="8" :step="1" placeholder="请输入不含税单价（元）" :max="9999999999.99" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="含税单价（元）" prop="price">
-              <el-input-number style="width: 100%" v-model.number="formData.price" :precision="8" :step="1" placeholder="请输入含税单价（元）" :max="9999999999.99"></el-input-number>
+              <el-input-number v-model.number="formData.price" style="width: 100%" :precision="8" :step="1" placeholder="请输入含税单价（元）" :max="9999999999.99" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="税率（%）" prop="taxRate">
-              <el-input-number style="width: 100%" v-model.number="formData.taxRate" :step="1" placeholder="请输入税率（%）" :max="99999.99"></el-input-number>
+              <el-input-number v-model.number="formData.taxRate" style="width: 100%" :step="1" placeholder="请输入税率（%）" :max="99999.99" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="税额（元）" prop="taxValue">
-              <el-input-number style="width: 100%" v-model.number="formData.taxValue" :precision="2" :step="1" placeholder="请输入税额（元）" :max="9999999999.99"></el-input-number>
+              <el-input-number v-model.number="formData.taxValue" style="width: 100%" :precision="2" :step="1" placeholder="请输入税额（元）" :max="9999999999.99" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="创建时间" prop="createDate">
-              <el-date-picker clearable v-model="formData.createDate" type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="请选择创建时间"></el-date-picker>
+              <el-date-picker v-model="formData.createDate" clearable type="date" value-format="yyyy-MM-dd HH:mm:ss" placeholder="请选择创建时间" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="备用数量" prop="deadStorage">
-              <el-input-number style="width: 100%" v-model.number="formData.deadStorage" :precision="3" :step="1" placeholder="请输入备用数量" :max="9999999999.99" clearable></el-input-number>
+              <el-input-number v-model.number="formData.deadStorage" style="width: 100%" :precision="3" :step="1" placeholder="请输入备用数量" :max="9999999999.99" clearable />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -102,7 +102,7 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="换算数量">
-              <el-input-number v-model.number="formData.alterUnitNum" :precision="2" :step="1" placeholder="请输入换算数量" :max="99999.99"></el-input-number>
+              <el-input-number v-model.number="formData.alterUnitNum" :precision="2" :step="1" placeholder="请输入换算数量" :max="99999.99" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -161,13 +161,13 @@
       </SectionCard>
     </el-form>
     <div slot="footer" align="center">
-      <el-button type="primary" @click="submitForm" :disabled="submitButton">提 交</el-button>
+      <el-button type="primary" :disabled="submitButton" @click="submitForm">提 交</el-button>
     </div>
   </PageCard>
 </template>
 <script>
 import { getMaterial, addMaterial, updateMaterial } from '@/api/material.js'
-import { listDictItems, listTypeQuery, listBrandQuery } from '@/api/base.js'
+import { listDictItems } from '@/api/base.js'
 import { listCategoryQuery } from '@/api/category.js'
 import { handleTree } from '@/utils/index.js'
 export default {

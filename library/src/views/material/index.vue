@@ -174,7 +174,7 @@ import { categoryTreeSelect, listCategoryQuery } from '@/api/category.js'
 import { handleTree } from '@/utils/index.js'
 import vxeTable from '@/mixins/vxeTable'
 import { listDictItems } from '@/api/base.js'
-import { listMaterial } from '@/api/material.js'
+import { listMaterial, delMaterial } from '@/api/material.js'
 export default {
   mixins: [vxeTable],
   data() {
@@ -307,7 +307,7 @@ export default {
     },
     handleDelete(row) {
       this.$confirm('是否确认删除物资编号为 "' + row.materialCode + '"，物资名称为"' + row.materialName + '"的数据项？').then(() => {
-        delMaterial(materialIds).then(() => {
+        delMaterial(row.materialId).then(() => {
           this.reload()
           this.$message.success('删除成功')
         })
