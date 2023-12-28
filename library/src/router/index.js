@@ -2,12 +2,14 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import categoryRouter from './page/category.js'
 import materialRouter from './page/material.js'
+import brandRouter from './page/brand.js'
 
 Vue.use(Router)
 
 export const constantRoutes = [
   ...categoryRouter,
   ...materialRouter,
+  ...brandRouter,
   {
     path: '/404',
     component: () => import('@/views/404'),
