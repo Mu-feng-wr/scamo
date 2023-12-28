@@ -101,7 +101,7 @@
                 >
                   <template #seqHeader>序号</template>
                   <template #categoryCode="{row}">
-                    <el-link :underline="false" type="primary" @click="handleDetail(row.categoryId)">{{ row.categoryCode }}</el-link>
+                    <el-link :underline="false" type="primary" @click="handleDetail(row.locationAddressId)">{{ row.categoryCode }}</el-link>
                   </template>
                   <template #locationType="{row}">
                     <dictDateView :value="row.locationType" :dict-data-list="dictDataList" dict-code="StlLocationAddress-locationType" />
@@ -115,8 +115,8 @@
                   </template>
                   <template #todo="{ row }">
                     <div class="todo">
-                      <el-button v-hasPermi="['library:category:list']" size="small" type="text" @click="handleDetail(row.categoryId)">查看</el-button>
-                      <el-button v-hasPermi="['library:category:edit']" size="mini" type="text" @click="handleUpdate(row.categoryId)">修改</el-button>
+                      <el-button v-hasPermi="['library:category:list']" size="small" type="text" @click="handleDetail(row.locationAddressId)">查看</el-button>
+                      <el-button v-hasPermi="['library:category:edit']" size="mini" type="text" @click="handleUpdate(row.locationAddressId)">修改</el-button>
                       <el-button v-hasPermi="['library:category:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                     </div>
                   </template>
@@ -256,6 +256,15 @@ export default {
         module: 'Library',
         fullPath: '/library/address/add',
         title: '新增库位'
+      })
+    },
+    handleDetail(id) {
+      window.$wujie.props.route({
+        path: '/library/address',
+        module: 'Library',
+        fullPath: '/library/address/detail',
+        title: '库位详情',
+        condition: { id }
       })
     },
     handleNodeClick(data) {

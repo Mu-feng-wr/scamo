@@ -8,6 +8,9 @@ import MoreQuery from './MoreQuery/index.vue'
 import PageCard from './PageCard/index.vue'
 import sectionCard from './sectionCard/index.vue'
 
+// 一些弹框组件
+import project from './selectDialog/project.vue'
+
 const com = [
   searchArea,
   baseInput,
@@ -16,7 +19,8 @@ const com = [
   ElTreeSelect,
   MoreQuery,
   PageCard,
-  sectionCard
+  sectionCard,
+  project
 ]
 com.forEach(item => {
   Vue.component(item.name, item)

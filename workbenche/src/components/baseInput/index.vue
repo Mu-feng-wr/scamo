@@ -14,7 +14,7 @@
       @clear="clear"
       @focus="load"
     >
-      <el-option v-for="(item,i) in options.length>0?options:preStore" :disabled="item.disabled" :key="i" :label="item[labelName]" :value="String(item[valueName])" />
+      <el-option v-for="(item,i) in options.length>0?options:preStore" :key="i" :disabled="item.disabled" :label="item[labelName]" :value="String(item[valueName])" />
     </el-select>
   </div>
 </template>

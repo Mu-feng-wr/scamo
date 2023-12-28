@@ -1,5 +1,5 @@
 <template>
-  <PageCard v-loading="submitLoading">
+  <PageCard v-loading="submitLoading" :return-url="returnUrl">
     <el-form ref="form" :model="formData" :rules="rules" label-width="160px" class="form-table form-table-edit">
       <SectionCard title="基本信息">
         <el-row>
@@ -19,7 +19,6 @@
               <el-tree-select
                 ref="treeSelect"
                 v-model="formData.parentId"
-                size="small"
                 only-final
                 node-key="id"
                 :props="{label:'locationName'}"
@@ -32,65 +31,64 @@
           <el-col :span="8">
             <el-form-item label="地址类型" prop="locationType">
               <base-input :value.sync="formData.locationType" :options-list="dictDataList" base-code="StlLocationAddress-locationType" placeholder="请选择地址类型" clearable />
-
-              <!-- <el-select v-model="formData.locationType" :disabled="formData.locationAddressId ? true : false" clearable placeholder="地址类型" style="width: 100%">
-                <el-option v-for="item in locationTypeList" :key="item.itemsValue" :label="item.itemsName" :value="Number(item.itemsValue)" :disabled="item.disabled"></el-option>
-              </el-select>-->
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="经度" prop="longitude">
-              <el-input-number style="width: 100%" v-model.number="formData.longitude" :precision="2" :step="1" placeholder="请输入经度" :max="9999999999.99"></el-input-number>
+              <el-input-number v-model.number="formData.longitude" style="width: 100%" :precision="2" :step="1" placeholder="请输入经度" :max="9999999999.99" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="纬度" prop="latitude">
-              <el-input-number style="width: 100%" v-model.number="formData.latitude" :precision="2" :step="1" placeholder="请输入纬度" :max="9999999999.99"></el-input-number>
+              <el-input-number v-model.number="formData.latitude" style="width: 100%" :precision="2" :step="1" placeholder="请输入纬度" :max="9999999999.99" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
             <el-form-item label="库位地址" prop="districtCountyName" class="addressPCD-first">
               <div class="flex">
-                <el-cascader ref="addressChoose" v-model="formData.city" style="width:20%;" :options="cityOptions" filterable clearable placeholder="请选择城市" @change="handleAddressChange" />
-                <el-input v-model="formData.address" placeholder="详细地址" maxlength="150" show-word-limit clearable style="width: 400px; margin-left: 10px"></el-input>
+                <el-cascader
+                  ref="addressChoose"
+                  v-model="formData.city"
+                  style="width:calc((100% - 320px) / 3 - 16px);"
+                  :options="cityOptions"
+                  filterable
+                  clearable
+                  placeholder="请选择城市"
+                  @change="handleAddressChange"
+                />
+                <el-input v-model="formData.address" placeholder="详细地址" maxlength="150" show-word-limit clearable style="width:calc((100% - 320px) / 3 * 2);margin-left: 12px" />
               </div>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="是否公开" prop="ynPublic">
-              <el-select v-model="formData.ynPublic" clearable placeholder="是否公开" style="width: 100%">
-                <el-option v-for="item in ynPublicList" :key="item.itemsValue" :label="item.itemsName" :value="Number(item.itemsValue)"></el-option>
-              </el-select>
+              <base-input :value.sync="formData.ynPublic" :options-list="dictDataList" base-code="StlLocationAddress-ynPublic" placeholder="请选择是否公开" clearable />
             </el-form-item>
             <el-form-item label="所属公司" prop="companyId">
               <el-select
                 v-model="formData.companyName"
-                @change="changeCompany"
                 placeholder="请选择公司"
                 style="width: 100%"
                 :disabled="!formData.parentId && !formData.existChildren ? false : true"
+                @change="changeCompany"
               >
-                <el-option v-for="item in companyList" :key="item.deptId" :label="item.deptName" :value="item.deptId"></el-option>
+                <el-option v-for="item in companyList" :key="item.deptId" :label="item.deptName" :value="item.deptId" />
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="所属项目" prop="projectId">
-              <el-select v-model="formData.projectId" clearable placeholder="请选择所属项目" style="width: 100%" @change="projectChoose">
-                <el-option v-for="item in projectList" :key="item.projectId" :label="item.projectName" :value="item.projectId"></el-option>
-              </el-select>
+              <el-input v-model="formData.projectName" suffix-icon="el-icon-arrow-down" placeholder="请输入项目名称" @focus="projectDialogVisible = true" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="状态" prop="status">
-              <el-select v-model="formData.status" placeholder="状态" style="width: 100%" :disabled="formData.existChildren">
-                <el-option v-for="item in statusList" :key="item.itemsValue" :label="item.itemsName" :value="item.itemsValue"></el-option>
-              </el-select>
+              <base-input :value.sync="formData.ynPublic" :options-list="dictDataList" base-code="System-status" placeholder="请选择是否公开" clearable />
             </el-form-item>
           </el-col>
           <el-col :span="16">
             <el-form-item label="排序" prop="sort">
-              <el-input-number placeholder="请输入排序" style="width: calc(50% - 80px)" v-model="formData.sort" controls-position="right" :min="0" />
+              <el-input-number v-model="formData.sort" placeholder="请输入排序" style="width: calc(50% - 80px - 12px)" controls-position="right" :min="0" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -102,42 +100,30 @@
       </SectionCard>
     </el-form>
     <div slot="footer" align="center">
-      <el-button type="primary" @click="submitForm" :disabled="submitButton">提 交</el-button>
+      <el-button type="primary" :disabled="submitButton" @click="submitForm">提 交</el-button>
     </div>
+    <project v-if="projectDialogVisible" :visible.sync="projectDialogVisible" @confirm="projectSelect" />
   </PageCard>
 </template>
 <script>
 import { getAddress, addAddress, updateAddress, listAddressParent } from '@/api/address.js'
-import { listDictItems } from '@/api/base.js'
+import { listDictItems, findCompanyList } from '@/api/base.js'
 import { handleTree } from '@/utils/index.js'
 import { regionData } from 'element-china-area-data'
 export default {
   data() {
     return {
       cityOptions: regionData,
+      returnUrl: '/library/address',
       // 提交加载
       submitLoading: false,
       // 是否禁用提交按钮
       submitButton: false,
-
-      // 库位树选项
-      addressOptions: [],
-      //字典集合
-      sysDictionaryList: [],
-      // 是否公开
-      ynPublicList: [],
-      // 状态集合
-      statusList: [],
-      // 上级数据
-      parentData: {},
-      // 公司树选项
       companyList: [],
-      // 项目集合
-      projectList: [],
-
       editId: '',
       formData: {},
       dictDataList: [],
+      projectDialogVisible: false,
       // 表单校验
       rules: {
         locationCode: [{ required: true, message: '地址编号不能为空', trigger: 'blur' }],
@@ -180,10 +166,10 @@ export default {
       this.formData.districtCountyId = value.parent.parent.value
       this.formData.districtCountyName = value.parent.parent.label
     },
-    //选择父级地址触发
+    // 选择父级地址触发
     parentAddressChange(data) {
       this.formData.locationType = ''
-      this.parentData = row
+      this.parentData = data
       if (data) {
         this.formData.parentId = data.locationAddressId
         this.formData.parentIds = data.parentIds
@@ -206,26 +192,22 @@ export default {
           return
         }
         if (!this.formData.parentId) {
-          //未选父级地址，地址类型只允许选择1库位所属公司
-          item['disabled'] = item.itemsValue == 1 ? false : true
+          // 未选父级地址，地址类型只允许选择1库位所属公司
+          item['disabled'] = item.itemsValue != 1
         }
         if (this.parentData) {
           if (this.parentData.locationType == '1') {
-            //父级地址是1库位所属公司，地址类型只允许选择2仓库和3使用区域
-
-            item['disabled'] = item.itemsValue == 2 || item.itemsValue == 3 ? false : true
+            // 父级地址是1库位所属公司，地址类型只允许选择2仓库和3使用区域
+            item['disabled'] = item.itemsValue != 2 || item.itemsValue != 3
           } else if (this.parentData.locationType == '2') {
-            //父级地址是2仓库，地址类型只允许选择5一级货架
-
-            item['disabled'] = item.itemsValue == 5 ? false : true
+            // 父级地址是2仓库，地址类型只允许选择5一级货架
+            item['disabled'] = item.itemsValue != 5
           } else if (this.parentData.locationType == '3') {
-            //父级地址是3使用区域，地址类型只允许选择4具体位置
-
-            item['disabled'] = item.itemsValue == 4 ? false : true
+            // 父级地址是3使用区域，地址类型只允许选择4具体位置
+            item['disabled'] = item.itemsValue != 4
           } else if (this.parentData.locationType == '5') {
-            //父级地址是5一级货架，地址类型只允许选择6二级货架
-
-            item['disabled'] = item.itemsValue == 6 ? false : true
+            // 父级地址是5一级货架，地址类型只允许选择6二级货架
+            item['disabled'] = item.itemsValue != 6
           }
         }
       })
@@ -234,8 +216,11 @@ export default {
     getSysDictionaryList() {
       listAddressParent().then((response) => {
         this.addressOptions = handleTree(response.rows, 'locationAddressId')
-        console.log(this.addressOptions)
       })
+      findCompanyList().then((res) => {
+        this.companyList = res.data
+      })
+
       var dictCodes = 'System-status' // 系统-状态
       dictCodes += ',StlLocationAddress-locationType' // 地址类型
       dictCodes += ',StlLocationAddress-ynPublic' // 是否公开
@@ -245,33 +230,10 @@ export default {
     },
 
     /** 选择项目触发 */
-    projectChoose(val) {
-      this.formData.projectCode = ''
-      this.formData.projectName = ''
-      this.projectList.forEach((item) => {
-        if (item.projectId == val) {
-          this.formData.projectId = item.projectId
-          this.formData.projectCode = item.projectCode
-          this.formData.projectName = item.projectName
-        }
-      })
-    },
-
-    /** 选择部门触发 */
-    deptChange(row) {
-      this.formData.deptId = row.deptId
-      this.formData.deptName = row.deptName
-    },
-    /** 转换库位地址数据结构 */
-    normalizerAddress(node) {
-      if (node.children && !node.children.length) {
-        delete node.children
-      }
-      return {
-        id: node.locationAddressId,
-        label: node.locationName,
-        children: node.children
-      }
+    projectSelect(val) {
+      this.formData.projectId = val.projectId
+      this.formData.projectCode = val.projectCode
+      this.formData.projectName = val.projectName
     },
 
     /** 选择公司触发 */
@@ -288,23 +250,20 @@ export default {
     submitForm() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          this.submitLoading = true
           this.submitButton = true
           if (this.formData.locationAddressId != null) {
             updateAddress(this.formData).then((response) => {
-              this.$modal.msgSuccess('修改成功')
-              this.submitLoading = false
-              this.submitButton = false
-
-              this.$router.back()
+              this.$message.success('修改成功')
+              setTimeout(() => {
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+              }, 500)
             })
           } else {
             addAddress(this.formData).then((response) => {
-              this.$modal.msgSuccess('新增成功')
-              this.submitLoading = false
-              this.submitButton = false
-
-              this.$router.back()
+              this.$message.success('新增成功')
+              setTimeout(() => {
+                window.$wujie.props.closeCurrentPage({ path: this.returnUrl })
+              }, 500)
             })
           }
         }
