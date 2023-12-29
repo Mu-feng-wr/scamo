@@ -1,6 +1,6 @@
 <template>
   <el-dialog :title="title" :visible.sync="openView" width="500px" append-to-body>
-    <el-form ref="form" :model="formData" :rules="rules" label-width="120px" v-loading="loading">
+    <el-form ref="form" v-loading="loading" :model="formData" :rules="rules" label-width="120px">
       <el-form-item label="业务类型编号" prop="businessCode">
         <el-input v-model="formData.businessCode" placeholder="请输入业务类型编号" maxlength="50" show-word-limit />
       </el-form-item>
@@ -14,8 +14,8 @@
         <el-input v-model="formData.remarks" type="textarea" placeholder="请输入内容" maxlength="250" show-word-limit />
       </el-form-item>
     </el-form>
-    <div align="center" slot="footer" class="dialog-footer">
-      <el-button type="primary" @click="submitForm" :loading="submitButton">确 定</el-button>
+    <div slot="footer" align="center" class="dialog-footer">
+      <el-button :loading="submitButton" type="primary" @click="submitForm">确 定</el-button>
       <el-button @click="cancel">取 消</el-button>
     </div>
   </el-dialog>

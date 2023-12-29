@@ -1,6 +1,6 @@
 <template>
   <el-dialog title="查看业务类型信息" :visible.sync="openView" width="500px" append-to-body>
-    <el-form ref="form" label-width="120px" v-loading="loading">
+    <el-form ref="form" v-loading="loading" label-width="120px">
       <el-form-item label="业务类型编号">{{ formData.businessCode }}</el-form-item>
       <el-form-item label="业务类型名称">{{ formData.businessName }}</el-form-item>
       <el-form-item label="状态">
@@ -8,14 +8,14 @@
       </el-form-item>
       <el-form-item label="备注">{{ formData.remarks }}</el-form-item>
     </el-form>
-    <div align="center" slot="footer" class="dialog-footer">
+    <div slot="footer" align="center" class="dialog-footer">
       <el-button @click="cancel">取 消</el-button>
     </div>
   </el-dialog>
 </template>
 
 <script>
-import { getType, addType, updateType } from '@/api/type.js'
+import { getType } from '@/api/type.js'
 export default {
   model: {
     prop: 'openView',
