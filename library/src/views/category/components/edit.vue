@@ -1,6 +1,6 @@
 <template>
-  <el-dialog :title="title" :visible.sync="openView" width="500px" append-to-body>
-    <el-form ref="form" v-loading="loading" :model="formData" :rules="rules" label-width="80px" @close="cancel">
+  <el-dialog :title="title" :visible.sync="openView" width="500px" append-to-body @close="cancel">
+    <el-form ref="form" v-loading="loading" :model="formData" :rules="rules" label-width="80px">
       <el-form-item label="分类编号">
         <el-input v-model="formData.categoryCode" placeholder="自动生成编号" :disabled="true" maxlength="50" show-word-limit />
       </el-form-item>

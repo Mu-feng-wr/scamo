@@ -40,7 +40,7 @@
                       <el-input v-model="queryParams.status" size="small" placeholder="请输入父分类名称" clearable @keyup.enter.native="load" />
                     </el-col>
                     <el-col :span="4">
-                      <base-input :value.sync="queryParams.centralizedBusinessId" size="small" base-code="System-status" placeholder="请选择状态" clearable @change="load" />
+                      <base-input :value.sync="queryParams.status" size="small" base-code="System-status" placeholder="请选择状态" clearable @change="load" />
                     </el-col>
                     <el-col :span="4">
                       <el-date-picker v-model="queryParams.updateDate" size="small" clearable type="date" value-format="yyyy-MM-dd" placeholder="请选择更新时间" @change="load" />
