@@ -27,7 +27,9 @@
     "vxe-table": "3.0.0",
     "file-saver": "2.0.5",
     "xe-utils": "^3.5.13",
-    "element-china-area-data": "5.0.2"
+    "element-china-area-data": "5.0.2",
+    "qrcodejs2": "^0.0.2",
+    "jsbarcode": "^3.11.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "4.4.4",
