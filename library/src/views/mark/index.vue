@@ -27,10 +27,10 @@
               </el-row>
               <el-row v-if="showAllSearch" :gutter="14" class="mt-10">
                 <el-col :span="4">
-                  <el-date-picker clearable v-model="queryParams.createDate" size="small" type="date" value-format="yyyy-MM-dd" placeholder="请选择创建时间" @change="load"></el-date-picker>
+                  <el-date-picker v-model="queryParams.createDate" clearable size="small" type="date" value-format="yyyy-MM-dd" placeholder="请选择创建时间" @change="load" />
                 </el-col>
                 <el-col :span="4">
-                  <el-date-picker clearable v-model="queryParams.updateDate" size="small" type="date" value-format="yyyy-MM-dd" placeholder="请选择更新时间" @change="load"></el-date-picker>
+                  <el-date-picker v-model="queryParams.updateDate" clearable size="small" type="date" value-format="yyyy-MM-dd" placeholder="请选择更新时间" @change="load" />
                 </el-col>
               </el-row>
             </div>
@@ -55,7 +55,7 @@
           </el-header>
           <el-main>
             <el-row>
-              <el-col :span="6" v-for="(row, index) in tableData" :key="index">
+              <el-col v-for="(row, index) in tableData" :key="index" :span="6">
                 <div class="markItem">
                   <div class="markItem-body">
                     <div class="item">
@@ -64,12 +64,12 @@
                           <img v-if="row.markLogo" :src="row.markLogo" />
                           <img v-else :src="defaultImg" class="avatar" />
                         </el-col>
-                        <el-col :span="16" v-if="row.markIcon == 2" style="margin-top: 20px">
+                        <el-col v-if="row.markIcon == 2" :span="16" style="margin-top: 20px">
                           <span>公司名称：</span>
                           <span>{{ row.companyName }}</span>
                         </el-col>
-                        <el-col :span="16" class="disp-flex justify-end qrcodeBox" v-else>
-                          <div class="qrcode" :ref="'qrcode' + index">{{ qrcodeFun(index, row.markCode) }}</div>
+                        <el-col v-else :span="16" class="disp-flex justify-end qrcodeBox">
+                          <div :ref="'qrcode' + index" class="qrcode">{{ qrcodeFun(index, row.markCode) }}</div>
                         </el-col>
                       </el-row>
                       <el-row v-if="row.markIcon != 2">
@@ -103,7 +103,7 @@
                         </el-col>
                       </el-row>
                       <el-row>
-                        <el-col :span="24" v-if="row.markIcon == 2">
+                        <el-col v-if="row.markIcon == 2" :span="24">
                           <img :ref="'barcode' + index" style="max-width: 100%" :src="barcodeFun(index, row.markCode)" />
                         </el-col>
                       </el-row>
@@ -111,8 +111,8 @@
                   </div>
                   <div class="actions">
                     <el-link type="primary" @click="detailHandle(row.materialMarkId)">预览</el-link>
-                    <el-link type="primary" @click="addOrUpdateHandle(row.materialMarkId)" v-hasPermi="['library:mark:edit']">编辑</el-link>
-                    <el-link type="primary" @click="handleDelete(row)" v-hasPermi="['library:mark:remove']">删除</el-link>
+                    <el-link v-hasPermi="['library:mark:edit']" type="primary" @click="addOrUpdateHandle(row.materialMarkId)">编辑</el-link>
+                    <el-link v-hasPermi="['library:mark:remove']" type="primary" @click="handleDelete(row)">删除</el-link>
                   </div>
                 </div>
               </el-col>
@@ -196,7 +196,7 @@ export default {
         })
       })
     },
-    detailHandle() {
+    detailHandle(id) {
       window.$wujie.props.route({
         path: '/library/mark',
         module: 'Library',
@@ -209,11 +209,11 @@ export default {
     qrcodeFun(index, code) {
       this.$nextTick(() => {
         this.$refs['qrcode' + index][0].innerHTML = ''
-        let qrcode = new QRCode(this.$refs['qrcode' + index][0], {
-          width: 100, //宽度
+        new QRCode(this.$refs['qrcode' + index][0], {
+          width: 100, // 宽度
           height: 100, // 高度
           text: code, // 二维码内容
-          correctLevel: QRCode.CorrectLevel.L //容错级别
+          correctLevel: QRCode.CorrectLevel.L // 容错级别
         })
       })
     }

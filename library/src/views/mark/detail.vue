@@ -30,14 +30,14 @@
                 <img v-else :src="defaultImg" />
               </el-col>
             </el-col>
-            <el-col :span="16" v-if="formData.markIcon == 2" style="margin-top: 20px">
+            <el-col v-if="formData.markIcon == 2" :span="16" style="margin-top: 20px">
               <span>公司名称：</span>
               <span>{{ formData.companyName }}</span>
             </el-col>
-            <el-col :span="16" class="text-right qrcodeBox" v-else>
+            <el-col v-else :span="16" class="text-right qrcodeBox">
               <div class="qrcodeImg">
                 <div ref="qrcode"></div>
-                <img :src="defaultLogo" class="defaultLogo" v-if="qrcodeVisible" />
+                <img v-if="qrcodeVisible" :src="defaultLogo" class="defaultLogo" />
               </div>
             </el-col>
           </el-row>
@@ -72,16 +72,13 @@
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="24" v-if="formData.markIcon == 2">
+            <el-col v-if="formData.markIcon == 2" :span="24">
               <img ref="barcode" style="max-width: 100%" />
             </el-col>
           </el-row>
         </div>
       </SectionCard>
     </el-form>
-    <div slot="footer" align="center">
-      <el-button @click="goBack">取 消</el-button>
-    </div>
   </PageCard>
 </template>
 <script>
@@ -126,7 +123,7 @@ export default {
         name: 'library-mark'
       })
     },
-    /*生成条形码 */
+    /* 生成条形码 */
     barcodeFun() {
       if (this.formData.markCode) {
         this.barcodeVisible = true
@@ -142,17 +139,17 @@ export default {
         })
       }
     },
-    //生成二维码
+    // 生成二维码
     qrcodeFun() {
       if (this.formData.markCode) {
         this.qrcodeVisible = true
         this.$nextTick(function () {
           this.$refs['qrcode'].innerHTML = ''
           new QRCode(this.$refs['qrcode'], {
-            width: 100, //宽度
+            width: 100, // 宽度
             height: 100, // 高度
             text: this.formData.markCode, // 二维码内容
-            correctLevel: QRCode.CorrectLevel.L //容错级别
+            correctLevel: QRCode.CorrectLevel.L // 容错级别
           })
         })
       }

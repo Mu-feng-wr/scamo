@@ -37,15 +37,15 @@
                 <span v-else class="avatar-uploader-icon">公司logo</span>
               </el-upload>
             </el-col>
-            <el-col :span="16" v-if="formData.markIcon == 2" style="margin-top: 20px">
+            <el-col v-if="formData.markIcon == 2" :span="16" style="margin-top: 20px">
               <el-form-item label="公司名称" prop="companyName">
                 <el-input v-model="formData.companyName" placeholder="请输入公司名称" />
               </el-form-item>
             </el-col>
-            <el-col :span="16" class="text-right qrcodeBox" v-else>
+            <el-col v-else :span="16" class="text-right qrcodeBox">
               <div class="qrcodeImg">
                 <div ref="qrcode"></div>
-                <img :src="defaultLogo" class="defaultLogo" v-if="qrcodeVisible" />
+                <img v-if="qrcodeVisible" :src="defaultLogo" class="defaultLogo" />
               </div>
             </el-col>
           </el-row>
@@ -66,7 +66,7 @@
           <el-row>
             <el-col :span="24">
               <el-form-item label="资产编码" prop="markCode">
-                <el-input @blur="blurFun" v-model="formData.markCode" placeholder="请输入资产编码" />
+                <el-input v-model="formData.markCode" placeholder="请输入资产编码" @blur="blurFun" />
               </el-form-item>
             </el-col>
           </el-row>
@@ -80,12 +80,12 @@
           <el-row v-if="formData.markIcon != 2">
             <el-col :span="24">
               <el-form-item label="启用日期" prop="activationDate">
-                <el-date-picker clearable v-model="formData.activationDate" type="date" value-format="yyyy-MM-dd" placeholder="请选择启用日期"></el-date-picker>
+                <el-date-picker v-model="formData.activationDate" clearable type="date" value-format="yyyy-MM-dd" placeholder="请选择启用日期" />
               </el-form-item>
             </el-col>
           </el-row>
           <el-row>
-            <el-col :span="24" v-if="formData.markIcon == 2">
+            <el-col v-if="formData.markIcon == 2" :span="24">
               <img ref="barcode" style="max-width: 100%" />
             </el-col>
           </el-row>
@@ -94,7 +94,7 @@
         <div class="markBox">
           <h4 class="tipTitle">展示信息</h4>
           <el-row :gutter="10">
-            <el-col :span="6" v-for="(item, key) in obj" :key="key">
+            <el-col v-for="(item, key) in obj" :key="key" :span="6">
               <el-tag type="info" class="elTag">{{ item }}</el-tag>
             </el-col>
           </el-row>
@@ -226,7 +226,7 @@ export default {
         this.qrcodeFun()
       }
     },
-    /*生成条形码 */
+    /* 生成条形码 */
     barcodeFun() {
       if (this.formData.markCode) {
         this.barcodeVisible = true
@@ -242,17 +242,17 @@ export default {
         })
       }
     },
-    //生成二维码
+    // 生成二维码
     qrcodeFun() {
       if (this.formData.markCode) {
         this.qrcodeVisible = true
         this.$nextTick(function () {
           this.$refs['qrcode'].innerHTML = ''
           new QRCode(this.$refs['qrcode'], {
-            width: 100, //宽度
+            width: 100, // 宽度
             height: 100, // 高度
             text: this.formData.markCode, // 二维码内容
-            correctLevel: QRCode.CorrectLevel.L //容错级别
+            correctLevel: QRCode.CorrectLevel.L // 容错级别
           })
         })
       }
