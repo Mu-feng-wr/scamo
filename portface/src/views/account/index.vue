@@ -203,7 +203,7 @@ export default {
     handleDelete(row) {
       this.$confirm('是否确认删除账号为 "' + row.accountNumber + '" 户名为 "' + row.accountName + '" 的数据项？', '', { type: 'warning' }).then(() => {
         delAccount(row.accountId).then(() => {
-          this.getList()
+          this.reload()
           this.$message.success('删除成功')
         })
       })
