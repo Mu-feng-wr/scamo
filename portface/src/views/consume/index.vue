@@ -63,12 +63,6 @@
               show-overflow="tooltip"
             >
               <template #seqHeader>序号</template>
-              <template #accountType="{row}">
-                <dictDateView :value="row.accountType" :dict-data-list="dictDataList" dict-code="FmBankAccount-accountType" />
-              </template>
-              <template #status="{row}">
-                <dictDateView :value="row.status" :dict-data-list="dictDataList" dict-code="System-status" />
-              </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
                   <el-button v-hasPermi="['datac:consume:list']" size="small" type="text" @click="handleDetail(row.id)">查看</el-button>
