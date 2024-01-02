@@ -14,7 +14,7 @@
         <div class="main">
           <el-form :label-position="labelPosition" :label-width="labelWidth">
             <el-row>
-              <el-col v-for="(item, i) in filterOptions" :key="i" :span="['datetimerange', 'daterange','numberRange'].includes(item.type) ? 24 : 12">
+              <el-col v-for="(item, i) in filterOptions" :key="i" :span="item.span||['datetimerange', 'daterange','numberRange','area'].includes(item.type) ? 24 : 12">
                 <el-form-item :label="item.label">
                   <el-input v-if="item.type == 'input'" v-model="form[item.value]" :placeholder="item.placeholder || '请输入'" :clearable="item.clearable||true" :size="item.size||'small'" />
 
@@ -108,6 +108,17 @@
                     :clearable="item.clearable||true"
                     :size="item.size||'small'"
                   />
+                  <el-cascader
+                    v-if="item.type == 'area'"
+                    ref="addressChoose"
+                    v-model="form[item.value]"
+                    :options="cityOptions"
+                    filterable
+                    :placeholder="item.placeholder || '请选择'"
+                    :clearable="item.clearable||true"
+                    :size="item.size||'small'"
+                    @change="changeArea"
+                  />
                 </el-form-item>
               </el-col>
             </el-row>
@@ -122,6 +133,7 @@
   </div>
 </template>
 <script>
+import { regionData } from 'element-china-area-data'
 export default {
   name: 'MoreQuery',
   props: {
@@ -149,6 +161,7 @@ export default {
   },
   data() {
     return {
+      cityOptions: regionData,
       show: false,
       isshow: false,
       form: {},
@@ -185,6 +198,24 @@ export default {
     },
     change() {
       this.$emit('update:formData', this.form)
+    },
+    changeArea() {
+      const value = this.$refs.addressChoose.getCheckedNodes()[0]
+      if (value) {
+        this.form.provinceId = value.value
+        this.form.provinceName = value.label
+        this.form.cityId = value.parent.value
+        this.form.cityName = value.parent.label
+        this.form.districtCountyId = value.parent.parent.value
+        this.form.districtCountyName = value.parent.parent.label
+      } else {
+        this.form.provinceId = ''
+        this.form.provinceName = ''
+        this.form.cityId = ''
+        this.form.cityName = ''
+        this.form.districtCountyId = ''
+        this.form.districtCountyName = ''
+      }
     }
   }
 }

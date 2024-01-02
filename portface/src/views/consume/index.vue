@@ -179,7 +179,6 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      const ids = row.id || this.ids
       this.$confirm('是否确认删除短信消费信息编号为"' + row.id + '"的数据项？', '', { type: 'warning' }).then(() => {
         delConsume(row.id).then(() => {
           this.reload()

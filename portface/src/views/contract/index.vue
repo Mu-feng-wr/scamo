@@ -38,7 +38,7 @@
                     size="small"
                     :start-value="queryParams.dateRangeQueryStart"
                     :end-alue="queryParams.dateRangeQueryEnd"
-                    valueFormat="yyyy-Mm-dd"
+                    value-format="yyyy-MM-dd"
                     start-placeholder="请选择有效开始时间"
                     end-placeholder="请选择有效结束时间"
                   />
