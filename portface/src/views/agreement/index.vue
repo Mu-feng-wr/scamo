@@ -29,7 +29,7 @@
           <el-header>
             <el-row class="mb-15">
               <el-col :span="12">
-                <el-button v-hasPermi="['datac:agreement:add']" type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd">新增</el-button>
+                <el-button v-hasPermi="['datac:agreement:add']" type="primary" plain icon="el-icon-plus" size="mini" @click="addOrUpdateHandle()">新增</el-button>
                 <el-button v-hasPermi="['datac:agreement:export']" plain icon="el-icon-upload2" size="mini" @click="handleExport">导出</el-button>
               </el-col>
               <el-col :span="12" class="text-right">
@@ -60,8 +60,8 @@
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
-                  <el-button v-hasPermi="['datac:agreement:list']" size="small" type="text" @click="handleDetail(row.id)">查看</el-button>
-                  <el-button v-hasPermi="['datac:agreement:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.id)">修改</el-button>
+                  <el-button v-hasPermi="['datac:agreement:list']" size="small" type="text" @click="handleDetail(row.tenderAgreementId)">查看</el-button>
+                  <el-button v-hasPermi="['datac:agreement:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.tenderAgreementId)">修改</el-button>
                   <el-button v-hasPermi="['datac:agreement:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
               </template>
@@ -82,6 +82,8 @@
         </el-container>
       </el-main>
     </el-container>
+    <edit v-if="editVisible" v-model="editVisible" :edit-id="editId" :dict-data-list="dictDataList" @reload="reload" />
+    <detail v-if="detailVisible" v-model="detailVisible" :edit-id="editId" :dict-data-list="dictDataList" />
   </div>
 </template>
 
@@ -89,7 +91,13 @@
 import vxeTable from '@/mixins/vxeTable'
 import { listAgreement, delAgreement } from '@/api/agreement.js'
 import { listDictItems } from '@/api/base.js'
+import edit from './components/edit.vue'
+import detail from './components/detail.vue'
 export default {
+  components: {
+    edit,
+    detail
+  },
   mixins: [vxeTable],
   data() {
     return {
@@ -102,7 +110,10 @@ export default {
         { field: 'tenderAgreementName', title: '招标协议名称', visible: true, visibleDisabled: true },
         { field: 'unifiedSystemNumber', title: '客户统一系统编号', visible: true, visibleDisabled: true },
         { field: 'todo', title: '操作', width: 160, align: 'center', fixed: 'right', slots: { default: 'todo' }, visible: true, visibleDisabled: true }
-      ]
+      ],
+      editVisible: false,
+      detailVisible: false,
+      editId: ''
     }
   },
   created() {
