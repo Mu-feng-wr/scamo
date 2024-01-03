@@ -19,8 +19,8 @@
                   <InputRange
                     type="daterange"
                     size="small"
-                    :start-value="queryParams.dateRangeQueryStart"
-                    :end-value="queryParams.dateRangeQueryEnd"
+                    :start-value.sync="queryParams.dateRangeQueryStart"
+                    :end-value.sync="queryParams.dateRangeQueryEnd"
                     value-format="yyyy-MM-dd"
                     start-placeholder="请选择开始时间"
                     end-placeholder="请选择结束时间"
