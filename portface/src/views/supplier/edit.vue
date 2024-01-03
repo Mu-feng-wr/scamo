@@ -27,7 +27,7 @@
           </el-col>
           <el-col :span="16">
             <el-form-item label="历史曾用名" prop="hisNameUsedBefore">
-              <el-input style="width: calc(50% - 85px)" v-model="formData.hisNameUsedBefore" :disabled="true" placeholder="请输入内容" clearable maxlength="500" show-word-limit />
+              <el-input v-model="formData.hisNameUsedBefore" style="width: calc(50% - 85px)" :disabled="true" placeholder="请输入内容" clearable maxlength="500" show-word-limit />
             </el-form-item>
           </el-col>
         </el-row>
@@ -61,7 +61,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="成立日期" prop="incorporationDate">
-              <el-date-picker clearable v-model="formData.incorporationDate" type="date" value-format="yyyy-MM-dd" placeholder="请选择成立日期"></el-date-picker>
+              <el-date-picker v-model="formData.incorporationDate" clearable type="date" value-format="yyyy-MM-dd" placeholder="请选择成立日期" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -158,7 +158,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="入库日期" prop="storageDate">
-              <el-date-picker clearable v-model="formData.storageDate" type="date" value-format="yyyy-MM-dd" placeholder="请选择入库日期"></el-date-picker>
+              <el-date-picker v-model="formData.storageDate" clearable type="date" value-format="yyyy-MM-dd" placeholder="请选择入库日期" />
             </el-form-item>
           </el-col>
         </el-row>

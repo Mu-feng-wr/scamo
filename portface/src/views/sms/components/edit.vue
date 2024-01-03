@@ -44,7 +44,7 @@
         </el-col>
         <el-col :span="12">
           <el-form-item label="发送时间" prop="sendDate">
-            <el-date-picker clearable v-model="formData.sendDate" type="date" value-format="yyyy-MM-dd" placeholder="请选择发送时间"></el-date-picker>
+            <el-date-picker v-model="formData.sendDate" clearable type="date" value-format="yyyy-MM-dd" placeholder="请选择发送时间" />
           </el-form-item>
         </el-col>
         <el-col :span="12">
@@ -108,8 +108,7 @@ export default {
     return {
       loading: false,
       formData: {},
-      rules: {},
-      loading: false
+      rules: {}
     }
   },
   computed: {
