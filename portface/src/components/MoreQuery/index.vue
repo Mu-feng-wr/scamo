@@ -64,6 +64,7 @@
                     v-model="form[item.value]"
                     align="right"
                     type="date"
+                    :size="item.size||'small'"
                     :placeholder="item.placeholder || '选择日期'"
                     :clearable="item.clearable||true"
                   />
