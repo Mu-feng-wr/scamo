@@ -59,8 +59,8 @@
           <el-header>
             <el-row class="mb-15">
               <el-col :span="12">
-                <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="addOrUpdateHandle()" v-hasPermi="['datac:supplier:add']">新增</el-button>
-                <el-button plain icon="el-icon-upload2" size="mini" @click="handleExport" v-hasPermi="['datac:supplier:export']">导出</el-button>
+                <el-button v-hasPermi="['datac:supplier:add']" type="primary" plain icon="el-icon-plus" size="mini" @click="addOrUpdateHandle()">新增</el-button>
+                <el-button v-hasPermi="['datac:supplier:export']" plain icon="el-icon-upload2" size="mini" @click="handleExport">导出</el-button>
               </el-col>
               <el-col :span="12" class="text-right">
                 <el-button plain icon="el-icon-refresh" size="mini" @click="load">刷新</el-button>

@@ -35,10 +35,8 @@
           <el-header>
             <el-row class="mb-15">
               <el-col :span="12">
-                <el-button type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd" v-hasPermi="['datac:sms:add']">新增</el-button>
-                <!-- <el-button type="success" plain icon="el-icon-edit" size="mini" @click="handleUpdate" v-hasPermi="['datac:sms:edit']">修改</el-button>
-                <el-button type="danger" plain icon="el-icon-delete" size="mini" @click="handleDelete" v-hasPermi="['datac:sms:remove']">删除</el-button>-->
-                <el-button plain icon="el-icon-upload2" size="mini" @click="handleExport" v-hasPermi="['datac:sms:export']">导出</el-button>
+                <el-button v-hasPermi="['datac:sms:add']" type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd">新增</el-button>
+                <el-button v-hasPermi="['datac:sms:export']" plain icon="el-icon-upload2" size="mini" @click="handleExport">导出</el-button>
               </el-col>
               <el-col :span="12" class="text-right">
                 <el-button plain icon="el-icon-refresh" size="mini" @click="getList">刷新</el-button>
@@ -175,8 +173,8 @@ export default {
     },
     /** 删除按钮操作 */
     handleDelete(row) {
-      this.$confirm('是否确认删除短信信息编号为"' + ids + '"的数据项？').then(() => {
-        delSms(ids).then(() => {
+      this.$confirm('是否确认删除短信信息编号为"' + row.id + '"的数据项？').then(() => {
+        delSms(row.id).then(() => {
           this.reload()
           this.$message.success('删除成功')
         })

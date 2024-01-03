@@ -87,13 +87,22 @@
         </el-container>
       </el-main>
     </el-container>
+
+    <edit v-if="editVisible" v-model="editVisible" :edit-id="editId" :dict-data-list="dictDataList" @reload="reload" />
+    <detail v-if="detailVisible" v-model="detailVisible" :edit-id="editId" :dict-data-list="dictDataList" />
   </div>
 </template>
 
 <script>
 import vxeTable from '@/mixins/vxeTable'
 import { listConsume, delConsume } from '@/api/consume.js'
+import edit from './components/edit.vue'
+import detail from './components/detail.vue'
 export default {
+  components: {
+    edit,
+    detail
+  },
   mixins: [vxeTable],
   data() {
     return {
