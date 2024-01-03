@@ -152,6 +152,7 @@ export default {
   watch: {
     optionsList: {
       handler() {
+        console.log(this.optionsList, '====================')
         if (this.optionsList.length > 0) {
           if (this.baseCode) {
             this.options = this.optionsList.filter((item) => item.dictionaryCode == this.baseCode)

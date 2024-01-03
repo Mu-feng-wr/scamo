@@ -97,8 +97,8 @@
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
-                  <el-button v-hasPermi="['datac:contract:list']" size="small" type="text" @click="handleDetail(row.id)">查看</el-button>
-                  <el-button v-hasPermi="['datac:contract:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.id)">修改</el-button>
+                  <el-button v-hasPermi="['datac:contract:list']" size="small" type="text" @click="handleDetail(row.contractId)">查看</el-button>
+                  <el-button v-hasPermi="['datac:contract:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.contractId)">修改</el-button>
                   <el-button v-hasPermi="['datac:contract:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
               </template>
@@ -195,8 +195,22 @@ export default {
     },
     // 新增||编辑
     addOrUpdateHandle(id) {
-      this.editId = id
-      this.editVisible = true
+      if (id) {
+        window.$wujie.props.route({
+          path: '/portface/contract',
+          module: 'Portface',
+          fullPath: '/portface/contract/edit',
+          title: '编辑合同',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/portface/contract',
+          module: 'Portface',
+          fullPath: '/portface/contract/edit',
+          title: '编辑合同'
+        })
+      }
     },
     // 查看
     handleDetail(id) {
