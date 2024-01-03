@@ -208,14 +208,19 @@ export default {
           path: '/portface/contract',
           module: 'Portface',
           fullPath: '/portface/contract/edit',
-          title: '编辑合同'
+          title: '新增合同'
         })
       }
     },
     // 查看
     handleDetail(id) {
-      this.editId = id
-      this.detailVisible = true
+      window.$wujie.props.route({
+        path: '/portface/contract',
+        module: 'Portface',
+        fullPath: '/portface/contract/detail',
+        title: '合同详情',
+        condition: { id }
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {
