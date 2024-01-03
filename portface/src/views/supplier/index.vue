@@ -90,8 +90,8 @@
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
-                  <el-button v-hasPermi="['datac:supplier:list']" size="small" type="text" @click="handleDetail(row.id)">查看</el-button>
-                  <el-button v-hasPermi="['datac:supplier:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.id)">修改</el-button>
+                  <el-button v-hasPermi="['datac:supplier:list']" size="small" type="text" @click="handleDetail(row.supplierId)">查看</el-button>
+                  <el-button v-hasPermi="['datac:supplier:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.supplierId)">修改</el-button>
                   <el-button v-hasPermi="['datac:supplier:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
               </template>
@@ -196,13 +196,32 @@ export default {
     },
     // 新增||编辑
     addOrUpdateHandle(id) {
-      this.editId = id
-      this.editVisible = true
+      if (id) {
+        window.$wujie.props.route({
+          path: '/portface/supplier',
+          module: 'Portface',
+          fullPath: '/portface/supplier/edit',
+          title: '编辑供应商',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/portface/supplier',
+          module: 'Portface',
+          fullPath: '/portface/supplier/add',
+          title: '新增供应商'
+        })
+      }
     },
     // 查看
     handleDetail(id) {
-      this.editId = id
-      this.detailVisible = true
+      window.$wujie.props.route({
+        path: '/portface/supplier',
+        module: 'Portface',
+        fullPath: '/portface/supplier/detail',
+        title: '供应商详情',
+        condition: { id }
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {

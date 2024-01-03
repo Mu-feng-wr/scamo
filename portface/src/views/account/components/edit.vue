@@ -121,7 +121,7 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           this.submitButton = true
-          if (this.editId != null) {
+          if (!this.editId) {
             updateAccount(this.formData).then((res) => {
               this.$message.success('修改成功')
               this.$emit('reload')

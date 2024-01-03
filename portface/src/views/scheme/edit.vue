@@ -245,16 +245,7 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           this.submitButton = true
-          // 转换时间
-          if (this.dateRange.length > 0) {
-            this.formData.startDate = this.dateRange[0]
-            this.formData.endDate = this.dateRange[1]
-          } else {
-            this.formData.startDate = null
-            this.formData.endDate = null
-          }
-
-          if (this.formData.schemeId != null) {
+          if (!this.editId) {
             updateScheme(this.formData)
               .then((res) => {
                 this.$message.success('修改成功')

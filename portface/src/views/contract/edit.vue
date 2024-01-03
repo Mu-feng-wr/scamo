@@ -242,7 +242,7 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           this.submitButton = true
-          if (this.editId != null) {
+          if (!this.editId) {
             updateContract(this.formData)
               .then((response) => {
                 this.$message.success('修改成功')

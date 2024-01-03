@@ -141,7 +141,7 @@ export default {
     submitForm() {
       this.$refs['form'].validate((valid) => {
         if (valid) {
-          if (this.editId != null) {
+          if (!this.editId) {
             updateConsume(this.formData).then((response) => {
               this.$message.success('修改成功')
               this.$emit('reload')

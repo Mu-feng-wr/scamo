@@ -206,7 +206,7 @@ export default {
         if (valid) {
           this.submitLoading = true
           this.submitButton = true
-          if (this.formData.projectId != null) {
+          if (!this.editId) {
             updateProject(this.form).then((response) => {
               this.$modal.msgSuccess('修改成功')
               setTimeout(() => {
