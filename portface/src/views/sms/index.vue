@@ -35,7 +35,7 @@
           <el-header>
             <el-row class="mb-15">
               <el-col :span="12">
-                <el-button v-hasPermi="['datac:sms:add']" type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd">新增</el-button>
+                <el-button v-hasPermi="['datac:sms:add']" type="primary" plain icon="el-icon-plus" size="mini" @click="addOrUpdateHandle()">新增</el-button>
                 <el-button v-hasPermi="['datac:sms:export']" plain icon="el-icon-upload2" size="mini" @click="handleExport">导出</el-button>
               </el-col>
               <el-col :span="12" class="text-right">
@@ -88,6 +88,8 @@
         </el-container>
       </el-main>
     </el-container>
+    <edit v-if="editVisible" v-model="editVisible" :edit-id="editId" :dict-data-list="dictDataList" @reload="reload" />
+    <detail v-if="detailVisible" v-model="detailVisible" :edit-id="editId" :dict-data-list="dictDataList" />
   </div>
 </template>
 
@@ -95,7 +97,13 @@
 import vxeTable from '@/mixins/vxeTable'
 import { listSms, delSms } from '@/api/sms.js'
 import { listDictItems } from '@/api/base.js'
+import edit from './components/edit.vue'
+import detail from './components/detail.vue'
 export default {
+  components: {
+    edit,
+    detail
+  },
   mixins: [vxeTable],
   data() {
     return {
@@ -118,7 +126,10 @@ export default {
         { field: 'unifiedSystemNumber', title: '客户统一系统编号', width: 120, visible: true },
         { field: 'status', title: '状态', width: 100, visible: true },
         { field: 'todo', title: '操作', width: 160, align: 'center', fixed: 'right', slots: { default: 'todo' }, visible: true, visibleDisabled: true }
-      ]
+      ],
+      editVisible: false,
+      detailVisible: false,
+      editId: ''
     }
   },
   created() {
