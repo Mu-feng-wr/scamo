@@ -148,3 +148,11 @@ export function listUser (query) {
     params: query
   })
 }
+
+// 根据公司ID查询部门下拉树结构
+export function getDeptByCompanyId(companyId) {
+  return request({
+    url: '/system/user/getDeptByCompanyId/' + companyId,
+    method: 'get'
+  })
+}

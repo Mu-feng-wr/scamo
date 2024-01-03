@@ -7,6 +7,7 @@ import InputRange from '@/components/InputRange/index.vue'
 import MoreQuery from '@/components/MoreQuery/index.vue'
 import PageCard from '@/components/PageCard/index.vue'
 import sectionCard from '@/components/sectionCard/index.vue'
+import ElTreeSelect from '@/components/ElTreeSelect/index.vue'
 
 const com = [
   searchArea,
@@ -16,7 +17,8 @@ const com = [
   InputRange,
   MoreQuery,
   PageCard,
-  sectionCard
+  sectionCard,
+  ElTreeSelect
 ]
 com.forEach(item => {
   Vue.component(item.name, item)

@@ -98,8 +98,8 @@
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
-                  <el-button v-hasPermi="['datac:project:list']" size="small" type="text" @click="handleDetail(row.id)">查看</el-button>
-                  <el-button v-hasPermi="['datac:project:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.id)">修改</el-button>
+                  <el-button v-hasPermi="['datac:project:list']" size="small" type="text" @click="handleDetail(row.schemeId)">查看</el-button>
+                  <el-button v-hasPermi="['datac:project:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.schemeId)">修改</el-button>
                   <el-button v-hasPermi="['datac:project:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
               </template>
@@ -135,7 +135,6 @@ export default {
       queryParams: {},
       dictDataList: [],
       tableColumn: [
-        // { type: "checkbox", width: 50, align: "center", fixed: "left" },
         { type: 'seq', width: 70, align: 'center', fixed: 'left', visible: true, visibleDisabled: true, slots: { header: 'seqHeader' } },
         { field: 'schemeCode', title: '方案编号', width: 150, fixed: 'left', visible: true, visibleDisabled: true },
         { field: 'schemeName', title: '方案名称', width: 200, fixed: 'left', visible: true, visibleDisabled: true },
@@ -208,13 +207,32 @@ export default {
     },
     // 新增||编辑
     addOrUpdateHandle(id) {
-      this.editId = id
-      this.editVisible = true
+      if (id) {
+        window.$wujie.props.route({
+          path: '/portface/scheme',
+          module: 'Portface',
+          fullPath: '/portface/scheme/edit',
+          title: '编辑方案',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/portface/scheme',
+          module: 'Portface',
+          fullPath: '/portface/scheme/add',
+          title: '新增方案'
+        })
+      }
     },
     // 查看
     handleDetail(id) {
-      this.editId = id
-      this.detailVisible = true
+      window.$wujie.props.route({
+        path: '/portface/scheme',
+        module: 'Portface',
+        fullPath: '/portface/scheme/detail',
+        title: '方案详情',
+        condition: { id }
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {

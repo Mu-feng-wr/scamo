@@ -22,25 +22,25 @@
             <el-form-item label="项目地址" prop="districtName">
               <el-cascader
                 ref="addressChoose"
-                style="width:27%;padding-right:10px;"
                 v-model="formData.districtName"
+                style="width:27%;padding-right:10px;"
                 :options="cityOptions"
                 filterable
                 placeholder="请选择"
                 clearable
                 @change="changeArea"
               />
-              <el-input v-model="formData.address" placeholder="详细地址" maxlength="150" show-word-limit clearable style="width: 50%"></el-input>
+              <el-input v-model="formData.address" placeholder="详细地址" maxlength="150" show-word-limit clearable style="width: 50%" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="经度" prop="longitude">
-              <el-input-number style="width: 100%" v-model.number="formData.longitude" :precision="2" :step="1" placeholder="请输入经度" :max="9999999999.99"></el-input-number>
+              <el-input-number v-model.number="formData.longitude" style="width: 100%" :precision="2" :step="1" placeholder="请输入经度" :max="9999999999.99" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="纬度" prop="latitude">
-              <el-input-number style="width: 100%" v-model.number="formData.latitude" :precision="2" :step="1" placeholder="请输入纬度" :max="9999999999.99"></el-input-number>
+              <el-input-number v-model.number="formData.latitude" style="width: 100%" :precision="2" :step="1" placeholder="请输入纬度" :max="9999999999.99" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -50,17 +50,17 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="完工时间" prop="completionTime">
-              <el-date-picker clearable v-model="formData.completionTime" type="date" value-format="yyyy-MM-dd" placeholder="请选择完工时间"></el-date-picker>
+              <el-date-picker v-model="formData.completionTime" clearable type="date" value-format="yyyy-MM-dd" placeholder="请选择完工时间" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="停工时间" prop="downTime">
-              <el-date-picker clearable v-model="formData.downTime" type="date" value-format="yyyy-MM-dd" placeholder="请选择停工时间"></el-date-picker>
+              <el-date-picker v-model="formData.downTime" clearable type="date" value-format="yyyy-MM-dd" placeholder="请选择停工时间" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="复工时间" prop="resumpteTime">
-              <el-date-picker clearable v-model="formData.resumpteTime" type="date" value-format="yyyy-MM-dd" placeholder="请选择复工时间"></el-date-picker>
+              <el-date-picker v-model="formData.resumpteTime" clearable type="date" value-format="yyyy-MM-dd" placeholder="请选择复工时间" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -75,7 +75,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="约定完工时间" prop="agreedCompleteTime">
-              <el-date-picker clearable v-model="formData.agreedCompleteTime" type="date" value-format="yyyy-MM-dd" placeholder="请选择约定完工时间"></el-date-picker>
+              <el-date-picker v-model="formData.agreedCompleteTime" clearable type="date" value-format="yyyy-MM-dd" placeholder="请选择约定完工时间" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -107,7 +107,7 @@
       </SectionCard>
     </el-form>
     <div slot="footer" align="center">
-      <el-button type="primary" @click="submitForm" :disabled="submitButton">提 交</el-button>
+      <el-button type="primary" :disabled="submitButton" @click="submitForm">提 交</el-button>
     </div>
   </PageCard>
 </template>
@@ -161,7 +161,7 @@ export default {
   methods: {
     init() {
       this.submitLoading = true
-      getProject(id)
+      getProject(this.editId)
         .then((response) => {
           this.formData = response.data
           this.submitLoading = false
