@@ -1,5 +1,5 @@
 <template>
-  <div class="card-container app-container">
+  <div class="card-container app-container" :return-url="returnUrl">
     <el-container>
       <el-header>
         <SearchArea :show-all-search.sync="showAllSearch" class="p-16">
@@ -123,8 +123,8 @@
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
-                  <el-button v-hasPermi="['datac:project:list']" size="small" type="text" @click="handleDetail(row.id)">查看</el-button>
-                  <el-button v-hasPermi="['datac:project:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.id)">修改</el-button>
+                  <el-button v-hasPermi="['datac:project:list']" size="small" type="text" @click="handleDetail(row.projectId)">查看</el-button>
+                  <el-button v-hasPermi="['datac:project:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.projectId)">修改</el-button>
                   <el-button v-hasPermi="['datac:project:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
               </template>
@@ -156,6 +156,7 @@ export default {
   mixins: [vxeTable],
   data() {
     return {
+      returnUrl: '/portface/project',
       showAllSearch: false,
       queryParams: {},
       dictDataList: [],
@@ -235,13 +236,32 @@ export default {
     },
     // 新增||编辑
     addOrUpdateHandle(id) {
-      this.editId = id
-      this.editVisible = true
+      if (id) {
+        window.$wujie.props.route({
+          path: '/portface/project',
+          module: 'Portface',
+          fullPath: '/portface/project/edit',
+          title: '编辑项目',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/portface/project',
+          module: 'Portface',
+          fullPath: '/portface/project/edit',
+          title: '新增项目'
+        })
+      }
     },
     // 查看
     handleDetail(id) {
-      this.editId = id
-      this.detailVisible = true
+      window.$wujie.props.route({
+        path: '/portface/project',
+        module: 'Portface',
+        fullPath: '/portface/project/detail',
+        title: '项目详情',
+        condition: { id }
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {
