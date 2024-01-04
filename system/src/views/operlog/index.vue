@@ -2,34 +2,61 @@
   <div class="card-container app-container">
     <el-container>
       <el-header>
-        <SearchArea :show-all-search.sync="showAllSearch" class="p-16" :show-toggle-btn="false">
+        <SearchArea :show-all-search.sync="showAllSearch" class="p-16">
           <div class="flex">
             <div class="searchLeft">
               <el-row :gutter="14">
                 <el-col :span="4">
-                  <el-input v-model="queryParams.roleName" size="small" placeholder="请输入角色名称" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.operName" size="small" placeholder="请输入用户姓名" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <base-input size="small" :value.sync="queryParams.centralizedBusinessId" base-code="System-status" placeholder="状态" clearable @change="load" />
+                  <el-input v-model="queryParams.title" size="small" placeholder="请输入模块名称" clearable @keyup.enter.native="load" />
                 </el-col>
-                <el-col :span="8">
-                  <input-range
-                    type="daterange"
+                <el-col :span="4">
+                  <base-input
                     size="small"
-                    format="yyyy-MM-dd"
-                    value-format="yyyy-MM-dd"
-                    :start-value.sync="queryParams.createDateStart"
-                    :end-value.sync="queryParams.createDateEnd"
-                    start-placeholder="创建开始日期"
-                    end-placeholder="创建结束日期"
+                    :value.sync="queryParams.businessTypes"
+                    :options-list="dictDataList"
+                    base-code="SysOperLog-businessType"
+                    placeholder="请选择操作类型"
+                    clearable
                     @change="load"
                   />
                 </el-col>
-                <el-col :span="8">
-                  <el-button type="primary" icon="el-icon-search" size="mini" @click="load">搜索</el-button>
-                  <el-button icon="el-icon-refresh" size="mini" @click="reset">重置</el-button>
+                <el-col :span="4">
+                  <el-input v-model="queryParams.method" size="small" placeholder="请输入请求方法" clearable @keyup.enter.native="load" />
+                </el-col>
+                <el-col :span="4">
+                  <el-input v-model="queryParams.operParam" size="small" placeholder="请输入请求参数" clearable @keyup.enter.native="load" />
+                </el-col>
+                <el-col :span="4">
+                  <el-input v-model="queryParams.operIp" size="small" placeholder="请输入IP地址" clearable @keyup.enter.native="load" />
                 </el-col>
               </el-row>
+              <el-row v-if="showAllSearch" :gutter="14" class="mt-10">
+                <el-col :span="4">
+                  <el-input v-model="queryParams.macAddress" size="small" placeholder="请输入MAC地址" clearable @keyup.enter.native="load" />
+                </el-col>
+                <el-col :span="4">
+                  <el-input v-model="queryParams.deviceType" size="small" placeholder="请输入终端类型" clearable @keyup.enter.native="load" />
+                </el-col>
+                <el-col :span="4">
+                  <el-input v-model="queryParams.deviceVersion" size="small" placeholder="浏览器/终端版本" clearable @keyup.enter.native="load" />
+                </el-col>
+                <el-col :span="4">
+                  <el-input v-model="queryParams.systemOperational" size="small" placeholder="请输入操作系统" clearable @keyup.enter.native="load" />
+                </el-col>
+                <el-col :span="4">
+                  <el-input v-model="queryParams.provinceName" size="small" placeholder="请输入所属身份" clearable @keyup.enter.native="load" />
+                </el-col>
+                <el-col :span="4">
+                  <el-input v-model="queryParams.cityName" size="small" placeholder="请输入所属城市" clearable @keyup.enter.native="load" />
+                </el-col>
+              </el-row>
+            </div>
+            <div class="ml-10 searchRight">
+              <el-button type="primary" icon="el-icon-search" size="mini" @click="load">搜索</el-button>
+              <el-button icon="el-icon-refresh" size="mini" @click="reset">重置</el-button>
             </div>
           </div>
         </SearchArea>
@@ -39,8 +66,7 @@
           <el-header>
             <el-row class="mb-15">
               <el-col :span="12">
-                <el-button v-hasPermi="['system:role:add']" type="primary" plain size="mini" icon="el-icon-plus" @click="addOrUpdateHandle()">新增</el-button>
-                <el-button v-hasPermi="['system:role:export']" plain size="mini" icon="el-icon-upload2" @click="handleExport">导出</el-button>
+                <el-button v-hasPermi="['system:operlog:remove']" type="danger" plain icon="el-icon-delete" size="mini" @click="handleClean">清空</el-button>
               </el-col>
               <el-col :span="12" class="text-right">
                 <el-button plain icon="el-icon-refresh" size="mini" @click="load">刷新</el-button>
@@ -64,14 +90,13 @@
               show-overflow="tooltip"
             >
               <template #seqHeader>序号</template>
-              <template #status="{row}">
-                <dictDateView :value="row.status" :dict-data-list="dictDataList" dict-code="System-status" />
+              <template #businessType="{row}">
+                <dictDateView :value="row.businessType" :dict-data-list="dictDataList" dict-code="SysOperLog-businessType" />
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
-                  <el-button v-hasPermi="['system:role:query']" size="mini" type="text" @click="detailHandle(row.roleId)">查看</el-button>
-                  <el-button v-hasPermi="['system:role:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.roleId)">修改</el-button>
-                  <el-button v-hasPermi="['system:role:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
+                  <el-button v-hasPermi="['system:operlog:query']" size="mini" type="text" @click="detailHandle(row.roleId)">查看</el-button>
+                  <el-button v-hasPermi="['system:operlog:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
               </template>
               <template #pager>
@@ -96,7 +121,7 @@
 
 <script>
 import vxeTable from '@/mixins/vxeTable'
-import { listRole, delRole } from '@/api/role.js'
+import { listOperlog, delOperlog, cleanOperlog } from '@/api/operlog.js'
 import { listDictItems } from '@/api/base.js'
 export default {
   mixins: [vxeTable],
@@ -107,11 +132,18 @@ export default {
       currentParams: {},
       tableColumn: [
         { type: 'seq', width: 70, align: 'center', fixed: 'left', visible: true, visibleDisabled: true, slots: { header: 'seqHeader' } },
-        { field: 'roleKey', title: '编号', fixed: 'left', visible: true, visibleDisabled: true },
-        { field: 'roleName', title: '角色名称', fixed: 'left', visible: true, visibleDisabled: true },
-        { field: 'remark', title: '备注', visible: true },
-        { field: 'updateTime', title: '最后更新时间', width: 160, visible: true },
-        { field: 'status', title: '状态', width: 120, visible: true, slots: { default: 'status' } },
+        { field: 'operName', title: '用户姓名', fixed: 'left', minWidth: 150, visible: true, visibleDisabled: true },
+        { field: 'title', title: '模块名称', fixed: 'left', minWidth: 150, visible: true, visibleDisabled: true },
+        { field: 'businessType', title: '操作', minWidth: 120, visible: true, slots: { default: 'businessType' } },
+        { field: 'method', title: '请求方法', visible: true, minWidth: 120 },
+        { field: 'operParam', title: '请求参数', visible: true, minWidth: 120 },
+        { field: 'operIp', title: '主机', visible: true, minWidth: 120 },
+        { field: 'macAddress', title: 'MAC地址', visible: true, minWidth: 120 },
+        { field: 'deviceType', title: '终端类型', visible: true, minWidth: 120 },
+        { field: 'deviceVersion', title: '浏览器/终端版本', visible: true, minWidth: 150 },
+        { field: 'provinceName', title: '所属省份', visible: true, minWidth: 120 },
+        { field: 'cityName', title: '所属城市', visible: true, minWidth: 120 },
+        { field: 'operTime', title: '操作日期', visible: true, minWidth: 200 },
         { field: 'todo', title: '操作', width: 160, align: 'center', fixed: 'right', slots: { default: 'todo' }, visible: true, visibleDisabled: true }
       ],
       dictDataList: []
@@ -137,7 +169,7 @@ export default {
     },
     reload(loading = true) {
       this.tableLoading = loading
-      listRole(this.currentParams)
+      listOperlog(this.currentParams)
         .then((res) => {
           this.tableData = res.rows
           this.tablePage.total = res.total
@@ -161,30 +193,26 @@ export default {
       this.load()
     },
     handleDelete(row) {
-      this.$confirm('是否确认删除角色名称："' + row.roleName + '" ,角色编号："' + row.roleId + '" 的数据项？')
-        .then(() => {
-          delRole(row.roleId).then(() => {
-            this.reload()
-            this.$message.success('删除成功')
-          })
+      this.$confirm('是否确认删除日志编号为"' + row.operId + '"的数据项？').then(() => {
+        delOperlog(row.operId).then(() => {
+          this.reload()
+          this.$message.success('删除成功')
         })
-
-        .catch(() => {})
+      })
     },
     getDictData() {
-      var dictCodes = 'System-status' // 系统-状态
+      var dictCodes = 'SysOperLog-businessType' // 操作日志业务类型
       listDictItems(dictCodes).then((res) => {
         this.dictDataList = res.sysDictionaryItemsList
       })
     },
-    handleExport() {
-      this.download(
-        'system/role/export',
-        {
-          ...this.queryParams
-        },
-        `role_${new Date().getTime()}.xlsx`
-      )
+    handleClean() {
+      this.$confirm('是否确认清空所有操作日志数据项？').then(() => {
+        cleanOperlog().then(() => {
+          this.reload()
+          this.$message.success('清空成功')
+        })
+      })
     }
   }
 }
