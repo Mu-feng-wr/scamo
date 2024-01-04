@@ -99,10 +99,15 @@ const menuRecursion = function(list, parent) {
     const obj = {
       path: `${parent && parent.path ? parent.path + '/' : ''}${item.path}`,
       name: `${parent && parent.name ? parent.name + '-' : ''}${item.name}`,
-      meta: { ...item.meta, module: parent && parent.name ? parent.name : '', fullTitle: parent && parent.name && repetitiveMenu.includes(parent.name) ? parent.meta.title + item.meta.title : item.meta.title }
+      meta: {
+        ...item.meta,
+        module: parent && parent.meta && parent.meta.module ? parent.meta.module : (parent && parent.name ? parent.name : ''),
+        fullTitle: parent && parent.name && repetitiveMenu.includes(parent.name) ? parent.meta.title + item.meta.title : item.meta.title
+      }
     }
+
     if (item.children && item.children.length > 0) {
-      obj.children = menuRecursion(item.children, item)
+      obj.children = menuRecursion(item.children, obj)
       obj.component = Layout
     }
     return obj
