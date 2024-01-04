@@ -160,8 +160,7 @@ export default {
       this.load()
     },
     handleDelete(row) {
-      this.$modal
-        .confirm('是否确认删除角色名称："' + row.roleName + '" ,角色编号："' + row.roleId + '" 的数据项？')
+      this.$confirm('是否确认删除角色名称："' + row.roleName + '" ,角色编号："' + row.roleId + '" 的数据项？')
         .then(() => {
           delRole(row.roleId).then(() => {
             this.reload()

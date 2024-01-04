@@ -55,6 +55,7 @@
                         :end-value.sync="queryParams.createDateEnd"
                         startPlaceholder="创建开始日期"
                         endPlaceholder="创建结束日期"
+                        @change="load"
                       />
                     </el-col>
                   </el-row>
