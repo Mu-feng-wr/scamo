@@ -5,6 +5,7 @@ import tableHeaderConfig from '@/components/tableHeaderConfig/index.vue'
 import InputRange from '@/components/InputRange/index.vue'
 import dictDataView from '@/components/dictDataView/index.vue'
 import MoreQuery from '@/components/MoreQuery/index.vue'
+import ElTreeSelect from '@/components/ElTreeSelect/index.vue'
 
 const com = [
   searchArea,
@@ -12,7 +13,8 @@ const com = [
   tableHeaderConfig,
   InputRange,
   dictDataView,
-  MoreQuery
+  MoreQuery,
+  ElTreeSelect
 ]
 com.forEach(item => {
   Vue.component(item.name, item)
