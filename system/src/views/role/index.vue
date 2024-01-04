@@ -161,15 +161,12 @@ export default {
       this.load()
     },
     handleDelete(row) {
-      this.$confirm('是否确认删除角色名称："' + row.roleName + '" ,角色编号："' + row.roleId + '" 的数据项？')
-        .then(() => {
-          delRole(row.roleId).then(() => {
-            this.reload()
-            this.$message.success('删除成功')
-          })
+      this.$confirm('是否确认删除角色名称："' + row.roleName + '" ,角色编号："' + row.roleId + '" 的数据项？').then(() => {
+        delRole(row.roleId).then(() => {
+          this.reload()
+          this.$message.success('删除成功')
         })
-
-        .catch(() => {})
+      })
     },
     getDictData() {
       var dictCodes = 'System-status' // 系统-状态
@@ -179,7 +176,7 @@ export default {
     },
     handleExport() {
       this.download(
-        'system/role/export',
+        '/system/role/export',
         {
           ...this.queryParams
         },

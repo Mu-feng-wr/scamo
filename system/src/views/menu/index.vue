@@ -96,9 +96,9 @@
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
-                  <el-button v-hasPermi="['system:role:query']" size="mini" type="text" @click="detailHandle(row.roleId)">查看</el-button>
-                  <el-button v-hasPermi="['system:role:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.roleId)">修改</el-button>
-                  <el-button v-hasPermi="['system:role:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
+                  <el-button v-hasPermi="['system:menu:query']" size="mini" type="text" @click="detailHandle(row.menuId)">查看</el-button>
+                  <el-button v-hasPermi="['system:menu:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.menuId)">修改</el-button>
+                  <el-button v-hasPermi="['system:menu:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
               </template>
             </vxe-grid>

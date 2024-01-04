@@ -125,9 +125,9 @@
                   </template>
                   <template #todo="{ row }">
                     <div class="todo">
-                      <el-button v-hasPermi="['system:dept:query']" size="small" type="text" @click="handleDetail(row.deptId)">查看</el-button>
-                      <el-button v-hasPermi="['system:dept:edit']" size="mini" type="text" @click="handleUpdate(row.deptId)">修改</el-button>
-                      <el-button v-hasPermi="['system:dept:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
+                      <el-button v-hasPermi="['system:user:query']" size="small" type="text" @click="handleDetail(row.userId)">查看</el-button>
+                      <el-button v-hasPermi="['system:user:edit']" size="mini" type="text" @click="handleUpdate(row.userId)">修改</el-button>
+                      <el-button v-hasPermi="['system:user:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                     </div>
                   </template>
                   <template #pager>
@@ -333,7 +333,7 @@ export default {
       this.upload.open = true
     },
     importTemplate() {
-      this.download('system/user/importTemplate', {}, `user_template_${new Date().getTime()}.xlsx`)
+      this.download('/system/user/importTemplate', {}, `user_template_${new Date().getTime()}.xlsx`)
     },
     // 文件上传中处理
     handleFileUploadProgress(event, file, fileList) {

@@ -77,8 +77,8 @@
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
-                  <el-button v-hasPermi="['system:config:query']" size="mini" type="text" @click="detailHandle(row.roleId)">查看</el-button>
-                  <el-button v-hasPermi="['system:config:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.roleId)">修改</el-button>
+                  <el-button v-hasPermi="['system:config:query']" size="mini" type="text" @click="detailHandle(row.configId)">查看</el-button>
+                  <el-button v-hasPermi="['system:config:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.configId)">修改</el-button>
                   <el-button v-hasPermi="['system:config:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
               </template>

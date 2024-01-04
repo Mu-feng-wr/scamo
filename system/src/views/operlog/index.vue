@@ -95,7 +95,7 @@
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
-                  <el-button v-hasPermi="['system:operlog:query']" size="mini" type="text" @click="detailHandle(row.roleId)">查看</el-button>
+                  <el-button v-hasPermi="['system:operlog:query']" size="mini" type="text" @click="detailHandle(row.operId)">查看</el-button>
                   <el-button v-hasPermi="['system:operlog:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
               </template>

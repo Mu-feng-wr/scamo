@@ -75,8 +75,8 @@
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
-                  <el-button v-hasPermi="['system:dictionaries:query']" size="mini" type="text" @click="detailHandle(row.roleId)">查看</el-button>
-                  <el-button v-hasPermi="['system:dictionaries:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.roleId)">修改</el-button>
+                  <el-button v-hasPermi="['system:dictionaries:query']" size="mini" type="text" @click="detailHandle(row.dictionariesId)">查看</el-button>
+                  <el-button v-hasPermi="['system:dictionaries:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.dictionariesId)">修改</el-button>
                   <el-button v-hasPermi="['system:dictionaries:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
               </template>

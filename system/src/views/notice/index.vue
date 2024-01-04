@@ -66,8 +66,8 @@
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
-                  <el-button v-hasPermi="['system:notice:query']" size="mini" type="text" @click="detailHandle(row.roleId)">查看</el-button>
-                  <el-button v-hasPermi="['system:notice:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.roleId)">修改</el-button>
+                  <el-button v-hasPermi="['system:notice:query']" size="mini" type="text" @click="detailHandle(row.noticeId)">查看</el-button>
+                  <el-button v-hasPermi="['system:notice:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.noticeId)">修改</el-button>
                   <el-button v-hasPermi="['system:notice:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
               </template>

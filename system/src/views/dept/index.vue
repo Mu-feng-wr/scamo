@@ -158,7 +158,6 @@ export default {
       currentParams: {},
       queryParams: {},
       tableColumn: [
-        // { type: "checkbox", width: 50, align: "center", fixed: "left" },
         { type: 'seq', width: 70, align: 'center', fixed: 'left', visible: true, visibleDisabled: true, slots: { header: 'seqHeader' } },
         { field: 'code', title: '组织编号', width: 200, fixed: 'left', visible: true, visibleDisabled: true },
         { field: 'deptName', title: '组织名称', width: 180, fixed: 'left', visible: true, visibleDisabled: true },
