@@ -11,7 +11,7 @@
               <el-input v-model="queryParams.userName" size="small" placeholder="请输入用户名称" clearable @keyup.enter.native="load" />
             </el-col>
             <el-col :span="4">
-              <base-input size="small" :value.sync="queryParams.logStatusList" :options-list="dictDataList" base-code="SysLogininfor-status" placeholder="登录状态" clearable @change="load" />
+              <base-input size="small" :value.sync="queryParams.status" :options-list="dictDataList" base-code="SysLogininfor-status" placeholder="登录状态" clearable @change="load" />
             </el-col>
             <el-col :span="8">
               <input-range
