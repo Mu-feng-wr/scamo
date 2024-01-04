@@ -1,27 +1,33 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+import configRouter from './page/config.js'
+import deptRouter from './page/dept.js'
+import dictionariesRouter from './page/dictionaries.js'
+import logRouter from './page/log.js'
+import menuRouter from './page/menu.js'
+import noticeRouter from './page/notice.js'
+import postRouter from './page/post.js'
+import roleRouter from './page/role.js'
+import userRouter from './page/user.js'
 
 Vue.use(Router)
 
 export const constantRoutes = [
+  ...configRouter,
+  ...deptRouter,
+  ...dictionariesRouter,
+  ...logRouter,
+  ...menuRouter,
+  ...noticeRouter,
+  ...postRouter,
+  ...roleRouter,
+  ...userRouter,
   {
     path: '/404',
     component: () => import('@/views/404'),
     hidden: true
   },
-  { path: '*', redirect: '/404', hidden: true },
-  {
-    path: '/workbenche/todo',
-    name: 'workbenche-todo',
-    component: () => import('@/views/todo/index.vue'),
-    meta: { title: '待办' }
-  },
-  {
-    path: '/workbenche/done',
-    name: 'workbenche-done',
-    component: () => import('@/views/done/index.vue'),
-    meta: { title: '已办' }
-  }
+  { path: '*', redirect: '/404', hidden: true }
 ]
 
 const createRouter = () => new Router({
