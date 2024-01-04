@@ -2,7 +2,13 @@
   <div ref="top_menu" class="top_menu">
     <el-menu :default-active="activeMenu" :unique-opened="true" menu-trigger="hover" :collapse-transition="false" mode="horizontal">
       <template v-for="(item) in menuList">
-        <el-menu-item :key="item.path" :index="item.path" @click="toLink(item)">{{ item.meta.title }}</el-menu-item>
+        <el-menu-item v-if="!item.children||item.children.length==0" :key="item.path" :index="item.path" @click="toLink(item)">{{ item.meta.title }}</el-menu-item>
+        <el-submenu v-else :key="item.path">
+          <template slot="title">{{ item.meta.title }}</template>
+          <template v-for="(temp) in item.children">
+            <el-menu-item :key="temp.path" :index="temp.path" @click="toLink(temp)">{{ temp.meta.title }}</el-menu-item>
+          </template>
+        </el-submenu>
       </template>
 
       <el-submenu v-if="moreMenuList.length>0" index="more" title="更多">
