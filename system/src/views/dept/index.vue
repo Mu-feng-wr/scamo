@@ -230,6 +230,14 @@ export default {
           this.treeLoading = false
         })
     },
+    handleUpdate(id) {
+      this.editId = id
+      this.editVisble = true
+    },
+    handleDetail(id) {
+      this.editId = id
+      this.detailVisible = true
+    },
     getDictData() {
       var dictCodes = 'System-status' // 系统-状态
       dictCodes += ',SysDept-orgType' // 组织类型
