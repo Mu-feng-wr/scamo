@@ -20,8 +20,9 @@
                     value-format="yyyy-MM-dd"
                     :start-value.sync="queryParams.createDateStart"
                     :end-value.sync="queryParams.createDateEnd"
-                    startPlaceholder="创建开始日期"
-                    endPlaceholder="创建结束日期"
+                    start-placeholder="创建开始日期"
+                    end-placeholder="创建结束日期"
+                    @change="load"
                   />
                 </el-col>
                 <el-col :span="8">
@@ -38,8 +39,8 @@
           <el-header>
             <el-row class="mb-15">
               <el-col :span="12">
-                <el-button type="primary" plain size="mini" icon="el-icon-plus" @click="addOrUpdateHandle()" v-hasPermi="['system:role:add']">新增</el-button>
-                <el-button plain size="mini" icon="el-icon-upload2" @click="handleExport" v-hasPermi="['system:role:export']">导出</el-button>
+                <el-button v-hasPermi="['system:role:add']" type="primary" plain size="mini" icon="el-icon-plus" @click="addOrUpdateHandle()">新增</el-button>
+                <el-button v-hasPermi="['system:role:export']" plain size="mini" icon="el-icon-upload2" @click="handleExport">导出</el-button>
               </el-col>
               <el-col :span="12" class="text-right">
                 <el-button plain icon="el-icon-refresh" size="mini" @click="load">刷新</el-button>
@@ -68,9 +69,9 @@
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
-                  <el-button size="mini" type="text" @click="detailHandle(row.roleId)" v-hasPermi="['system:role:query']">查看</el-button>
-                  <el-button size="mini" type="text" @click="addOrUpdateHandle(row.roleId)" v-hasPermi="['system:role:edit']">修改</el-button>
-                  <el-button size="mini" type="text" @click="handleDelete(row)" v-hasPermi="['system:role:remove']">删除</el-button>
+                  <el-button v-hasPermi="['system:role:query']" size="mini" type="text" @click="detailHandle(row.roleId)">查看</el-button>
+                  <el-button v-hasPermi="['system:role:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.roleId)">修改</el-button>
+                  <el-button v-hasPermi="['system:role:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
               </template>
               <template #pager>

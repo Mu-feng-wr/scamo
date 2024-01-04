@@ -54,7 +54,7 @@
                     </el-col>
                     <el-col :span="4">
                       <el-select v-model="queryParams.postIdList" size="small" multiple placeholder="请选择职级名称" clearable collapse-tags @keyup.enter.native="load">
-                        <el-option v-for="item in postOptions" :key="item.postId" :label="item.postName" :value="item.postId"></el-option>
+                        <el-option v-for="item in postOptions" :key="item.postId" :label="item.postName" :value="item.postId" />
                       </el-select>
                     </el-col>
                     <el-col :span="4">
@@ -78,7 +78,7 @@
                 <div class="ml-10 searchRight">
                   <el-button type="primary" icon="el-icon-search" size="mini" @click="load">搜索</el-button>
                   <el-button icon="el-icon-refresh" size="mini" @click="reset">重置</el-button>
-                  <MoreQuery :filterOptions="filterOptions" :formData.sync="moreQueryParams" @reload="load" />
+                  <MoreQuery :filter-options="filterOptions" :form-data.sync="moreQueryParams" @reload="load" />
                 </div>
               </div>
             </SearchArea>
@@ -88,9 +88,9 @@
               <el-header>
                 <el-row class="mb-15">
                   <el-col :span="12">
-                    <el-button size="mini" type="primary" plain icon="el-icon-plus" @click="addOrUpdateHandle()" v-hasPermi="['system:user:add']">新增</el-button>
-                    <el-button size="mini" type="info" plain icon="el-icon-upload2" @click="handleImport" v-hasPermi="['system:user:import']">导入</el-button>
-                    <el-button size="mini" plain icon="el-icon-upload2" @click="handleExport" v-hasPermi="['system:user:export']">导出</el-button>
+                    <el-button v-hasPermi="['system:user:add']" size="mini" type="primary" plain icon="el-icon-plus" @click="addOrUpdateHandle()">新增</el-button>
+                    <el-button v-hasPermi="['system:user:import']" size="mini" type="info" plain icon="el-icon-upload2" @click="handleImport">导入</el-button>
+                    <el-button v-hasPermi="['system:user:export']" size="mini" plain icon="el-icon-upload2" @click="handleExport">导出</el-button>
                   </el-col>
                   <el-col :span="12" class="text-right">
                     <el-button plain icon="el-icon-refresh" size="mini" @click="reload">刷新</el-button>
@@ -167,8 +167,8 @@
           将文件拖到此处，或
           <em>点击上传</em>
         </div>
-        <div class="el-upload__tip text-center" slot="tip">
-          <div class="el-upload__tip" slot="tip">
+        <div slot="tip" class="el-upload__tip text-center">
+          <div slot="tip" class="el-upload__tip">
             <el-checkbox v-model="upload.updateSupport" />是否更新已经存在的用户数据
           </div>
           <span>仅允许导入xls、xlsx格式文件。</span>
@@ -186,7 +186,7 @@
 <script>
 import vxeTable from '@/mixins/vxeTable'
 import { deptTreeSelect, listDictItems, optionSelect } from '@/api/base.js'
-import { listUser } from '@/api/user.js'
+import { listUser, delUser } from '@/api/user.js'
 import { getToken } from '@/utils/auth'
 
 export default {
