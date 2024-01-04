@@ -3,7 +3,8 @@ import Router from 'vue-router'
 import configRouter from './page/config.js'
 import deptRouter from './page/dept.js'
 import dictionariesRouter from './page/dictionaries.js'
-import logRouter from './page/log.js'
+import operlogRouter from './page/operlog.js'
+import logininforRouter from './page/logininfor.js'
 import menuRouter from './page/menu.js'
 import noticeRouter from './page/notice.js'
 import postRouter from './page/post.js'
@@ -16,7 +17,8 @@ export const constantRoutes = [
   ...configRouter,
   ...deptRouter,
   ...dictionariesRouter,
-  ...logRouter,
+  ...operlogRouter,
+  ...logininforRouter,
   ...menuRouter,
   ...noticeRouter,
   ...postRouter,
