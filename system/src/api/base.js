@@ -155,3 +155,10 @@ export function deptTreeSelect() {
     method: 'get'
   })
 }
+// 查询全部岗位列表
+export function optionSelect() {
+  return request({
+    url: '/system/post/optionselect',
+    method: 'get',
+  })
+}
