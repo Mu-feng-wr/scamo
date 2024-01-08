@@ -183,11 +183,12 @@ export default {
         path: '/system/role',
         module: 'System',
         fullPath: '/system/role/detail',
-        title: '查看角色'
+        title: '查看角色',
+        condition: { id }
       })
     },
     handleDelete(row) {
-      this.$confirm('是否确认删除角色名称："' + row.roleName + '" ,角色编号："' + row.roleId + '" 的数据项？').then(() => {
+      this.$confirm('是否确认删除角色名称："' + row.roleName + '" ,角色编号："' + row.roleId + '" 的数据项？', '', { type: 'warning' }).then(() => {
         delRole(row.roleId).then(() => {
           this.reload()
           this.$message.success('删除成功')
