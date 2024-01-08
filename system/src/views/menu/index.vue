@@ -97,6 +97,7 @@
               <template v-slot:todo="{ row }">
                 <div class="todo">
                   <el-button v-hasPermi="['system:menu:query']" size="mini" type="text" @click="detailHandle(row.menuId)">查看</el-button>
+                  <el-button v-hasPermi="['system:menu:add']" size="mini" type="text" @click="handleAdd(row)">新增</el-button>
                   <el-button v-hasPermi="['system:menu:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.menuId)">修改</el-button>
                   <el-button v-hasPermi="['system:menu:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
@@ -106,7 +107,7 @@
         </el-container>
       </el-main>
     </el-container>
-    <edit v-if="editVisble" v-model="editVisble" :edit-id="editId" :dict-data-list="dictDataList" @reload="reload" />
+    <edit v-if="editVisble" v-model="editVisble" :edit-id="editId" :tableData="tableData" :rowData="rowData" :dict-data-list="dictDataList" @reload="reload" />
     <detail v-if="detailVisible" v-model="detailVisible" :edit-id="editId" :dict-data-list="dictDataList" />
   </div>
 </template>
@@ -152,12 +153,13 @@ export default {
         { field: 'remark', title: '备注', headerAlign: 'center', align: 'left', minWidth: 220, visible: true },
         { field: 'updateTime', title: '最后更新时间', minWidth: 160, visible: true },
         { field: 'status', title: '状态', minWidth: 120, visible: true, slots: { default: 'status' } },
-        { field: 'todo', title: '操作', width: 160, align: 'center', fixed: 'right', slots: { default: 'todo' }, visible: true, visibleDisabled: true }
+        { field: 'todo', title: '操作', width: 200, align: 'center', fixed: 'right', slots: { default: 'todo' }, visible: true, visibleDisabled: true }
       ],
       dictDataList: [],
       editVisble: false,
       detailVisible: false,
-      editId: ''
+      editId: '',
+      rowData: ''
     }
   },
   created() {
@@ -183,8 +185,6 @@ export default {
       listMenu(this.currentParams)
         .then((res) => {
           this.tableData = handleTree(res.data, 'menuId')
-          console.log(this.tableData)
-          this.tablePage.total = res.total
         })
         .finally(() => {
           this.tableLoading = false
@@ -193,6 +193,20 @@ export default {
     reset() {
       this.queryParams = {}
       this.load()
+    },
+    addOrUpdateHandle(id) {
+      this.editId = id
+      this.rowData = ''
+      this.editVisble = true
+    },
+    handleAdd(row) {
+      this.rowData = row
+      this.editId = ''
+      this.editVisble = true
+    },
+    detailHandle(id) {
+      this.editId = id
+      this.detailVisible = true
     },
     toggleExpandAll() {
       this.$refs.vxeTable.setAllTreeExpand(false)

@@ -62,7 +62,7 @@ export function getExtendsUser(userId) {
 // 查询用户详细
 export function getUserRole(userId) {
   return request({
-    url: '/system/role/user/' + userId,
+    url: '/system/api/role/user/' + userId,
     method: 'get'
   })
 }
