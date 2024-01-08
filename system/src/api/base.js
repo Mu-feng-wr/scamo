@@ -140,14 +140,7 @@ export function listDept (query) {
   })
 }
 
-// 查询用户列表
-export function listUser (query) {
-  return request({
-    url: '/system/user/list',
-    method: 'get',
-    params: query
-  })
-}
+
 // 查询部门下拉树结构
 export function deptTreeSelect() {
   return request({
@@ -159,6 +152,23 @@ export function deptTreeSelect() {
 export function optionSelect() {
   return request({
     url: '/system/post/optionselect',
+    method: 'get',
+  })
+}
+
+// 查询用户列表
+export function listUser (query) {
+  return request({
+    url: '/system/user/list',
+    method: 'get',
+    params: query
+  })
+}
+
+// 查询全部用户列表
+export function userList() {
+  return request({
+    url: '/system/user/userList',
     method: 'get',
   })
 }

@@ -36,7 +36,9 @@ import {
   listProjectQuery,
   listBrandQuery,
   listDept,
-  listUser
+  listUser,
+  userList,
+  optionSelect
 } from '@/api/base.js'
 export default {
   name: 'BaseInput',
@@ -145,7 +147,9 @@ export default {
         listBrand: listBrandQuery, // 品牌
         listUser: listUser, // 用户
         listDept: listDept, // 部门
-        listAddress: listAddressQuery
+        listAddress: listAddressQuery,
+        userList: userList,
+        optionSelect: optionSelect // 岗位
       }
     }
   },

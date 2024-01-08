@@ -78,7 +78,7 @@
                 <div class="ml-10 searchRight">
                   <el-button type="primary" icon="el-icon-search" size="mini" @click="load">搜索</el-button>
                   <el-button icon="el-icon-refresh" size="mini" @click="reset">重置</el-button>
-                  <MoreQuery :filter-options="filterOptions" :form-data.sync="moreQueryParams" @reload="load" />
+                  <MoreQuery :filter-options="filterOptions" :form-data.sync="queryParams" @reload="load" />
                 </div>
               </div>
             </SearchArea>
@@ -88,7 +88,7 @@
               <el-header>
                 <el-row class="mb-15">
                   <el-col :span="12">
-                    <el-button v-hasPermi="['system:user:add']" size="mini" type="primary" plain icon="el-icon-plus" @click="addOrUpdateHandle()">新增</el-button>
+                    <el-button v-hasPermi="['system:user:add']" size="mini" type="primary" plain icon="el-icon-plus" @click="handleUpdate()">新增</el-button>
                     <el-button v-hasPermi="['system:user:import']" size="mini" type="info" plain icon="el-icon-upload2" @click="handleImport">导入</el-button>
                     <el-button v-hasPermi="['system:user:export']" size="mini" plain icon="el-icon-upload2" @click="handleExport">导出</el-button>
                   </el-col>
@@ -278,6 +278,33 @@ export default {
       }
       // 触发列表请求
       this.load()
+    },
+    handleUpdate(id) {
+      if (id) {
+        window.$wujie.props.route({
+          path: '/system/user',
+          module: 'System',
+          fullPath: '/system/user/edit',
+          title: '编辑用户',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/system/user',
+          module: 'System',
+          fullPath: '/system/user/add',
+          title: '新增用户'
+        })
+      }
+    },
+    handleDetail(id) {
+      window.$wujie.props.route({
+        path: '/system/user',
+        module: 'System',
+        fullPath: '/system/user/detail',
+        title: '用户详情',
+        condition: { id }
+      })
     },
     getDeptTree() {
       this.treeLoading = true

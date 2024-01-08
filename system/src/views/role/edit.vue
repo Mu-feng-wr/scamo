@@ -54,7 +54,7 @@
 <script>
 import { addRole, updateRole, getSystemRole } from '@/api/role.js'
 import { listDictItems } from '@/api/base.js'
-import dataPermissions from '../components/dataPermissions.vue'
+import dataPermissions from './components/dataPermissions.vue'
 export default {
   components: {
     dataPermissions

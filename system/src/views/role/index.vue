@@ -165,7 +165,7 @@ export default {
         window.$wujie.props.route({
           path: '/system/role',
           module: 'System',
-          fullPath: '/system/role/add',
+          fullPath: '/system/role/edit',
           title: '编辑角色',
           condition: { id }
         })

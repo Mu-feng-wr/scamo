@@ -52,7 +52,7 @@
           <el-header>
             <el-row class="mb-15">
               <el-col :span="12">
-                <el-button v-hasPermi="['system:menu:add']" type="primary" plain icon="el-icon-plus" size="mini" @click="handleAdd()">新增</el-button>
+                <el-button v-hasPermi="['system:menu:add']" type="primary" plain icon="el-icon-plus" size="mini" @click="addOrUpdateHandle()">新增</el-button>
                 <el-button v-hasPermi="['system:menu:export']" plain icon="el-icon-upload2" size="mini" @click="handleExport">导出</el-button>
                 <el-button type="info" plain icon="el-icon-sort" size="mini" @click="toggleExpandAll">展开/折叠</el-button>
               </el-col>
@@ -106,6 +106,8 @@
         </el-container>
       </el-main>
     </el-container>
+    <edit v-if="editVisble" v-model="editVisble" :edit-id="editId" :dict-data-list="dictDataList" @reload="reload" />
+    <detail v-if="detailVisible" v-model="detailVisible" :edit-id="editId" :dict-data-list="dictDataList" />
   </div>
 </template>
 
@@ -114,7 +116,13 @@ import vxeTable from '@/mixins/vxeTable'
 import { listMenu, delMenu } from '@/api/menu.js'
 import { listDictItems } from '@/api/base.js'
 import { handleTree } from '@/utils/index.js'
+import edit from './components/edit.vue'
+import detail from './components/detail.vue'
 export default {
+  components: {
+    edit,
+    detail
+  },
   mixins: [vxeTable],
   data() {
     return {
@@ -146,7 +154,10 @@ export default {
         { field: 'status', title: '状态', minWidth: 120, visible: true, slots: { default: 'status' } },
         { field: 'todo', title: '操作', width: 160, align: 'center', fixed: 'right', slots: { default: 'todo' }, visible: true, visibleDisabled: true }
       ],
-      dictDataList: []
+      dictDataList: [],
+      editVisble: false,
+      detailVisible: false,
+      editId: ''
     }
   },
   created() {
