@@ -74,9 +74,7 @@ export default {
         roleKey: [{ required: true, message: '角色标识不能为空', trigger: 'change' }]
       },
       editId: '',
-      menuOptions: [],
-      dictDataList: [],
-      permissionOptions: []
+      dictDataList: []
     }
   },
   created() {

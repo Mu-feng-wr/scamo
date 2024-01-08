@@ -1,3 +1,5 @@
+
+import { template } from 'xe-utils';
 <template>
   <SectionCard title="数据权限">
     <vxe-grid
