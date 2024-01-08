@@ -12,7 +12,7 @@
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="24" v-if="formData.parentId != 0">
+        <el-col v-if="formData.parentId != 0" :span="24">
           <el-form-item label="上级部门">{{ '[' + formData.parentCode + ']' + formData.parentName }}</el-form-item>
         </el-col>
       </el-row>

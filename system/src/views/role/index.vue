@@ -10,7 +10,7 @@
                   <el-input v-model="queryParams.roleName" size="small" placeholder="请输入角色名称" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <base-input size="small" :value.sync="queryParams.centralizedBusinessId" base-code="System-status" placeholder="状态" clearable @change="load" />
+                  <base-input size="small" :value.sync="queryParams.status" :options-list="dictDataList" base-code="System-status" placeholder="状态" clearable @change="load" />
                 </el-col>
                 <el-col :span="8">
                   <input-range
@@ -159,6 +159,32 @@ export default {
       }
       // 触发列表请求
       this.load()
+    },
+    addOrUpdateHandle(id) {
+      if (id) {
+        window.$wujie.props.route({
+          path: '/system/role',
+          module: 'System',
+          fullPath: '/system/role/add',
+          title: '编辑角色',
+          condition: { id }
+        })
+      } else {
+        window.$wujie.props.route({
+          path: '/system/role',
+          module: 'System',
+          fullPath: '/system/role/add',
+          title: '新增角色'
+        })
+      }
+    },
+    detailHandle(id) {
+      window.$wujie.props.route({
+        path: '/system/role',
+        module: 'System',
+        fullPath: '/system/role/detail',
+        title: '查看角色'
+      })
     },
     handleDelete(row) {
       this.$confirm('是否确认删除角色名称："' + row.roleName + '" ,角色编号："' + row.roleId + '" 的数据项？').then(() => {

@@ -34,3 +34,19 @@ export function delRole (roleId) {
     method: 'delete'
   })
 }
+
+// 查询角色详细
+export function getSystemRole (roleId) {
+  return request({
+    url: '/system/role/extends/' + roleId,
+    method: 'get'
+  })
+}
+
+/*根据id获取角色信息*/
+export function getRoleInfo (roleId) {
+  return request({
+    url: '/system/api/role/' + roleId,
+    method: 'get'
+  })
+}
