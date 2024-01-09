@@ -19,6 +19,12 @@ export default {
     userId: {
       type: String,
       default: ''
+    },
+    roles: {
+      type: Array,
+      default: () => {
+        return []
+      }
     }
   },
   data() {
@@ -34,9 +40,17 @@ export default {
   },
   methods: {
     async init() {
-      getUserRole(this.userId)
-      // var checkLists = await getAllRole()
-      // this.checkLists = checkLists.data
+      var checkLists = await getAllRole()
+      this.checkLists = checkLists.data
+      if (this.userId && this.roles) {
+        this.checkListsAll = this.roles.map((item) => item.roleId)
+        if (this.checkListsAll.length > 0 && this.checkListsAll.length == this.checkLists.length) {
+          this.checkAll = true
+        } else if (this.checkListsAll.length > 0 && this.checkListsAll.length < this.checkLists.length) {
+          this.isIndeterminate = true
+        }
+        this.$emit('reloadPermissions', this.checkListsAll)
+      }
     },
     handleCheckAllChange(val) {
       this.isIndeterminate = false

@@ -36,7 +36,7 @@ export function getDeptByCompanyId(companyId) {
 // 查询全部角色列表
 export function getAllRole() {
   return request({
-    url: '/system/role/all',
+    url: '/system/api/role/all',
     method: 'get',
   })
 }

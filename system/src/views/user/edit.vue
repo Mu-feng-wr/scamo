@@ -124,7 +124,7 @@
         </el-row>
       </SectionCard>
     </el-form>
-    <rolesList @reloadPermissions="reloadPermissions" :userId="userId" />
+    <rolesList @reloadPermissions="reloadPermissions" :userId="userId" :roles="formData.roles" />
     <dataPermissions :roleIds="roleIds" :dictDataList="dictDataList" />
   </PageCard>
 </template>
