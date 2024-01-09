@@ -16,7 +16,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="登录密码" prop="password">
-              <el-input v-model="formData.password" type="password" placeholder="请输入登录密码"></el-input>
+              <el-input v-model="formData.password" type="password" placeholder="请输入登录密码" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -44,9 +44,9 @@
                 :value.sync="formData.parentUserId"
                 label-name="userName"
                 value-name="userId"
-                resultLabel="data"
+                result-label="data"
                 base-code="userList"
-                :returnObj="true"
+                :return-obj="true"
                 placeholder="请选择上级姓名"
                 clearable
                 @change="parentNameChange"
@@ -59,9 +59,9 @@
                 :value.sync="formData.companyId"
                 label-name="deptName"
                 value-name="deptId"
-                resultLabel="data"
+                result-label="data"
                 base-code="companyList"
-                :returnObj="true"
+                :return-obj="true"
                 placeholder="请选择所属公司"
                 clearable
                 @change="changeCompany"
@@ -89,7 +89,7 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="岗位" prop="postIds">
-              <base-input :value.sync="formData.postIds" base-code="optionSelect" resultLabel="data" placeholder="请选择岗位" clearable />
+              <base-input :value.sync="formData.postIds" base-code="optionSelect" result-label="data" placeholder="请选择岗位" clearable />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -99,7 +99,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="入职日期" prop="workDate">
-              <el-date-picker v-model="formData.workDate" type="date" clearable placeholder="选择入职日期" value-format="yyyy-MM-dd HH:mm:ss" style="width: 100%"></el-date-picker>
+              <el-date-picker v-model="formData.workDate" type="date" clearable placeholder="选择入职日期" value-format="yyyy-MM-dd HH:mm:ss" style="width: 100%" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -118,20 +118,23 @@
         <el-row>
           <el-col :span="24">
             <el-form-item label="备注" prop="remark" class="noProp-item-textarea">
-              <el-input v-model="formData.remark" rows="4" clearable type="textarea" placeholder="请输入内容" maxlength="500" show-word-limit></el-input>
+              <el-input v-model="formData.remark" rows="4" clearable type="textarea" placeholder="请输入内容" maxlength="500" show-word-limit />
             </el-form-item>
           </el-col>
         </el-row>
       </SectionCard>
     </el-form>
-    <rolesList @reloadPermissions="reloadPermissions" :userId="userId" :roles="formData.roles" />
-    <dataPermissions :roleIds="roleIds" :dictDataList="dictDataList" />
+    <rolesList :user-id="userId" :roles="formData.roles" @reloadPermissions="reloadPermissions" />
+    <dataPermissions ref="menuAndPermission" :role-ids="formData.roleIds" :dict-data-list="dictDataList" />
+    <div slot="footer" align="center">
+      <el-button type="primary" @click="submitForm">提 交</el-button>
+    </div>
   </PageCard>
 </template>
 
 <script>
 import { listDictItems } from '@/api/base.js'
-import { getDeptByCompanyId, getExtendsUser } from '@/api/user.js'
+import { getDeptByCompanyId, getExtendsUser, updateUser, addUser } from '@/api/user.js'
 import { handleTree } from '@/utils/index.js'
 import rolesList from './components/rolesList.vue'
 import dataPermissions from './components/dataPermissions.vue'
@@ -146,7 +149,8 @@ export default {
       loading: false,
       formData: {
         sort: 0,
-        status: '1'
+        status: '1',
+        roleIds: []
       },
       rules: {
         no: [{ required: true, message: '用户编号不能为空', trigger: 'change' }],
@@ -162,7 +166,6 @@ export default {
       },
       dictDataList: [],
       deptChildList: [],
-      roleIds: [],
       userId: ''
     }
   },
@@ -206,9 +209,36 @@ export default {
       })
     },
     reloadPermissions(val) {
-      this.roleIds = val
+      this.formData.roleIds = val
     },
-    selectDept() {}
+    selectDept(val) {
+      this.formData.deptId = val.deptId
+      this.formData.deptName = val.deptName
+    },
+    submitForm() {
+      this.$refs['form'].validate((valid) => {
+        if (valid) {
+          if (!this.formData.roleIds || this.formData.roleIds.length == 0) {
+            this.$message({
+              message: '用户角色不能为空！',
+              type: 'warning'
+            })
+            return
+          }
+          var { permissionList } = this.$refs.menuAndPermission.getSelectData()
+          this.form.selectedList = permissionList
+          if (this.userId) {
+            updateUser(this.formData).then((response) => {
+              this.$message.success('修改成功')
+            })
+          } else {
+            addUser(this.form).then((response) => {
+              this.$message.success('新增成功')
+            })
+          }
+        }
+      })
+    }
   }
 }
 </script>

@@ -107,7 +107,7 @@
         </el-container>
       </el-main>
     </el-container>
-    <edit v-if="editVisble" v-model="editVisble" :edit-id="editId" :tableData="tableData" :rowData="rowData" :dict-data-list="dictDataList" @reload="reload" />
+    <edit v-if="editVisble" v-model="editVisble" :edit-id="editId" :table-data="tableData" :row-data="rowData" :dict-data-list="dictDataList" @reload="reload" />
     <detail v-if="detailVisible" v-model="detailVisible" :edit-id="editId" :dict-data-list="dictDataList" />
   </div>
 </template>

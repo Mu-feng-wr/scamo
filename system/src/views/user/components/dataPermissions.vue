@@ -48,8 +48,8 @@ import { template } from 'xe-utils';
 </template>
 
 <script>
-import { getRoleInfo } from '@/api/role.js'
-import { getMenuTree } from '@/api/menu.js'
+// import { getRoleInfo } from '@/api/role.js'
+// import { getMenuTree } from '@/api/menu.js'
 import { getRolePermByRoleIds } from '@/api/user.js'
 export default {
   props: {

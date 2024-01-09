@@ -6,14 +6,15 @@
     </h3>
     <div class="roleBox">
       <el-checkbox-group v-model="checkListsAll" @change="handleCheckedCitiesChange">
-        <el-checkbox v-for="(item, index) in checkLists" :label="item.roleId" :key="index">{{ item.roleName }}</el-checkbox>
+        <el-checkbox v-for="(item, index) in checkLists" :key="index" :label="item.roleId">{{ item.roleName }}</el-checkbox>
       </el-checkbox-group>
     </div>
   </SectionCard>
 </template>
 
 <script>
-import { getAllRole, getUserRole } from '@/api/user.js'
+// getUserRole
+import { getAllRole } from '@/api/user.js'
 export default {
   props: {
     userId: {

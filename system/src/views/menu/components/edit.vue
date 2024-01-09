@@ -31,17 +31,17 @@
           <el-form-item label="菜单类型" prop="menuType">
             <el-radio-group v-model="formData.menuType" :disabled="typeDisable">
               <template v-for="item in dictDataList">
-                <el-radio v-if="item.dictionaryCode == 'SysMenu-menuType'" :label="item.itemsValue" :key="item.itemsValue">{{ item.itemsName }}</el-radio>
+                <el-radio v-if="item.dictionaryCode == 'SysMenu-menuType'" :key="item.itemsValue" :label="item.itemsValue">{{ item.itemsName }}</el-radio>
               </template>
             </el-radio-group>
           </el-form-item>
         </el-col>
-        <el-col :span="24" v-if="formData.menuType != 'F'">
+        <el-col v-if="formData.menuType != 'F'" :span="24">
           <el-form-item label="菜单地址" prop="path">
             <el-input v-model="formData.path" placeholder="请输入菜单地址" maxlength="200" show-word-limit />
           </el-form-item>
         </el-col>
-        <el-col :span="24" v-if="formData.menuType == 'C'">
+        <el-col v-if="formData.menuType == 'C'" :span="24">
           <el-form-item prop="component">
             <span slot="label">
               <el-tooltip content="访问的菜单URL，如：`system/user/index`，默认在`views`目录下" placement="top">
@@ -51,7 +51,7 @@
             <el-input v-model="formData.component" placeholder="请输入菜单URL" maxlength="200" show-word-limit />
           </el-form-item>
         </el-col>
-        <el-col :span="24" v-if="formData.menuType != 'M'">
+        <el-col v-if="formData.menuType != 'M'" :span="24">
           <el-form-item prop="perms">
             <el-input v-model="formData.perms" placeholder="请输入授权标识" maxlength="500" show-word-limit />
             <span slot="label">
@@ -61,13 +61,13 @@
             </span>
           </el-form-item>
         </el-col>
-        <el-col :span="24" v-if="formData.menuType != 'F'">
+        <el-col v-if="formData.menuType != 'F'" :span="24">
           <el-form-item label="菜单图标" prop="icon">
             <el-popover placement="bottom-start" width="460" trigger="click" @show="$refs['iconSelect'].reset()">
               <IconSelect ref="iconSelect" @selected="selected" />
               <el-input slot="reference" v-model="formData.icon" placeholder="点击选择图标">
                 <svg-icon v-if="formData.icon" slot="prefix" :icon-class="formData.icon" class="el-input__icon" style="height: 32px; width: 16px" />
-                <i v-else slot="prefix" class="el-icon-search el-input__icon" />
+                <i v-else slot="prefix" class="el-icon-search el-input__icon"></i>
               </el-input>
             </el-popover>
           </el-form-item>
@@ -79,10 +79,10 @@
         </el-col>
         <el-col :span="24">
           <el-form-item label="备注">
-            <el-input v-model="formData.remark" rows="2" type="textarea" placeholder="请输入内容" maxlength="500" show-word-limit></el-input>
+            <el-input v-model="formData.remark" rows="2" type="textarea" placeholder="请输入内容" maxlength="500" show-word-limit />
           </el-form-item>
         </el-col>
-        <el-col :span="24" v-if="formData.menuType != 'F'">
+        <el-col v-if="formData.menuType != 'F'" :span="24">
           <el-form-item prop="status">
             <span slot="label">
               <el-tooltip content="选择停用则路由将不会出现在侧边栏，也不能被访问" placement="top">
@@ -92,11 +92,11 @@
             <base-input :value.sync="formData.status" :options-list="dictDataList" base-code="System-status" placeholder="请选择状态" clearable />
           </el-form-item>
         </el-col>
-        <el-col :span="12" v-if="formData.menuType == 'C'">
+        <el-col v-if="formData.menuType == 'C'" :span="12">
           <el-form-item label="是否显示首页" prop="ynHome">
             <el-radio-group v-model="formData.ynHome">
               <template v-for="item in dictDataList">
-                <el-radio v-if="item.dictionaryCode == 'SysMenu-ynHome'" :label="item.itemsValue" :key="item.itemsValue">{{ item.itemsName }}</el-radio>
+                <el-radio v-if="item.dictionaryCode == 'SysMenu-ynHome'" :key="item.itemsValue" :label="item.itemsValue">{{ item.itemsName }}</el-radio>
               </template>
             </el-radio-group>
           </el-form-item>

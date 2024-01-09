@@ -14,7 +14,7 @@
         <base-input :value.sync="formData.status" :options-list="dictDataList" base-code="System-status" placeholder="状态" clearable />
       </el-form-item>
       <el-form-item label="备注" prop="remark">
-        <el-input v-model="formData.remark" rows="4" type="textarea" placeholder="请输入内容" maxlength="500" show-word-limit></el-input>
+        <el-input v-model="formData.remark" rows="4" type="textarea" placeholder="请输入内容" maxlength="500" show-word-limit />
       </el-form-item>
     </el-form>
     <div slot="footer" class="dialog-footer" align="center">
@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import { getPos, addPost, updatePost } from '@/api/post.js'
+import { getPost, addPost, updatePost } from '@/api/post.js'
 export default {
   model: {
     prop: 'openView',
@@ -75,7 +75,7 @@ export default {
   methods: {
     init() {
       this.loading = true
-      getPos(this.editId)
+      getPost(this.editId)
         .then((res) => [(this.formData = res.data)])
         .finally(() => {
           this.loading = false
@@ -85,7 +85,7 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           this.loading = true
-          if (!this.editId) {
+          if (this.editId) {
             updatePost(this.formData)
               .then((response) => {
                 this.$message.success('修改成功')

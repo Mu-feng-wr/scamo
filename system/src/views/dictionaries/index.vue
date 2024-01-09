@@ -46,7 +46,7 @@
             <el-row class="mb-15">
               <el-col :span="12">
                 <el-button v-hasPermi="['system:dictionaries:add']" type="primary" plain size="mini" icon="el-icon-plus" @click="addOrUpdateHandle()">新增</el-button>
-                <el-button v-hasPermi="['system:dictionaries:export']" plain icon="el-icon-upload2" size="mini" @click="handleExport">导出</el-button>
+                <!-- <el-button v-hasPermi="['system:dictionaries:export']" plain icon="el-icon-upload2" size="mini" @click="handleExport">导出</el-button> -->
               </el-col>
               <el-col :span="12" class="text-right">
                 <el-button plain icon="el-icon-refresh" size="mini" @click="load">刷新</el-button>
@@ -76,6 +76,7 @@
               <template v-slot:todo="{ row }">
                 <div class="todo">
                   <el-button v-hasPermi="['system:dictionaries:query']" size="mini" type="text" @click="detailHandle(row.dictionariesId)">查看</el-button>
+                  <el-button v-hasPermi="['system:dictionaries:add']" size="mini" type="text" @click="detailHandle(row.dictionariesId)">新增</el-button>
                   <el-button v-hasPermi="['system:dictionaries:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.dictionariesId)">修改</el-button>
                   <el-button v-hasPermi="['system:dictionaries:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
@@ -112,7 +113,7 @@ export default {
       queryParams: {},
       currentParams: {},
       tableColumn: [
-        { type: 'seq', width: 50, align: 'center', fixed: 'left', visible: true, visibleDisabled: true },
+        { type: 'seq', width: 70, align: 'center', fixed: 'left', visible: true, visibleDisabled: true, slots: { header: 'seqHeader' } },
         { field: 'code', title: '字典唯一标志', fixed: 'left', visible: true, visibleDisabled: true },
         { field: 'name', title: '字典名称', fixed: 'left', visible: true, visibleDisabled: true },
         { field: 'value', title: '字典值', visible: true },
@@ -120,7 +121,7 @@ export default {
         { field: 'remark', title: '备注', visible: true },
         { field: 'updateTime', title: '最后更新时间', width: 160, visible: true },
         { field: 'status', title: '状态', width: 120, visible: true, slots: { default: 'status' } },
-        { field: 'todo', title: '操作', width: 160, align: 'center', fixed: 'right', slots: { default: 'todo' }, visible: true, visibleDisabled: true }
+        { field: 'todo', title: '操作', width: 200, align: 'center', fixed: 'right', slots: { default: 'todo' }, visible: true, visibleDisabled: true }
       ],
       dictDataList: []
     }

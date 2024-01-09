@@ -45,7 +45,7 @@ export function getAllRole() {
 // 根据所选角色获取相应的数据权限
 export function getRolePermByRoleIds(roleIds) {
   return request({
-    url: '/system/api/role/batch/' + roleIds,
+    url: '/system/user/getRolePermByRoleIds/' + roleIds,
     method: 'get'
   })
 }
@@ -58,11 +58,28 @@ export function getExtendsUser(userId) {
   })
 }
 
-
 // 查询用户详细
 export function getUserRole(userId) {
   return request({
     url: '/system/api/role/user/' + userId,
     method: 'get'
+  })
+}
+
+// 新增用户
+export function addUser(data) {
+  return request({
+    url: '/system/user',
+    method: 'post',
+    data: data
+  })
+}
+
+// 修改用户
+export function updateUser(data) {
+  return request({
+    url: '/system/user',
+    method: 'put',
+    data: data
   })
 }

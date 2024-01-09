@@ -1,6 +1,6 @@
 <template>
   <vxe-modal v-model="openView" :title="title" width="600px" height="70%" show-footer esc-closable resize @hide="cancel" @close="cancel">
-    <el-form v-loading="loading" ref="form" label-width="80px">
+    <el-form ref="form" v-loading="loading" label-width="80px">
       <el-form-item label="岗位名称">{{ form.postName }}</el-form-item>
       <el-form-item label="岗位编码">{{ form.postCode }}</el-form-item>
       <el-form-item label="排序">{{ form.postSort }}</el-form-item>
@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import { getPos } from '@/api/post.js'
+import { getPost } from '@/api/post.js'
 export default {
   model: {
     prop: 'openView',
@@ -52,7 +52,7 @@ export default {
   methods: {
     init() {
       this.loading = true
-      getPos(this.editId)
+      getPost(this.editId)
         .then((res) => [(this.formData = res.data)])
         .finally(() => {
           this.loading = false
