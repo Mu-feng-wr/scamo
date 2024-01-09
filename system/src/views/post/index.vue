@@ -93,6 +93,8 @@
         </el-container>
       </el-main>
     </el-container>
+    <edit v-if="editVisble" v-model="editVisble" :edit-id="editId" :dict-data-list="dictDataList" @reload="reload" />
+    <detail v-if="detailVisible" v-model="detailVisible" :edit-id="editId" :dict-data-list="dictDataList" />
   </div>
 </template>
 
@@ -100,7 +102,13 @@
 import vxeTable from '@/mixins/vxeTable'
 import { listPost, delPost } from '@/api/post.js'
 import { listDictItems } from '@/api/base.js'
+import edit from './components/edit.vue'
+import detail from './components/detail.vue'
 export default {
+  components: {
+    edit,
+    detail
+  },
   mixins: [vxeTable],
   data() {
     return {
@@ -117,7 +125,10 @@ export default {
         { field: 'status', title: '状态', width: 120, visible: true, slots: { default: 'status' } },
         { field: 'todo', title: '操作', width: 160, align: 'center', fixed: 'right', slots: { default: 'todo' }, visible: true, visibleDisabled: true }
       ],
-      dictDataList: []
+      dictDataList: [],
+      editVisble: false,
+      detailVisible: false,
+      editId: ''
     }
   },
   created() {
@@ -162,6 +173,14 @@ export default {
       }
       // 触发列表请求
       this.load()
+    },
+    addOrUpdateHandle(id) {
+      this.editId = id
+      this.editVisble = true
+    },
+    detailHandle(id) {
+      this.editId = id
+      this.detailVisible = true
     },
     handleDelete(row) {
       this.$confirm('是否确认删除岗位编号为"' + row.postId + '"的数据项？').then(() => {
