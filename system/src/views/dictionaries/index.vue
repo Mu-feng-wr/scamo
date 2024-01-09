@@ -16,7 +16,7 @@
                   <el-input v-model="queryParams.value" size="small" placeholder="请输入字典值" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <base-input size="small" :value.sync="queryParams.centralizedBusinessId" base-code="System-status" placeholder="状态" clearable @change="load" />
+                  <base-input size="small" :value.sync="queryParams.status" base-code="System-status" placeholder="状态" clearable @change="load" />
                 </el-col>
                 <el-col :span="8">
                   <input-range
@@ -76,7 +76,7 @@
               <template v-slot:todo="{ row }">
                 <div class="todo">
                   <el-button v-hasPermi="['system:dictionaries:query']" size="mini" type="text" @click="detailHandle(row.dictionariesId)">查看</el-button>
-                  <el-button v-hasPermi="['system:dictionaries:add']" size="mini" type="text" @click="detailHandle(row.dictionariesId)">新增</el-button>
+                  <el-button v-hasPermi="['system:dictionaries:add']" size="mini" type="text" @click="addDictionaryitems(row.dictionariesId)">新增</el-button>
                   <el-button v-hasPermi="['system:dictionaries:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.dictionariesId)">修改</el-button>
                   <el-button v-hasPermi="['system:dictionaries:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
@@ -98,6 +98,9 @@
         </el-container>
       </el-main>
     </el-container>
+    <edit v-if="editVisble" v-model="editVisble" :edit-id="editId" :dict-data-list="dictDataList" @reload="reload" />
+    <detail v-if="detailVisible" v-model="detailVisible" :edit-id="editId" :dict-data-list="dictDataList" />
+    <dictionaryitemsEdit v-if="dictionaryitemsEditVisble" v-model="dictionaryitemsEditVisble" :edit-id="editId" :dict-data-list="dictDataList" @reload="reload" />
   </div>
 </template>
 
@@ -105,7 +108,15 @@
 import vxeTable from '@/mixins/vxeTable'
 import { listDictionaries, delDictionaries } from '@/api/dictionaries.js'
 import { listDictItems } from '@/api/base.js'
+import edit from './components/edit.vue'
+import detail from './components/detail.vue'
+import dictionaryitemsEdit from './components/dictionaryitemsEdit.vue'
 export default {
+  components: {
+    edit,
+    detail,
+    dictionaryitemsEdit
+  },
   mixins: [vxeTable],
   data() {
     return {
@@ -123,7 +134,11 @@ export default {
         { field: 'status', title: '状态', width: 120, visible: true, slots: { default: 'status' } },
         { field: 'todo', title: '操作', width: 200, align: 'center', fixed: 'right', slots: { default: 'todo' }, visible: true, visibleDisabled: true }
       ],
-      dictDataList: []
+      dictDataList: [],
+      editVisble: false,
+      detailVisible: false,
+      dictionaryitemsEditVisble: false,
+      editId: ''
     }
   },
   created() {
@@ -168,6 +183,18 @@ export default {
       }
       // 触发列表请求
       this.load()
+    },
+    addOrUpdateHandle(id) {
+      this.editId = id
+      this.editVisble = true
+    },
+    addDictionaryitems(id) {
+      this.editId = id
+      this.dictionaryitemsEditVisble = true
+    },
+    detailHandle(id) {
+      this.editId = id
+      this.detailVisible = true
     },
     handleDelete(row) {
       this.$confirm('是否确认删除数据字典名称为"' + row.name + '"的数据项？', '', { type: 'warning' }).then(() => {

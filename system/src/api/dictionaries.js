@@ -42,3 +42,11 @@ export function delDictionaries(dictionariesId) {
     method: 'delete'
   })
 }
+
+// 删除数据字典项
+export function delItems(dictionaryItemsId) {
+  return request({
+    url: '/system/items/' + dictionaryItemsId,
+    method: 'delete'
+  })
+}
