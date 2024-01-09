@@ -66,7 +66,7 @@
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
-                  <el-button v-hasPermi="['system:notice:query']" size="mini" type="text" @click="detailHandle(row.noticeId)">查看</el-button>
+                  <!-- <el-button v-hasPermi="['system:notice:query']" size="mini" type="text" @click="detailHandle(row.noticeId)">查看</el-button> -->
                   <el-button v-hasPermi="['system:notice:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.noticeId)">修改</el-button>
                   <el-button v-hasPermi="['system:notice:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
@@ -88,6 +88,8 @@
         </el-container>
       </el-main>
     </el-container>
+    <edit v-if="editVisble" v-model="editVisble" :edit-id="editId" :dict-data-list="dictDataList" @reload="reload" />
+    <!-- <detail v-if="detailVisible" v-model="detailVisible" :edit-id="editId" :dict-data-list="dictDataList" /> -->
   </div>
 </template>
 
@@ -95,7 +97,13 @@
 import vxeTable from '@/mixins/vxeTable'
 import { listNotice, delNotice } from '@/api/notice.js'
 import { listDictItems } from '@/api/base.js'
+import edit from './components/edit.vue'
+// import detail from './components/detail.vue'
 export default {
+  components: {
+    edit
+    // detail
+  },
   mixins: [vxeTable],
   data() {
     return {
@@ -111,7 +119,10 @@ export default {
         { field: 'createTime', title: '创建时间', visible: true },
         { field: 'todo', title: '操作', width: 160, align: 'center', fixed: 'right', slots: { default: 'todo' }, visible: true, visibleDisabled: true }
       ],
-      dictDataList: []
+      dictDataList: [],
+      editVisble: false,
+      detailVisible: false,
+      editId: ''
     }
   },
   created() {
@@ -156,6 +167,14 @@ export default {
       }
       // 触发列表请求
       this.load()
+    },
+    addOrUpdateHandle(id) {
+      this.editId = id
+      this.editVisble = true
+    },
+    detailHandle(id) {
+      this.editId = id
+      this.detailVisible = true
     },
     handleDelete(row) {
       this.$confirm('是否确认删除公告编号为"' + row.noticeId + '"的数据项？').then(() => {

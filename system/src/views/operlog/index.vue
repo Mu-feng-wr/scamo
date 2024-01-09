@@ -95,7 +95,7 @@
               </template>
               <template v-slot:todo="{ row }">
                 <div class="todo">
-                  <el-button v-hasPermi="['system:operlog:query']" size="mini" type="text" @click="detailHandle(row.operId)">查看</el-button>
+                  <el-button v-hasPermi="['system:operlog:query']" size="mini" type="text" @click="detailHandle(row)">查看</el-button>
                   <el-button v-hasPermi="['system:operlog:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
               </template>
@@ -116,6 +116,7 @@
         </el-container>
       </el-main>
     </el-container>
+    <detail v-if="detailVisible" v-model="detailVisible" :form-data="rowData" :dict-data-list="dictDataList" />
   </div>
 </template>
 
@@ -123,7 +124,11 @@
 import vxeTable from '@/mixins/vxeTable'
 import { listOperlog, delOperlog, cleanOperlog } from '@/api/operlog.js'
 import { listDictItems } from '@/api/base.js'
+import detail from './components/detail.vue'
 export default {
+  components: {
+    detail
+  },
   mixins: [vxeTable],
   data() {
     return {
@@ -146,7 +151,9 @@ export default {
         { field: 'operTime', title: '操作日期', visible: true, minWidth: 200 },
         { field: 'todo', title: '操作', width: 160, align: 'center', fixed: 'right', slots: { default: 'todo' }, visible: true, visibleDisabled: true }
       ],
-      dictDataList: []
+      dictDataList: [],
+      rowData: {},
+      detailVisible: false
     }
   },
   created() {
@@ -191,6 +198,10 @@ export default {
       }
       // 触发列表请求
       this.load()
+    },
+    detailHandle(rowData) {
+      this.rowData = rowData
+      this.detailVisible = true
     },
     handleDelete(row) {
       this.$confirm('是否确认删除日志编号为"' + row.operId + '"的数据项？').then(() => {

@@ -76,7 +76,9 @@ export default {
     init() {
       this.loading = true
       getPost(this.editId)
-        .then((res) => [(this.formData = res.data)])
+        .then((res) => {
+          this.formData = res.data
+        })
         .finally(() => {
           this.loading = false
         })

@@ -159,7 +159,7 @@ export default {
       this.load()
     },
     handleDelete(row) {
-      this.$confirm('是否确认删除访问编号为"' + row.infoId + '"的数据项？').then(function () {
+      this.$confirm('是否确认删除访问编号为"' + row.infoId + '"的数据项？').then(() => {
         delLogininfor(row.infoId).then(() => {
           this.reload()
           this.$message.success('删除成功')

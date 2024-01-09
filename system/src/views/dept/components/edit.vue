@@ -17,7 +17,7 @@
       </el-row>
       <el-row>
         <el-col :span="24">
-          <el-form-item label="上级部门" prop="parentId" v-if="formData.parentId != 0">
+          <el-form-item v-if="formData.parentId != 0" label="上级部门" prop="parentId">
             <el-tree-select
               ref="treeSelect"
               v-model="formData.parentId"
@@ -50,7 +50,7 @@
       <el-row>
         <el-col :span="24">
           <el-form-item label="备注">
-            <el-input type="textarea" rows="3" v-model="formData.remark" clearable placeholder="备注" maxlength="500" show-word-limit style="width: 100%"></el-input>
+            <el-input v-model="formData.remark" type="textarea" rows="3" clearable placeholder="备注" maxlength="500" show-word-limit style="width: 100%" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -164,11 +164,12 @@ export default {
       this.$emit('close', false)
     },
     async getDictData() {
+      var deptData
       if (this.editId) {
-        var deptData = await listDeptExcludeChild(this.editId)
+        deptData = await listDeptExcludeChild(this.editId)
         this.deptOptions = handleTree(deptData.data, 'deptId')
       } else {
-        var deptData = await listTree()
+        deptData = await listTree()
         this.deptOptions = handleTree(deptData.data, 'deptId')
       }
     }
