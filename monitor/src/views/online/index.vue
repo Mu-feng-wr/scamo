@@ -2,15 +2,15 @@
   <div class="card-container app-container">
     <el-container>
       <el-header>
-        <SearchArea :show-all-search.sync="showAllSearch" class="p-16" :showToggleBtn="false">
+        <SearchArea :show-all-search.sync="showAllSearch" class="p-16" :show-toggle-btn="false">
           <div class="flex">
             <div class="searchLeft">
               <el-row :gutter="14">
                 <el-col :span="4">
-                  <el-input v-model="queryParams.assetBorrowCode" size="mini" placeholder="借用单号" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.ipaddr" size="mini" placeholder="请输入登录地址" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="4">
-                  <el-input v-model="queryParams.userName" size="mini" placeholder="使用人" clearable @keyup.enter.native="load" />
+                  <el-input v-model="queryParams.userName" size="mini" placeholder="请输入用户名称" clearable @keyup.enter.native="load" />
                 </el-col>
                 <el-col :span="16">
                   <el-button type="primary" icon="el-icon-search" size="mini" @click="load">搜索</el-button>
@@ -38,7 +38,7 @@
         >
           <template #seqHeader>序号</template>
           <template #todo="{row}">
-            <el-button size="mini" type="text" icon="el-icon-delete" @click="handleForceLogout(row)" v-hasPermi="['monitor:online:forceLogout']">强退</el-button>
+            <el-button v-hasPermi="['monitor:online:forceLogout']" size="mini" type="text" icon="el-icon-delete" @click="handleForceLogout(row)">强退</el-button>
           </template>
           <template #loginTime="{row}">
             <span>{{ $vxe.toDateString(new Date(Number(row.loginTime))) }}</span>
@@ -78,7 +78,7 @@ export default {
         { visible: true, field: 'userName', title: '登录名称' },
         { visible: true, field: 'ipaddr', title: '主机' },
         { visible: true, field: 'loginTime', title: '登录时间', slots: { default: 'loginTime' } },
-        { visible: true, field: 'todo', title: '操作', slots: { default: 'todo' } }
+        { visible: true, field: 'todo', width: 100, title: '操作', slots: { default: 'todo' } }
       ]
     }
   },
@@ -135,6 +135,4 @@ export default {
   }
 }
 </script>
-
-
 <style lang="scss" scoped src="@/styles/vxeTable.scss"></style>
