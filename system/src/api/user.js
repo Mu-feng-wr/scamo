@@ -45,7 +45,7 @@ export function getAllRole() {
 // 根据所选角色获取相应的数据权限
 export function getRolePermByRoleIds(roleIds) {
   return request({
-    url: '/system/user/getRolePermByRoleIds/' + roleIds,
+    url: `/system/api/role/batch/${roleIds}/menu`,
     method: 'get'
   })
 }

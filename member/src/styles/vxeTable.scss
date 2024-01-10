@@ -18,18 +18,18 @@
 }
 .vxeTable {
   ::v-deep .vxe-header--row {
-    color: #222943 ;
+    color: #222943 !important;
     background-color: #F8F9F9 !important;
   }
   ::v-deep .vxe-table--header .vxe-header--column .vxe-cell {
     font-weight: normal;
   }
   ::v-deep .vxe-footer--column{
-    padding: 2px 0;
+    padding: 2px 0 !important;
     color: red;
   }
   ::v-deep .vxe-body--column{
-    padding: 0px 0;
+    padding: 0px 0 !important;
     height: 40px !important;
     line-height: normal;
   }

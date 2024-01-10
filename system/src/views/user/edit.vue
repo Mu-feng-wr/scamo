@@ -124,7 +124,7 @@
         </el-row>
       </SectionCard>
     </el-form>
-    <rolesList :user-id="userId" :roles="formData.roles" @reloadPermissions="reloadPermissions" />
+    <rolesList :user-id="userId" :role-ids="formData.roleIds" @reloadPermissions="reloadPermissions" />
     <dataPermissions ref="menuAndPermission" :role-ids="formData.roleIds" :dict-data-list="dictDataList" />
     <div slot="footer" align="center">
       <el-button type="primary" @click="submitForm">提 交</el-button>
@@ -150,7 +150,7 @@ export default {
       formData: {
         sort: 0,
         status: '1',
-        roleIds: []
+        roleIds: ''
       },
       rules: {
         no: [{ required: true, message: '用户编号不能为空', trigger: 'change' }],
@@ -209,7 +209,7 @@ export default {
       })
     },
     reloadPermissions(val) {
-      this.formData.roleIds = val
+      this.formData.roleIds = val.join(',')
     },
     selectDept(val) {
       this.formData.deptId = val.deptId

@@ -77,10 +77,8 @@ export default {
       default: ''
     },
     roleIds: {
-      type: Array,
-      default: () => {
-        return []
-      }
+      type: String,
+      default: ''
     }
   },
   data() {
@@ -108,7 +106,7 @@ export default {
       handler() {
         this.menuOptions = []
         this.tableData = JSON.parse(JSON.stringify(this.menuOptions))
-        if (this.roleIds.length > 0) {
+        if (this.roleIds) {
           this.init()
         }
       },
@@ -118,7 +116,7 @@ export default {
   methods: {
     async init() {
       this.tableLoading = true
-      var menuTree = await getRolePermByRoleIds(this.roleIds.join())
+      var menuTree = await getRolePermByRoleIds(this.roleIds)
       this.menuOptions = menuTree.data
       this.tableData = JSON.parse(JSON.stringify(this.menuOptions))
       this.tableLoading = false
