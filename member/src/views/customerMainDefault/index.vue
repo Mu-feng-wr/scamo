@@ -2,7 +2,7 @@
   <div class="app-container2">
     <enterprise :sys-dictionary-list="sysDictionaryList" />
     <invoice class="mt-8" :sys-dictionary-list="sysDictionaryList" />
-    <address class="mt-8" />
+    <mailingAddress class="mt-8" />
     <notice />
   </div>
 </template>
@@ -10,14 +10,14 @@
 <script>
 import enterprise from './components/enterprise.vue'
 import invoice from './components/invoice.vue'
-import address from './components/address.vue'
+import mailingAddress from './components/mailingAddress.vue'
 import notice from './components/notice.vue'
 import { findItemsByDictionariesCode } from '@/api/base.js'
 export default {
   components: {
     enterprise,
     invoice,
-    address,
+    mailingAddress,
     notice
   },
   data() {
