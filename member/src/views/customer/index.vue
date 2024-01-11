@@ -83,32 +83,32 @@
             >
               <template #seqHeader>序号</template>
               <template #sex="{ row }">
-                <dictDateView :value="row.sex" :dictDataList="dictDataList" dict-code="SysUser-sex"></dictDateView>
+                <dictDateView :value="row.sex" :dict-data-list="dictDataList" dict-code="SysUser-sex" />
               </template>
               <template #status="{ row }">
-                <dictDateView :value="row.status" :dictDataList="dictDataList" dict-code="MmCustomer-status"></dictDateView>
+                <dictDateView :value="row.status" :dict-data-list="dictDataList" dict-code="MmCustomer-status" />
               </template>
               <template #acquisitionChannel="{ row }">
-                <dictDateView :value="row.acquisitionChannel" :dictDataList="dictDataList" dict-code="MmCustomer-acquisitionChannel"></dictDateView>
+                <dictDateView :value="row.acquisitionChannel" :dict-data-list="dictDataList" dict-code="MmCustomer-acquisitionChannel" />
               </template>
               <template #ynFollowUpCall="{ row }">
-                <dictDateView :value="row.ynFollowUpCall" :dictDataList="dictDataList" dict-code="System-whether"></dictDateView>
+                <dictDateView :value="row.ynFollowUpCall" :dict-data-list="dictDataList" dict-code="System-whether" />
               </template>
               <template #yn7DayOnline="{ row }">
-                <dictDateView :value="row.yn7DayOnline" :dictDataList="dictDataList" dict-code="System-whether"></dictDateView>
+                <dictDateView :value="row.yn7DayOnline" :dict-data-list="dictDataList" dict-code="System-whether" />
               </template>
               <template #ynOfflineScheme="{ row }">
-                <dictDateView :value="row.ynOfflineScheme" :dictDataList="dictDataList" dict-code="System-whether"></dictDateView>
+                <dictDateView :value="row.ynOfflineScheme" :dict-data-list="dictDataList" dict-code="System-whether" />
               </template>
               <template #ynTransaction="{ row }">
-                <dictDateView :value="row.ynTransaction" :dictDataList="dictDataList" dict-code="System-whether"></dictDateView>
+                <dictDateView :value="row.ynTransaction" :dict-data-list="dictDataList" dict-code="System-whether" />
               </template>
               <template #todo="{row}">
                 <div class="todo">
-                  <el-button size="mini" type="text" @click="detailHandle(row.customerId)" v-hasPermi="['memberc:customer:query']">查看</el-button>
-                  <el-button size="mini" type="text" @click="addOrUpdateHandle(row.customerId)" v-hasPermi="['memberc:customer:edit']">修改</el-button>
-                  <el-button size="mini" type="text" v-if="row.applicationTryoutOrderId" @click="addOrUpdateHandle(row.customerId)" v-hasPermi="['memberc:customer:edit']">允许试用</el-button>
-                  <el-button size="mini" type="text" @click="handleDelete(row)" v-hasPermi="['memberc:customer:remove']">删除</el-button>
+                  <el-button v-hasPermi="['memberc:customer:query']" size="mini" type="text" @click="detailHandle(row.customerId)">查看</el-button>
+                  <el-button v-hasPermi="['memberc:customer:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.customerId)">修改</el-button>
+                  <el-button v-if="row.applicationTryoutOrderId" v-hasPermi="['memberc:customer:edit']" size="mini" type="text" @click="addOrUpdateHandle(row.customerId)">允许试用</el-button>
+                  <el-button v-hasPermi="['memberc:customer:remove']" size="mini" type="text" @click="handleDelete(row)">删除</el-button>
                 </div>
               </template>
               <template #pager>
@@ -133,7 +133,7 @@
 
 <script>
 import { listDictItems } from '@/api/base.js'
-import { provinceAndCityData, CodeToText, TextToCode } from 'element-china-area-data'
+import { provinceAndCityData, CodeToText } from 'element-china-area-data'
 import { findListByCondition, delCustomer } from '@/api/customer.js'
 import vxeTable from '@/mixins/vxeTable'
 export default {

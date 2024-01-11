@@ -12,7 +12,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="用户性别">
-              <dictDateView :value="formData.sex" :dictDataList="dictDataList" dict-code="SysUser-sex" />
+              <dictDateView :value="formData.sex" :dict-data-list="dictDataList" dict-code="SysUser-sex" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -92,7 +92,7 @@
               </el-col>
               <el-col :span="12">
                 <el-form-item label="是否已婚">
-                  <dictDateView :value="formData.ynMarry" :dictDataList="dictDataList" dict-code="MmCustomer-ynMarry" />
+                  <dictDateView :value="formData.ynMarry" :dict-data-list="dictDataList" dict-code="MmCustomer-ynMarry" />
                 </el-form-item>
               </el-col>
             </el-row>
@@ -151,7 +151,7 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="是否已电话回访">
-              <dictDateView :value="formData.ynFollowUpCall" :dictDataList="dictDataList" dict-code="System-whether" />
+              <dictDateView :value="formData.ynFollowUpCall" :dict-data-list="dictDataList" dict-code="System-whether" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -172,7 +172,7 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="是否已开通">
-              <dictDateView :value="formData.yn7DayOnline" :dictDataList="dictDataList" dict-code="System-whether" />
+              <dictDateView :value="formData.yn7DayOnline" :dict-data-list="dictDataList" dict-code="System-whether" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -193,7 +193,7 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="是否已线下方案预约">
-              <dictDateView :value="formData.ynOfflineScheme" :dictDataList="dictDataList" dict-code="System-whether" />
+              <dictDateView :value="formData.ynOfflineScheme" :dict-data-list="dictDataList" dict-code="System-whether" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -214,7 +214,7 @@
         <el-row>
           <el-col :span="8">
             <el-form-item label="是否已成交">
-              <dictDateView :value="formData.ynTransaction" :dictDataList="dictDataList" dict-code="System-whether" />
+              <dictDateView :value="formData.ynTransaction" :dict-data-list="dictDataList" dict-code="System-whether" />
             </el-form-item>
           </el-col>
           <el-col :span="8">

@@ -41,12 +41,12 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="城市">
-              <el-cascader style="width: 100%" :options="cityOptions" v-model="formData.selectedOptions" @change="handleChange" filterable size="large" placeholder="请选择城市"></el-cascader>
+              <el-cascader v-model="formData.selectedOptions" style="width: 100%" :options="cityOptions" filterable size="large" placeholder="请选择城市" @change="handleChange" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
             <el-form-item label="注册日期">
-              <el-date-picker clearable v-model="formData.registrationDate" type="date" value-format="yyyy-MM-dd" placeholder="  请选择注册日期" style="width: 100%"></el-date-picker>
+              <el-date-picker v-model="formData.registrationDate" clearable type="date" value-format="yyyy-MM-dd" placeholder="  请选择注册日期" style="width: 100%" />
             </el-form-item>
           </el-col>
           <el-col :span="8">
@@ -56,7 +56,7 @@
           </el-col>
           <el-col :span="16">
             <el-form-item label="预计最晚使用时间">
-              <el-date-picker style="width: calc(50% - 100px)" clearable v-model="formData.estimatedLatestServiceTime" type="date" value-format="yyyy-MM-dd" placeholder="  请选择预计最晚使用时间"></el-date-picker>
+              <el-date-picker v-model="formData.estimatedLatestServiceTime" style="width: calc(50% - 100px)" clearable type="date" value-format="yyyy-MM-dd" placeholder="  请选择预计最晚使用时间" />
             </el-form-item>
           </el-col>
           <el-col :span="24">
@@ -94,7 +94,7 @@
               </el-col>
               <el-col :span="12">
                 <el-form-item label="生日">
-                  <el-date-picker clearable v-model="formData.birthday" type="date" value-format="yyyy-MM-dd" placeholder="  请选择生日"></el-date-picker>
+                  <el-date-picker v-model="formData.birthday" clearable type="date" value-format="yyyy-MM-dd" placeholder="  请选择生日" />
                 </el-form-item>
               </el-col>
               <el-col :span="12">
@@ -124,15 +124,15 @@
           <el-col :span="24" class="addressPCD">
             <el-form-item label="居住地址">
               <el-cascader
+                v-model="formData.residential"
                 style="width: 30%"
                 :options="regionData"
-                v-model="formData.residential"
                 :props="{value:'label'}"
-                @change="changeAddress($event,'residential')"
                 filterable
                 placeholder="请选择城市"
+                @change="changeAddress($event,'residential')"
               />
-              <el-input v-model="formData.residentialAddress" placeholder="详细地址" maxlength="150" show-word-limit class="pl-10" style="width: 50%"></el-input>
+              <el-input v-model="formData.residentialAddress" placeholder="详细地址" maxlength="150" show-word-limit class="pl-10" style="width: 50%" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -140,15 +140,15 @@
           <el-col :span="24" class="addressPCD">
             <el-form-item label="办公地址">
               <el-cascader
+                v-model="formData.office"
                 style="width: 30%"
                 :options="regionData"
-                v-model="formData.office"
                 :props="{value:'label'}"
-                @change="changeAddress($event,'office')"
                 filterable
                 placeholder="请选择城市"
+                @change="changeAddress($event,'office')"
               />
-              <el-input v-model="formData.officeAddress" placeholder="详细地址" maxlength="150" class="pl-10" show-word-limit style="width: 50%"></el-input>
+              <el-input v-model="formData.officeAddress" placeholder="详细地址" maxlength="150" class="pl-10" show-word-limit style="width: 50%" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -156,24 +156,24 @@
           <el-col :span="24" class="addressPCD">
             <el-form-item label="户籍地址">
               <el-cascader
+                v-model="formData.residence"
                 style="width: 30%"
                 :options="regionData"
-                v-model="formData.residence"
                 :props="{value:'label'}"
-                @change="changeAddress($event,'residence')"
                 filterable
                 placeholder="请选择城市"
+                @change="changeAddress($event,'residence')"
               />
 
-              <el-input v-model="formData.residenceAddress" placeholder="详细地址" maxlength="150" class="pl-10" show-word-limit style="width: 50%;"></el-input>
+              <el-input v-model="formData.residenceAddress" placeholder="详细地址" maxlength="150" class="pl-10" show-word-limit style="width: 50%;" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="24" class="addressPCD">
             <el-form-item label="邮寄地址">
-              <el-cascader style="width: 30%" :options="regionData" v-model="formData.mail" :props="{value:'label'}" @change="changeAddress($event,'mail')" filterable placeholder="请选择城市" />
-              <el-input v-model="formData.mailAddress" placeholder="详细地址" maxlength="150" class="pl-10" show-word-limit style="width: 50%;"></el-input>
+              <el-cascader v-model="formData.mail" style="width: 30%" :options="regionData" :props="{value:'label'}" filterable placeholder="请选择城市" @change="changeAddress($event,'mail')" />
+              <el-input v-model="formData.mailAddress" placeholder="详细地址" maxlength="150" class="pl-10" show-word-limit style="width: 50%;" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -229,7 +229,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="回访时间">
-              <el-date-picker clearable v-model="formData.followUpDate" type="date" value-format="yyyy-MM-dd" placeholder="  请选择电话回访时间"></el-date-picker>
+              <el-date-picker v-model="formData.followUpDate" clearable type="date" value-format="yyyy-MM-dd" placeholder="  请选择电话回访时间" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -256,7 +256,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="开通时间">
-              <el-date-picker clearable v-model="formData.experienceDate" type="date" value-format="yyyy-MM-dd" placeholder="  请选择开通时间"></el-date-picker>
+              <el-date-picker v-model="formData.experienceDate" clearable type="date" value-format="yyyy-MM-dd" placeholder="  请选择开通时间" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -284,7 +284,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="线下方案时间">
-              <el-date-picker clearable v-model="formData.schemeDate" type="date" value-format="yyyy-MM-dd" placeholder="  请选择线下方案时间"></el-date-picker>
+              <el-date-picker v-model="formData.schemeDate" clearable type="date" value-format="yyyy-MM-dd" placeholder="  请选择线下方案时间" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -312,7 +312,7 @@
           </el-col>
           <el-col :span="8">
             <el-form-item label="成交时间">
-              <el-date-picker clearable v-model="formData.transactionDate" type="date" value-format="yyyy-MM-dd" placeholder="  请选择成交时间"></el-date-picker>
+              <el-date-picker v-model="formData.transactionDate" clearable type="date" value-format="yyyy-MM-dd" placeholder="  请选择成交时间" />
             </el-form-item>
           </el-col>
         </el-row>
@@ -329,7 +329,7 @@ import { listDictItems } from '@/api/base.js'
 import { findByCondition, addCustomer, updateCustomer } from '@/api/customer.js'
 import customerAvatar from './components/customer-avatar.vue'
 
-import { provinceAndCityData, CodeToText, TextToCode, regionData } from 'element-china-area-data'
+import { provinceAndCityData, CodeToText, regionData } from 'element-china-area-data'
 
 export default {
   components: { customerAvatar },
@@ -379,7 +379,7 @@ export default {
           this.submitLoading = false
         })
     },
-    //选择城市触发
+    // 选择城市触发
     handleChange(value) {
       const city = CodeToText[value[0]] + '/' + CodeToText[value[1]]
       this.formData.registerCity = city

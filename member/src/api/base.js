@@ -148,3 +148,11 @@ export function listUser (query) {
     params: query
   })
 }
+
+// 查询参数列表
+export function findItemsByDictionariesCode(dictCodes) {
+  return request({
+    url: '/system/api/dictionaries/code/'+dictCodes+'/items',
+    method: 'get'
+  })
+}
