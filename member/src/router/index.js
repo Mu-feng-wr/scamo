@@ -4,6 +4,7 @@ import appRouter from './page/app.js'
 import orderRouter from './page/order.js'
 import customerRouter from './page/customer.js'
 import customerMainDefaultRouter from './page/customerMainDefault.js'
+import saleVersionBuyRouter from './page/saleVersionBuy.js'
 
 Vue.use(Router)
 
@@ -12,6 +13,7 @@ export const constantRoutes = [
   ...orderRouter,
   ...customerRouter,
   ...customerMainDefaultRouter,
+  ...saleVersionBuyRouter,
   {
     path: '/404',
     component: () => import('@/views/404'),
