@@ -45,3 +45,9 @@ export default {
   }
 }
 </script>
+<style>
+.app-container2 {
+  height: 100%;
+  overflow: auto;
+}
+</style>
